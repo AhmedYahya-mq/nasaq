@@ -1,11 +1,150 @@
 @import 'tailwindcss';
+/* @import "tw-animate"; */
+@config "../../tailwind.config.js";
+@tailwind utilities;
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
+
+
+@theme inline {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+}
+
+
+/* Variables */
+:root {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+    --radius: 0.65rem;
+
+    /* الألوان الأساسية */
+    --background: #f8f7fa;
+    --foreground: #25293c;
+    --card: #fff;
+    --card-foreground: #2f3349;
+
+    --primary: #848b3c;
+    /* متناسق مع اللوجو */
+    --primary-foreground: #5c612a;
+    --secondary: #a0a46a;
+    --secondary-foreground: #4b4e34;
+
+    --muted: #dcdcdc;
+    /* واضح على الخلفية */
+    --muted-foreground: #6b6b6b;
+
+    --accent: #c0c05c;
+    /* لون بارز يتناسب مع primary */
+    --accent-foreground: #2f3349;
+
+    --destructive: #e74c3c;
+
+    /* الحدود والمدخلات */
+    --border: #ccc;
+    --input: var(--border);
+    --ring: #bada55;
+
+    /* Popover */
+    --popover: #fff;
+    --popover-foreground: #25293c;
+
+    /* Sidebar */
+    --sidebar: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+}
+
+.dark {
+    --background: #25293c;
+    --foreground: #f8f7fa;
+    --card: #2f3349;
+    --card-foreground: #fff;
+
+    --primary: #5c612a;
+    --primary-foreground: #cddc6a;
+    --secondary: #7c8435;
+    --secondary-foreground: #e0e3b0;
+
+    --muted: #3c3f52;
+    --muted-foreground: #c0c0c0;
+
+    --accent: #848b3c;
+    --accent-foreground: #f8f7fa;
+
+    --destructive: #e74c3c;
+
+    --border: #555;
+    --input: #666;
+    --ring: #8fa23f;
+
+    --popover: #3c3f52;
+    --popover-foreground: #f8f7fa;
+
+    --sidebar: #2f3349;
+    --sidebar-foreground: #f8f7fa;
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+}
+
+
+
+@layer base {
+    body {
+        @apply bg-background text-foreground;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-bold;
+    }
+
+    a {
+        @apply text-primary hover:text-primary-foreground;
+    }
+
+    .badge-red-700 {
+        @apply bg-red-700 text-white px-2 py-1 rounded;
+    }
+}
+
+@layer components {
+    .sub-menu {
+        @apply absolute top-[4.2rem] p-[15px] rounded-[6px] origin-[50%_-170px] backdrop-blur bg-accent-foreground/[0.04];
+    }
+}
+
+@layer utilities {
+    .flex-center {
+        @apply flex items-center;
+    }
+
+    .flex-center-between {
+        @apply flex items-center justify-between;
+    }
+
+}
+
+[x-cloak] {
+    display: none !important
 }
