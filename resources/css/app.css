@@ -33,7 +33,7 @@
 
     --primary: #848b3c;
     /* متناسق مع اللوجو */
-    --primary-foreground: #5c612a;
+    --primary-foreground: #a9ab60;
     --secondary: #a0a46a;
     --secondary-foreground: #4b4e34;
 
@@ -73,8 +73,8 @@
     --card: #2f3349;
     --card-foreground: #fff;
 
-    --primary: #5c612a;
-    --primary-foreground: #cddc6a;
+    --primary: #a9ab60;
+    --primary-foreground: #848b3c;
     --secondary: #7c8435;
     --secondary-foreground: #e0e3b0;
 
@@ -126,11 +126,15 @@
     .badge-red-700 {
         @apply bg-red-700 text-white px-2 py-1 rounded;
     }
+
+    .container {
+        @apply max-w-7xl mx-auto;
+    }
 }
 
 @layer components {
     .sub-menu {
-        @apply absolute top-[4.2rem] p-[15px] rounded-[6px] origin-[50%_-170px] backdrop-blur bg-accent-foreground/[0.04];
+        @apply absolute top-[4.05rem] p-[15px] rounded-[6px] origin-[50%_-170px] backdrop-blur bg-accent-foreground/[0.04];
     }
 }
 
@@ -148,3 +152,41 @@
 [x-cloak] {
     display: none !important
 }
+.scrollbar::-webkit-scrollbar {
+  width: var(--scrollbar-thumb-width);
+  height: var(--scrollbar-thumb-width);
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+  border-radius: var(--scrollbar-track-radius);
+  border: var(--scrollbar-track-border) solid var(--scrollbar-track-color);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: var(--scrollbar-thumb-radius);
+  border: var(--scrollbar-thumb-border) solid var(--scrollbar-track-color);
+  box-sizing: border-box;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover-color);
+}
+
+/* دخول مع ارتداد */
+@keyframes bounce-in-left {
+  0%   { opacity: 0; transform: translateX(100%); }
+  60%  { opacity: 1; transform: translateX(-10%); }
+  80%  { transform: translateX(5%); }
+  100% { transform: translateX(0%); }
+}
+
+/* خروج سلس */
+@keyframes slide-out-right {
+  0%   { opacity: 1; transform: translateX(0%); }
+  100% { opacity: 0; transform: translateX(100%); }
+}
+
+.bounce-in-left { animation: bounce-in-left 0.5s forwards; }
+.slide-out-right { animation: slide-out-right 0.3s forwards; }

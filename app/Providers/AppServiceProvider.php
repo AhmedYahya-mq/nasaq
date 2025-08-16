@@ -24,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
         //
         View::composer('*', function ($view) {
             $view->with('locale', App::getLocale());
+            $view->with('languages', ['en' => 'gb', 'ar' => 'sa']);
         });
     }
 }

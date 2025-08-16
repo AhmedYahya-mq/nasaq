@@ -9,7 +9,7 @@
         @endif
     </span>
     @if ($hasSubMenu)
-        <div class="sub-menu "
+        <div class="sub-menu"
             @if ($hasSubMenu) x-show="isHovered"  x-transition:enter="transition ease-out grid-cols-3 grid-cols-2 duration-200"
                 x-transition:enter-start="opacity-0 -translate-y-2"
                 x-transition:enter-end="opacity-100 translate-y-0"

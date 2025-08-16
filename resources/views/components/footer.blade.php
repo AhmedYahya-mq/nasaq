@@ -1,7 +1,7 @@
-<footer class="bg-card border-t mt-16 w-full flex flex-col">
+<footer class="bg-card border-t border-primary mt-16  py-10 pb-3 w-full flex flex-col">
     {{-- حاوية الأعمدة ممتدة بعرض الشاشة --}}
-    <div class="w-full px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 text-sm">
+    <div class="container">
+        <div class="w-full mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 text-sm">
 
             {{-- العمود الأول: الشعار وأيقونات التواصل --}}
             <div class="col-span-1">

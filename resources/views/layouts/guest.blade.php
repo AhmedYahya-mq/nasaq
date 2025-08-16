@@ -8,8 +8,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <div class="container">
+<body class="scroll-smooth overflow-x-hidden scrollbar antialiased">
+    <div class="">
+        <x-topbar />
         <x-header />
 
         <main style="padding: 20px;">

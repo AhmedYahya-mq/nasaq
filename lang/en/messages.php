@@ -7,4 +7,7 @@ return [
     'select_language' => 'Select Language',
     'en' => 'English',
     'ar' => 'Arabic',
+    'dark' => 'Dark',
+    'light' => 'Light',
+    'system' => 'System',
 ];
