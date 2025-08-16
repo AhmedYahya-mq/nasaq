@@ -19,7 +19,7 @@
                 تسجيل الدخول
             </button>
             <div class="flex-center gap-x-1">
-                <x-button-toggle-menu />
+                <x-ui.button-toggle-menu />
             </div>
         </div>
     </nav>

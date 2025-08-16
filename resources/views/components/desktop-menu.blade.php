@@ -5,7 +5,7 @@
         class="flex-center gap-1 cursor-pointer px-3 py-1 rounded-xl hover:bg-primary/20 hover:text-primary-foreground transition-colors">
         {{ __($menu['name']) }}
         @if ($hasSubMenu)
-            <x-icon name="chevron-down" class="mt-[0.6px] size-4 group-hover/link:rotate-180 duration-200" />
+            <x-ui.icon name="chevron-down" class="mt-[0.6px] size-4 group-hover/link:rotate-180 duration-200" />
         @endif
     </span>
     @if ($hasSubMenu)

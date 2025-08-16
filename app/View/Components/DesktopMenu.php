@@ -10,22 +10,21 @@ use Illuminate\View\Component;
 class DesktopMenu extends Component
 {
     public $menu;
+    public $hasSubMenu;
+
     /**
      * Create a new component instance.
      */
     public function __construct($menu = null)
     {
         $this->menu = $menu;
+        $this->hasSubMenu = isset($menu['subMenu']) && count($menu['subMenu']) > 0;
     }
-
     /**
      * Get the view / contents that represent the component.
      */
     public function render(): View|Closure|string
     {
-        return view('components.desktop-menu', [
-            'menu' => $this->menu,
-            "hasSubMenu" => isset($this->menu['subMenu']) && count($this->menu['subMenu']) > 0,
-        ]);
+        return view('components.desktop-menu');
     }
 }

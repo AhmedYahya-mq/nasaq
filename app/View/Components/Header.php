@@ -8,13 +8,14 @@ use Illuminate\View\Component;
 
 class Header extends Component
 {
-
+    public $menus;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
         //
+        $this->menus = config('menus');
     }
 
     /**
@@ -22,8 +23,6 @@ class Header extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.header', [
-            'menus' => config('menus')
-        ]);
+        return view('components.header');
     }
 }
