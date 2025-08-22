@@ -13,7 +13,7 @@
             </span>
         </div>
     </div>
-    <div class="flex items-center gap-1">
+    <div class="flex items-center gap-4">
         <x-ui.theme-switcher />
         <x-ui.lang-selector />
     </div>

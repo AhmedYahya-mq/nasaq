@@ -3,14 +3,14 @@
 
     {{-- زر Trigger --}}
     <x-slot name="trigger">
-        <button
+        <button aria-label="تغيير اللغة"
             class="inline-flex px-[4px] items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border border-border bg-background/30 hover:bg-background/50 shadow-xs  dark:bg-input/30 dark:border-input dark:hover:bg-input/50 size-9">
             {{-- اللغة --}}
            <picture>
             <source srcset="{{ 'https://flagcdn.com/' . $languages[$locale] . '.svg' }}" type="image/svg+xml" />
             <img
                 src="image source"
-                class="img-fluid shadow-md"
+                class="img-fluid shadow-md size-full"
                 alt="{{ __('messages.' . $locale) }}" loading="lazy" decoding="async"
             />
            </picture>

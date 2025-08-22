@@ -8,12 +8,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="scroll-smooth overflow-x-hidden scrollbar antialiased">
-    <div class="">
+<body class="relative">
+    <div class="max-h-dvh overflow-hidden relative overflow-x-hidden scrollbar scroll-container">
         <x-topbar />
         <x-header />
 
-        <main style="padding: 20px;">
+        <main>
             {{ $slot }}
         </main>
 

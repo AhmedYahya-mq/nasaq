@@ -11,7 +11,9 @@ import loading from './components/loading';
 import dropdown from './components/dropdown';
 import hover from './components/hover';
 import buttonToggleMenu from './components/button-toggle-menu';
-
+import { register } from 'swiper/element';
+import swiperSlide from './animations/swiperSlide';
+import importing from './scrollAnimtionImport';
 
 window.Alpine = Alpine;
 Alpine.plugin(focus);
@@ -24,7 +26,12 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('hover', hover);
     loading();
     buttonToggleMenu();
+
 });
 Alpine.start();
 
-
+document.addEventListener('DOMContentLoaded', () => {
+    register();
+    swiperSlide();
+    importing();
+});
