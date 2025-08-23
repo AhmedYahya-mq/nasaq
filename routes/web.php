@@ -12,6 +12,6 @@ Route::group(['prefix' => '{locale?}', 'where' => ['locale' => 'en|ar']], functi
     })->name('home');
 
     Route::get('/about', function () {
-        return "Current locale: " . app()->getLocale();
+        return view('about');
     })->name('about');
 });
