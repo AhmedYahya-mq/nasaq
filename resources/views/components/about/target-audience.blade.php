@@ -23,7 +23,7 @@
 
         {{-- شبكة بطاقات العضوية --}}
         @if (!empty($memberships) && is_array($memberships))
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 ">
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
                 @foreach ($memberships as $member)
                     <x-ui.membership-card :title="$member['title']" :desc="$member['desc']" :requirements="$member['requirements'] ?? []" :benefits="$member['benefits'] ?? []"
                         :price="$member['price']" />

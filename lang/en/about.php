@@ -67,179 +67,112 @@ return [
 
     // --- Audience Section ---
 
-//  'memberships' => [
-//         'title' => 'Membership Types',
-//         'subtitle' => 'Choose the membership that fits your professional path in clinical nutrition.',
-//         'join_now' => 'Join Now',
-//         'types' => [
-//             [
-//                 'title' => 'Student Membership',
-//                 'desc' => 'Designed for students in clinical nutrition or related health fields, with early development opportunities.',
-//                 'requirements' => [
-//                     'Valid university enrollment proof',
-//                     'Specialization in nutrition or related health sciences',
-//                 ],
-//                 'benefits' => [
-//                     'Attend scientific events with special discounts',
-//                     'Access to a digital knowledge library',
-//                     'Volunteering and research participation opportunities',
-//                 ],
-//                 'price' => 50,
-//                 'original_price' => 80,
-//                 'discount' => 35,
-//             ],
-//             [
-//                 'title' => 'Graduate / Trainee Membership',
-//                 'desc' => 'For graduates and trainees looking to develop skills and join the professional market.',
-//                 'requirements' => [
-//                     'Bachelor degree in Nutrition or equivalent',
-//                     'Training certificate (if available)',
-//                 ],
-//                 'benefits' => [
-//                     'Access to specialized training programs',
-//                     'Opportunity to join a professional network',
-//                     'Discounts on workshops',
-//                 ],
-//                 'price' => 120,
-//                 'original_price' => 150,
-//                 'discount' => 20,
-//             ],
-//             [
-//                 'title' => 'Licensed Specialist Membership',
-//                 'desc' => 'For licensed specialists practicing clinical nutrition.',
-//                 'requirements' => [
-//                     'Professional license',
-//                     'Accredited academic degree',
-//                 ],
-//                 'benefits' => [
-//                     'Job and professional partnership opportunities',
-//                     'Priority in conferences and seminars',
-//                     'Listing in the specialists directory',
-//                 ],
-//                 'price' => 250,
-//                 'original_price' => 300,
-//                 'discount' => 15,
-//             ],
-//             [
-//                 'title' => 'Researcher / Academic Membership',
-//                 'desc' => 'For researchers and faculty members in nutrition and health to enhance research activity.',
-//                 'requirements' => [
-//                     'Academic CV',
-//                     'Proof of research or academic activity',
-//                 ],
-//                 'benefits' => [
-//                     'Support for scientific publishing',
-//                     'Research collaboration opportunities',
-//                     'Access to specialized databases',
-//                 ],
-//                 'price' => 180,
-//                 'original_price' => 220,
-//                 'discount' => 18,
-//             ],
-//             [
-//                 'title' => 'Entrepreneur Membership',
-//                 'desc' => 'For entrepreneurs interested in nutrition and health projects to grow and expand their business.',
-//                 'requirements' => [
-//                     'Proof of ownership of a startup or company',
-//                 ],
-//                 'benefits' => [
-//                     'Opportunities to build investment relationships',
-//                     'Marketing and strategic partnership opportunities',
-//                     'Access to innovation events',
-//                 ],
-//                 'price' => 300,
-//                 'original_price' => 400,
-//                 'discount' => 25,
-//             ],
-//         ],
-//     ],
-
-
-
 'memberships' => [
-        'title' => 'Membership Types',
-        'subtitle' => 'Choose the membership that fits your professional path in clinical nutrition.',
-        'join_now' => 'Join Now',
-        'requirements_title' => 'Requirements',
-        'benefits_title' => 'Benefits',
-        'billing_cycle' => 'Yearly',
+    'title' => 'Membership Types',
+    'subtitle' => 'Choose the membership that best fits your professional journey in Clinical Nutrition.',
+    'join_now' => 'Join Now',
+    'requirements_title' => 'Requirements',
+    'benefits_title' => 'Benefits',
+    'billing_cycle' => 'Annually',
 
-        'types' => [
-            [
-                'title' => 'Student Membership',
-                'desc' => 'For students in clinical nutrition, offering early professional development opportunities.',
-                'price' => 50,
-                'requirements' => [
-                    'Valid university enrollment proof',
-                    'Valid university enrollment proof',
-                    'Specialization in nutrition or related health sciences',
-                ],
-                'benefits' => [
-                    'Attend events with special discounts',
-                    'Attend events with special discounts',
-                    'Access to the digital knowledge library',
-                ],
+    'types' => [
+        [
+            'title' => 'Student Membership',
+            'desc' => 'Undergraduate students in Clinical Nutrition programs',
+            'price' => 100,
+            'requirements' => [
+                'Recent university enrollment proof',
+                'Active participation in monthly Zoom meetings (camera on and verbal participation required)',
+                'Attend at least one in-person event annually (mandatory only for residents of Makkah/Jeddah)',
             ],
-            [
-                'title' => 'Graduate/Trainee Membership',
-                'desc' => 'For graduates and trainees looking to develop skills and enter the professional market.',
-                'price' => 120,
-                'requirements' => [
-                    'Bachelor\'s degree in Nutrition or equivalent',
-                    'Training certificate (if available)',
-                    'Training certificate (if available)',
-                ],
-                'benefits' => [
-                    'Access to specialized training programs',
-                    'Access to specialized training programs',
-                    'Opportunity to join a professional network',
-                ],
+            'benefits' => [
+                'Membership certificate',
+                'Discount on monthly sessions',
+                'Invitation to student-focused events such as career guidance days or educational workshops',
+                'Recommended to attend in-person meetings every 3 months',
+                'Professional Mentorship program with certified specialists',
+                'Access to digital educational resources and the latest research/recommendations',
             ],
-            [
-                'title' => 'Licensed Specialist Membership',
-                'desc' => 'For licensed specialists practicing clinical nutrition.',
-                'price' => 250,
-                'requirements' => [
-                    'Valid professional license',
-                    'Accredited academic degree',
-                    'Accredited academic degree',
-                ],
-                'benefits' => [
-                    'Job and professional partnership opportunities',
-                    'Priority in conferences and seminars',
-                    'Priority in conferences and seminars',
-                ],
+        ],
+        [
+            'title' => 'Graduate / Intern Membership',
+            'desc' => 'Clinical Nutrition graduates awaiting license or in internship training',
+            'price' => 150,
+            'requirements' => [
+                'Graduation certificate or proof of internship/rotation',
+                'Active participation in monthly Zoom meetings (camera on and verbal participation required)',
+                'Attend at least one in-person event annually (mandatory only for residents of Makkah/Jeddah)',
             ],
-            [
-                'title' => 'Researcher/Academic Membership',
-                'desc' => 'For researchers and faculty members in nutrition and health.',
-                'price' => 180,
-                'requirements' => [
-                    'Academic CV',
-                    'Academic CV',
-                    'Proof of research or academic activity',
-                ],
-                'benefits' => [
-                    'Support for scientific publishing',
-                    'Research collaboration opportunities',
-                    'Research collaboration opportunities',
-                ],
+            'benefits' => [
+                'Membership certificate',
+                'Discount on monthly sessions',
+                'Priority in attending in-person meetings every 3 months',
+                'Preparatory sessions for SCFHS exam',
+                'Professional Mentorship program with certified specialists',
+                'Access to digital educational resources and the latest research/recommendations',
             ],
-            [
-                'title' => 'Entrepreneur Membership',
-                'desc' => 'For those interested in health and nutrition projects to grow their business.',
-                'price' => 300,
-                'requirements' => [
-                    'Proof of ownership of a company or startup',
-                    'Proof of ownership of a company or startup',
-                    'Proof of ownership of a company or startup',
-                ],
-                'benefits' => [
-                    'Build investment relationships',
-                    'Marketing and strategic partnerships',
-                    'Marketing and strategic partnerships',
-                ],
+        ],
+        [
+            'title' => 'Licensed Specialist Membership',
+            'desc' => 'Clinical Nutrition Specialist holding a valid license from the Saudi Commission for Health Specialties (SCFHS)',
+            'price' => 250,
+            'requirements' => [
+                'Valid SCFHS license',
+                'Active participation in monthly Zoom meetings (camera on and verbal participation required)',
+                'Attend at least one in-person event annually (mandatory only for residents of Makkah/Jeddah)',
+            ],
+            'benefits' => [
+                'Membership certificate',
+                'Free access to all sessions and events',
+                'Priority in applying as a speaker in events',
+                'Voting rights and participation in “Nasaq” committees',
+                'Member of exclusive “Nasaq” committee group',
+                'Rights to vote and suggest topics',
+            ],
+        ],
+        [
+            'title' => 'Researcher / Academic Membership',
+            'desc' => 'Faculty members, postgraduate students, and researchers in Clinical Nutrition',
+            'price' => 300,
+            'requirements' => [
+                'Proof of active academic or research affiliation',
+                'Published or contributed to a scientific paper within the last two years (recommended)',
+                'Active participation in monthly Zoom meetings (camera on and verbal participation required)',
+                'Attend at least one in-person event annually (mandatory only for residents of Makkah/Jeddah)',
+            ],
+            'benefits' => [
+                'Membership certificate',
+                'Free access to all sessions and events',
+                'Priority in applying as a speaker in events',
+                'Voting rights and participation in “Nasaq” committees',
+                'Member of exclusive “Nasaq” committee group',
+                'Rights to vote and suggest topics',
+                'Opportunities for collaboration in scientific initiatives',
+                'Knowledge-sharing sessions with local and international researchers',
+                'Priority in presenting research abstracts at events',
+            ],
+        ],
+        [
+            'title' => 'Entrepreneur Membership',
+            'desc' => 'For individuals interested in health and nutrition-related businesses to grow their ventures.',
+            'price' => 350,
+            'requirements' => [
+                'Proof of providing services or content related to Clinical Nutrition',
+                'Active participation in monthly Zoom meetings (camera on and verbal participation required)',
+                'Attend at least one in-person event annually (mandatory only for residents of Makkah/Jeddah)',
+            ],
+            'benefits' => [
+                'Membership certificate',
+                'Free access to all sessions and events',
+                'Priority in applying as a speaker in events',
+                'Voting rights and participation in “Nasaq” committees',
+                'Member of exclusive “Nasaq” committee group',
+                'Rights to vote and suggest topics',
+                'Workshops on marketing and brand building',
+                'Listing in Nasaq’s online business directory (promotion for your project)',
             ],
         ],
     ],
+],
+
 ];
