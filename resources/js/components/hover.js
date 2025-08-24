@@ -4,12 +4,15 @@ export default function hover() {
         hideTimeout: null,
 
         onHoverStart(callback) {
+
             this.$el.addEventListener('mouseenter', () => {
                 if (this.hideTimeout) {
                     clearTimeout(this.hideTimeout);
                     this.hideTimeout = null;
                 }
                 this.isHovered = true;
+                console.log("Hover started");
+
                 callback?.();
             });
         },
@@ -18,9 +21,14 @@ export default function hover() {
             this.$el.addEventListener('mouseleave', () => {
                 this.hideTimeout = setTimeout(() => {
                     this.isHovered = false;
+                    console.log("Hover ended");
                     callback?.();
-                }, 50); // المهلة قبل الإغلاق
+                }, 50);
             });
+        },
+        init() {
+            this.onHoverEnd(() => {});
+            this.onHoverStart(() => {});
         }
     }
 }

@@ -8,42 +8,39 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-
-
-
 @font-face {
-  font-family: 'Rubik';
-  src: url('@/fonts/Rubik-Light.otf') format('opentype');
-  font-weight: 300;
-  font-style: normal;
+    font-family: 'Rubik';
+    src: url('@/fonts/Rubik-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'Rubik';
-  src: url('@/fonts/Rubik-Regular.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
+    font-family: 'Rubik';
+    src: url('@/fonts/Rubik-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'Rubik';
-  src: url('@/fonts/Rubik-SemiBold.otf') format('opentype');
-  font-weight: 600;
-  font-style: normal;
+    font-family: 'Rubik';
+    src: url('@/fonts/Rubik-SemiBold.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'Rubik';
-  src: url('@/fonts/Rubik-ExtraBold.otf') format('opentype');
-  font-weight: 800;
-  font-style: normal;
+    font-family: 'Rubik';
+    src: url('@/fonts/Rubik-ExtraBold.otf') format('opentype');
+    font-weight: 800;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'Rubik';
-  src: url('@/fonts/Rubik-Black.otf') format('opentype');
-  font-weight: 900;
-  font-style: normal;
+    font-family: 'Rubik';
+    src: url('@/fonts/Rubik-Black.otf') format('opentype');
+    font-weight: 900;
+    font-style: normal;
 }
 
 
@@ -166,6 +163,31 @@
     .sub-menu {
         @apply absolute top-[4.05rem] p-[15px] rounded-[6px] origin-[50%_-170px] backdrop-blur bg-accent-foreground/[0.04];
     }
+
+    .iti__selected-country {
+        @apply z-[1] flex items-center h-full bg-none border-0 outline-0 cursor-pointer;
+    }
+
+    .iti--inline-dropdown .iti__dropdown-content {
+        @apply !bg-card !shadow-md !text-card-foreground mt-1 scrollbar overflow-hidden !border-accent/50;
+    }
+
+    .iti__dropdown-content {
+        @apply !bg-card !shadow-md !text-card-foreground mt-1 scrollbar overflow-hidden !border-accent/50;
+    }
+
+    .iti__search-input {
+        @apply !w-full !bg-background !text-[0.8125rem] !font-normal !appearance-none !px-[0.9rem] !py-2 !border !border-border !outline-none focus:!border-primary !transition-colors !ease-in-out !duration-150;
+    }
+
+    .iti__country-list {
+        @apply scrollbar;
+    }
+
+    .iti__country.iti__highlight {
+        @apply hover:!bg-accent/35;
+    }
+
 }
 
 @layer utilities {
@@ -177,46 +199,103 @@
         @apply flex items-center justify-between;
     }
 
+    .card {
+        @apply bg-card text-card-foreground p-6 rounded-lg shadow-md;
+    }
+
+    .card-title {
+        @apply text-xl font-semibold mb-4;
+    }
+
+    .card-description {
+        @apply text-sm text-muted-foreground;
+    }
+
+   
+}
+
+@utility rtl{
+    direction: rtl;
+}
+@utility ltr{
+    direction: ltr;
 }
 
 [x-cloak] {
     display: none !important
 }
-.scrollbar::-webkit-scrollbar {
-  width: var(--scrollbar-thumb-width);
-  height: var(--scrollbar-thumb-width);
+
+.scrollbar::-webkit-scrollbar,
+.iti__country-list::-webkit-scrollbar {
+    width: var(--scrollbar-thumb-width);
+    height: var(--scrollbar-thumb-width);
 }
 
-.scrollbar::-webkit-scrollbar-track {
-  background: var(--scrollbar-track-color);
-  border-radius: var(--scrollbar-track-radius);
-  border: var(--scrollbar-track-border) solid var(--scrollbar-track-color);
+.scrollbar::-webkit-scrollbar-track,
+.iti__country-list::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+    border-radius: var(--scrollbar-track-radius);
+    border: var(--scrollbar-track-border) solid var(--scrollbar-track-color);
 }
 
-.scrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--scrollbar-thumb-color);
-  border-radius: var(--scrollbar-thumb-radius);
-  border: var(--scrollbar-thumb-border) solid var(--scrollbar-track-color);
-  box-sizing: border-box;
+.scrollbar::-webkit-scrollbar-thumb,
+.iti__country-list::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: var(--scrollbar-thumb-radius);
+    border: var(--scrollbar-thumb-border) solid var(--scrollbar-track-color);
+    box-sizing: border-box;
 }
 
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-hover-color);
+.scrollbar::-webkit-scrollbar-thumb:hover,
+.iti__country-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover-color);
 }
 
 /* دخول مع ارتداد */
 @keyframes bounce-in-left {
-  0%   { opacity: 0; transform: translateX(100%); }
-  60%  { opacity: 1; transform: translateX(-10%); }
-  80%  { transform: translateX(5%); }
-  100% { transform: translateX(0%); }
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateX(-10%);
+    }
+
+    80% {
+        transform: translateX(5%);
+    }
+
+    100% {
+        transform: translateX(0%);
+    }
 }
 
 /* خروج سلس */
 @keyframes slide-out-right {
-  0%   { opacity: 1; transform: translateX(0%); }
-  100% { opacity: 0; transform: translateX(100%); }
+    0% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
+    }
 }
 
-.bounce-in-left { animation: bounce-in-left 0.5s forwards; }
-.slide-out-right { animation: slide-out-right 0.3s forwards; }
+.bounce-in-left {
+    animation: bounce-in-left 0.5s forwards;
+}
+
+.slide-out-right {
+    animation: slide-out-right 0.3s forwards;
+}
+
+.text-clamp-3 {
+    @apply overflow-hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}

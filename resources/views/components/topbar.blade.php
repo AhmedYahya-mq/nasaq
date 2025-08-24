@@ -1,5 +1,5 @@
 <div
-    class="text-[15px] mb-0.5 card inset-0 flex-center bg-card h-[45px] flex items-center justify-between max-[450px]:justify-center w-full py-3 px-1">
+    class="text-[15px] mb-0.5 inset-0 flex-center bg-card h-[45px] flex items-center justify-between max-[450px]:justify-center w-full py-3 px-1">
     <div class="flex items-center gap-4 max-[450px]:hidden">
         <div class="flex items-center gap-0.5">
             <x-ui.icon name="phone" class="size-4 text-accent-foreground" />

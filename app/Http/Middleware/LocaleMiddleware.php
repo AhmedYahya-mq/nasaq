@@ -13,8 +13,7 @@ class LocaleMiddleware
 
     public function handle($request, Closure $next)
     {
-        $segments = $request->segments();
-        $locale = $segments[0] ?? null;
+        $locale = $request->route('locale');
         if ($locale && in_array($locale, $this->languages)) {
             App::setLocale($locale);
             Session::put('locale', $locale);

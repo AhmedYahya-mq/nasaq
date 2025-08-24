@@ -1,5 +1,5 @@
 <section id="hero">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 bg-card lg:h-[calc(100dvh-6.9rem)] relative">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 p-4 bg-card lg:h-[calc(100dvh-6.9rem)]">
         <div class="flex flex-col items-start justify-center p-5 h-full order-2 lg:order-1">
             <h1 class="text-3xl font-bold mb-4">مجتمع التغذية العلاجية</h1>
             <p class="text-lg text-muted-foreground mb-6">
@@ -30,6 +30,5 @@
                     الأطباء والخبراء في مختلف التخصصات.</p>
             </div>
         </div>
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black opacity-30"></div>
     </div>
 </section>

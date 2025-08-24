@@ -1,4 +1,4 @@
-<header class="h-16 text-[15px] card inset-0 flex-center bg-card relative">
+<header class="h-16 text-[15px] inset-0 flex-center bg-card relative z-50">
     <nav class="px-3.5 flex-center-between w-full max-w-7xl mx-auto">
         <a href="/" class="flex-center gap-x-3 z-10">
             <img src="{{ asset('favicon.ico') }}" alt="Nasaq" class="size-8">
@@ -15,9 +15,10 @@
         {{-- Mobile Menu --}}
 
         <div class="flex-center gap-x-5">
-            <button class="bg-background/5  relative md:px-4 px-2 py-1 shadow rounded-xl flex-center">
-                تسجيل الدخول
-            </button>
+            {{-- <button class="bg-background/5  relative md:px-4 px-2 py-1 shadow rounded-xl flex-center">
+                 سجل معنا
+            </button> --}}
+            <x-ui.toggle-menu-profile />
             <div class="flex-center gap-x-1">
                 <x-ui.button-toggle-menu />
             </div>

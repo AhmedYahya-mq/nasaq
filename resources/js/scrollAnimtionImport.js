@@ -7,9 +7,9 @@ export default () => {
     drawSvgLines('.line');
     //if waapi is not supported, use the original scrollAnimationText
 
-    if (!'animate' in Element.prototype) {
-        runAnimetion();
-    } else {
-        runAnimetionWaapi();
-    }
+    runAnimetion();
+    // if (!'animate' in Element.prototype) {
+    // } else {
+    //     runAnimetionWaapi();
+    // }
 }
