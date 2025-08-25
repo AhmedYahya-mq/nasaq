@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="relative">
+<body class="relative" >
     <div class="max-h-dvh overflow-hidden relative overflow-x-hidden scrollbar scroll-container">
         <x-topbar />
         <x-header />
@@ -20,6 +20,7 @@
         <x-footer />
     </div>
     <x-loading />
+
 </body>
 
 </html>

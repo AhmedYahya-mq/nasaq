@@ -14,6 +14,8 @@ import buttonToggleMenu from './components/button-toggle-menu';
 import { register } from 'swiper/element';
 import swiperSlide from './animations/swiperSlide';
 import importing from './scrollAnimtionImport';
+import datepicker from './components/datepicker';
+import phoneInput from './components/tel';
 
 window.Alpine = Alpine;
 Alpine.plugin(focus);
@@ -24,6 +26,8 @@ document.addEventListener('alpine:init', () => {
     registerMenuStore(Alpine);
     Alpine.data('dropdown', dropdown);
     Alpine.data('hover', hover);
+    Alpine.data('datepicker', datepicker);
+    Alpine.data('phoneInput', phoneInput);
     loading();
     buttonToggleMenu();
 

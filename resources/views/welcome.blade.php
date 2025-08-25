@@ -3,4 +3,5 @@
     <x-sections.goals-section />
     <x-sections.num-section />
     <x-sections.feature-section />
+    <x-sections.blogs-section />
 </x-layouts.guest-layout>

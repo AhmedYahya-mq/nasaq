@@ -107,6 +107,7 @@ module.exports = {
             // ================================
             // Badget example (من الكود السابق)
             // ================================
+            // 1. الفئة الأساسية
             addUtilities({
                 '.badget': {
                     '--badget-percent': '84%',
@@ -116,14 +117,67 @@ module.exports = {
                 }
             });
 
-            const percentValues = { '10': '10', '20': '20', '30': '30', '40': '40', '50': '50', '60': '60', '70': '70', '80': '80', '90': '90' };
-            matchUtilities({
-                'badget': (value) => ({
-                    '--badget-percent': `${value}%`,
-                    'background-color': 'color-mix(in srgb, var(--background) var(--badget-percent,84%), var(--badget-color, var(--primary)))',
-                    'color': 'var(--badget-color, var(--primary))',
-                }),
-            }, { values: percentValues, type: 'number' });
+            // 2. تحضير قيم الألوان
+            const colorValuesBadget = {
+                'red': "#ff0000",
+                'green': "#00ff00",
+                'blue': "#0000ff",
+                'yellow': "#ffff00",
+                'purple': "#800080",
+                'pink': "#ff00ff",
+                'orange': "#ffa500",
+                'brown': "#a52a2a",
+                'grey': "#808080",
+                ...Object.entries(theme('colors')).reduce((acc, [name, value]) => {
+                    if (typeof value === 'string') {
+                        acc[name] = value;
+                    } else if (value && typeof value === 'object') {
+                        acc[name] = value[500] || value.DEFAULT;
+                    }
+                    return acc;
+                }, {})
+            };
+
+            // 3. معالجة الألوان
+            matchUtilities(
+                {
+                    'badget': (value) => ({
+                        '--badget-color': value,
+                        'background-color': 'color-mix(in srgb, var(--background) var(--badget-percent,84%), var(--badget-color))',
+                        'color': 'var(--badget-color)',
+                    }),
+                },
+                {
+                    values: colorValuesBadget,
+                    supportsNegativeValues: false,
+                    type: 'color'
+                }
+            );
+
+            // 4. معالجة النسب المئوية (بدعم التركيبات)
+            matchUtilities(
+                {
+                    'badget': (value) => ({
+                        '--badget-percent': `${value}%`,
+                        'background-color': 'color-mix(in srgb, var(--background) var(--badget-percent,84%), var(--badget-color, var(--primary)))',
+                        'color': 'var(--badget-color, var(--primary))',
+                    }),
+                },
+                {
+                    values: {
+                        '10': '10',
+                        '20': '20',
+                        '30': '30',
+                        '40': '40',
+                        '50': '50',
+                        '60': '60',
+                        '70': '70',
+                        '80': '80',
+                        '90': '90',
+                    },
+                    type: 'number'
+                }
+            );
 
         }),
     ],
