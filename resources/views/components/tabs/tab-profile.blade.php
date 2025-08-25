@@ -10,7 +10,7 @@
             <x-forms.tel-input id="phone" name="phone" label="رقم الجوال" />
             <x-forms.input id="address" name="address" label="العنوان" type="text" placeholder="أدخل العنوان"
                 class="w-full" icon="location" />
-            <x-forms.datepicker label="تاريخ الميلاد" value="2025/5/15" name="birthday" />
+            <x-forms.datepicker label="تاريخ الميلاد" id="barthday" value="2025/5/15" name="birthday" />
         </div>
          <x-forms.input id="job-title" name="job-title" label="المسمى الوظيفي" type="text"
             placeholder="أكتب المسمى الوظيفي" class="w-full" icon="job" />

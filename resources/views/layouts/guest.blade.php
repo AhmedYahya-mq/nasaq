@@ -20,6 +20,7 @@
         <x-footer />
     </div>
     <x-loading />
+    @stack('modals')
 
 </body>
 

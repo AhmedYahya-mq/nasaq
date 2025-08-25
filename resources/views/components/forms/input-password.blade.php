@@ -8,7 +8,9 @@
     'class' => '',
 ])
 
-<div class="w-full" x-data="{
+<div class="w-full"
+:id="{{ $id }}"
+x-data="{
     showPassword: false
 }">
     @if (!empty($label))

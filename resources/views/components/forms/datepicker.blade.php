@@ -1,4 +1,6 @@
-<div class="w-full" x-data="datepicker('{{ $value ?? '' }}')" x-init="init()" x-cloak>
+<div class="w-full" x-data="datepicker('{{ $value ?? '' }}')" x-init="init()" x-cloak
+    :id="{{ $id }}"
+>
     <x-forms.input
     type="text"
     value="{{ $value ?? '' }}"
@@ -9,6 +11,7 @@
     @click="toggle()"
     placeholder="اختر التاريخ"
     class="!cursor-pointer"
+     {{ $attributes }}
     icon="calendar" iconPosition="trailing"/>
     <!-- التقويم المنبثق -->
     <div x-ref="calendar" x-show="open" x-transition:enter="transition transform ease-out duration-300"

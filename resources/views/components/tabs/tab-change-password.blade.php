@@ -1,9 +1,9 @@
   <div class="relative">
       <div class="@container relative pb-14 flex flex-col gap-y-3.5">
           <div class="grid grid-cols-1 @md:grid-cols-2 @lg:grid-cols-3 gap-4">
-              <x-forms.input-password value="password" label="كلمة المرور القديمة" />
-              <x-forms.input-password value="password" label="كلمة المرور الجديدة" />
-              <x-forms.input-password value="password" label="تأكيد كلمة المرور" />
+              <x-forms.input-password value="password" id="old_password" label="كلمة المرور القديمة" />
+              <x-forms.input-password value="password" id="current_password" label="كلمة المرور الجديدة" />
+              <x-forms.input-password value="password" id="confirm_password" label="تأكيد كلمة المرور" />
           </div>
           <div class="absolute bottom-0 rtl:left-0 ltr:right-0 flex gap-3">
               <button class="bg-primary py-2 px-3 rounded-md hover:bg-primary/60 cursor-pointer"
