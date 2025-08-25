@@ -1,7 +1,3 @@
-{{--
-  مسار الملف: resources/views/components/ui/membership-card.blade.php
---}}
-
 @props([
     'title' => 'Default Title',
     'desc' => 'Default description.',
