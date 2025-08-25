@@ -13,14 +13,14 @@
         <x-topbar />
         <x-header />
 
-        <main class="mt-5">
+        <main>
             {{ $slot }}
         </main>
 
         <x-footer />
     </div>
     <x-loading />
-    
+
 </body>
 
 </html>
