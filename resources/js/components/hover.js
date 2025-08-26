@@ -11,8 +11,6 @@ export default function hover() {
                     this.hideTimeout = null;
                 }
                 this.isHovered = true;
-                console.log("Hover started");
-
                 callback?.();
             });
         },
@@ -23,7 +21,7 @@ export default function hover() {
                     this.isHovered = false;
                     console.log("Hover ended");
                     callback?.();
-                }, 50);
+                }, 100);
             });
         },
         init() {

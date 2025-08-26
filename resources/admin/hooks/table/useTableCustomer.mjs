@@ -1,0 +1,49 @@
+import { useState, useMemo, useEffect } from "react";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+} from "@tanstack/react-table";
+
+export function useTableCustomers({ customers , columns }) {
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [search, setSearch] = useState("");
+  const [yemeniGovernorate, setYemeniGovernorate] = useState(undefined);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const filteredData = useMemo(() => {
+    return customers.filter((item) => {
+      return (
+        (!search || Object.values(item).some((val) => String(val).toLowerCase().includes(search.toLowerCase()))) &&
+        (!yemeniGovernorate || item.governorate === yemeniGovernorate) 
+      );
+    });
+  }, [customers, search, yemeniGovernorate]);
+
+  const table = useReactTable({
+    data: filteredData,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: { pagination: { pageSize: 10 } },
+  });
+
+  return {
+    selectedRow,
+    setSelectedRow,
+    search,
+    setSearch,
+    yemeniGovernorate,
+    setYemeniGovernorate,
+    isClient,
+    table,
+  };
+}
