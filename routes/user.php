@@ -14,8 +14,15 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/profile', function () {
-     if (app()->environment('testing')) {
+    if (app()->environment('testing')) {
         return "Current locale: " . app()->getLocale();
     }
     return view('profile');
 })->name('profile');
+
+Route::get('/login', function () {
+  return view('auth.login');
+})->name('login');
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
