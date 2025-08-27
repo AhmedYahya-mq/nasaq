@@ -7,7 +7,7 @@
     label="{{ $label ?? 'اختر التاريخ' }}"
     x-model="selectedDate"
     @click="toggle()"
-    placeholder="اختر التاريخ"
+    placeholder="{{ $placeholder ?? 'اختر التاريخ' }}"
     class="!cursor-pointer"
     icon="calendar" iconPosition="trailing"/>
     <!-- التقويم المنبثق -->
