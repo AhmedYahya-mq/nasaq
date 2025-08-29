@@ -1,7 +1,6 @@
 import intlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.css";
 import ar from "intl-tel-input/i18n/ar";
-import utils from "intl-tel-input/utils";
 
 export default function phoneInput() {
     return {

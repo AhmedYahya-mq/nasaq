@@ -1,7 +1,7 @@
 @props(['title', 'items'])
 
 <div>
-    <h4 class="font-semibold mb-3">{{ $title }}</h4>
+    <h4 class="font-semibold mb-3 mx-2  ">{{ $title }}</h4>
     <ul class="space-y-2">
         @foreach($items as $item)
             <li>

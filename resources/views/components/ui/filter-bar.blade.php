@@ -1,50 +1,50 @@
-@props([
-    'filters' => [],
-    'activeFilter' => '',
-])
+<div x-data="{ showFilters: false, isLoading: false }" class="w-full space-y-4">
 
+    <!-- البحث + أيقونة الفلترة -->
+    <div class="flex items-center gap-2 w-full relative">
+        <!-- شريط البحث -->
+        <x-forms.input type="search" name="search" :placeholder="__('library.search_placeholder')" icon="search" class="flex-1" />
 
-<div
-    x-data="{ isLoading: false }"
-    @filter-loading-started.window="isLoading = true"
-    @filter-loading-finished.window="isLoading = false"
-    class="w-full"
->
-    <div class="hidden md:flex md:items-center md:justify-center gap-2 flex-wrap">
-        @foreach ($filters as $filter)
-            @php
-                $isActive = $activeFilter === $filter;
-            @endphp
-            <button
-                @click="$dispatch('filter-changed', '{{ $filter }}')"
-                :disabled="isLoading"
-                :class="{
-                    'bg-primary text-primary-foreground': '{{ $isActive }}',
-                    'bg-card text-muted-foreground hover:bg-accent/20': !'{{ $isActive }}',
-                    'cursor-not-allowed opacity-70': isLoading
-                }"
-                class="px-4 py-2 text-sm font-semibold rounded-full border border-border transition-all duration-200 flex items-center gap-x-2"
-            >
-                <svg x-show="isLoading" class="animate-spin -ml-1 mr-2 h-4 w-4 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span>{{ __($filter ) }}</span>
-            </button>
-        @endforeach
+        <!-- زر الأيقونة -->
+        <button @click="showFilters = !showFilters"
+            class="p-2 rounded-full border border-border bg-card hover:bg-accent/20 transition relative z-20">
+            <!-- أيقونة فلترة -->
+            <x-icons.filter-icon class="h-5 w-5 text-foreground" />
+        </button>
+
+        <!-- القائمة المنسدلة للموبايل -->
+        <div x-show="showFilters" x-transition
+            class="absolute top-full left-0 mt-2 w-40 bg-card border border-border rounded-lg shadow-lg md:hidden z-10   ">
+            <ul class="divide-y divide-border ">
+                @foreach ($filters as $filter)
+                    @php $isActive = $activeFilter === $filter; @endphp
+                    <li>
+                        <button
+                            @click="
+                                $dispatch('filter-changed', '{{ $filter }}');
+                                showFilters = false
+                            "
+                            class="w-full origin-top-right rtl:origin-top-left rtl:right-0 ltr:left-0   px-4 py-2 text-sm transition hover:bg-accent/20
+                                   {{ $isActive ? 'bg-primary text-primary-foreground' : 'text-foreground' }}"
+                            :disabled="isLoading">
+                            {{ __($filter) }}
+                        </button>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
 
-    <div class="block md:hidden w-full">
-        <select
-            @change="$dispatch('filter-changed', $event.target.value)"
-            :disabled="isLoading"
-            class="w-full bg-card border border-border rounded-lg px-4 py-2.5 focus:ring-primary focus:border-primary transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
-        >
-            @foreach ($filters as $filter)
-                <option value="{{ $filter }}" @selected($activeFilter === $filter)>
-                    {{ __($filter) }}
-                </option>
-            @endforeach
-        </select>
+    <!-- الفلاتر سطح المكتب -->
+    <div x-show="showFilters" x-transition class="hidden md:flex md:items-center md:justify-center gap-2 flex-wrap">
+        @foreach ($filters as $filter)
+            @php $isActive = $activeFilter === $filter; @endphp
+            <button @click="$dispatch('filter-changed', '{{ $filter }}')" :disabled="isLoading"
+                class="px-4 py-2 text-sm font-semibold rounded-full border border-border transition
+                       {{ $isActive ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-accent/20' }}
+                       disabled:opacity-70 disabled:cursor-not-allowed">
+                {{ __($filter) }}
+            </button>
+        @endforeach
     </div>
 </div>
