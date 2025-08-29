@@ -1,8 +1,6 @@
-<li class="group/link"
-    @if ($hasSubMenu) x-data="hover"
+<li class="group/link" @if ($hasSubMenu) x-data="hover"
         x-init="init()" @endif>
-    <span
-        class="flex-center gap-1 cursor-pointer px-3 py-1 rounded-xl hover:bg-primary/20 transition-colors">
+    <span class="flex-center gap-1 cursor-pointer px-3 py-1 rounded-xl hover:bg-primary/20 transition-colors">
         {{ __($menu['name']) }}
         @if ($hasSubMenu)
             <x-ui.icon name="chevron-down" class="mt-[0.6px] size-4 group-hover/link:rotate-180 duration-200" />
@@ -11,12 +9,12 @@
     @if ($hasSubMenu)
         <div class="sub-menu"
             @if ($hasSubMenu) x-show="isHovered"  x-transition:enter="transition ease-out grid-cols-3 grid-cols-2 duration-200"
-                x-transition:enter-start="opacity-0 -translate-y-2"
+                x-transition:enter-start="opacity-0 -translate-y-1.5"
                 x-transition:enter-end="opacity-100 translate-y-0"
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 translate-y-0"
-                x-transition:leave-end="opacity-0 -translate-y-2" @endif>
-            <div class="grid gap-7 z-10grid-cols-{{ $menu['gridCols'] ?? 1 }}">
+                x-transition:leave-end="opacity-0 -translate-y-1.5" @endif>
+            <div class="grid gap-7 z-10 grid-cols-{{ $menu['gridCols'] ?? 1 }}">
                 @foreach ($menu['subMenu'] as $subMenu)
                     <div class="relative cursor-pointer">
                         <div class="flex-center gap-x-4 group/menubox">

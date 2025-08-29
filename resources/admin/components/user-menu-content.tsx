@@ -22,13 +22,15 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
     return (
         <>
             <DropdownMenuLabel className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                <div className="flex rtl:flex-row-reverse items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <UserInfo user={user} showEmail={true} />
                 </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem
+                    className='rtl:rtl'
+                    asChild>
                     <Link className="block w-full" href={edit()} as="button" prefetch onClick={cleanup}>
                         <Settings className="mr-2" />
                         Settings
@@ -36,7 +38,9 @@ export function UserMenuContent({ user }: UserMenuContentProps) {
                 </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem
+                className='rtl:rtl'
+                asChild>
                 <Link className="block w-full" href={logout()} as="button" onClick={handleLogout}>
                     <LogOut className="mr-2" />
                     Log out

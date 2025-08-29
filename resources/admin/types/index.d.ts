@@ -1,4 +1,5 @@
 import { InertiaLinkProps } from '@inertiajs/react';
+import { ColumnDef } from '@tanstack/react-table';
 import { LucideIcon } from 'lucide-react';
 
 export interface Auth {
@@ -20,6 +21,7 @@ export interface NavItem {
     href: NonNullable<InertiaLinkProps['href']>;
     icon?: LucideIcon | null;
     isActive?: boolean;
+    items?: NavItem[];
 }
 
 export interface SharedData {
@@ -44,15 +46,44 @@ export interface User {
 
 // نوع Customer
 export interface Customer {
-  name: string;
-  email: string;
-  avatar: string;
+    name: string;
+    email: string;
+    avatar: string;
 }
 
 
 interface TableProps {
-  columns: any[];
-  table: any;
-  isClient: boolean;
-  setSelectedRow: (v: any) => void;
+    columns: any[];
+    table: any;
+    isClient: boolean;
+    setSelectedRow: (v: any) => void;
 }
+
+
+
+interface RowsProps {
+    cell: any;
+    accessorKey: string;
+}
+
+
+
+interface ComboboxSelectProps {
+    data: ComboboxItem[];
+    commandEmptyText: string;
+    placeholder?: string;
+    className?: string;
+    onSelect: (value: any) => void;
+    value: string;
+}
+
+
+interface ComboboxItem {
+    value: string;
+    label: string;
+}
+
+
+export type ExtendedColumnDef<TData, TValue = any> = ColumnDef<TData, TValue> & {
+  nonHideable?: boolean;
+};

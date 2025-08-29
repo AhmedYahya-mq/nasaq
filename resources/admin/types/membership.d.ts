@@ -13,27 +13,6 @@ interface UseTableMembershipsProps {
 }
 
 
-interface ComboboxSelectProps {
-  data: ComboboxItem[];
-  commandEmptyText: string;
-  placeholder?: string;
-  className?: string;
-  onSelect: (value: string) => void;
-  value: string;
-}
 
-
-interface ComboboxItem {
-  value: string;
-  label: string;
-}
-
-
-
-
-interface RowsMembershipProps {
-    row: any;
-    accessorKey: string;
-}
 
 

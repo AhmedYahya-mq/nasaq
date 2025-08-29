@@ -19,27 +19,12 @@ class ProfileController extends Controller
     public function edit(Request $request): Response
     {
         return Inertia::render('settings/profile', [
-            'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'mustVerifyEmail' => $request->user("admin") instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
         ]);
     }
 
-    /**
-     * Update the user's profile settings.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return to_route('admin.profile.edit');
-    }
-
+    
     /**
      * Delete the user's account.
      */

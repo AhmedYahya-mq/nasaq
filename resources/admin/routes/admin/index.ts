@@ -1,7 +1,10 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 import profile from './profile'
 import password from './password'
+import login from './login'
+import register from './register'
 import verification from './verification'
+import twoFactor from './two-factor'
 /**
  * @see routes/admin.php:7
  * @route '/admin/dashboard'
@@ -145,7 +148,78 @@ membership.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     membership.form = membershipForm
 /**
- * @see routes/settings.php:21
+ * @see routes/admin.php:13
+ * @route '/admin/membershipApplications'
+ */
+export const membershipApplications = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: membershipApplications.url(options),
+    method: 'get',
+})
+
+membershipApplications.definition = {
+    methods: ["get","head"],
+    url: '/admin/membershipApplications',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/admin.php:13
+ * @route '/admin/membershipApplications'
+ */
+membershipApplications.url = (options?: RouteQueryOptions) => {
+    return membershipApplications.definition.url + queryParams(options)
+}
+
+/**
+ * @see routes/admin.php:13
+ * @route '/admin/membershipApplications'
+ */
+membershipApplications.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: membershipApplications.url(options),
+    method: 'get',
+})
+/**
+ * @see routes/admin.php:13
+ * @route '/admin/membershipApplications'
+ */
+membershipApplications.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: membershipApplications.url(options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/admin.php:13
+ * @route '/admin/membershipApplications'
+ */
+    const membershipApplicationsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: membershipApplications.url(options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/admin.php:13
+ * @route '/admin/membershipApplications'
+ */
+        membershipApplicationsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: membershipApplications.url(options),
+            method: 'get',
+        })
+            /**
+ * @see routes/admin.php:13
+ * @route '/admin/membershipApplications'
+ */
+        membershipApplicationsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: membershipApplications.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    membershipApplications.form = membershipApplicationsForm
+/**
+ * @see routes/settings.php:31
  * @route '/admin/settings/appearance'
  */
 export const appearance = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -159,7 +233,7 @@ appearance.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/settings.php:21
+ * @see routes/settings.php:31
  * @route '/admin/settings/appearance'
  */
 appearance.url = (options?: RouteQueryOptions) => {
@@ -167,7 +241,7 @@ appearance.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/settings.php:21
+ * @see routes/settings.php:31
  * @route '/admin/settings/appearance'
  */
 appearance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -175,7 +249,7 @@ appearance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/settings.php:21
+ * @see routes/settings.php:31
  * @route '/admin/settings/appearance'
  */
 appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -184,7 +258,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/settings.php:21
+ * @see routes/settings.php:31
  * @route '/admin/settings/appearance'
  */
     const appearanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -193,7 +267,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/settings.php:21
+ * @see routes/settings.php:31
  * @route '/admin/settings/appearance'
  */
         appearanceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -201,7 +275,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/settings.php:21
+ * @see routes/settings.php:31
  * @route '/admin/settings/appearance'
  */
         appearanceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -216,86 +290,8 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     appearance.form = appearanceForm
 /**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:21
- * @route '/admin/register'
- */
-export const register = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: register.url(options),
-    method: 'get',
-})
-
-register.definition = {
-    methods: ["get","head"],
-    url: '/admin/register',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:21
- * @route '/admin/register'
- */
-register.url = (options?: RouteQueryOptions) => {
-    return register.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:21
- * @route '/admin/register'
- */
-register.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: register.url(options),
-    method: 'get',
-})
-/**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:21
- * @route '/admin/register'
- */
-register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: register.url(options),
-    method: 'head',
-})
-
-    /**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:21
- * @route '/admin/register'
- */
-    const registerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: register.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:21
- * @route '/admin/register'
- */
-        registerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: register.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:21
- * @route '/admin/register'
- */
-        registerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: register.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    register.form = registerForm
-/**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::login
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:19
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:38
  * @route '/admin/login'
  */
 export const login = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -310,7 +306,7 @@ login.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::login
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:19
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:38
  * @route '/admin/login'
  */
 login.url = (options?: RouteQueryOptions) => {
@@ -319,7 +315,7 @@ login.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::login
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:19
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:38
  * @route '/admin/login'
  */
 login.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -328,7 +324,7 @@ login.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::login
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:19
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:38
  * @route '/admin/login'
  */
 login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -338,7 +334,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::login
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:19
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:38
  * @route '/admin/login'
  */
     const loginForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -348,7 +344,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::login
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:19
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:38
  * @route '/admin/login'
  */
         loginForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -357,7 +353,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::login
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:19
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:38
  * @route '/admin/login'
  */
         loginForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -373,7 +369,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     login.form = loginForm
 /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::logout
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:42
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:60
  * @route '/admin/logout'
  */
 export const logout = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -388,7 +384,7 @@ logout.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::logout
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:42
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:60
  * @route '/admin/logout'
  */
 logout.url = (options?: RouteQueryOptions) => {
@@ -397,7 +393,7 @@ logout.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::logout
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:42
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:60
  * @route '/admin/logout'
  */
 logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -407,7 +403,7 @@ logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::logout
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:42
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:60
  * @route '/admin/logout'
  */
     const logoutForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -417,7 +413,7 @@ logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::logout
- * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:42
+ * @see app/Http/Controllers/Auth/AuthenticatedSessionController.php:60
  * @route '/admin/logout'
  */
         logoutForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -426,16 +422,96 @@ logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
         })
     
     logout.form = logoutForm
+/**
+* @see \App\Http\Controllers\Auth\RegisteredUserController::register
+ * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
+ * @route '/admin/register'
+ */
+export const register = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: register.url(options),
+    method: 'get',
+})
+
+register.definition = {
+    methods: ["get","head"],
+    url: '/admin/register',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Auth\RegisteredUserController::register
+ * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
+ * @route '/admin/register'
+ */
+register.url = (options?: RouteQueryOptions) => {
+    return register.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Auth\RegisteredUserController::register
+ * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
+ * @route '/admin/register'
+ */
+register.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: register.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\Auth\RegisteredUserController::register
+ * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
+ * @route '/admin/register'
+ */
+register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: register.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\Auth\RegisteredUserController::register
+ * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
+ * @route '/admin/register'
+ */
+    const registerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: register.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\Auth\RegisteredUserController::register
+ * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
+ * @route '/admin/register'
+ */
+        registerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: register.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\Auth\RegisteredUserController::register
+ * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
+ * @route '/admin/register'
+ */
+        registerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: register.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    register.form = registerForm
 const admin = {
     dashboard,
 membership,
+membershipApplications,
 profile,
 password,
 appearance,
-register,
 login,
-verification,
 logout,
+register,
+verification,
+twoFactor,
 }
 
 export default admin

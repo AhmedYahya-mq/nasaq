@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Inertia\Inertia;
 use Inertia\Response;
+use Laravel\Fortify\Fortify;
+use Illuminate\Support\Str;
+use Laravel\Fortify\Contracts\FailedPasswordResetLinkRequestResponse;
+use Laravel\Fortify\Contracts\SuccessfulPasswordResetLinkRequestResponse;
 
 class PasswordResetLinkController extends Controller
 {
@@ -22,20 +29,47 @@ class PasswordResetLinkController extends Controller
     }
 
     /**
-     * Handle an incoming password reset link request.
+     * Send a reset link to the given user.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\Support\Responsable
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): Responsable
     {
-        $request->validate([
-            'email' => 'required|email',
-        ]);
+        $request->validate([Fortify::email() => 'required|email']);
 
-        Password::sendResetLink(
-            $request->only('email')
+        if (config('fortify.lowercase_usernames') && $request->has(Fortify::email())) {
+            $request->merge([
+                Fortify::email() => Str::lower($request->{Fortify::email()}),
+            ]);
+        }
+        
+
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+        $status = $this->broker()->sendResetLink(
+            $request->only(Fortify::email())
         );
 
-        return back()->with('status', __('A reset link will be sent if the account exists.'));
+        return $status == Password::RESET_LINK_SENT
+            ? app(SuccessfulPasswordResetLinkRequestResponse::class, ['status' => $status])
+            : app(FailedPasswordResetLinkRequestResponse::class, ['status' => $status]);
+    }
+
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    protected function broker(): PasswordBroker
+    {
+        return Password::broker("admins");
+    }
+
+    public function resetLinkEmailForm()
+    {
+        return view('admin.forgot-password', ["guard" => "admin"]);
     }
 }

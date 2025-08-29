@@ -78,73 +78,8 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     edit.form = editForm
 /**
-* @see \App\Http\Controllers\Settings\ProfileController::update
- * @see app/Http/Controllers/Settings/ProfileController.php:30
- * @route '/admin/settings/profile'
- */
-export const update = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
-    url: update.url(options),
-    method: 'patch',
-})
-
-update.definition = {
-    methods: ["patch"],
-    url: '/admin/settings/profile',
-} satisfies RouteDefinition<["patch"]>
-
-/**
-* @see \App\Http\Controllers\Settings\ProfileController::update
- * @see app/Http/Controllers/Settings/ProfileController.php:30
- * @route '/admin/settings/profile'
- */
-update.url = (options?: RouteQueryOptions) => {
-    return update.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Settings\ProfileController::update
- * @see app/Http/Controllers/Settings/ProfileController.php:30
- * @route '/admin/settings/profile'
- */
-update.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
-    url: update.url(options),
-    method: 'patch',
-})
-
-    /**
-* @see \App\Http\Controllers\Settings\ProfileController::update
- * @see app/Http/Controllers/Settings/ProfileController.php:30
- * @route '/admin/settings/profile'
- */
-    const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url({
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PATCH',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Settings\ProfileController::update
- * @see app/Http/Controllers/Settings/ProfileController.php:30
- * @route '/admin/settings/profile'
- */
-        updateForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PATCH',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    update.form = updateForm
-/**
 * @see \App\Http\Controllers\Settings\ProfileController::destroy
- * @see app/Http/Controllers/Settings/ProfileController.php:46
+ * @see app/Http/Controllers/Settings/ProfileController.php:31
  * @route '/admin/settings/profile'
  */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -159,7 +94,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\ProfileController::destroy
- * @see app/Http/Controllers/Settings/ProfileController.php:46
+ * @see app/Http/Controllers/Settings/ProfileController.php:31
  * @route '/admin/settings/profile'
  */
 destroy.url = (options?: RouteQueryOptions) => {
@@ -168,7 +103,7 @@ destroy.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\ProfileController::destroy
- * @see app/Http/Controllers/Settings/ProfileController.php:46
+ * @see app/Http/Controllers/Settings/ProfileController.php:31
  * @route '/admin/settings/profile'
  */
 destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -178,7 +113,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 
     /**
 * @see \App\Http\Controllers\Settings\ProfileController::destroy
- * @see app/Http/Controllers/Settings/ProfileController.php:46
+ * @see app/Http/Controllers/Settings/ProfileController.php:31
  * @route '/admin/settings/profile'
  */
     const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -193,7 +128,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 
             /**
 * @see \App\Http\Controllers\Settings\ProfileController::destroy
- * @see app/Http/Controllers/Settings/ProfileController.php:46
+ * @see app/Http/Controllers/Settings/ProfileController.php:31
  * @route '/admin/settings/profile'
  */
         destroyForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,6 +142,6 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
         })
     
     destroy.form = destroyForm
-const ProfileController = { edit, update, destroy }
+const ProfileController = { edit, destroy }
 
 export default ProfileController

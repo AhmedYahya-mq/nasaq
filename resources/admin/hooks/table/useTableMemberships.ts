@@ -44,5 +44,6 @@ export function useTableMemberships({ memberships , columns }: UseTableMembershi
     setSearch,
     isClient,
     table,
+    columns
   };
 }

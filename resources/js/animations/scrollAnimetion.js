@@ -1,6 +1,6 @@
 import { stagger, text, onScroll, utils, animate, createTimer, svg } from 'animejs';
 import { getTranslateX } from '../utils/getTranslate';
-const [container] = utils.$('.scroll-container');
+const [container] = utils.$('.scroll-container') || [];
 const debug = false;
 
 /**
@@ -60,7 +60,6 @@ export function scrollAnimationText(selector, type = 'lines') {
                 target: el.parentNode,
                 axis: 'y',
                 offset: el.scrollTop,
-                container,
                 debug,
             })
         }));

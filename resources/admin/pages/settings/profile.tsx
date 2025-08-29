@@ -1,4 +1,4 @@
-import { update } from '@/actions/App/Http/Controllers/Settings/ProfileController';
+
 import { send } from '@/routes/admin/verification';
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import { edit } from '@/routes/admin/profile';
+import { edit, update } from '@/routes/admin/profile';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -23,6 +23,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Profile({ mustVerifyEmail, status }: { mustVerifyEmail: boolean; status?: string }) {
     const { auth } = usePage<SharedData>().props;
+    console.log(mustVerifyEmail);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>

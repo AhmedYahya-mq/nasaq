@@ -12,11 +12,7 @@ import {
     CommandList,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ComboboxSelectProps } from "@/types/membership";
-
-
-
-
+import { ComboboxSelectProps } from "@/types";
 
 export function ComboboxSelect({
     data,
@@ -59,8 +55,11 @@ export function ComboboxSelect({
                                             value === element.value && "primary-bg"
                                         )}
                                         onSelect={(currentValue: any) => {
-                                            onSelect(currentValue === value ? "" : currentValue);
+                                            if (onSelect)
+                                                onSelect(currentValue === value ? "" : currentValue);
                                             setOpen(false);
+                                            console.log(currentValue);
+
                                         }}
                                     >
                                         {element.label}

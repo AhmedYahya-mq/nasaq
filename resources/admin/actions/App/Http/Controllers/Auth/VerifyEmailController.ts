@@ -2,24 +2,24 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:14
- * @route '/admin/verify-email/{id}/{hash}'
+ * @route '/admin/email/verify/{id}/{hash}'
  */
-const VerifyEmailController = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: VerifyEmailController.url(args, options),
+export const __invoke = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: __invoke.url(args, options),
     method: 'get',
 })
 
-VerifyEmailController.definition = {
+__invoke.definition = {
     methods: ["get","head"],
-    url: '/admin/verify-email/{id}/{hash}',
+    url: '/admin/email/verify/{id}/{hash}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:14
- * @route '/admin/verify-email/{id}/{hash}'
+ * @route '/admin/email/verify/{id}/{hash}'
  */
-VerifyEmailController.url = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions) => {
+__invoke.url = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
         args = {
                     id: args[0],
@@ -34,7 +34,7 @@ VerifyEmailController.url = (args: { id: string | number, hash: string | number 
                                 hash: args.hash,
                 }
 
-    return VerifyEmailController.definition.url
+    return __invoke.definition.url
             .replace('{id}', parsedArgs.id.toString())
             .replace('{hash}', parsedArgs.hash.toString())
             .replace(/\/+$/, '') + queryParams(options)
@@ -43,48 +43,48 @@ VerifyEmailController.url = (args: { id: string | number, hash: string | number 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:14
- * @route '/admin/verify-email/{id}/{hash}'
+ * @route '/admin/email/verify/{id}/{hash}'
  */
-VerifyEmailController.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: VerifyEmailController.url(args, options),
+__invoke.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: __invoke.url(args, options),
     method: 'get',
 })
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:14
- * @route '/admin/verify-email/{id}/{hash}'
+ * @route '/admin/email/verify/{id}/{hash}'
  */
-VerifyEmailController.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: VerifyEmailController.url(args, options),
+__invoke.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: __invoke.url(args, options),
     method: 'head',
 })
 
     /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:14
- * @route '/admin/verify-email/{id}/{hash}'
+ * @route '/admin/email/verify/{id}/{hash}'
  */
-    const VerifyEmailControllerForm = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: VerifyEmailController.url(args, options),
+    const __invokeForm = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: __invoke.url(args, options),
         method: 'get',
     })
 
             /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:14
- * @route '/admin/verify-email/{id}/{hash}'
+ * @route '/admin/email/verify/{id}/{hash}'
  */
-        VerifyEmailControllerForm.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: VerifyEmailController.url(args, options),
+        __invokeForm.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: __invoke.url(args, options),
             method: 'get',
         })
             /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:14
- * @route '/admin/verify-email/{id}/{hash}'
+ * @route '/admin/email/verify/{id}/{hash}'
  */
-        VerifyEmailControllerForm.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: VerifyEmailController.url(args, {
+        __invokeForm.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: __invoke.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
                             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -93,5 +93,7 @@ VerifyEmailController.head = (args: { id: string | number, hash: string | number
             method: 'get',
         })
     
-    VerifyEmailController.form = VerifyEmailControllerForm
+    __invoke.form = __invokeForm
+const VerifyEmailController = { __invoke }
+
 export default VerifyEmailController

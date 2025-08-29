@@ -2,72 +2,72 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
  * @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:16
- * @route '/admin/verify-email'
+ * @route '/admin/email/verify'
  */
-const EmailVerificationPromptController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: EmailVerificationPromptController.url(options),
+export const __invoke = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: __invoke.url(options),
     method: 'get',
 })
 
-EmailVerificationPromptController.definition = {
+__invoke.definition = {
     methods: ["get","head"],
-    url: '/admin/verify-email',
+    url: '/admin/email/verify',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
  * @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:16
- * @route '/admin/verify-email'
+ * @route '/admin/email/verify'
  */
-EmailVerificationPromptController.url = (options?: RouteQueryOptions) => {
-    return EmailVerificationPromptController.definition.url + queryParams(options)
+__invoke.url = (options?: RouteQueryOptions) => {
+    return __invoke.definition.url + queryParams(options)
 }
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
  * @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:16
- * @route '/admin/verify-email'
+ * @route '/admin/email/verify'
  */
-EmailVerificationPromptController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: EmailVerificationPromptController.url(options),
+__invoke.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: __invoke.url(options),
     method: 'get',
 })
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
  * @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:16
- * @route '/admin/verify-email'
+ * @route '/admin/email/verify'
  */
-EmailVerificationPromptController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: EmailVerificationPromptController.url(options),
+__invoke.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: __invoke.url(options),
     method: 'head',
 })
 
     /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
  * @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:16
- * @route '/admin/verify-email'
+ * @route '/admin/email/verify'
  */
-    const EmailVerificationPromptControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: EmailVerificationPromptController.url(options),
+    const __invokeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: __invoke.url(options),
         method: 'get',
     })
 
             /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
  * @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:16
- * @route '/admin/verify-email'
+ * @route '/admin/email/verify'
  */
-        EmailVerificationPromptControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: EmailVerificationPromptController.url(options),
+        __invokeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: __invoke.url(options),
             method: 'get',
         })
             /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
  * @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:16
- * @route '/admin/verify-email'
+ * @route '/admin/email/verify'
  */
-        EmailVerificationPromptControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: EmailVerificationPromptController.url({
+        __invokeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: __invoke.url({
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'HEAD',
                             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -76,5 +76,7 @@ EmailVerificationPromptController.head = (options?: RouteQueryOptions): RouteDef
             method: 'get',
         })
     
-    EmailVerificationPromptController.form = EmailVerificationPromptControllerForm
+    __invoke.form = __invokeForm
+const EmailVerificationPromptController = { __invoke }
+
 export default EmailVerificationPromptController

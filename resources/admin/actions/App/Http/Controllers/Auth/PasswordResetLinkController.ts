@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::create
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::create
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
 create.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::create
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::create
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::create
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
     const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::create
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
         createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::create
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
         createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     create.form = createForm
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::store
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
  * @route '/admin/forgot-password'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -94,7 +94,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::store
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
  * @route '/admin/forgot-password'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::store
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
  * @route '/admin/forgot-password'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -113,7 +113,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::store
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
  * @route '/admin/forgot-password'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -123,7 +123,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::store
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
  * @route '/admin/forgot-password'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

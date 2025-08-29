@@ -1,4 +1,5 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import confirm from './confirm'
 /**
 * @see \App\Http\Controllers\Settings\PasswordController::edit
  * @see app/Http/Controllers/Settings/PasswordController.php:18
@@ -144,7 +145,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
 export const request = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -159,7 +160,7 @@ request.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
 request.url = (options?: RouteQueryOptions) => {
@@ -168,7 +169,7 @@ request.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
 request.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -177,7 +178,7 @@ request.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
 request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -187,7 +188,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
     const requestForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -197,7 +198,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
         requestForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -206,7 +207,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:17
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
  * @route '/admin/forgot-password'
  */
         requestForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -221,63 +222,8 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     request.form = requestForm
 /**
-* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
- * @route '/admin/forgot-password'
- */
-export const email = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: email.url(options),
-    method: 'post',
-})
-
-email.definition = {
-    methods: ["post"],
-    url: '/admin/forgot-password',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
- * @route '/admin/forgot-password'
- */
-email.url = (options?: RouteQueryOptions) => {
-    return email.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
- * @route '/admin/forgot-password'
- */
-email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: email.url(options),
-    method: 'post',
-})
-
-    /**
-* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
- * @route '/admin/forgot-password'
- */
-    const emailForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: email.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
- * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:29
- * @route '/admin/forgot-password'
- */
-        emailForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: email.url(options),
-            method: 'post',
-        })
-    
-    email.form = emailForm
-/**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
- * @see app/Http/Controllers/Auth/NewPasswordController.php:23
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:45
  * @route '/admin/reset-password/{token}'
  */
 export const reset = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -292,7 +238,7 @@ reset.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
- * @see app/Http/Controllers/Auth/NewPasswordController.php:23
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:45
  * @route '/admin/reset-password/{token}'
  */
 reset.url = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -320,7 +266,7 @@ reset.url = (args: { token: string | number } | [token: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
- * @see app/Http/Controllers/Auth/NewPasswordController.php:23
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:45
  * @route '/admin/reset-password/{token}'
  */
 reset.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -329,7 +275,7 @@ reset.get = (args: { token: string | number } | [token: string | number ] | stri
 })
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
- * @see app/Http/Controllers/Auth/NewPasswordController.php:23
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:45
  * @route '/admin/reset-password/{token}'
  */
 reset.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -339,7 +285,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
 
     /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
- * @see app/Http/Controllers/Auth/NewPasswordController.php:23
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:45
  * @route '/admin/reset-password/{token}'
  */
     const resetForm = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -349,7 +295,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
 
             /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
- * @see app/Http/Controllers/Auth/NewPasswordController.php:23
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:45
  * @route '/admin/reset-password/{token}'
  */
         resetForm.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -358,7 +304,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
         })
             /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
- * @see app/Http/Controllers/Auth/NewPasswordController.php:23
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:45
  * @route '/admin/reset-password/{token}'
  */
         resetForm.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -373,8 +319,63 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
     
     reset.form = resetForm
 /**
+* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
+ * @route '/admin/forgot-password'
+ */
+export const email = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: email.url(options),
+    method: 'post',
+})
+
+email.definition = {
+    methods: ["post"],
+    url: '/admin/forgot-password',
+} satisfies RouteDefinition<["post"]>
+
+/**
+* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
+ * @route '/admin/forgot-password'
+ */
+email.url = (options?: RouteQueryOptions) => {
+    return email.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
+ * @route '/admin/forgot-password'
+ */
+email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: email.url(options),
+    method: 'post',
+})
+
+    /**
+* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
+ * @route '/admin/forgot-password'
+ */
+    const emailForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: email.url(options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
+ * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
+ * @route '/admin/forgot-password'
+ */
+        emailForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: email.url(options),
+            method: 'post',
+        })
+    
+    email.form = emailForm
+/**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
- * @see app/Http/Controllers/Auth/NewPasswordController.php:36
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:58
  * @route '/admin/reset-password'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -389,7 +390,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
- * @see app/Http/Controllers/Auth/NewPasswordController.php:36
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:58
  * @route '/admin/reset-password'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -398,7 +399,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
- * @see app/Http/Controllers/Auth/NewPasswordController.php:36
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:58
  * @route '/admin/reset-password'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -408,7 +409,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
- * @see app/Http/Controllers/Auth/NewPasswordController.php:36
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:58
  * @route '/admin/reset-password'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -418,7 +419,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
- * @see app/Http/Controllers/Auth/NewPasswordController.php:36
+ * @see app/Http/Controllers/Auth/NewPasswordController.php:58
  * @route '/admin/reset-password'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -430,7 +431,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/confirm-password'
+ * @route '/admin/user/confirm-password'
  */
 export const confirm = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirm.url(options),
@@ -439,13 +440,13 @@ export const confirm = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 confirm.definition = {
     methods: ["get","head"],
-    url: '/admin/confirm-password',
+    url: '/admin/user/confirm-password',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/confirm-password'
+ * @route '/admin/user/confirm-password'
  */
 confirm.url = (options?: RouteQueryOptions) => {
     return confirm.definition.url + queryParams(options)
@@ -454,7 +455,7 @@ confirm.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/confirm-password'
+ * @route '/admin/user/confirm-password'
  */
 confirm.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirm.url(options),
@@ -463,7 +464,7 @@ confirm.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/confirm-password'
+ * @route '/admin/user/confirm-password'
  */
 confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: confirm.url(options),
@@ -473,7 +474,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/confirm-password'
+ * @route '/admin/user/confirm-password'
  */
     const confirmForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: confirm.url(options),
@@ -483,7 +484,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/confirm-password'
+ * @route '/admin/user/confirm-password'
  */
         confirmForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirm.url(options),
@@ -492,7 +493,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/confirm-password'
+ * @route '/admin/user/confirm-password'
  */
         confirmForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirm.url({
@@ -505,14 +506,93 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
     
     confirm.form = confirmForm
+/**
+* @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
+ * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
+ * @route '/admin/user/confirmed-password-status'
+ */
+export const confirmation = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: confirmation.url(options),
+    method: 'get',
+})
+
+confirmation.definition = {
+    methods: ["get","head"],
+    url: '/admin/user/confirmed-password-status',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
+ * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
+ * @route '/admin/user/confirmed-password-status'
+ */
+confirmation.url = (options?: RouteQueryOptions) => {
+    return confirmation.definition.url + queryParams(options)
+}
+
+/**
+* @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
+ * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
+ * @route '/admin/user/confirmed-password-status'
+ */
+confirmation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: confirmation.url(options),
+    method: 'get',
+})
+/**
+* @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
+ * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
+ * @route '/admin/user/confirmed-password-status'
+ */
+confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: confirmation.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
+ * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
+ * @route '/admin/user/confirmed-password-status'
+ */
+    const confirmationForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: confirmation.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
+ * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
+ * @route '/admin/user/confirmed-password-status'
+ */
+        confirmationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: confirmation.url(options),
+            method: 'get',
+        })
+            /**
+* @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
+ * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
+ * @route '/admin/user/confirmed-password-status'
+ */
+        confirmationForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: confirmation.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    confirmation.form = confirmationForm
 const password = {
     edit,
 update,
 request,
-email,
 reset,
+email,
 store,
 confirm,
+confirmation,
 }
 
 export default password

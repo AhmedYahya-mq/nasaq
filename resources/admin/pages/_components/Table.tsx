@@ -2,12 +2,12 @@ import { JSX } from "react";
 import { TableCustomize, TableButton } from "@/components/table-customize";
 import { TableHeader, TableRow, TableHead, TableBody } from "@/components/ui/table";
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import RowsProduct from "./memberships/RowMembership";
 import { Card } from "@/components/ui/card";
 import FooterTable from "../../components/FooterTable";
 import { TableProps } from "@/types/index";
+import Row from "./Row";
 
-function TableMemberships({
+function Table({
     columns,
     table,
     isClient,
@@ -55,11 +55,7 @@ function TableMemberships({
                                             hidden={visibleColumns.length === columns.length ? "hidden" : ""}
                                         />
                                         {visibleColumns.map((colIndex) => (
-                                            <RowsProduct
-                                                key={colIndex}
-                                                row={row.original}
-                                                accessorKey={columns[colIndex].accessorKey}
-                                            />
+                                           <Row key={colIndex} cell={row.getVisibleCells()[colIndex]} accessorKey={columns[colIndex].accessorKey}/>
                                         ))}
                                     </TableRow>
                                 ))}
@@ -74,4 +70,4 @@ function TableMemberships({
     );
 }
 
-export default TableMemberships;
+export default Table;

@@ -4,8 +4,7 @@ export default function hover() {
         hideTimeout: null,
 
         onHoverStart(callback) {
-
-            this.$el.addEventListener('mouseenter', () => {
+            this.$el.addEventListener('mouseover', () => {
                 if (this.hideTimeout) {
                     clearTimeout(this.hideTimeout);
                     this.hideTimeout = null;
@@ -14,19 +13,19 @@ export default function hover() {
                 callback?.();
             });
         },
-
         onHoverEnd(callback) {
-            this.$el.addEventListener('mouseleave', () => {
-                this.hideTimeout = setTimeout(() => {
-                    this.isHovered = false;
-                    console.log("Hover ended");
-                    callback?.();
-                }, 100);
+            this.$el.addEventListener('mouseout', (e) => {
+                if (!this.$el.contains(e.relatedTarget)) {
+                    this.hideTimeout = setTimeout(() => {
+                        this.isHovered = false;
+                        callback?.();
+                    }, 100);
+                }
             });
         },
         init() {
-            this.onHoverEnd(() => {});
-            this.onHoverStart(() => {});
+            this.onHoverEnd(() => { });
+            this.onHoverStart(() => { });
         }
     }
 }
