@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
+use App\Http\Controllers\Settings\SecurityController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -31,4 +32,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('settings/appearance', function () {
         return Inertia::render('settings/appearance');
     })->name('appearance');
+
+    Route::get('settings/security', [SecurityController::class,"index"])->name('security');
+    // $twoFactorMiddleware = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
+    //     ? ['auth:admin', 'password.confirm']
+    //     : ['auth:admin'];
+    // Route::post(RoutePath::for('two-factor.enable', '/user/two-factor-authentication'), [TwoFactorAuthenticationController::class, 'store'])
+    //     ->middleware($twoFactorMiddleware)
+    //     ->name('two-factor.enable');
 });

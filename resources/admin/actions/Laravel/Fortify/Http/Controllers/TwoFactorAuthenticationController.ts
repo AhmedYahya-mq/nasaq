@@ -117,7 +117,7 @@ export const store = {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/user/two-factor-authentication'
  */
 const destroya8b3ee4b2a14cda802d531b78132d05f = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -132,7 +132,7 @@ destroya8b3ee4b2a14cda802d531b78132d05f.definition = {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/user/two-factor-authentication'
  */
 destroya8b3ee4b2a14cda802d531b78132d05f.url = (options?: RouteQueryOptions) => {
@@ -141,7 +141,7 @@ destroya8b3ee4b2a14cda802d531b78132d05f.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/user/two-factor-authentication'
  */
 destroya8b3ee4b2a14cda802d531b78132d05f.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -151,7 +151,7 @@ destroya8b3ee4b2a14cda802d531b78132d05f.delete = (options?: RouteQueryOptions): 
 
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/user/two-factor-authentication'
  */
     const destroya8b3ee4b2a14cda802d531b78132d05fForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -166,7 +166,7 @@ destroya8b3ee4b2a14cda802d531b78132d05f.delete = (options?: RouteQueryOptions): 
 
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/user/two-factor-authentication'
  */
         destroya8b3ee4b2a14cda802d531b78132d05fForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -182,7 +182,7 @@ destroya8b3ee4b2a14cda802d531b78132d05f.delete = (options?: RouteQueryOptions): 
     destroya8b3ee4b2a14cda802d531b78132d05f.form = destroya8b3ee4b2a14cda802d531b78132d05fForm
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
 const destroye8dc4d1c850af5778a373f1adb88ae48 = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -197,7 +197,7 @@ destroye8dc4d1c850af5778a373f1adb88ae48.definition = {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
 destroye8dc4d1c850af5778a373f1adb88ae48.url = (options?: RouteQueryOptions) => {
@@ -206,7 +206,7 @@ destroye8dc4d1c850af5778a373f1adb88ae48.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
 destroye8dc4d1c850af5778a373f1adb88ae48.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -216,7 +216,7 @@ destroye8dc4d1c850af5778a373f1adb88ae48.delete = (options?: RouteQueryOptions): 
 
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
     const destroye8dc4d1c850af5778a373f1adb88ae48Form = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -231,7 +231,7 @@ destroye8dc4d1c850af5778a373f1adb88ae48.delete = (options?: RouteQueryOptions): 
 
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
         destroye8dc4d1c850af5778a373f1adb88ae48Form.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

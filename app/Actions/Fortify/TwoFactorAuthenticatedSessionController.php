@@ -2,15 +2,16 @@
 
 namespace App\Actions\Fortify;
 
+use App\Http\Requests\TwoFactorLoginRequest;
+use App\Http\Responses\Auth\FailedTwoFactorLoginResponse;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Routing\Controller;
-use Laravel\Fortify\Contracts\FailedTwoFactorLoginResponse;
+use Inertia\Inertia;
 use Laravel\Fortify\Contracts\TwoFactorLoginResponse;
 use Laravel\Fortify\Events\RecoveryCodeReplaced;
 use Laravel\Fortify\Events\TwoFactorAuthenticationFailed;
 use Laravel\Fortify\Events\ValidTwoFactorAuthenticationCodeProvided;
-use Laravel\Fortify\Http\Requests\TwoFactorLoginRequest;
 
 class TwoFactorAuthenticatedSessionController extends Controller
 {
@@ -35,16 +36,17 @@ class TwoFactorAuthenticatedSessionController extends Controller
     /**
      * Show the two factor authentication challenge view.
      *
-     * @param  \Laravel\Fortify\Http\Requests\TwoFactorLoginRequest  $request
+     * @param  \App\Http\Requests\TwoFactorLoginRequest  $request
      * @return \Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse
      */
     public function create(TwoFactorLoginRequest $request)
     {
-        if (!$request->hasChallengedUser("admin")) {
+        if (!$request->hasChallengedUser()) {
             throw new HttpResponseException(redirect()->route('admin.login'));
         }
-
-        return view("auth.two-factor-challenge",["guard"=>"admin"]);
+        return Inertia::render('auth/two-factor-challenge', [
+            'guard' => 'admin'
+        ]);
     }
 
     /**
@@ -55,8 +57,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
      */
     public function store(TwoFactorLoginRequest $request)
     {
-        $user = $request->challengedUser("admin");
-
+        $user = $request->challengedUser();
         if ($code = $request->validRecoveryCode()) {
             $user->replaceRecoveryCode($code);
 
@@ -64,7 +65,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
         } elseif (! $request->hasValidCode()) {
             event(new TwoFactorAuthenticationFailed($user));
 
-            return app(FailedTwoFactorLoginResponse::class)->toResponse($request,"admin.two-factor.login");
+            return app(FailedTwoFactorLoginResponse::class)->toResponse($request, "admin.two-factor.login");
         }
 
         event(new ValidTwoFactorAuthenticationCodeProvided($user));

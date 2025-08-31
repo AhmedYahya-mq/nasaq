@@ -4,12 +4,16 @@ namespace App\Models;
 
 use App\Notifications\EmailVerificationNotification;
 use App\Notifications\ResetPasswordNotification;
+use BaconQrCode\Exception\InvalidArgumentException;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use RuntimeException;
 
+/** @package App\Models */
 class Admin extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -41,6 +45,16 @@ class Admin extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'guard_name',
+        'two_factor_enabled',
+    ];
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -50,6 +64,7 @@ class Admin extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'two_factor_confirmed_at' => 'datetime',
         ];
     }
 
@@ -75,9 +90,62 @@ class Admin extends Authenticatable implements MustVerifyEmail
         $this->notify(new EmailVerificationNotification());
     }
 
-    // Accessor لجعلها متاحة كـ property
+    /**
+     * Get the guard name attribute.
+     * @return string
+     */
     public function getGuardNameAttribute(): string
     {
         return $this->guard;
+    }
+
+    /**
+     * Get the two factor QR code SVG attribute.
+     * @return null|string
+     * @throws BindingResolutionException
+     * @throws InvalidArgumentException
+     */
+    public function getTwoFactorQrCodeSvgAttribute(): ?string
+    {
+        if (! $this->two_factor_secret) {
+            return null;
+        }
+        return $this->twoFactorQrCodeSvg();
+    }
+
+    /**
+     * Get the two factor recovery codes as an array.
+     * @return null|array
+     * @throws BindingResolutionException
+     */
+    public function getTwoFactorRecoveryCodesArrayAttribute(): ?array
+    {
+        if (!$this->two_factor_recovery_codes) {
+            return null;
+        }
+        return json_decode(decrypt($this->two_factor_recovery_codes), true);
+    }
+
+    /**
+     * Get the two factor enabled attribute.
+     * @return bool
+     */
+    public function getTwoFactorEnabledAttribute(): bool
+    {
+        return $this->hasEnabledTwoFactorAuthentication();
+    }
+
+    /**
+     * Get the two factor secret key attribute.
+     * @return string
+     * @throws BindingResolutionException
+     * @throws RuntimeException
+     */
+    public function getTwoFactorSecretKeyAttribute()
+    {
+        if (! $this->two_factor_secret) {
+            return null;
+        }
+        return decrypt($this->two_factor_secret);
     }
 }

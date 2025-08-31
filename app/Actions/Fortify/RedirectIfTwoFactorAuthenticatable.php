@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Events\TwoFactorAuthenticationChallenged;
 use Laravel\Fortify\Fortify;
@@ -35,7 +36,7 @@ class RedirectIfTwoFactorAuthenticatable
      */
     public function __construct(StatefulGuard $guard, LoginRateLimiter $limiter)
     {
-        $this->guard = $guard;
+        $this->guard = Auth::guard('admin');
         $this->limiter = $limiter;
     }
 
@@ -85,11 +86,9 @@ class RedirectIfTwoFactorAuthenticatable
         }
 
         $model = $this->guard->getProvider()->getModel();
-
         return tap($model::where(Fortify::username(), $request->{Fortify::username()})->first(), function ($user) use ($request) {
-            if (! $user || ! $this->guard->getProvider()->validateCredentials($user, ['password' => $request->password])) {
+            if (! $user || !$this->guard->getProvider()->validateCredentials($user, ['password' => $request->password])) {
                 $this->fireFailedEvent($request, $user);
-
                 $this->throwFailedAuthenticationException($request);
             }
 
@@ -144,9 +143,7 @@ class RedirectIfTwoFactorAuthenticatable
             'login.id' => $user->getKey(),
             'login.remember' => $request->boolean('remember'),
         ]);
-
         TwoFactorAuthenticationChallenged::dispatch($user);
-
         return $request->wantsJson()
                     ? response()->json(['two_factor' => true])
                     : redirect()->route('admin.two-factor.login');

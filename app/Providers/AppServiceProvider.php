@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
             \App\Contract\Auth\FailedPasswordResetResponse::class => \App\Http\Responses\Auth\FailedPasswordResetResponse::class,
             \App\Contract\Auth\SuccessfulPasswordResetLinkRequestResponse::class => \App\Http\Responses\Auth\SuccessfulPasswordResetLinkRequestResponse::class,
             \App\Contract\Auth\FailedPasswordResetLinkRequestResponse::class => \App\Http\Responses\Auth\FailedPasswordResetLinkRequestResponse::class,
+            \App\Contract\Auth\FailedTwoFactorLoginResponse::class => \App\Http\Responses\Auth\FailedTwoFactorLoginResponse::class,
         ];
         $bindingRequests = [];
         $bindingResources = [];

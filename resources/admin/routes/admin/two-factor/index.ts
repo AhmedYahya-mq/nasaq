@@ -190,7 +190,7 @@ confirm.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     confirm.form = confirmForm
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
 export const disable = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -205,7 +205,7 @@ disable.definition = {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
 disable.url = (options?: RouteQueryOptions) => {
@@ -214,7 +214,7 @@ disable.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
 disable.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -224,7 +224,7 @@ disable.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
     const disableForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -239,7 +239,7 @@ disable.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
         disableForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -488,8 +488,8 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     
     recoveryCodes.form = recoveryCodesForm
 /**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::regenerateRecoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
+* @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
+ * @see app/Http/Controllers/Settings/SecurityController.php:36
  * @route '/admin/user/two-factor-recovery-codes'
  */
 export const regenerateRecoveryCodes = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -503,8 +503,8 @@ regenerateRecoveryCodes.definition = {
 } satisfies RouteDefinition<["post"]>
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::regenerateRecoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
+* @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
+ * @see app/Http/Controllers/Settings/SecurityController.php:36
  * @route '/admin/user/two-factor-recovery-codes'
  */
 regenerateRecoveryCodes.url = (options?: RouteQueryOptions) => {
@@ -512,8 +512,8 @@ regenerateRecoveryCodes.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::regenerateRecoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
+* @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
+ * @see app/Http/Controllers/Settings/SecurityController.php:36
  * @route '/admin/user/two-factor-recovery-codes'
  */
 regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -522,8 +522,8 @@ regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'p
 })
 
     /**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::regenerateRecoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
+* @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
+ * @see app/Http/Controllers/Settings/SecurityController.php:36
  * @route '/admin/user/two-factor-recovery-codes'
  */
     const regenerateRecoveryCodesForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -532,8 +532,8 @@ regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'p
     })
 
             /**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::regenerateRecoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
+* @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
+ * @see app/Http/Controllers/Settings/SecurityController.php:36
  * @route '/admin/user/two-factor-recovery-codes'
  */
         regenerateRecoveryCodesForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

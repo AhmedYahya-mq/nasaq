@@ -166,12 +166,12 @@ export const index = {
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
  * @route '/user/two-factor-recovery-codes'
  */
-const store86252b38e5c39cafdc01180413a6f9f2 = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: store86252b38e5c39cafdc01180413a6f9f2.url(options),
+export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
     method: 'post',
 })
 
-store86252b38e5c39cafdc01180413a6f9f2.definition = {
+store.definition = {
     methods: ["post"],
     url: '/user/two-factor-recovery-codes',
 } satisfies RouteDefinition<["post"]>
@@ -181,8 +181,8 @@ store86252b38e5c39cafdc01180413a6f9f2.definition = {
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
  * @route '/user/two-factor-recovery-codes'
  */
-store86252b38e5c39cafdc01180413a6f9f2.url = (options?: RouteQueryOptions) => {
-    return store86252b38e5c39cafdc01180413a6f9f2.definition.url + queryParams(options)
+store.url = (options?: RouteQueryOptions) => {
+    return store.definition.url + queryParams(options)
 }
 
 /**
@@ -190,8 +190,8 @@ store86252b38e5c39cafdc01180413a6f9f2.url = (options?: RouteQueryOptions) => {
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
  * @route '/user/two-factor-recovery-codes'
  */
-store86252b38e5c39cafdc01180413a6f9f2.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: store86252b38e5c39cafdc01180413a6f9f2.url(options),
+store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
     method: 'post',
 })
 
@@ -200,8 +200,8 @@ store86252b38e5c39cafdc01180413a6f9f2.post = (options?: RouteQueryOptions): Rout
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
  * @route '/user/two-factor-recovery-codes'
  */
-    const store86252b38e5c39cafdc01180413a6f9f2Form = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store86252b38e5c39cafdc01180413a6f9f2.url(options),
+    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: store.url(options),
         method: 'post',
     })
 
@@ -210,73 +210,12 @@ store86252b38e5c39cafdc01180413a6f9f2.post = (options?: RouteQueryOptions): Rout
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
  * @route '/user/two-factor-recovery-codes'
  */
-        store86252b38e5c39cafdc01180413a6f9f2Form.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store86252b38e5c39cafdc01180413a6f9f2.url(options),
+        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: store.url(options),
             method: 'post',
         })
     
-    store86252b38e5c39cafdc01180413a6f9f2.form = store86252b38e5c39cafdc01180413a6f9f2Form
-    /**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
- */
-const store90aae05e13bf46644dd99c5385502b4a = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: store90aae05e13bf46644dd99c5385502b4a.url(options),
-    method: 'post',
-})
-
-store90aae05e13bf46644dd99c5385502b4a.definition = {
-    methods: ["post"],
-    url: '/admin/user/two-factor-recovery-codes',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
- */
-store90aae05e13bf46644dd99c5385502b4a.url = (options?: RouteQueryOptions) => {
-    return store90aae05e13bf46644dd99c5385502b4a.definition.url + queryParams(options)
-}
-
-/**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
- */
-store90aae05e13bf46644dd99c5385502b4a.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: store90aae05e13bf46644dd99c5385502b4a.url(options),
-    method: 'post',
-})
-
-    /**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
- */
-    const store90aae05e13bf46644dd99c5385502b4aForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store90aae05e13bf46644dd99c5385502b4a.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
- */
-        store90aae05e13bf46644dd99c5385502b4aForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store90aae05e13bf46644dd99c5385502b4a.url(options),
-            method: 'post',
-        })
-    
-    store90aae05e13bf46644dd99c5385502b4a.form = store90aae05e13bf46644dd99c5385502b4aForm
-
-export const store = {
-    '/user/two-factor-recovery-codes': store86252b38e5c39cafdc01180413a6f9f2,
-    '/admin/user/two-factor-recovery-codes': store90aae05e13bf46644dd99c5385502b4a,
-}
-
+    store.form = storeForm
 const RecoveryCodeController = { index, store }
 
 export default RecoveryCodeController
