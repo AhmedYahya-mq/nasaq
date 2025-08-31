@@ -1,84 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 import login from './login'
 /**
-* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
- * @route '/admin/two-factor-challenge'
- */
-export const login = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: login.url(options),
-    method: 'get',
-})
-
-login.definition = {
-    methods: ["get","head"],
-    url: '/admin/two-factor-challenge',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
- * @route '/admin/two-factor-challenge'
- */
-login.url = (options?: RouteQueryOptions) => {
-    return login.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
- * @route '/admin/two-factor-challenge'
- */
-login.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: login.url(options),
-    method: 'get',
-})
-/**
-* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
- * @route '/admin/two-factor-challenge'
- */
-login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: login.url(options),
-    method: 'head',
-})
-
-    /**
-* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
- * @route '/admin/two-factor-challenge'
- */
-    const loginForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: login.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
- * @route '/admin/two-factor-challenge'
- */
-        loginForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: login.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
- * @route '/admin/two-factor-challenge'
- */
-        loginForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: login.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    login.form = loginForm
-/**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::enable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
  * @route '/admin/user/two-factor-authentication'
@@ -489,7 +411,7 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     recoveryCodes.form = recoveryCodesForm
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
- * @see app/Http/Controllers/Settings/SecurityController.php:36
+ * @see app/Http/Controllers/Settings/SecurityController.php:39
  * @route '/admin/user/two-factor-recovery-codes'
  */
 export const regenerateRecoveryCodes = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -504,7 +426,7 @@ regenerateRecoveryCodes.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
- * @see app/Http/Controllers/Settings/SecurityController.php:36
+ * @see app/Http/Controllers/Settings/SecurityController.php:39
  * @route '/admin/user/two-factor-recovery-codes'
  */
 regenerateRecoveryCodes.url = (options?: RouteQueryOptions) => {
@@ -513,7 +435,7 @@ regenerateRecoveryCodes.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
- * @see app/Http/Controllers/Settings/SecurityController.php:36
+ * @see app/Http/Controllers/Settings/SecurityController.php:39
  * @route '/admin/user/two-factor-recovery-codes'
  */
 regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -523,7 +445,7 @@ regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'p
 
     /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
- * @see app/Http/Controllers/Settings/SecurityController.php:36
+ * @see app/Http/Controllers/Settings/SecurityController.php:39
  * @route '/admin/user/two-factor-recovery-codes'
  */
     const regenerateRecoveryCodesForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -533,7 +455,7 @@ regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'p
 
             /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
- * @see app/Http/Controllers/Settings/SecurityController.php:36
+ * @see app/Http/Controllers/Settings/SecurityController.php:39
  * @route '/admin/user/two-factor-recovery-codes'
  */
         regenerateRecoveryCodesForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -542,15 +464,93 @@ regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'p
         })
     
     regenerateRecoveryCodes.form = regenerateRecoveryCodesForm
+/**
+* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
+ * @route '/admin/two-factor-challenge'
+ */
+export const login = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: login.url(options),
+    method: 'get',
+})
+
+login.definition = {
+    methods: ["get","head"],
+    url: '/admin/two-factor-challenge',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
+ * @route '/admin/two-factor-challenge'
+ */
+login.url = (options?: RouteQueryOptions) => {
+    return login.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
+ * @route '/admin/two-factor-challenge'
+ */
+login.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: login.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
+ * @route '/admin/two-factor-challenge'
+ */
+login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: login.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
+ * @route '/admin/two-factor-challenge'
+ */
+    const loginForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: login.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
+ * @route '/admin/two-factor-challenge'
+ */
+        loginForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: login.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
+ * @route '/admin/two-factor-challenge'
+ */
+        loginForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: login.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    login.form = loginForm
 const twoFactor = {
-    login,
-enable,
+    enable,
 confirm,
 disable,
 qrCode,
 secretKey,
 recoveryCodes,
 regenerateRecoveryCodes,
+login,
 }
 
 export default twoFactor

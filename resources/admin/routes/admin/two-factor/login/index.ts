@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

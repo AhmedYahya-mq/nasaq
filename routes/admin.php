@@ -16,4 +16,4 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
 });
 
 require __DIR__ . '/settings.php';
-require __DIR__ . '/auth2.php';
+require __DIR__ . '/auth.php';

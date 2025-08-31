@@ -12,13 +12,13 @@ import AuthLayout from '@/layouts/auth-layout';
 import { useState } from 'react';
 import { store } from '@/routes/admin/two-factor/login';
 
-export default function ForgotPassword({ status, guard }: { status?: string, guard?: string }) {
-    const [isCodeSent, setIsCodeSent] = useState(false);
+export default function TowFactorChallenge() {
+    const [isCodeSent, setIsCodeSent] = useState(true);
 
     return (
         <AuthLayout
             title={
-                isCodeSent ? 'رمز المصادقة الثنائية' : 'كود الاسترجاع'
+                isCodeSent ? 'رمز المصادقة الثنائية' : 'رمز الاسترجاع'
             }
             description={
                 isCodeSent ? "أدخل الرمز المكوَّن من 6 أرقام الذي يولده تطبيق المصادقة على هاتفك لتأكيد تسجيل الدخول." : 'يرجى تأكيد الوصول إلى حسابك عن طريق إدخال أحد رموز الاسترداد في حالات الطوارئ.'
@@ -34,7 +34,7 @@ export default function ForgotPassword({ status, guard }: { status?: string, gua
                             {
                                 isCodeSent ? (
                                     <div className="grid gap-2">
-                                        <Label htmlFor="code">الكود</Label>
+                                        <Label htmlFor="code">الرمز</Label>
                                         <Input key="code" id="code" type="text" name="code" autoComplete="off" autoFocus placeholder="XXX-XXX" onInput={
                                             (e: React.FormEvent<HTMLInputElement>) => {
                                                 e.currentTarget.value = e.currentTarget.value.replace(/[^\d]/g, '').replace(/(.{3})/, '$1-').slice(0, 7);
@@ -49,16 +49,10 @@ export default function ForgotPassword({ status, guard }: { status?: string, gua
                                             onInput={
                                                 (e: React.FormEvent<HTMLInputElement>) => {
                                                     const input = e.currentTarget;
-
-                                                    // السماح فقط بالأحرف والأرقام
                                                     let value = input.value.replace(/[^a-zA-Z0-9]/g, '');
-
-                                                    // إدخال الشرطة بعد أول 10 خانات إذا تجاوز الطول 10
                                                     if (value.length > 10) {
                                                         value = value.slice(0, 10) + '-' + value.slice(10, 20);
                                                     }
-
-                                                    // تحديد الحد الأقصى (21 مع الشرطة)
                                                     input.value = value.slice(0, 21);
                                                 }
                                             }
@@ -83,7 +77,7 @@ export default function ForgotPassword({ status, guard }: { status?: string, gua
                         setIsCodeSent(!isCodeSent);
                     }}>
                         {
-                            isCodeSent ? 'استخدم رمز استرداد بدلاً من ذلك' : 'استخدم رمز المصادقة الثنائية بدلاً من ذلك'
+                            isCodeSent ? 'استخدم رمز استرجاع بدلاً من ذلك' : 'استخدم رمز المصادقة الثنائية بدلاً من ذلك'
                         }
                     </TextLink>
                 </div>

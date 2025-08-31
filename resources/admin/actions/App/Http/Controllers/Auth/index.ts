@@ -1,7 +1,6 @@
 import AuthenticatedSessionController from './AuthenticatedSessionController'
 import PasswordResetLinkController from './PasswordResetLinkController'
 import NewPasswordController from './NewPasswordController'
-import RegisteredUserController from './RegisteredUserController'
 import EmailVerificationPromptController from './EmailVerificationPromptController'
 import VerifyEmailController from './VerifyEmailController'
 import EmailVerificationNotificationController from './EmailVerificationNotificationController'
@@ -10,7 +9,6 @@ const Auth = {
     AuthenticatedSessionController,
 PasswordResetLinkController,
 NewPasswordController,
-RegisteredUserController,
 EmailVerificationPromptController,
 VerifyEmailController,
 EmailVerificationNotificationController,

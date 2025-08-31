@@ -26,4 +26,6 @@ export default function Product() {
     );
 }
 
+// لا تغيير مطلوب، جميع النصوص بالعربية بالفعل
+
 

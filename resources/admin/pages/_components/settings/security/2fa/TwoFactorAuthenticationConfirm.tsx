@@ -74,11 +74,7 @@ export default function TwoFactorAuthenticationConfirm() {
                             {...confirm.form()}
                             options={{ preserveScroll: true }}
                             className="mt-2 space-y-4"
-                            onError={
-                                (errors) => {
-                                    console.log(errors);
-                                }
-                            }
+                            errorBag="confirmTwoFactorAuthentication"
                             resetOnSuccess
                             disableWhileProcessing
                         >
@@ -94,7 +90,7 @@ export default function TwoFactorAuthenticationConfirm() {
                                             autoComplete="one-time-code"
                                         />
 
-                                        <InputError message={errors.confirmTwoFactorAuthentication?.code} />
+                                        <InputError message={errors.code} />
                                     </div>
 
                                     <Button type="submit" disabled={processing}>

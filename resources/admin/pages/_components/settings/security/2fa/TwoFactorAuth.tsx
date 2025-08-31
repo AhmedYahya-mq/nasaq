@@ -7,8 +7,9 @@ import { Card, CardDescription, CardTitle } from '@/components/ui/card';
 import { usePage } from '@inertiajs/react';
 import { SharedData } from '@/types';
 import { useEffect, useState } from 'react';
+import { AuthProps } from '@/types/shared/auth';
 
-export default function TwoFactorAuth({ status }: { status?: string; }) {
+export default function TwoFactorAuth({ status }: AuthProps) {
     const { auth } = usePage<SharedData>().props;
     const [enabling, setEnabling] = useState(false);
 

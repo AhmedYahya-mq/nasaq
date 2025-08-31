@@ -1,61 +1,107 @@
 <?php
 
+use App\Actions\Fortify\TwoFactorAuthenticatedSessionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Features;
+use Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController;
+use Laravel\Fortify\RoutePath;
 
-Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
+Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
+    $enableViews = config('fortify.views', true);
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // Authentication...
+    if ($enableViews) {
+        Route::get(RoutePath::for('login', '/login'), [AuthenticatedSessionController::class, 'create'])
+            ->middleware('guest:admin')
+            ->name('login');
+    }
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+    $limiter = config('fortify.limiters.login');
+    $twoFactorLimiter = config('fortify.limiters.two-factor');
+    $verificationLimiter = config('fortify.limiters.verification', '6,1');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post(RoutePath::for('login', '/login'), [AuthenticatedSessionController::class, 'store'])
+        ->middleware(array_filter([
+            'guest:admin',
+            $limiter ? 'throttle:' . $limiter : null,
+        ]))->name('login.store');
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-        ->name('password.request');
-
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
-        ->name('password.email');
-
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->name('password.reset');
-
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-        ->name('password.store');
-});
-
-Route::middleware('auth:admin')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
-        ->name('verification.notice');
-
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
-
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware('throttle:6,1')
-        ->name('verification.send');
-
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-        ->name('password.confirm');
-
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store'])
-        ->middleware('throttle:6,1');
-
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::post(RoutePath::for('logout', '/logout'), [AuthenticatedSessionController::class, 'destroy'])
+        ->middleware('auth:admin')
         ->name('logout');
+
+    // Password Reset...
+    if (Features::enabled(Features::resetPasswords())) {
+        if ($enableViews) {
+            Route::get(RoutePath::for('password.request', '/forgot-password'), [PasswordResetLinkController::class, 'create'])
+                ->middleware('guest:admin')
+                ->name('password.request');
+
+            Route::get(RoutePath::for('password.reset', '/reset-password/{token}'), [NewPasswordController::class, 'create'])
+                ->middleware('guest:admin')
+                ->name('password.reset');
+        }
+
+        Route::post(RoutePath::for('password.email', '/forgot-password'), [PasswordResetLinkController::class, 'store'])
+            ->middleware('guest:admin')
+            ->name('password.email');
+
+        Route::post(RoutePath::for('password.store', '/reset-password'), [NewPasswordController::class, 'store'])
+            ->middleware('guest:admin')
+            ->name('password.store');
+    }
+
+    // Email Verification...
+    if (Features::enabled(Features::emailVerification())) {
+        if ($enableViews) {
+            Route::get(RoutePath::for('verification.notice', '/email/verify'), [EmailVerificationPromptController::class, '__invoke'])
+                ->middleware('auth:admin')
+                ->name('verification.notice');
+        }
+
+        Route::get(RoutePath::for('verification.verify', '/email/verify/{id}/{hash}'), [VerifyEmailController::class, '__invoke'])
+            ->middleware(['auth:admin', 'signed', 'throttle:' . $verificationLimiter])
+            ->name('verification.verify');
+
+        Route::post(RoutePath::for('verification.send', '/email/verification-notification'), [EmailVerificationNotificationController::class, 'store'])
+            ->middleware(['auth:admin', 'throttle:' . $verificationLimiter])
+            ->name('verification.send');
+    }
+
+    // Password Confirmation...
+    if ($enableViews) {
+        Route::get(RoutePath::for('password.confirm', '/user/confirm-password'), [ConfirmablePasswordController::class, 'show'])
+            ->middleware(['auth:admin'])
+            ->name('password.confirm');
+    }
+
+    Route::get(RoutePath::for('password.confirmation', '/user/confirmed-password-status'), [ConfirmedPasswordStatusController::class, 'show'])
+        ->middleware('auth:admin')
+        ->name('password.confirmation');
+
+    Route::post(RoutePath::for('password.confirm', '/user/confirm-password'), [ConfirmablePasswordController::class, 'store'])
+        ->middleware('auth:admin')
+        ->name('password.confirm.store');
+
+    // Two Factor Authentication...
+    if (Features::enabled(Features::twoFactorAuthentication())) {
+        if ($enableViews) {
+            Route::get(RoutePath::for('two-factor.login', '/two-factor-challenge'), [TwoFactorAuthenticatedSessionController::class, 'create'])
+                ->middleware('guest:admin')
+                ->name('two-factor.login');
+        }
+
+        Route::post(RoutePath::for('two-factor.login', '/two-factor-challenge'), [TwoFactorAuthenticatedSessionController::class, 'store'])
+            ->middleware(array_filter([
+                'guest:admin',
+                $twoFactorLimiter ? 'throttle:' . $twoFactorLimiter : null,
+            ]))->name('two-factor.login.store');
+    }
 });
-
-
-
-

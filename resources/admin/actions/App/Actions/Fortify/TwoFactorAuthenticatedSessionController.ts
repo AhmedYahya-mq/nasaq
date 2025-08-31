@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::create
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
  * @route '/admin/two-factor-challenge'
  */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ create.definition = {
 
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::create
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
  * @route '/admin/two-factor-challenge'
  */
 create.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::create
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
  * @route '/admin/two-factor-challenge'
  */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -34,7 +34,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::create
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
  * @route '/admin/two-factor-challenge'
  */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -44,7 +44,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::create
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
  * @route '/admin/two-factor-challenge'
  */
     const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -54,7 +54,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::create
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
  * @route '/admin/two-factor-challenge'
  */
         createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -63,7 +63,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::create
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:41
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:42
  * @route '/admin/two-factor-challenge'
  */
         createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -79,7 +79,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     create.form = createForm
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -94,7 +94,7 @@ store.definition = {
 
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -103,7 +103,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -113,7 +113,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -123,7 +123,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::store
- * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:56
+ * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:58
  * @route '/admin/two-factor-challenge'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

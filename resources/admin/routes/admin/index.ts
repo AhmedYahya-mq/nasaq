@@ -1,10 +1,10 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 import profile from './profile'
 import password from './password'
-import login from './login'
-import register from './register'
-import verification from './verification'
 import twoFactor from './two-factor'
+import sessions from './sessions'
+import login from './login'
+import verification from './verification'
 /**
  * @see routes/admin.php:7
  * @route '/admin/dashboard'
@@ -219,7 +219,7 @@ membershipApplications.head = (options?: RouteQueryOptions): RouteDefinition<'he
     
     membershipApplications.form = membershipApplicationsForm
 /**
- * @see routes/settings.php:32
+ * @see routes/settings.php:41
  * @route '/admin/settings/appearance'
  */
 export const appearance = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -233,7 +233,7 @@ appearance.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/settings.php:32
+ * @see routes/settings.php:41
  * @route '/admin/settings/appearance'
  */
 appearance.url = (options?: RouteQueryOptions) => {
@@ -241,7 +241,7 @@ appearance.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/settings.php:32
+ * @see routes/settings.php:41
  * @route '/admin/settings/appearance'
  */
 appearance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -249,7 +249,7 @@ appearance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/settings.php:32
+ * @see routes/settings.php:41
  * @route '/admin/settings/appearance'
  */
 appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -258,7 +258,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/settings.php:32
+ * @see routes/settings.php:41
  * @route '/admin/settings/appearance'
  */
     const appearanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -267,7 +267,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/settings.php:32
+ * @see routes/settings.php:41
  * @route '/admin/settings/appearance'
  */
         appearanceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -275,7 +275,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/settings.php:32
+ * @see routes/settings.php:41
  * @route '/admin/settings/appearance'
  */
         appearanceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -291,7 +291,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     appearance.form = appearanceForm
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::security
- * @see app/Http/Controllers/Settings/SecurityController.php:22
+ * @see app/Http/Controllers/Settings/SecurityController.php:24
  * @route '/admin/settings/security'
  */
 export const security = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -306,7 +306,7 @@ security.definition = {
 
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::security
- * @see app/Http/Controllers/Settings/SecurityController.php:22
+ * @see app/Http/Controllers/Settings/SecurityController.php:24
  * @route '/admin/settings/security'
  */
 security.url = (options?: RouteQueryOptions) => {
@@ -315,7 +315,7 @@ security.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::security
- * @see app/Http/Controllers/Settings/SecurityController.php:22
+ * @see app/Http/Controllers/Settings/SecurityController.php:24
  * @route '/admin/settings/security'
  */
 security.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -324,7 +324,7 @@ security.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::security
- * @see app/Http/Controllers/Settings/SecurityController.php:22
+ * @see app/Http/Controllers/Settings/SecurityController.php:24
  * @route '/admin/settings/security'
  */
 security.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -334,7 +334,7 @@ security.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\Settings\SecurityController::security
- * @see app/Http/Controllers/Settings/SecurityController.php:22
+ * @see app/Http/Controllers/Settings/SecurityController.php:24
  * @route '/admin/settings/security'
  */
     const securityForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -344,7 +344,7 @@ security.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\Settings\SecurityController::security
- * @see app/Http/Controllers/Settings/SecurityController.php:22
+ * @see app/Http/Controllers/Settings/SecurityController.php:24
  * @route '/admin/settings/security'
  */
         securityForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -353,7 +353,7 @@ security.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\Settings\SecurityController::security
- * @see app/Http/Controllers/Settings/SecurityController.php:22
+ * @see app/Http/Controllers/Settings/SecurityController.php:24
  * @route '/admin/settings/security'
  */
         securityForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -500,84 +500,6 @@ logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
         })
     
     logout.form = logoutForm
-/**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
- * @route '/admin/register'
- */
-export const register = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: register.url(options),
-    method: 'get',
-})
-
-register.definition = {
-    methods: ["get","head"],
-    url: '/admin/register',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
- * @route '/admin/register'
- */
-register.url = (options?: RouteQueryOptions) => {
-    return register.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
- * @route '/admin/register'
- */
-register.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: register.url(options),
-    method: 'get',
-})
-/**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
- * @route '/admin/register'
- */
-register.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: register.url(options),
-    method: 'head',
-})
-
-    /**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
- * @route '/admin/register'
- */
-    const registerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: register.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
- * @route '/admin/register'
- */
-        registerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: register.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Auth\RegisteredUserController::register
- * @see app/Http/Controllers/Auth/RegisteredUserController.php:22
- * @route '/admin/register'
- */
-        registerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: register.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    register.form = registerForm
 const admin = {
     dashboard,
 membership,
@@ -586,11 +508,11 @@ profile,
 password,
 appearance,
 security,
+twoFactor,
+sessions,
 login,
 logout,
-register,
 verification,
-twoFactor,
 }
 
 export default admin
