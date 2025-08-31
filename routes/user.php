@@ -33,3 +33,7 @@ Route::get('/about', function () {
 Route::get('/events', function () {
     return view('events');
 })->name('events');
+
+Route::get('/library', function () {
+    return view('library');
+})->name('library');
