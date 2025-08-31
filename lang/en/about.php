@@ -65,6 +65,69 @@ return [
         ],
     ],
 
+    // ==================================================================
+// --- Contact Us Section ---
+// ==================================================================
+'contact_section' => [
+    // Main section title
+    'main_title' => 'Contact Us',
+    'subtitle' => 'We are here to help. Choose the best way to contact us and we will respond as soon as possible.',
+
+    // Contact form
+    'form' => [
+        'title' => 'Send Us a Message',
+        'name' => 'Full Name',
+        'name_placeholder' => 'Enter your name here',
+        'email' => 'Email Address',
+        'email_placeholder' => 'example@mail.com',
+        'phone' => 'Phone Number',
+        'phone_placeholder' => '05X XXX XXXX',
+        'subject' => 'Subject',
+        'subject_placeholder' => 'Write the message subject',
+        'message' => 'Message',
+        'message_placeholder' => 'Write your message here...',
+        'send_button' => 'Send Message',
+        'loading' => 'Sending...',
+        'success_title' => 'Sent Successfully!',
+        'success_message' => 'Thank you for contacting us, we will get back to you as soon as possible.',
+    ],
+
+    // Quick links
+    'quick_links' => [
+        'title' => 'Or via quick links',
+        'action_text' => 'Contact Us Now',
+    ],
+
+    // Contact methods cards
+    'methods' => [
+        'whatsapp' => [
+            'title' => 'WhatsApp',
+            'link' => 'https://wa.me/966000000000', // <-- replace with your number
+        ],
+        'email' => [
+            'title' => 'Email',
+            'link' => 'mailto:info@example.com', // <-- replace with your email
+        ],
+        'twitter' => [
+            'title' => 'Twitter (X)',
+            'link' => 'https://twitter.com/your_username', // <-- replace with your link
+        ],
+        'instagram' => [
+            'title' => 'Instagram',
+            'link' => 'https://instagram.com/your_username', // <-- replace with your link
+        ],
+        'snapchat' => [
+            'title' => 'Snapchat',
+            'link' => 'https://snapchat.com/add/your_username', // <-- replace with your link
+        ],
+        'location' => [
+            'title' => 'Location',
+            'link' => 'https://maps.google.com/?q=Riyadh', // <-- replace with your location link
+            'enabled' => true, // <-- set false to hide location
+        ],
+    ],
+],
+
     // --- Audience Section ---
 
 'memberships' => [

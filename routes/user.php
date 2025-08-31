@@ -29,3 +29,7 @@ Route::get('/register', function () {
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
+Route::get('/events', function () {
+    return view('events');
+})->name('events');
