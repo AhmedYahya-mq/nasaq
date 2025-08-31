@@ -26,3 +26,14 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/events', function () {
+    return view('events');
+})->name('events');
+
+Route::get('/library', function () {
+    return view('library');
+})->name('library');

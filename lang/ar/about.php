@@ -68,6 +68,68 @@ return [
         ],
     ],
 
+     // ==================================================================
+    // --- سكشن تواصل معنا (Contact Us Section) - تمت الإضافة هنا ---
+    // ==================================================================
+    'contact_section' => [
+        // العنوان الرئيسي للقسم
+        'main_title' => 'تواصل معنا',
+        'subtitle' => 'نحن هنا لمساعدتك. اختر الطريقة الأنسب لك للتواصل معنا وسنرد عليك في أقرب وقت ممكن.',
+
+        // نموذج المراسلة
+        'form' => [
+            'title' => 'أرسل لنا رسالة',
+            'name' => 'الاسم الكامل',
+            'name_placeholder' => 'أدخل اسمك هنا',
+            'email' => 'البريد الإلكتروني',
+            'email_placeholder' => 'example@mail.com',
+            'phone' => 'رقم الجوال',
+            'phone_placeholder' => '05X XXX XXXX',
+            'subject' => 'الموضوع',
+            'subject_placeholder' => 'اكتب موضوع الرسالة',
+            'message' => 'نص الرسالة',
+            'message_placeholder' => 'اكتب رسالتك هنا...',
+            'send_button' => 'إرسال الرسالة',
+            'loading' => 'جاري الإرسال...',
+            'success_title' => 'تم الإرسال بنجاح!',
+            'success_message' => 'شكرًا لتواصلك معنا، سنقوم بالرد في أقرب وقت.',
+        ],
+
+        // روابط التواصل السريع
+        'quick_links' => [
+            'title' => 'أو عبر الروابط السريعة',
+            'action_text' => 'تواصل معنا الآن',
+        ],
+
+        // بطاقات التواصل (Methods)
+        'methods' => [
+            'whatsapp' => [
+                'title' => 'واتساب',
+                'link' => 'https://wa.me/966000000000', // <-- استبدل بالرقم الصحيح
+            ],
+            'email' => [
+                'title' => 'البريد الإلكتروني',
+                'link' => 'mailto:info@example.com', // <-- استبدل بالبريد الصحيح
+            ],
+            'twitter' => [
+                'title' => 'تويتر (X )',
+                'link' => 'https://twitter.com/your_username', // <-- استبدل بالرابط الصحيح
+            ],
+            'instagram' => [
+                'title' => 'انستغرام',
+                'link' => 'https://instagram.com/your_username', // <-- استبدل بالرابط الصحيح
+            ],
+            'snapchat' => [
+                'title' => 'سناب شات',
+                'link' => 'https://snapchat.com/add/your_username', // <-- استبدل بالرابط الصحيح
+            ],
+            'location' => [
+                'title' => 'الموقع الجغرافي',
+                'link' => 'https://maps.google.com/?q=Riyadh', // <-- استبدل برابط الموقع
+                'enabled' => true, // <-- للتحكم في ظهور الموقع، غير القيمة إلى false لإخفائه
+            ],
+        ],
+    ],
     // --- سكشن الشرائح المستهدفة (Audience ) ---
     'memberships' => [
         'title' => 'أنواع العضويات',
