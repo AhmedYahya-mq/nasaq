@@ -8,6 +8,7 @@
             </h1>
 
             <p class="text-base text-muted-foreground leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
+
                 {{ __('about.hero.description') }}
             </p>
 

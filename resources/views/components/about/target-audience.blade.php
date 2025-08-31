@@ -1,7 +1,6 @@
 @props([
     'memberships' => trans('about.memberships.types'),
 ])
-
 {{--
     استخدام Alpine.js لإدارة حالة التبديل بين شهري/سنوي.
     x-data="{ billing: 'yearly' }"
@@ -18,7 +17,6 @@
                 {{ __('about.memberships.subtitle') }}
             </p>
         </div>
-
         {{-- 2. مفتاح التبديل بين شهري/سنوي (الميزة الجديدة) --}}
         <div class="mt-10 flex justify-center items-center gap-4">
             <span class="font-medium text-foreground">{{ __('memberships.billing.monthly', ['default' => 'شهري']) }}</span>
@@ -64,7 +62,6 @@
         @endif
     </div>
 </section>
-
 {{-- 4. السكريبت الخاص بالقسم (للتنظيم) --}}
 <script>
     function membershipSection() {
