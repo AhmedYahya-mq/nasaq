@@ -9,8 +9,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {{-- 1. العنوان الرئيسي والوصف --}}
-        <div class="text-center max-w-3xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
+        <div class="text-center  mx-auto">
+            <h2 class="text-xl md:text-2xl font-bold text-primary tracking-tight">
                 {{ __('about.memberships.title') }}
             </h2>
             <p class="mt-4 text-lg text-muted-foreground">
