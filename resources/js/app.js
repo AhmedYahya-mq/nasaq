@@ -16,6 +16,8 @@ import swiperSlide from './animations/swiperSlide';
 import importing from './scrollAnimtionImport';
 import datepicker from './components/datepicker';
 import phoneInput from './components/tel';
+import eventsCalendar from './components/eventsCalendar';
+import countdown from './components/countdown';
 
 window.Alpine = Alpine;
 Alpine.plugin(focus);
@@ -28,6 +30,8 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('hover', hover);
     Alpine.data('datepicker', datepicker);
     Alpine.data('phoneInput', phoneInput);
+    Alpine.data('eventsCalendar', eventsCalendar);
+    Alpine.data('countdown', countdown);
     loading();
     buttonToggleMenu();
 
