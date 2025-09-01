@@ -1,14 +1,13 @@
-
-import HeadingSmall from '@/components/heading-small';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
-import { CardDescription, CardFooter, CardTitle } from '@/components/ui/card';
+import { CardFooter } from '@/components/ui/card';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { enable } from '@/routes/admin/two-factor';
 import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
+
 export default function TwoFactorAuthenticationEnable() {
     const passwordInput = useRef<HTMLInputElement>(null);
     return (
@@ -41,7 +40,7 @@ export default function TwoFactorAuthenticationEnable() {
                                 <>
                                     <div className="grid gap-2">
                                         <Label htmlFor="password" className="sr-only">
-                                            Password
+                                            كلمة المرور
                                         </Label>
 
                                         <Input
@@ -49,7 +48,7 @@ export default function TwoFactorAuthenticationEnable() {
                                             type="password"
                                             name="password"
                                             ref={passwordInput}
-                                            placeholder="Password"
+                                            placeholder="كلمة المرور"
                                             autoComplete="current-password"
                                         />
 
@@ -59,7 +58,7 @@ export default function TwoFactorAuthenticationEnable() {
                                     <DialogFooter className="gap-2">
                                         <DialogClose asChild>
                                             <Button variant="secondary" onClick={() => resetAndClearErrors()}>
-                                                Cancel
+                                                الغاء
                                             </Button>
                                         </DialogClose>
 

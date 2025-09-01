@@ -89,7 +89,7 @@ export default function SessionsContainer({ sessions }: { sessions: SecurityProp
                                     <>
                                         <div className="grid gap-2">
                                             <Label htmlFor="password" className="sr-only">
-                                                Password
+                                                كلمة المرور
                                             </Label>
 
                                             <Input
@@ -97,7 +97,7 @@ export default function SessionsContainer({ sessions }: { sessions: SecurityProp
                                                 type="password"
                                                 name="password"
                                                 ref={passwordInput}
-                                                placeholder="Password"
+                                                placeholder="كلمة المرور"
                                                 autoComplete="current-password"
                                             />
 
