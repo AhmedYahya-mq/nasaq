@@ -19,6 +19,12 @@ import phoneInput from './components/tel';
 import eventsCalendar from './components/eventsCalendar';
 import countdown from './components/countdown';
 
+// تسجيل مكون Swiper
+register();
+
+// تسجيل مكون العد التنازلي عالميًا
+Alpine.data('countdown', countdown);
+
 window.Alpine = Alpine;
 Alpine.plugin(focus);
 
