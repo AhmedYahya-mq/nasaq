@@ -9,7 +9,7 @@
     label="{{ $label ?? 'اختر التاريخ' }}"
     x-model="selectedDate"
     @click="toggle()"
-    placeholder="اختر التاريخ"
+    placeholder="{{ $placeholder ?? 'اختر التاريخ' }}"
     class="!cursor-pointer"
      {{ $attributes }}
     icon="calendar" iconPosition="trailing"/>

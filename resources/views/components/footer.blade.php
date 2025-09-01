@@ -1,6 +1,5 @@
 <footer class="bg-card border-t border-primary mt-16  py-10 pb-3 w-full flex flex-col">
-    {{-- حاوية الأعمدة ممتدة بعرض الشاشة --}}
-    <div class="container">
+    <div class="container p-2">
         <div class="w-full mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 text-sm">
 
             {{-- العمود الأول: الشعار وأيقونات التواصل --}}
@@ -11,7 +10,6 @@
                 </a>
 
                 <div class="flex space-x-4">
-                    {{-- مربعات فارغة للأيقونات --}}
                     <a href="https://facebook.com" target="_blank" aria-label="Facebook"
                         class="w-6 h-6 border flex items-center justify-center rounded">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-4 h-4">
