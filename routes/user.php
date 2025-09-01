@@ -19,7 +19,6 @@ Route::get('/profile', function () {
     }
     return view('profile');
 })->name('profile');
-
 Route::get('/login', function () {
   return view('auth.login');
 })->name('login');

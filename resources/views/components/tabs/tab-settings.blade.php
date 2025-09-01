@@ -1,6 +1,6 @@
 <div class="pb-14">
     <div class="p-4 flex flex-col gap-4">
-        <div class="flex flex-col items-end gap-2">
+        <div class="flex flex-col items-end gap-3">
             <div>
                 <h6 class="text-[0.875rem] font-medium mb-1">
                     المصادقة الثائية (2FA)
@@ -10,7 +10,7 @@
                     يتم إرساله إلى هاتفك المحمول عند تسجيل الدخول.
                 </p>
             </div>
-            <div class="w-full mb">
+            <div class="w-full">
                 <img src="{{ asset('images/qr.png') }}" width="120" height="120" alt="">
                 <p class="text-muted-foreground text-sm my-2">
                     امسح رمز الاستجابة السريعة (QR) باستخدام تطبيق المصادقة الخاص بك (مثل Google Authenticator أو Authy)
@@ -19,7 +19,7 @@
                 <x-forms.input name="code" id="code" label="رمز التحقق" placeholder="أدخل رمز التحقق المكون من 6 أرقام"
                     class="w-full" />
             </div>
-            <div class="w-full flex flex-wrap justify-end gap-3.5" x-data>
+            <div class="w-full mt-3 flex flex-wrap justify-end gap-3.5" x-data>
                 <button aria-label="Enable 2FA" @click="$dispatch('toggle-form', true)">
                     <span
                         class="text-sm text-white bg-primary px-3 py-1 rounded-md hover:bg-primary/80 transition-colors">
