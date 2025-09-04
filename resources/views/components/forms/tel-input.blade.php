@@ -3,7 +3,7 @@
         id="phone"
         type="tel"
         {{ $attributes }}
-        label="رقم الجوال"
+        label="{{ $label ?? 'رقم الهاتف' }}"
         x-ref="input"
         placeholder="05X XXX XXXX"
         class="w-full border rounded p-2"
