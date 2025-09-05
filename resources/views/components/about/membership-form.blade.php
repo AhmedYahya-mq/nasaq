@@ -4,25 +4,17 @@
         <div class="mt-16 bg-card border border-border shadow-2xl shadow-primary/10 rounded-3xl overflow-hidden">
 
             {{-- تم تحويل جميع النصوص داخل المكون إلى مفاتيح ترجمة من ملف 'memberships' --}}
-            <x-about.info 
-                icon="<svg>...</svg>"
-                :title="__('memberships.info_box.title')"
-                :subtitle="__('memberships.info_box.subtitle')"
-                :description="__('memberships.info_box.description')"
-                :highlights="__('memberships.info_box.highlights')"
+            <x-about.info icon="<svg>...</svg>" :title="__('memberships.info_box.title')" :subtitle="__('memberships.info_box.subtitle')" :description="__('memberships.info_box.description')" :highlights="__('memberships.info_box.highlights')"
                 :link="[
                     'url' => 'https://www.linkedin.com/company/nasaq-community-of-nutrition-therapy/?viewAsMember=true',
-                    'label' => __('memberships.info_box.link_label' ),
-                ]"
-                :payment="[
+                    'label' => __('memberships.info_box.link_label'),
+                ]" :payment="[
                     'title' => __('memberships.info_box.payment_title'),
                     'bank' => __('memberships.info_box.payment_bank'),
                     'account' => '86100001829608',
                     'iban' => 'SA7210000086100001829608',
                     'note' => __('memberships.info_box.payment_note'),
-                ]"
-                highlight 
-            />
+                ]" highlight />
 
             <div class="p-8 md:p-10 bg-gradient-to-r from-primary/5 to-accent/5 border-b border-border text-center">
                 <h2 class="text-xl md:text-2xl font-bold text-foreground">{{ __('memberships.form_header.title') }}</h2>
@@ -52,7 +44,8 @@
                             {{ __('memberships.professional_info.title') }}
                         </legend>
                         <x-forms.select name="status" :label="__('memberships.professional_info.status')" required>
-                            <option value="" disabled selected>{{ __('memberships.professional_info.status_placeholder') }}</option>
+                            <option value="" disabled selected>
+                                {{ __('memberships.professional_info.status_placeholder') }}</option>
                             <option value="employee">{{ __('memberships.professional_info.status_employee') }}</option>
                             <option value="graduate">{{ __('memberships.professional_info.status_graduate') }}</option>
                             <option value="student">{{ __('memberships.professional_info.status_student') }}</option>
@@ -62,15 +55,15 @@
                         <x-forms.input name="scfhs_number" :label="__('memberships.professional_info.scfhs_number')" required />
                     </fieldset>
 
-                    <!-- المجموعة الثالثة: إثبات التسجيل -->
-                    <fieldset class="space-y-6">
-                        <legend class="text-lg font-semibold text-foreground pb-3 border-b-2 border-primary/20 w-full">
-                            {{ __('memberships.proof.title') }}
-                        </legend>
-                        <x-forms.file-upload name="payment_proof" 
-                            :title="__('memberships.proof.upload_title')"
-                            :subtitle="__('memberships.proof.upload_subtitle')" required />
+                    <!-- المجموعة الثالثة: إثبات التسجيل (التصميم النهائي) -->
+                    <fieldset>
+                        <x-forms.file-upload name="payment_proof" :title="__('memberships.proof.title')" :subtitle="__('memberships.proof.upload_subtitle')"
+                            :server="route('upload')" required />
+                        @error('payment_proof')
+                            <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
+                        @enderror
                     </fieldset>
+
                 </div>
 
                 <!-- زر الإرسال -->
@@ -78,8 +71,10 @@
                     <button type="submit"
                         class="w-full bg-primary text-primary-foreground py-4 text-xl rounded-xl font-bold shadow-lg shadow-primary/30 hover:bg-primary/90 transition-all duration-300 transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-primary/30 flex items-center justify-center gap-3">
                         <span>{{ __('memberships.submit_button') }}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rtl:-scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rtl:-scale-x-100" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                     </button>
                 </div>

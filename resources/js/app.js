@@ -19,6 +19,13 @@ import phoneInput from './components/tel';
 import eventsCalendar from './components/eventsCalendar';
 import countdown from './components/countdown';
 
+
+// مكون رفع الصور  filepond
+import * as FilePond from 'filepond';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+
 // تسجيل مكون Swiper
 register();
 
@@ -27,6 +34,14 @@ Alpine.data('countdown', countdown);
 
 window.Alpine = Alpine;
 Alpine.plugin(focus);
+
+
+// تسجيل مكونات FilePond
+window.FilePond = FilePond;
+window.FilePondPluginImagePreview = FilePondPluginImagePreview;
+window.FilePondPluginFileValidateType = FilePondPluginFileValidateType;
+window.FilePondPluginFileValidateSize = FilePondPluginFileValidateSize;
+
 
 // تسجيل الـ Stores
 document.addEventListener('alpine:init', () => {

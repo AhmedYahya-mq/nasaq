@@ -65,13 +65,23 @@ return [
         'scfhs_number'         => 'SCFHS Number',
     ],
 
-    // == Registration Section: Proof of Payment ==
-    'proof' => [
-        'title'            => 'Proof of Registration',
-        'upload_title'     => 'Attach Transfer Receipt',
-        'upload_subtitle'  => 'Upload a clear image of the bank transfer receipt (Image or PDF)',
+      // == File Upload Component Keys (Professional Design) ==
+    'upload' => [
+        'default_title'           => 'Attach Documents',
+        'default_subtitle'        => 'Upload the required files here.',
+        'drop_or_click'           => 'Drop file here or <span class="filepond--label-action"> browse your device </span>',
+        'supported_files_detailed'=> 'Supports Images (PNG, JPG) and PDF (Max :size)',
+        'processing'              => 'Processing...',
+        'complete'                => 'Upload complete',
+        'tap_to_undo'             => 'Tap to undo',
+        'tap_to_cancel'           => 'Tap to cancel',
     ],
 
+    // == Proof of Registration Section Keys ==
+    'proof' => [
+        'title'           => 'Proof of Registration',
+        'upload_subtitle' => 'To complete your registration, please attach a clear image of the bank transfer receipt.',
+    ],
     // == Registration Section: Submit Button ==
     'submit_button' => 'Complete Registration Now',
 ];
