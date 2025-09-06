@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'home' => '/',
+    'home' => 'client.home',
 
     /*
     |--------------------------------------------------------------------------
@@ -154,6 +154,17 @@ return [
             'confirmPassword' => true,
             // 'window' => 0,
         ]),
+    ],
+
+    'redirects' => [
+        'login' => '/',
+        'logout' => '/',
+        'register' => '/',
+        'password-reset' => '/login',
+        'password-confirmation' => '/',
+        'email-verification' => 'user/profile',
+        'two-factor-challenge' => '/',
+
     ],
 
 ];

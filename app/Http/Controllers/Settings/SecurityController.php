@@ -60,7 +60,7 @@ class SecurityController extends Controller
 
         return collect(
             DB::connection(config('session.connection'))->table(config('session.table', 'sessions'))
-                ->where('user_id', $request->user()->getAuthIdentifier())
+                ->where('user_id', $request->user('admin')->getAuthIdentifier())
                 ->orderBy('last_activity', 'desc')
                 ->get()
         )->map(function ($session) use ($request) {

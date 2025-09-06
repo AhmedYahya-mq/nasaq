@@ -7,6 +7,7 @@ use App\Http\Responses\Auth\FailedTwoFactorLoginResponse;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Laravel\Fortify\Contracts\TwoFactorLoginResponse;
 use Laravel\Fortify\Events\RecoveryCodeReplaced;
@@ -30,7 +31,7 @@ class TwoFactorAuthenticatedSessionController extends Controller
      */
     public function __construct(StatefulGuard $guard)
     {
-        $this->guard = $guard;
+        $this->guard = Auth::guard('admin');
     }
 
     /**
@@ -60,20 +61,14 @@ class TwoFactorAuthenticatedSessionController extends Controller
         $user = $request->challengedUser();
         if ($code = $request->validRecoveryCode()) {
             $user->replaceRecoveryCode($code);
-
             event(new RecoveryCodeReplaced($user, $code));
-        } elseif (! $request->hasValidCode()) {
+        } elseif (!$request->hasValidCode()) {
             event(new TwoFactorAuthenticationFailed($user));
-
             return app(FailedTwoFactorLoginResponse::class)->toResponse($request, "admin.two-factor.login");
         }
-
         event(new ValidTwoFactorAuthenticationCodeProvided($user));
-
         $this->guard->login($user, $request->remember());
-
         $request->session()->regenerate();
-
         return app(TwoFactorLoginResponse::class);
     }
 }

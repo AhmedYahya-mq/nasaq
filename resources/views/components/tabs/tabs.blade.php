@@ -4,7 +4,7 @@
     <div class="flex border-b border-primary/50 p-3 pb-0">
         {{ $header ?? '' }}
     </div>
-    <div class="mt-4 p-4 relative">
+    <div class="mt-4 p-4">
         {{ $slot }}
     </div>
 </div>

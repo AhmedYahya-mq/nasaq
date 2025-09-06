@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function __construct(StatefulGuard $guard)
     {
-        $this->guard = $guard;
+        $this->guard = Auth::guard('admin');
     }
 
     /**
@@ -78,7 +78,7 @@ class AuthenticatedSessionController extends Controller
                 call_user_func(Fortify::$authenticateThroughCallback, $request)
             ));
         }
-
+        
         if (is_array(config('fortify.pipelines.login'))) {
             return (new Pipeline(app()))->send($request)->through(array_filter(
                 config('fortify.pipelines.login')

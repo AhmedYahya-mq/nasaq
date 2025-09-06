@@ -1,7 +1,5 @@
 <?php
 
-use App\Actions\Fortify\TwoFactorAuthenticatedSessionController;
-use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Settings\PasswordController;
 use App\Http\Controllers\Settings\ProfileController;
 use App\Http\Controllers\Settings\SecurityController;
