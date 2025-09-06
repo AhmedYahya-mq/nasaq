@@ -42,7 +42,7 @@ class OtherBrowserSessionsController extends Controller
         }
 
         DB::connection(config('session.connection'))->table(config('session.table', 'sessions'))
-            ->where('user_id', $request->user()->getAuthIdentifier())
+            ->where('user_id', $request->user('admin')->getAuthIdentifier())
             ->where('id', '!=', $request->session()->getId())
             ->delete();
     }
@@ -61,7 +61,7 @@ class OtherBrowserSessionsController extends Controller
         }
 
         DB::connection(config('session.connection'))->table(config('session.table', 'sessions'))
-            ->where('user_id', $request->user()->getAuthIdentifier())
+            ->where('user_id', $request->user('admin')->getAuthIdentifier())
             ->where('id', '=', $sessionId)
             ->delete();
 

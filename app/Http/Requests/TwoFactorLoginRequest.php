@@ -59,7 +59,6 @@ class TwoFactorLoginRequest extends RequestsTwoFactorLoginRequest
 
     public function prepareForValidation()
     {
-
         if ($this->has('code')) {
             $this->merge([
                 'code' => str_replace('-', '', $this->code)

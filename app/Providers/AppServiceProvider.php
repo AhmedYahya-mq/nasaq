@@ -17,14 +17,29 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $bindingResponses = [
-            // Auth
+            // Auth Admin
             \App\Contract\Auth\PasswordResetResponse::class => \App\Http\Responses\Auth\PasswordResetResponse::class,
             \App\Contract\Auth\FailedPasswordResetResponse::class => \App\Http\Responses\Auth\FailedPasswordResetResponse::class,
             \App\Contract\Auth\SuccessfulPasswordResetLinkRequestResponse::class => \App\Http\Responses\Auth\SuccessfulPasswordResetLinkRequestResponse::class,
             \App\Contract\Auth\FailedPasswordResetLinkRequestResponse::class => \App\Http\Responses\Auth\FailedPasswordResetLinkRequestResponse::class,
             \App\Contract\Auth\FailedTwoFactorLoginResponse::class => \App\Http\Responses\Auth\FailedTwoFactorLoginResponse::class,
+
+            // Auth Client
+            \Laravel\Fortify\Contracts\LoginViewResponse::class => \App\Http\Responses\AuthClient\LoginViewResponse::class,
+            \Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse::class => \App\Http\Responses\AuthClient\TwoFactorChallengeViewResponse::class,
+            \Laravel\Fortify\Contracts\RequestPasswordResetLinkViewResponse::class => \App\Http\Responses\AuthClient\RequestPasswordResetLinkViewResponse::class,
+            \Laravel\Fortify\Contracts\ResetPasswordViewResponse::class => \App\Http\Responses\AuthClient\ResetPasswordViewResponse::class,
+
+
+            // profile client
+            \App\Contract\User\Profile\PhotoResponse::class => \App\Http\Responses\User\Profile\PhotoResponse::class,
+
+            // Views
         ];
-        $bindingRequests = [];
+        $bindingRequests = [
+            // user profile
+            \App\Contract\User\Profile\PhotoRequest::class => \App\Http\Requests\User\Profile\PhotoRequest::class,
+        ];
         $bindingResources = [];
 
         $bindings = array_merge($bindingResponses, $bindingRequests, $bindingResources);

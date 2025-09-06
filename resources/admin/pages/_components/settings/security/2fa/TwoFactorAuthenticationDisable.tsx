@@ -4,7 +4,7 @@ import { disable, recoveryCodes, regenerateRecoveryCodes } from "@/routes/admin/
 import { Link } from "@inertiajs/react";
 import axios from "axios";
 import { CheckCheckIcon, CopyIcon, DownloadIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 export default function TwoFactorAuthenticationDisable() {

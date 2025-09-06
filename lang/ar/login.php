@@ -25,6 +25,7 @@ return [
     'email_placeholder' => 'email@example.com',
     'password' => 'كلمة المرور',
     'password_placeholder' => '********',
+    'remember_me' => 'تذكرني',
 
     // ...
     'reset_password_title'    => 'إعادة تعيين كلمة المرور',
@@ -35,13 +36,15 @@ return [
 
 
     // --- نصوص التحقق بخطوتين (2FA) ---
-    '2fa_title' => 'التحقق من هويتك',
-    '2fa_subtitle' => 'لحماية حسابك، يرجى إكمال خطوة التحقق التالية.',
-    '2fa_app_code_label' => 'رمز تطبيق المصادقة',
-    '2fa_recovery_code_label' => 'مفتاح الاسترداد',
-    '2fa_code_placeholder' => '· · · · · ·', // استخدام نقاط لإيحاء بالأمان
-    '2fa_recovery_code_placeholder' => 'أدخل مفتاح الاسترداد',
-    '2fa_verify_button' => 'تأكيد ومتابعة',
+    '2fa_title_code' => 'رمز المصادقة الثنائية',
+    '2fa_subtitle_code' => 'أدخل الرمز المكوَّن من 6 أرقام الذي يولده تطبيق المصادقة على هاتفك لتأكيد تسجيل الدخول.',
+    '2fa_title_recovery' => 'رمز الاسترداد',
+    '2fa_subtitle_recovery' => 'أدخل الرمز المكوَّن من 6 أرقام الذي يولده تطبيق المصادقة على هاتفك لتأكيد تسجيل الدخول.',
+    '2fa_app_code_label' => 'رمز',
+    '2fa_recovery_code_label' => 'رمز الاسترداد',
+    '2fa_code_placeholder' => 'xxx-xxx',
+    '2fa_recovery_placeholder' => 'xxxxxxxxxxx-xxxxxxxxxx',
+    '2fa_verify_button' => 'تأكيد',
     '2fa_use_recovery_code' => 'استخدام مفتاح استرداد بدلاً من ذلك',
-    '2fa_use_app_code' => 'استخدام تطبيق المصادقة',
+    '2fa_use_app_code' => 'استخدم رمز المصادقة الثنائية بدلاً من ذلك',
 ];

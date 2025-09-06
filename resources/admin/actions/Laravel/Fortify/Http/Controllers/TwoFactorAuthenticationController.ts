@@ -2,69 +2,14 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/user/two-factor-authentication'
- */
-const storea8b3ee4b2a14cda802d531b78132d05f = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: storea8b3ee4b2a14cda802d531b78132d05f.url(options),
-    method: 'post',
-})
-
-storea8b3ee4b2a14cda802d531b78132d05f.definition = {
-    methods: ["post"],
-    url: '/user/two-factor-authentication',
-} satisfies RouteDefinition<["post"]>
-
-/**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/user/two-factor-authentication'
- */
-storea8b3ee4b2a14cda802d531b78132d05f.url = (options?: RouteQueryOptions) => {
-    return storea8b3ee4b2a14cda802d531b78132d05f.definition.url + queryParams(options)
-}
-
-/**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/user/two-factor-authentication'
- */
-storea8b3ee4b2a14cda802d531b78132d05f.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: storea8b3ee4b2a14cda802d531b78132d05f.url(options),
-    method: 'post',
-})
-
-    /**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/user/two-factor-authentication'
- */
-    const storea8b3ee4b2a14cda802d531b78132d05fForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: storea8b3ee4b2a14cda802d531b78132d05f.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/user/two-factor-authentication'
- */
-        storea8b3ee4b2a14cda802d531b78132d05fForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: storea8b3ee4b2a14cda802d531b78132d05f.url(options),
-            method: 'post',
-        })
-    
-    storea8b3ee4b2a14cda802d531b78132d05f.form = storea8b3ee4b2a14cda802d531b78132d05fForm
-    /**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::store
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
  * @route '/admin/user/two-factor-authentication'
  */
-const storee8dc4d1c850af5778a373f1adb88ae48 = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: storee8dc4d1c850af5778a373f1adb88ae48.url(options),
+export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
     method: 'post',
 })
 
-storee8dc4d1c850af5778a373f1adb88ae48.definition = {
+store.definition = {
     methods: ["post"],
     url: '/admin/user/two-factor-authentication',
 } satisfies RouteDefinition<["post"]>
@@ -74,8 +19,8 @@ storee8dc4d1c850af5778a373f1adb88ae48.definition = {
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
  * @route '/admin/user/two-factor-authentication'
  */
-storee8dc4d1c850af5778a373f1adb88ae48.url = (options?: RouteQueryOptions) => {
-    return storee8dc4d1c850af5778a373f1adb88ae48.definition.url + queryParams(options)
+store.url = (options?: RouteQueryOptions) => {
+    return store.definition.url + queryParams(options)
 }
 
 /**
@@ -83,8 +28,8 @@ storee8dc4d1c850af5778a373f1adb88ae48.url = (options?: RouteQueryOptions) => {
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
  * @route '/admin/user/two-factor-authentication'
  */
-storee8dc4d1c850af5778a373f1adb88ae48.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: storee8dc4d1c850af5778a373f1adb88ae48.url(options),
+store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: store.url(options),
     method: 'post',
 })
 
@@ -93,8 +38,8 @@ storee8dc4d1c850af5778a373f1adb88ae48.post = (options?: RouteQueryOptions): Rout
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
  * @route '/admin/user/two-factor-authentication'
  */
-    const storee8dc4d1c850af5778a373f1adb88ae48Form = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: storee8dc4d1c850af5778a373f1adb88ae48.url(options),
+    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: store.url(options),
         method: 'post',
     })
 
@@ -103,94 +48,23 @@ storee8dc4d1c850af5778a373f1adb88ae48.post = (options?: RouteQueryOptions): Rout
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
  * @route '/admin/user/two-factor-authentication'
  */
-        storee8dc4d1c850af5778a373f1adb88ae48Form.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: storee8dc4d1c850af5778a373f1adb88ae48.url(options),
+        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: store.url(options),
             method: 'post',
         })
     
-    storee8dc4d1c850af5778a373f1adb88ae48.form = storee8dc4d1c850af5778a373f1adb88ae48Form
-
-export const store = {
-    '/user/two-factor-authentication': storea8b3ee4b2a14cda802d531b78132d05f,
-    '/admin/user/two-factor-authentication': storee8dc4d1c850af5778a373f1adb88ae48,
-}
-
+    store.form = storeForm
 /**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
- * @route '/user/two-factor-authentication'
- */
-const destroya8b3ee4b2a14cda802d531b78132d05f = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: destroya8b3ee4b2a14cda802d531b78132d05f.url(options),
-    method: 'delete',
-})
-
-destroya8b3ee4b2a14cda802d531b78132d05f.definition = {
-    methods: ["delete"],
-    url: '/user/two-factor-authentication',
-} satisfies RouteDefinition<["delete"]>
-
-/**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
- * @route '/user/two-factor-authentication'
- */
-destroya8b3ee4b2a14cda802d531b78132d05f.url = (options?: RouteQueryOptions) => {
-    return destroya8b3ee4b2a14cda802d531b78132d05f.definition.url + queryParams(options)
-}
-
-/**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
- * @route '/user/two-factor-authentication'
- */
-destroya8b3ee4b2a14cda802d531b78132d05f.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: destroya8b3ee4b2a14cda802d531b78132d05f.url(options),
-    method: 'delete',
-})
-
-    /**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
- * @route '/user/two-factor-authentication'
- */
-    const destroya8b3ee4b2a14cda802d531b78132d05fForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: destroya8b3ee4b2a14cda802d531b78132d05f.url({
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'DELETE',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
- * @route '/user/two-factor-authentication'
- */
-        destroya8b3ee4b2a14cda802d531b78132d05fForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: destroya8b3ee4b2a14cda802d531b78132d05f.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'DELETE',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    destroya8b3ee4b2a14cda802d531b78132d05f.form = destroya8b3ee4b2a14cda802d531b78132d05fForm
-    /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::destroy
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
-const destroye8dc4d1c850af5778a373f1adb88ae48 = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: destroye8dc4d1c850af5778a373f1adb88ae48.url(options),
+export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(options),
     method: 'delete',
 })
 
-destroye8dc4d1c850af5778a373f1adb88ae48.definition = {
+destroy.definition = {
     methods: ["delete"],
     url: '/admin/user/two-factor-authentication',
 } satisfies RouteDefinition<["delete"]>
@@ -200,8 +74,8 @@ destroye8dc4d1c850af5778a373f1adb88ae48.definition = {
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
-destroye8dc4d1c850af5778a373f1adb88ae48.url = (options?: RouteQueryOptions) => {
-    return destroye8dc4d1c850af5778a373f1adb88ae48.definition.url + queryParams(options)
+destroy.url = (options?: RouteQueryOptions) => {
+    return destroy.definition.url + queryParams(options)
 }
 
 /**
@@ -209,8 +83,8 @@ destroye8dc4d1c850af5778a373f1adb88ae48.url = (options?: RouteQueryOptions) => {
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
-destroye8dc4d1c850af5778a373f1adb88ae48.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: destroye8dc4d1c850af5778a373f1adb88ae48.url(options),
+destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: destroy.url(options),
     method: 'delete',
 })
 
@@ -219,8 +93,8 @@ destroye8dc4d1c850af5778a373f1adb88ae48.delete = (options?: RouteQueryOptions): 
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
-    const destroye8dc4d1c850af5778a373f1adb88ae48Form = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: destroye8dc4d1c850af5778a373f1adb88ae48.url({
+    const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: destroy.url({
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'DELETE',
                         ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -234,8 +108,8 @@ destroye8dc4d1c850af5778a373f1adb88ae48.delete = (options?: RouteQueryOptions): 
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
  * @route '/admin/user/two-factor-authentication'
  */
-        destroye8dc4d1c850af5778a373f1adb88ae48Form.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: destroye8dc4d1c850af5778a373f1adb88ae48.url({
+        destroyForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: destroy.url({
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'DELETE',
                             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -244,13 +118,7 @@ destroye8dc4d1c850af5778a373f1adb88ae48.delete = (options?: RouteQueryOptions): 
             method: 'post',
         })
     
-    destroye8dc4d1c850af5778a373f1adb88ae48.form = destroye8dc4d1c850af5778a373f1adb88ae48Form
-
-export const destroy = {
-    '/user/two-factor-authentication': destroya8b3ee4b2a14cda802d531b78132d05f,
-    '/admin/user/two-factor-authentication': destroye8dc4d1c850af5778a373f1adb88ae48,
-}
-
+    destroy.form = destroyForm
 const TwoFactorAuthenticationController = { store, destroy }
 
 export default TwoFactorAuthenticationController

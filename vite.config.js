@@ -18,13 +18,20 @@ export default defineConfig({
             formVariants: true,
             patterns: ['app/Http/Controllers/Auth/*.php', 'app/Http/Controllers/Admin/*.php'],
             path: 'resources/admin/',
-            command: 'php artisan wayfinder:generate --with-form',
+            command: 'php artisan wayfinder:generate-user --routes-name=admin --with-form',
+        }),
+        wayfinder({
+            formVariants: true,
+            path: 'resources/js/',
+            actions: false,
+            command: 'php artisan wayfinder:generate-user --routes-name=client,user-profile-information,verification.send,user-password.update --with-form',
         }),
     ],
     resolve: {
+        extensions: ['.js', '.ts', '.jsx', '.tsx', '.d.ts'],
         alias: {
-            '@': path.resolve(__dirname, 'resources/admin') // أو resources/js/app
-
+            '@': path.resolve(__dirname, 'resources/admin'),
+            '@client': path.resolve(__dirname, 'resources/js'),
         },
     },
     build: {
