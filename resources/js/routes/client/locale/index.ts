@@ -486,6 +486,100 @@ library.head = (args?: { locale?: string | number } | [locale: string | number ]
         })
     
     library.form = libraryForm
+/**
+ * @see routes/user.php:71
+ * @route '/{locale?}/blogs'
+ */
+export const blogs = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: blogs.url(args, options),
+    method: 'get',
+})
+
+blogs.definition = {
+    methods: ["get","head"],
+    url: '/{locale?}/blogs',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:71
+ * @route '/{locale?}/blogs'
+ */
+blogs.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { locale: args }
+    }
+
+    
+    if (Array.isArray(args)) {
+        args = {
+                    locale: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    validateParameters(args, [
+            "locale",
+        ])
+
+    const parsedArgs = {
+                        locale: args?.locale,
+                }
+
+    return blogs.definition.url
+            .replace('{locale?}', parsedArgs.locale?.toString() ?? '')
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:71
+ * @route '/{locale?}/blogs'
+ */
+blogs.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: blogs.url(args, options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:71
+ * @route '/{locale?}/blogs'
+ */
+blogs.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: blogs.url(args, options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:71
+ * @route '/{locale?}/blogs'
+ */
+    const blogsForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: blogs.url(args, options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:71
+ * @route '/{locale?}/blogs'
+ */
+        blogsForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: blogs.url(args, options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:71
+ * @route '/{locale?}/blogs'
+ */
+        blogsForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: blogs.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    blogs.form = blogsForm
 const locale = {
     profile,
 twoFactor,
@@ -494,6 +588,7 @@ home,
 about,
 events,
 library,
+blogs,
 }
 
 export default locale

@@ -372,6 +372,77 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
     
     library.form = libraryForm
+/**
+ * @see routes/user.php:71
+ * @route '/blogs'
+ */
+export const blogs = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: blogs.url(options),
+    method: 'get',
+})
+
+blogs.definition = {
+    methods: ["get","head"],
+    url: '/blogs',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:71
+ * @route '/blogs'
+ */
+blogs.url = (options?: RouteQueryOptions) => {
+    return blogs.definition.url + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:71
+ * @route '/blogs'
+ */
+blogs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: blogs.url(options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:71
+ * @route '/blogs'
+ */
+blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: blogs.url(options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:71
+ * @route '/blogs'
+ */
+    const blogsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: blogs.url(options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:71
+ * @route '/blogs'
+ */
+        blogsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: blogs.url(options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:71
+ * @route '/blogs'
+ */
+        blogsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: blogs.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    blogs.form = blogsForm
 const client = {
     twoFactor,
 locale,
@@ -381,6 +452,7 @@ home,
 about,
 events,
 library,
+blogs,
 }
 
 export default client

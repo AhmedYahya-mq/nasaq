@@ -157,7 +157,7 @@ confirm.post = (args?: { locale?: string | number } | [locale: string | number ]
     confirm.form = confirmForm
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
  * @route '/{locale?}/user/two-factor-authentication'
  */
 export const disable = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -172,7 +172,7 @@ disable.definition = {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
  * @route '/{locale?}/user/two-factor-authentication'
  */
 disable.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -204,7 +204,7 @@ disable.url = (args?: { locale?: string | number } | [locale: string | number ] 
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
  * @route '/{locale?}/user/two-factor-authentication'
  */
 disable.delete = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -214,7 +214,7 @@ disable.delete = (args?: { locale?: string | number } | [locale: string | number
 
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
  * @route '/{locale?}/user/two-factor-authentication'
  */
     const disableForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -229,7 +229,7 @@ disable.delete = (args?: { locale?: string | number } | [locale: string | number
 
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:34
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
  * @route '/{locale?}/user/two-factor-authentication'
  */
         disableForm.delete = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

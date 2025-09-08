@@ -67,3 +67,7 @@ Route::get('/events', function () {
 Route::get('/library', function () {
     return view('library');
 })->name('library');
+
+Route::get('/blogs', function () {
+    return view('blogs');
+})->name('blogs');
