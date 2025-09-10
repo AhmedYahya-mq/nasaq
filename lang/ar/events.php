@@ -18,6 +18,7 @@ return [
         'riyadh_meeting' => 'لقاء الربع الثالث - الرياض',
         'research_workshop' => 'ورشة عمل - المنهجية البحثية',
         'first_graduates_meeting' => 'لقاء الخريجين الأول',
+        'view_all_archives' => 'عرض كل الأرشيفات',
     ],
 
     'time' => [
