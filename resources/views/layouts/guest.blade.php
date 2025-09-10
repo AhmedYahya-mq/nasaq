@@ -5,11 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ __($title) }}</title>
+    @stack('scripts')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="relative" >
-    <div class="max-h-dvh overflow-hidden relative overflow-x-hidden scrollbar scroll-container">
+    <div class="max-h-dvh relative overflow-hidden overflow-x-hidden scrollbar scroll-container">
         <x-topbar />
         <x-header />
 
@@ -20,8 +21,7 @@
         <x-footer />
     </div>
     <x-loading />
-    @stack('modals')
-
+    @stack('models')
 </body>
 
 </html>

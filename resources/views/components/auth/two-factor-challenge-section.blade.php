@@ -1,7 +1,3 @@
-@props([
-    'actionUrl' => '#',
-])
-
 <section
     x-data="{ authMethod: 'app' }"
     class="min-h-screen flex-center p-4 sm:p-6"

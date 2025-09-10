@@ -15,10 +15,15 @@
         {{-- Mobile Menu --}}
 
         <div class="flex-center gap-x-5">
-            {{-- <button class="bg-background/5  relative md:px-4 px-2 py-1 shadow rounded-xl flex-center">
-                 سجل معنا
-            </button> --}}
-            <x-ui.toggle-menu-profile />
+
+            @auth('web')
+                <x-ui.toggle-menu-profile :user="Auth::guard()->user() "/>
+            @else
+                <a href="{{ route('login') }}"
+                    class="bg-background/5 relative md:px-4 px-2 py-1 shadow rounded-xl flex-center">
+                    تسجيل الدخول
+                </a>
+            @endauth
             <div class="flex-center gap-x-1">
                 <x-ui.button-toggle-menu />
             </div>

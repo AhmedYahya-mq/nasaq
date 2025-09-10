@@ -1,6 +1,6 @@
 import { stagger, text, onScroll, utils, animate, createTimer, svg } from 'animejs';
 import { getTranslateX } from '../utils/getTranslate';
-const [container] = utils.$('.scroll-container');
+const [container] = utils.$('.scroll-container') || [];
 const debug = false;
 
 /**
@@ -58,9 +58,9 @@ export function scrollAnimationText(selector, type = 'lines') {
             loop: false,
             autoplay: onScroll({
                 target: el.parentNode,
-                axis: 'y',
                 offset: el.scrollTop,
                 container,
+                axis: 'y',
                 debug,
             })
         }));
@@ -88,7 +88,6 @@ export function drawSvgLines(selector, duration = 1000, delayStep = 500) {
             loop: false,
             autoplay: onScroll({
                 target: el.parentNode,
-                axis: 'y',
                 offset: el.scrollTop,
                 container,
                 enter: 'bottom-=150 top-=120',
@@ -137,5 +136,4 @@ export default () => {
     scrollAnimationText('.text-animetion', 'lines');       // للعنوانين أو النصوص الكبيرة
     scrollAnimationText('.text-normal-animation', 'lines'); // للنصوص العادية
     animateCardsOnScroll();
-
 };

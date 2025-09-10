@@ -1,5 +1,5 @@
 <label x-data="{ open: false }" class="relative lg:hidden cursor-pointer flex items-center justify-center">
-    <input type="checkbox" class="peer hidden" />
+    <input data-button-toggle-menu type="checkbox" class="peer hidden" />
 
     <svg viewBox="0 0 32 32" class="h-8 transition-transform duration-600 ease-in-out peer-checked:rotate-[-45deg]">
         <!-- Top & Bottom Line -->
