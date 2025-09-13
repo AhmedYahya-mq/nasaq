@@ -16,7 +16,7 @@ export default function AppSidebarLayout({ children, breadcrumbs = [] }: PropsWi
                     {children}
                 </AppContent>
             </AppShell>
-            <Toaster position="top-right" richColors />
+            <Toaster position="top-center" richColors />
         </>
     );
 }

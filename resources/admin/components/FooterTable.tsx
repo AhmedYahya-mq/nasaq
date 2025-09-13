@@ -15,6 +15,7 @@ interface FooterTableProps<TData> {
 
 export default function FooterTable<TData>({ table }: FooterTableProps<TData>) {
   const { pageIndex, pageSize } = table.getState().pagination;
+    console.log('Rendering FooterTable with pageIndex:', pageIndex, 'and pageSize:', pageSize);
 
   return (
     <div className="flex items-center justify-between px-4">

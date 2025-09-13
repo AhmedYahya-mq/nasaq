@@ -164,7 +164,7 @@
                 تسجيل الخروج لكل
             </span>
         </div>
-        <div class="flex flex-col gap-3 py-5 scrollbar !overflow-hidden hover:!overflow-y-scroll max-h-80">
+        <div class="flex flex-col gap-3 py-5 scrollbar !overflow-hidden hover:!overflow-y-auto max-h-80">
             @forelse ($sessions as $session)
                 <x-ui.device-session-item :session="$session" />
             @empty

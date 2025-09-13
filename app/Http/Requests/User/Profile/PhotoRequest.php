@@ -29,9 +29,6 @@ class PhotoRequest extends FormRequest implements \App\Contract\User\Profile\Pho
 
     protected function passedValidation(): void
     {
-        // move the uploaded file to a temporary location photos/profile-photos/{user_id}/{time}_profile.{extension}
-        // and delete the old photo if exists and update the user photo path
-
         $user = $this->user();
         if ($this->hasFile('photo')) {
             $file = $this->file('photo');

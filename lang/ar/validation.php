@@ -101,6 +101,9 @@ return [
     'required_with_all'    => 'حقل :attribute مطلوب عندما تكون :values موجودة.',
     'required_without'     => 'حقل :attribute مطلوب عندما لا يكون :values موجود.',
     'required_without_all' => 'حقل :attribute مطلوب عندما لا يكون أي من :values موجود.',
+    'prohibited'           => 'حقل :attribute محظور.',
+    'prohibited_if'        => 'حقل :attribute محظور عندما يكون :other بقيمة :value.',
+    'prohibited_unless'    => 'حقل :attribute محظور إلا إذا كان :other بقيمة :values.',
     'same'                 => ':attribute و :other يجب أن يكونا متطابقين.',
     'size'                 => [
         'numeric' => ':attribute يجب أن يكون :size.',
@@ -146,8 +149,23 @@ return [
         'title' => 'العنوان',
         'content' => 'المحتوى',
         'g-recaptcha-response' => 'التحقق البشري',
-        'terms' => 'الشروط والأحكام'
-        
+        'terms' => 'الشروط والأحكام',
+        'category' => 'التصنيف',
+        'tags' => 'الوسوم',
+        'excerpt' => 'المقتطف',
+        'date' => 'التاريخ',
+        'time' => 'الوقت',
+        'available_slots' => 'الأماكن المتاحة',
+        'is_active' => 'مفعل',
+        'price' => 'السعر',
+        'discounted_price' => 'السعر بعد الخصم',
+        'duration_days' => 'مدة الاشتراك بالأيام',
+        'requirements' => 'المتطلبات',
+        'features' => 'المميزات',
+        'sort_order' => 'ترتيب العرض',
+        'features.*' => 'الميزة',
+        'requirements.*' => 'المتطلب',
+        'description' => 'الوصف',
     ],
 
 ];

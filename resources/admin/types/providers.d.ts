@@ -1,9 +1,4 @@
-
-interface OpenFormContextType {
-    setOpen?: (value: boolean) => void;
-}
-
-
+import { Membership } from "./model/membership.d";
 
 interface OpenFormProviderProps<FormDataType = any> {
     useFormTem?: (
@@ -21,3 +16,13 @@ interface OpenFormProviderProps<FormDataType = any> {
     };
     children: ReactNode;
 }
+
+interface AlertConfirmProviderProps {
+    children: ReactNode;
+    onConfirm: (id: string | number) => void;
+}
+
+export {
+    OpenFormProviderProps,
+    AlertConfirmProviderProps
+};

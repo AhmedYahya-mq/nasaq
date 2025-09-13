@@ -211,6 +211,13 @@
         @apply text-sm text-muted-foreground;
     }
 
+    .required-label::after {
+        content: "*";
+        margin-right: 0.15rem;
+        font-size: 1.4rem;
+        color: theme("colors.red.500");
+    }
+
 }
 
 @utility rtl {

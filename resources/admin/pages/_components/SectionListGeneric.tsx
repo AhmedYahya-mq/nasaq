@@ -2,7 +2,8 @@ import { JSX } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import FilterSection from "./FilterSection";
 import Table from "./Table";
-
+import DialogComponenet from "./DialogComponenet";
+import { ColumnLabels } from "@/types";
 interface HookProps {
     selectedRow: any | null;
     setSelectedRow: (v: any | null) => void;
@@ -16,14 +17,12 @@ interface HookProps {
 interface SectionListGenericProps {
     children?: React.ReactNode;
     initHook: HookProps;
-    DialogComponent: any;
-    filterControls?: JSX.Element | null;
+    columnLabels?: Record<string, ColumnLabels>;
 }
 
 export default function SectionListGeneric({
     children,
-    DialogComponent,
-    filterControls = null,
+    columnLabels,
     initHook
 }: SectionListGenericProps): JSX.Element {
     return (
@@ -40,7 +39,7 @@ export default function SectionListGeneric({
             <hr className="border-t border-accent" />
             <CardContent>
                 <Table isClient={initHook.isClient} columns={initHook.columns} table={initHook.table} setSelectedRow={initHook.setSelectedRow} />
-                <DialogComponent selectedRow={initHook.selectedRow} setSelectedRow={initHook.setSelectedRow} />
+                <DialogComponenet selectedRow={initHook.selectedRow} setSelectedRow={initHook.setSelectedRow} columnLabels={columnLabels} />
             </CardContent>
         </Card>
     );

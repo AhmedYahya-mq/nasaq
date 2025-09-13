@@ -2,7 +2,7 @@ import AppLayout from '@/layouts/app-layout';
 import { membershipApplications } from '@/routes/admin';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
-import SectionListMembershipApplications from './_components/membershipApplication/SectionListMembershipApplications';
+import SectionListMembershipApplications from '../../_components/membershipApplication/SectionListMembershipApplications';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
