@@ -10,7 +10,7 @@
         name="{{ $name }}_display"
         value="{{ $value }}"
         {{ $attributes }}
-        label="رقم الجوال"
+        label="{{ $label ?? 'رقم الهاتف' }}"
         x-ref="input"
         class="w-full border rounded p-2"
     />

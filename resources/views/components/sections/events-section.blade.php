@@ -68,12 +68,25 @@
             </h2>
             <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <x-events.archive-card title="{{ __('events.event_titles.first_graduates_meeting') }}"
+                imageUrl="https://images.unsplash.com/photo-1555066931-4365d14bab8c"
                     date="2025-06-05" time="06:00 {{ __('events.time.evening') }}"
                     filesUrl="https://www.example.com/file.pdf" registrationUrl="https://example.com/video" />
                 <x-events.archive-card title="{{ __('events.event_titles.first_graduates_meeting') }}"
                     date="2025-06-05" time="06:00 {{ __('events.time.evening') }}"
+                    imageUrl="https://images.unsplash.com/photo-1555066931-4365d14bab8c"
                     filesUrl="https://www.example.com/file.pdf" registrationUrl="https://example.com/video" />
             </div>
+
+               {{-- 3. زر "مشاهدة الكل" في الأسفل --}}
+        <div class="text-center mt-12">
+            <a href="" {{-- استبدل 'archive.index' باسم الـ route الصحيح --}}
+               class="inline-flex items-center gap-2 px-6 py-3 text-base font-semibold text-primary-foreground bg-primary rounded-lg hover:bg-primary/90 transition-colors duration-200 shadow-md">
+                <span>{{ __('events.event_titles.view_all_archives') }}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+            </a>
+        </div>
         </div>
 
     </div>

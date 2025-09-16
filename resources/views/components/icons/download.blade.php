@@ -1,3 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" class="{{ $class }}" viewBox="0 0 20 20" fill="currentColor">
-  <path fill-rule="evenodd" d="M10 14a1 1 0 0 1-.707-.293l-5-5a1 1 0 1 1 1.414-1.414L9 10.586V3a1 1 0 1 1 2 0v7.586l3.293-3.293a1 1 0 0 1 1.414 1.414l-5 5A1 1 0 0 1 10 14z" clip-rule="evenodd"/>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 24 24"
+     fill="none"
+     stroke="currentColor"
+     {{ $attributes->merge(['class' => 'w-6 h-6']) }}>
+  <path stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
 </svg>

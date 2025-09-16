@@ -18,6 +18,7 @@ return [
         'riyadh_meeting' => 'Q3 Meeting - Riyadh',
         'research_workshop' => 'Research Methodology Workshop',
         'first_graduates_meeting' => 'First Graduates Meeting',
+        'view_all_archives' => 'View All Archives',
     ],
 
     'time' => [
