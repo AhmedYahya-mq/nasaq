@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
 @import 'tailwindcss';
 @plugin 'tailwindcss-animate';
 @config "../../tailwind.config.js";
@@ -11,8 +12,9 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
 @theme {
-    --font-sans:
+    --font-sans: 'Tajawal',
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --radius-lg: var(--radius);
@@ -207,6 +209,13 @@
 
     .card-description {
         @apply text-sm text-muted-foreground;
+    }
+
+    .required-label::after {
+        content: "*";
+        margin-right: 0.15rem;
+        font-size: 1.4rem;
+        color: theme("colors.red.500");
     }
 
 }

@@ -1,4 +1,4 @@
-import { dashboard, membership, membershipApplications } from "@/routes/admin";
+import { blogs, dashboard, membership, membershipApplications } from "@/routes/admin";
 import { NavItem } from "@/types";
 import { BookOpen, Box, Folder, LayoutGrid, Users } from "lucide-react";
 
@@ -26,6 +26,12 @@ const mainNavItems: NavItem[] = [
                 isActive: false,
             },
         ],
+    },
+     {
+        title: 'الدونات',
+        href: blogs(),
+        icon: Users,
+        isActive: false,
     },
     {
         title: 'Components',

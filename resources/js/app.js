@@ -6,6 +6,7 @@ import focus from '@alpinejs/focus';
 import registerThemeStore from './stores/theme';
 import registerMenuStore from './stores/menu';
 
+
 // استيراد الـ Modules
 import loading from './components/loading';
 import dropdown from './components/dropdown';
@@ -19,7 +20,6 @@ import phoneInput from './components/tel';
 
 window.Alpine = Alpine;
 Alpine.plugin(focus);
-
 // تسجيل الـ Stores
 document.addEventListener('alpine:init', () => {
     registerThemeStore(Alpine);
@@ -30,8 +30,8 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('phoneInput', phoneInput);
     loading();
     buttonToggleMenu();
-
 });
+
 Alpine.start();
 
 document.addEventListener('DOMContentLoaded', () => {

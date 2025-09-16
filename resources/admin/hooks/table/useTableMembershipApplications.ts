@@ -6,9 +6,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import { MembershipApplication, UseTableMembershipApplicationsProps } from "@/types/membershipApplication";
-import { ComboboxItem } from "@/types";
-
+import { MembershipApplication, UseTableMembershipApplicationsProps } from "@/types/model/membershipApplication";
 
 
 export function useTableMembershipApplications({ applications , columns }: UseTableMembershipApplicationsProps) {

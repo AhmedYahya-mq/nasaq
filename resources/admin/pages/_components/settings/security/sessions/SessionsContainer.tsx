@@ -5,9 +5,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '@/com
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { destroy, destroyOne } from '@/routes/admin/sessions';
+import { destroy } from '@/routes/admin/sessions';
 import { type SecurityProps } from '@/types/shared/auth';
-import { Form, Link } from '@inertiajs/react';
+import { Form } from '@inertiajs/react';
 import { HelpCircleIcon, MonitorIcon, SmartphoneIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 

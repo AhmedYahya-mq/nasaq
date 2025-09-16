@@ -107,24 +107,24 @@
 ])>
 
     {{-- القسم العلوي: العنوان والسعر --}}
-    <div class="p-6 text-center">
+    <div class="p-2 text-center">
         @if($featured)
-            <div class="mb-4">
-                <span class="inline-block bg-primary text-primary-foreground text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider">
+            <div class="mb-2">
+                <span class="inline-block bg-primary text-primary-foreground text-lg font-bold px-4 py-1 rounded-full uppercase tracking-wider">
                     {{ __('memberships.most_popular', ['default' => 'الأكثر شيوعًا']) }}
                 </span>
             </div>
         @endif
 
-        <h3 class="text-2xl font-bold text-foreground">{{ $title }}</h3>
+        <h3 class="text-lg text-foreground">{{ $title }}</h3>
         <p class="text-sm text-muted-foreground mt-2 min-h-[40px]">{{ $desc }}</p>
 
-        <div class="my-6">
-            <div class="text-5xl font-extrabold text-foreground flex items-baseline justify-center gap-1">
+        <div class="my-2">
+            <div class="text-2xl font-bold text-foreground flex items-baseline justify-center gap-1">
                 <span>{{ $price }}</span>
                 <span class="text-lg font-medium text-muted-foreground">{{ $currency }}</span>
             </div>
-            <div class="mt-2 text-xs text-muted-foreground">
+            <div class=" text-xs text-muted-foreground">
                 {{ __('about.memberships.billing_cycle') }}
             </div>
         </div>

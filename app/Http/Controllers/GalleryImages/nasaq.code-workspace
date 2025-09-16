@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"path": "../../../.."
+		},
+		{
+			"path": "../../../../../my-image-package"
+		},
+		{
+			"path": "../../../../../gallery-images"
+		}
+	],
+	"settings": {
+		"sqltools.useNodeRuntime": true,
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"driver": "SQLite",
+				"database": "${workspaceFolder:nasaq}/database/database.sqlite",
+				"name": "nasaq"
+			}
+		]
+	}
+}

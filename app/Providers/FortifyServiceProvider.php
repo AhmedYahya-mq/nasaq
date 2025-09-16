@@ -27,13 +27,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->when([
-            AttemptToAuthenticate::class,
-            RedirectIfTwoFactorAuthenticatable::class,
-            PasswordResetLinkController::class,
-            NewPasswordController::class,
-            TwoFactorAuthenticatedSessionController::class
-        ])->needs(StatefulGuard::class)->give(fn() => Auth::guard('admin'));
+        
     }
 
     /**

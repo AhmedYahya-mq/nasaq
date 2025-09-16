@@ -1,32 +1,9 @@
-import { MembershipApplication } from "@/types/membershipApplication";
+import { MembershipApplication } from "@/types/model/membershipApplication";
 import { applicationStatusOptions, canResubmitOptions, paymentStatusOptions } from "./tableOptions";
 import { ExtendedColumnDef } from "@/types";
 import { TableCell } from "@/components/ui/table";
-import { actionsCell, booleanBadgeCell, dateCell, textCell } from "../tableHelpers";
+import { actionsCell, booleanBadgeCell, dateCell, textCell } from "../../lib/tableHelpers";
 import { Badge } from "@/components/ui/badge";
-
-export const applications: MembershipApplication[] = Array.from(
-    { length: 2000 },
-    (_, i) => ({
-        id: i + 1,
-        userId: 1000 + i,
-        membershipId: (i % 5) + 1,
-        formData: { field1: "قيمة تجريبية " + (i + 1) },
-        amount: Math.floor(Math.random() * 100) + 20,
-        // استخدام options
-        paymentStatus: paymentStatusOptions[i % paymentStatusOptions.length].value as
-            | "Pending"
-            | "Paid"
-            | "Failed",
-        applicationStatus: applicationStatusOptions[i % applicationStatusOptions.length].value as
-            | "Pending"
-            | "Approved"
-            | "Rejected",
-        canResubmit: canResubmitOptions[i % canResubmitOptions.length].value === "true",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-    })
-);
 
 // أعمدة الجدول
 export const columns: ExtendedColumnDef<MembershipApplication>[] = [
@@ -67,7 +44,7 @@ export const columns: ExtendedColumnDef<MembershipApplication>[] = [
     },
     {
         header: "Actions", accessorKey: "actions",
-        cell: actionsCell, nonHideable: true
+        cell: actionsCell(), nonHideable: true
     },
 ];
 
@@ -111,4 +88,6 @@ function renderPaymentStatus() {
         );
     };
 }
+
+export const applications: MembershipApplication[] = [];
 

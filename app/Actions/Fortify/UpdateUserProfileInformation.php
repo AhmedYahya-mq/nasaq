@@ -20,24 +20,32 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-
             'email' => [
                 'required',
                 'string',
-                'email',
+                'email:rfc,dns',
                 'max:255',
                 Rule::unique($user->getTable())->ignore($user->id),
             ],
+            'phone' => ['required', 'phone:AUTO'],
+            'birthday' => ['required', 'date'],
+            'address' => ['nullable', 'string', 'max:255'],
+            'job_title' => ['nullable', 'string', 'max:255'],
+            'bio' => ['nullable', 'string', 'max:500'],
         ])->validateWithBag('updateProfileInformation');
 
-        if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
-            $this->updateVerifiedUser($user, $input);
+        $data = collect($input)
+            ->filter(fn($value) => !is_null($value) && $value !== '') // تجاهل null والفارغ ''
+            ->only($user->getFillable())
+            ->toArray();
+
+        if (
+            $input['email'] !== $user->email &&
+            $user instanceof MustVerifyEmail
+        ) {
+            $this->updateVerifiedUser($user, $data);
         } else {
-            $user->forceFill([
-                'name' => $input['name'],
-                'email' => $input['email'],
-            ])->save();
+            $user->forceFill($data)->save();
         }
     }
 
@@ -46,14 +54,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      *
      * @param  array<string, string>  $input
      */
-    protected function updateVerifiedUser(Admin|User $user, array $input): void
+    protected function updateVerifiedUser(User $user, array $data): void
     {
-        $user->forceFill([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'email_verified_at' => null,
-        ])->save();
-
+        $user->forceFill(array_merge($data, ['email_verified_at' => null]))->save();
         $user->sendEmailVerificationNotification();
     }
 }

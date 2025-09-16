@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use Illuminate\Auth\Events\Failed;
 use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\LoginRateLimiter;
@@ -33,7 +34,9 @@ class AttemptToAuthenticate
      */
     public function __construct(StatefulGuard $guard, LoginRateLimiter $limiter)
     {
-        $this->guard = $guard;
+        $this->guard = request()->route()->getName() === 'admin.login.store'
+            ? Auth::guard('admin')
+            : $guard;
         $this->limiter = $limiter;
     }
 
@@ -52,8 +55,8 @@ class AttemptToAuthenticate
 
         if ($this->guard->attempt(
             $request->only(Fortify::username(), 'password'),
-            $request->boolean('remember'))
-        ) {
+            $request->boolean('remember')
+        )) {
             return $next($request);
         }
 

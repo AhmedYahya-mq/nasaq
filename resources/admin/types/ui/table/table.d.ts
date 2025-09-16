@@ -15,3 +15,10 @@ export interface RowsProps {
 export type ExtendedColumnDef<TData, TValue = any> = ColumnDef<TData, TValue> & {
     nonHideable?: boolean;
 };
+
+
+interface ButtonsActions {
+    onEdit: (item: any) => void;
+    onDelete: (item: any) => void;
+    onTranslate: (item: any) => void;
+}

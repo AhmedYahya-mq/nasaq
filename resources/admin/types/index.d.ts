@@ -89,3 +89,28 @@ interface ComboboxItem {
 export type ExtendedColumnDef<TData, TValue = any> = ColumnDef<TData, TValue> & {
     nonHideable?: boolean;
 };
+
+export interface ColumnLabels {
+    label: string;
+    prefix?: React.ReactNode;
+    suffix?: React.ReactNode;
+    render?: (value: any) => React.ReactNode;
+}
+
+
+export interface Links {
+    first: string | null;
+    last: string | null;
+    prev: string | null;
+    next: string | null;
+}
+
+export interface MetaPagination {
+    total: number,
+    count: number,
+    per_page: number,
+    current_page: number,
+    total_pages: number,
+    sort_by: string | null,
+    sort_order: 'asc' | 'desc' | null,
+}

@@ -20,8 +20,9 @@
         {{-- زر لكل لغة --}}
         @php
             $routeName = Route::currentRouteName();
-            $routeBase = strstr($routeName, '.', false) ? substr($routeName, strpos($routeName, '.') + 1) : $routeName;
-            $routeName = 'locale.' . $routeBase;
+            $routeBase = str_replace('client.', '', $routeName);
+            $routeBase = str_replace('locale.', '', $routeBase);
+            $routeName = 'client.locale.' . $routeBase;
         @endphp
         @foreach (['ar' => 'ar', 'en' => 'en'] as $key => $lang)
             <a href="{{ route($routeName, $key) }}" @class([
