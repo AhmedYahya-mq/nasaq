@@ -488,6 +488,194 @@ library.head = (args?: { locale?: string | number } | [locale: string | number ]
     library.form = libraryForm
 /**
  * @see routes/user.php:65
+ * @route '/{locale?}/archives'
+ */
+export const archives = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: archives.url(args, options),
+    method: 'get',
+})
+
+archives.definition = {
+    methods: ["get","head"],
+    url: '/{locale?}/archives',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:65
+ * @route '/{locale?}/archives'
+ */
+archives.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { locale: args }
+    }
+
+    
+    if (Array.isArray(args)) {
+        args = {
+                    locale: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    validateParameters(args, [
+            "locale",
+        ])
+
+    const parsedArgs = {
+                        locale: args?.locale,
+                }
+
+    return archives.definition.url
+            .replace('{locale?}', parsedArgs.locale?.toString() ?? '')
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:65
+ * @route '/{locale?}/archives'
+ */
+archives.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: archives.url(args, options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:65
+ * @route '/{locale?}/archives'
+ */
+archives.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: archives.url(args, options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:65
+ * @route '/{locale?}/archives'
+ */
+    const archivesForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: archives.url(args, options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:65
+ * @route '/{locale?}/archives'
+ */
+        archivesForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: archives.url(args, options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:65
+ * @route '/{locale?}/archives'
+ */
+        archivesForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: archives.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    archives.form = archivesForm
+/**
+ * @see routes/user.php:69
+ * @route '/{locale?}/archive'
+ */
+export const archive = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: archive.url(args, options),
+    method: 'get',
+})
+
+archive.definition = {
+    methods: ["get","head"],
+    url: '/{locale?}/archive',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:69
+ * @route '/{locale?}/archive'
+ */
+archive.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { locale: args }
+    }
+
+    
+    if (Array.isArray(args)) {
+        args = {
+                    locale: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    validateParameters(args, [
+            "locale",
+        ])
+
+    const parsedArgs = {
+                        locale: args?.locale,
+                }
+
+    return archive.definition.url
+            .replace('{locale?}', parsedArgs.locale?.toString() ?? '')
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:69
+ * @route '/{locale?}/archive'
+ */
+archive.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: archive.url(args, options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:69
+ * @route '/{locale?}/archive'
+ */
+archive.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: archive.url(args, options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:69
+ * @route '/{locale?}/archive'
+ */
+    const archiveForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: archive.url(args, options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:69
+ * @route '/{locale?}/archive'
+ */
+        archiveForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: archive.url(args, options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:69
+ * @route '/{locale?}/archive'
+ */
+        archiveForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: archive.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    archive.form = archiveForm
+/**
+ * @see routes/user.php:73
  * @route '/{locale?}/blogs'
  */
 export const blogs = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -501,7 +689,7 @@ blogs.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/{locale?}/blogs'
  */
 blogs.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -532,7 +720,7 @@ blogs.url = (args?: { locale?: string | number } | [locale: string | number ] | 
 }
 
 /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/{locale?}/blogs'
  */
 blogs.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -540,7 +728,7 @@ blogs.get = (args?: { locale?: string | number } | [locale: string | number ] | 
     method: 'get',
 })
 /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/{locale?}/blogs'
  */
 blogs.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -549,7 +737,7 @@ blogs.head = (args?: { locale?: string | number } | [locale: string | number ] |
 })
 
     /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/{locale?}/blogs'
  */
     const blogsForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -558,7 +746,7 @@ blogs.head = (args?: { locale?: string | number } | [locale: string | number ] |
     })
 
             /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/{locale?}/blogs'
  */
         blogsForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -566,7 +754,7 @@ blogs.head = (args?: { locale?: string | number } | [locale: string | number ] |
             method: 'get',
         })
             /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/{locale?}/blogs'
  */
         blogsForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -588,6 +776,8 @@ home,
 about,
 events,
 library,
+archives,
+archive,
 blogs,
 }
 

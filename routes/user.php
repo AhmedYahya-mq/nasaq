@@ -62,6 +62,14 @@ Route::get('/library', function () {
     return view('library');
 })->name('library');
 
+Route::get('/archives', function () {
+    return view('archives');
+})->name('archives');
+
+Route::get('/archive', function(){
+    return view('details-archive');
+})->name('archive');
+
 Route::get('/blogs', function () {
     return view('blogs');
 })->name('blogs');

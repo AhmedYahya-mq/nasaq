@@ -374,6 +374,148 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     library.form = libraryForm
 /**
  * @see routes/user.php:65
+ * @route '/archives'
+ */
+export const archives = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: archives.url(options),
+    method: 'get',
+})
+
+archives.definition = {
+    methods: ["get","head"],
+    url: '/archives',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:65
+ * @route '/archives'
+ */
+archives.url = (options?: RouteQueryOptions) => {
+    return archives.definition.url + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:65
+ * @route '/archives'
+ */
+archives.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: archives.url(options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:65
+ * @route '/archives'
+ */
+archives.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: archives.url(options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:65
+ * @route '/archives'
+ */
+    const archivesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: archives.url(options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:65
+ * @route '/archives'
+ */
+        archivesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: archives.url(options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:65
+ * @route '/archives'
+ */
+        archivesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: archives.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    archives.form = archivesForm
+/**
+ * @see routes/user.php:69
+ * @route '/archive'
+ */
+export const archive = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: archive.url(options),
+    method: 'get',
+})
+
+archive.definition = {
+    methods: ["get","head"],
+    url: '/archive',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:69
+ * @route '/archive'
+ */
+archive.url = (options?: RouteQueryOptions) => {
+    return archive.definition.url + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:69
+ * @route '/archive'
+ */
+archive.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: archive.url(options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:69
+ * @route '/archive'
+ */
+archive.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: archive.url(options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:69
+ * @route '/archive'
+ */
+    const archiveForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: archive.url(options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:69
+ * @route '/archive'
+ */
+        archiveForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: archive.url(options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:69
+ * @route '/archive'
+ */
+        archiveForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: archive.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    archive.form = archiveForm
+/**
+ * @see routes/user.php:73
  * @route '/blogs'
  */
 export const blogs = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -387,7 +529,7 @@ blogs.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/blogs'
  */
 blogs.url = (options?: RouteQueryOptions) => {
@@ -395,7 +537,7 @@ blogs.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/blogs'
  */
 blogs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -403,7 +545,7 @@ blogs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/blogs'
  */
 blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -412,7 +554,7 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/blogs'
  */
     const blogsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -421,7 +563,7 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/blogs'
  */
         blogsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -429,7 +571,7 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/user.php:65
+ * @see routes/user.php:73
  * @route '/blogs'
  */
         blogsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -452,6 +594,8 @@ home,
 about,
 events,
 library,
+archives,
+archive,
 blogs,
 }
 
