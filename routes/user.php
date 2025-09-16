@@ -45,3 +45,7 @@ Route::get('/archives', function () {
 Route::get('/archive', function(){
     return view('details-archive');
 })->name('archive');
+
+Route::get('/blogs', function () {
+    return view('blogs');
+})->name('blogs');
