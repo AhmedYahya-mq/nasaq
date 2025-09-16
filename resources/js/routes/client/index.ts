@@ -160,7 +160,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     home.form = homeForm
 /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/about'
  */
 export const about = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -174,7 +174,7 @@ about.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/about'
  */
 about.url = (options?: RouteQueryOptions) => {
@@ -182,7 +182,7 @@ about.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/about'
  */
 about.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -190,7 +190,7 @@ about.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/about'
  */
 about.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -199,7 +199,7 @@ about.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/about'
  */
     const aboutForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -208,7 +208,7 @@ about.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/about'
  */
         aboutForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -216,7 +216,7 @@ about.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/about'
  */
         aboutForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -231,7 +231,7 @@ about.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     about.form = aboutForm
 /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/events'
  */
 export const events = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -245,7 +245,7 @@ events.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/events'
  */
 events.url = (options?: RouteQueryOptions) => {
@@ -253,7 +253,7 @@ events.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/events'
  */
 events.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -261,7 +261,7 @@ events.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/events'
  */
 events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -270,7 +270,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/events'
  */
     const eventsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -279,7 +279,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/events'
  */
         eventsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -287,7 +287,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/events'
  */
         eventsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -302,7 +302,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     events.form = eventsForm
 /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/library'
  */
 export const library = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -316,7 +316,7 @@ library.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/library'
  */
 library.url = (options?: RouteQueryOptions) => {
@@ -324,7 +324,7 @@ library.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/library'
  */
 library.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -332,7 +332,7 @@ library.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/library'
  */
 library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -341,7 +341,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/library'
  */
     const libraryForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -350,7 +350,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/library'
  */
         libraryForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -358,7 +358,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/library'
  */
         libraryForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -373,7 +373,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     library.form = libraryForm
 /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/blogs'
  */
 export const blogs = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -387,7 +387,7 @@ blogs.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/blogs'
  */
 blogs.url = (options?: RouteQueryOptions) => {
@@ -395,7 +395,7 @@ blogs.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/blogs'
  */
 blogs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -403,7 +403,7 @@ blogs.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/blogs'
  */
 blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -412,7 +412,7 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/blogs'
  */
     const blogsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -421,7 +421,7 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/blogs'
  */
         blogsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -429,7 +429,7 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/blogs'
  */
         blogsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -51,12 +51,6 @@ Route::prefix('/')->middleware('auth')->group(function () {
 Route::get('/', HomeController::class)->name('home');
 
 Route::get('/about', function () {
-    return "Current locale: " . app()->getLocale();
-})->name('about');
-
-
-
-Route::get('/about', function () {
     return view('about');
 })->name('about');
 

@@ -205,7 +205,7 @@ home.head = (args?: { locale?: string | number } | [locale: string | number ] | 
     
     home.form = homeForm
 /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/{locale?}/about'
  */
 export const about = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -219,7 +219,7 @@ about.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/{locale?}/about'
  */
 about.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -250,7 +250,7 @@ about.url = (args?: { locale?: string | number } | [locale: string | number ] | 
 }
 
 /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/{locale?}/about'
  */
 about.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -258,7 +258,7 @@ about.get = (args?: { locale?: string | number } | [locale: string | number ] | 
     method: 'get',
 })
 /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/{locale?}/about'
  */
 about.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -267,7 +267,7 @@ about.head = (args?: { locale?: string | number } | [locale: string | number ] |
 })
 
     /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/{locale?}/about'
  */
     const aboutForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -276,7 +276,7 @@ about.head = (args?: { locale?: string | number } | [locale: string | number ] |
     })
 
             /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/{locale?}/about'
  */
         aboutForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -284,7 +284,7 @@ about.head = (args?: { locale?: string | number } | [locale: string | number ] |
             method: 'get',
         })
             /**
- * @see routes/user.php:59
+ * @see routes/user.php:53
  * @route '/{locale?}/about'
  */
         aboutForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -299,7 +299,7 @@ about.head = (args?: { locale?: string | number } | [locale: string | number ] |
     
     about.form = aboutForm
 /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/{locale?}/events'
  */
 export const events = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -313,7 +313,7 @@ events.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/{locale?}/events'
  */
 events.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -344,7 +344,7 @@ events.url = (args?: { locale?: string | number } | [locale: string | number ] |
 }
 
 /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/{locale?}/events'
  */
 events.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -352,7 +352,7 @@ events.get = (args?: { locale?: string | number } | [locale: string | number ] |
     method: 'get',
 })
 /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/{locale?}/events'
  */
 events.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -361,7 +361,7 @@ events.head = (args?: { locale?: string | number } | [locale: string | number ] 
 })
 
     /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/{locale?}/events'
  */
     const eventsForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -370,7 +370,7 @@ events.head = (args?: { locale?: string | number } | [locale: string | number ] 
     })
 
             /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/{locale?}/events'
  */
         eventsForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -378,7 +378,7 @@ events.head = (args?: { locale?: string | number } | [locale: string | number ] 
             method: 'get',
         })
             /**
- * @see routes/user.php:63
+ * @see routes/user.php:57
  * @route '/{locale?}/events'
  */
         eventsForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -393,7 +393,7 @@ events.head = (args?: { locale?: string | number } | [locale: string | number ] 
     
     events.form = eventsForm
 /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/{locale?}/library'
  */
 export const library = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -407,7 +407,7 @@ library.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/{locale?}/library'
  */
 library.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -438,7 +438,7 @@ library.url = (args?: { locale?: string | number } | [locale: string | number ] 
 }
 
 /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/{locale?}/library'
  */
 library.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -446,7 +446,7 @@ library.get = (args?: { locale?: string | number } | [locale: string | number ] 
     method: 'get',
 })
 /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/{locale?}/library'
  */
 library.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -455,7 +455,7 @@ library.head = (args?: { locale?: string | number } | [locale: string | number ]
 })
 
     /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/{locale?}/library'
  */
     const libraryForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -464,7 +464,7 @@ library.head = (args?: { locale?: string | number } | [locale: string | number ]
     })
 
             /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/{locale?}/library'
  */
         libraryForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -472,7 +472,7 @@ library.head = (args?: { locale?: string | number } | [locale: string | number ]
             method: 'get',
         })
             /**
- * @see routes/user.php:67
+ * @see routes/user.php:61
  * @route '/{locale?}/library'
  */
         libraryForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -487,7 +487,7 @@ library.head = (args?: { locale?: string | number } | [locale: string | number ]
     
     library.form = libraryForm
 /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/{locale?}/blogs'
  */
 export const blogs = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -501,7 +501,7 @@ blogs.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/{locale?}/blogs'
  */
 blogs.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -532,7 +532,7 @@ blogs.url = (args?: { locale?: string | number } | [locale: string | number ] | 
 }
 
 /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/{locale?}/blogs'
  */
 blogs.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -540,7 +540,7 @@ blogs.get = (args?: { locale?: string | number } | [locale: string | number ] | 
     method: 'get',
 })
 /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/{locale?}/blogs'
  */
 blogs.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -549,7 +549,7 @@ blogs.head = (args?: { locale?: string | number } | [locale: string | number ] |
 })
 
     /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/{locale?}/blogs'
  */
     const blogsForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -558,7 +558,7 @@ blogs.head = (args?: { locale?: string | number } | [locale: string | number ] |
     })
 
             /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/{locale?}/blogs'
  */
         blogsForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -566,7 +566,7 @@ blogs.head = (args?: { locale?: string | number } | [locale: string | number ] |
             method: 'get',
         })
             /**
- * @see routes/user.php:71
+ * @see routes/user.php:65
  * @route '/{locale?}/blogs'
  */
         blogsForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

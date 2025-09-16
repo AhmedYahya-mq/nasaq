@@ -1,6 +1,28 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import axios from 'axios';
+import { useDropzone, type FileRejection, type Accept } from 'react-dropzone';
+import axios, { type AxiosProgressEvent } from 'axios';
+
+type UploadStatus = 'pending' | 'uploading' | 'completed' | 'error';
+
+type FileItem = {
+  id: string;
+  file: File;
+  name: string;
+  size: number;
+  type: string;
+  preview: string | null;
+  progress: number;
+  status: UploadStatus;
+  url?: string;
+};
+
+type FileUploaderProps = {
+  multiple?: boolean;
+  maxFileSize?: number;
+  acceptedFileTypes?: string[];
+  uploadUrl?: string;
+  deleteUrl?: string;
+};
 
 const FileUploader = ({
   multiple = false,
@@ -8,19 +30,19 @@ const FileUploader = ({
   acceptedFileTypes = ['image/*', 'application/pdf'],
   uploadUrl = '/upload',
   deleteUrl = '/delete'
-}) => {
-  const [files, setFiles] = useState([]);
+}: FileUploaderProps) => {
+  const [files, setFiles] = useState<FileItem[]>([]);
   const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // معالجة اختيار الملفات
-  const handleFiles = useCallback((acceptedFiles, rejectedFiles) => {
+  const handleFiles = useCallback((acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
     if (rejectedFiles && rejectedFiles.length > 0) {
       alert('بعض الملفات مرفوضة. تأكد من الحجم والنوع المسموح به.');
       return;
     }
 
-    const newFiles = acceptedFiles.map(file => ({
+    const newFiles: FileItem[] = acceptedFiles.map((file) => ({
       file,
       name: file.name,
       size: file.size,
@@ -32,7 +54,7 @@ const FileUploader = ({
     }));
 
     if (multiple) {
-      setFiles(prev => [...prev, ...newFiles]);
+      setFiles((prev) => [...prev, ...newFiles]);
     } else {
       setFiles(newFiles);
     }
@@ -51,54 +73,55 @@ const FileUploader = ({
     multiple,
     maxSize: maxFileSize,
     accept: acceptedFileTypes.reduce((acc, type) => {
-      acc[type] = [];
+      (acc as Record<string, string[]>)[type] = [];
       return acc;
-    }, {})
+    }, {} as Accept)
   });
 
   // رفع الملف إلى السيرفر
-  const uploadFile = async (fileObj) => {
+  const uploadFile = async (fileObj: FileItem) => {
     const formData = new FormData();
     formData.append('file', fileObj.file);
 
-    setFiles(prev => prev.map(f =>
-      f.id === fileObj.id ? { ...f, status: 'uploading' } : f
+    setFiles((prev) => prev.map((f) =>
+      f.id === fileObj.id ? { ...f, status: 'uploading' as UploadStatus } : f
     ));
 
     try {
       const response = await axios.post(uploadUrl, formData, {
-        onUploadProgress: (progressEvent) => {
-          const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setFiles(prev => prev.map(f =>
+        onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+          const total = progressEvent.total ?? 1;
+          const progress = Math.round((Number(progressEvent.loaded) * 100) / total);
+          setFiles((prev) => prev.map((f) =>
             f.id === fileObj.id ? { ...f, progress } : f
           ));
         }
       });
 
-      setFiles(prev => prev.map(f =>
+      setFiles((prev) => prev.map((f) =>
         f.id === fileObj.id ? {
           ...f,
-          status: 'completed',
+          status: 'completed' as UploadStatus,
           progress: 100,
           url: response.data.url
         } : f
       ));
     } catch (error) {
       console.error('Upload error:', error);
-      setFiles(prev => prev.map(f =>
-        f.id === fileObj.id ? { ...f, status: 'error' } : f
+      setFiles((prev) => prev.map((f) =>
+        f.id === fileObj.id ? { ...f, status: 'error' as UploadStatus } : f
       ));
     }
   };
 
   // حذف الملف
-  const deleteFile = async (fileId, fileUrl) => {
+  const deleteFile = async (fileId: string, fileUrl?: string) => {
     try {
       if (fileUrl) {
         await axios.delete(`${deleteUrl}?fileUrl=${encodeURIComponent(fileUrl)}`);
       }
 
-      setFiles(prev => prev.filter(f => f.id !== fileId));
+      setFiles((prev) => prev.filter((f) => f.id !== fileId));
     } catch (error) {
       console.error('Delete error:', error);
       alert('حدث خطأ أثناء حذف الملف');
@@ -107,7 +130,7 @@ const FileUploader = ({
 
   // فتح نافذة اختيار الملفات
   const handleButtonClick = () => {
-    fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
   return (
@@ -146,7 +169,7 @@ const FileUploader = ({
 
       {/* قائمة الملفات */}
       <div className="mt-6 space-y-4">
-        {files.map((file) => (
+        {files.map((file: FileItem) => (
           <div key={file.id} className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
             <div className="flex items-center space-x-4 flex-1 min-w-0">
               {/* معاينة الصورة */}
@@ -182,7 +205,7 @@ const FileUploader = ({
                     <div
                       className="bg-blue-600 h-2 rounded-full"
                       style={{ width: `${file.progress}%` }}
-                    ></div>
+                    />
                   </div>
                 )}
 

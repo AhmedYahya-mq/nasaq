@@ -27,11 +27,13 @@ import { store, update } from "@/routes/admin/membership";
 import { Membership } from "@/types/model/membership.d";
 import { Form } from "@inertiajs/react";
 import { LoaderCircleIcon } from "lucide-react";
-import { Page, PageProps } from "@inertiajs/core/types/types";
+// Removed missing @inertiajs/core types; Page can be imported from @inertiajs/react if needed
 import { useContext, useEffect, useRef, useState } from "react";
 import DynamicInputList from "../ui/DynamicInputList";
 import { updateTranslation } from "@/actions/App/Http/Controllers/User/MembershipController";
 import { toast } from "sonner";
+import FileUploader from "@/components/FileUploader";
+import TiptapEditor from "@/components/tiptap/TiptapEditor";
 
 
 
@@ -58,7 +60,7 @@ function FormComponent({ tableHook }: { tableHook: any }) {
         setNumFeatures(item?.features?.length ?? 1);
     }, [item]);
 
-    const resetAndClose = (page?: Page<PageProps>) => {
+    const resetAndClose = (page?: any) => {
         formRef.current?.reset();
         if (page?.props?.membership) {
             const membership = page.props.membership as Membership;
@@ -70,7 +72,7 @@ function FormComponent({ tableHook }: { tableHook: any }) {
 
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && resetAndClose()}>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="min-w-[95%] h-[95%]">
                 <DialogHeader className="mb-4">
                     <DialogTitle>
                         {isTranslate
@@ -87,8 +89,17 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                 : "أضف مدونة جديدة بسهولة وسرعة."}
                     </DialogDescription>
                 </DialogHeader>
-
-                <FileUploader />
+                <Form
+                    ref={formRef}
+                    method={formProps.method}
+                    action={formProps.action}
+                    onSuccess={resetAndClose}
+                    className="space-y-4 scrollbar h-full"
+                >
+                    <TiptapEditor
+                    maxHeight={300}
+                    minHeight={300} />
+                </Form>
             </DialogContent>
         </Dialog >
     );
