@@ -1,6 +1,13 @@
 <?php
 
 return [
+    'home' => 'Home',
+    'about' => 'About',
+    'events' => 'Events',
+    'library'=>'Digital Library',
+    'blogs'=>'Blogs',
+
+
     'features' => 'Features',
     'design' => 'Design',
     'scale' => 'Scale',

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', $locale) }}" dir="{{ $locale === 'ar' ? 'rtl' : 'ltr' }}"
+<html lang="{{ str_replace('_', '-', $locale) }}" dir="rtl"
     @class(['dark' => ($appearance ?? 'system') == 'dark'])>
 
 <head>

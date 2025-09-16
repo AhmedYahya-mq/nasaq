@@ -20,17 +20,17 @@
 @endphp
 
 <div
-    class="relative flex flex-col w-full max-w-full bg-white dark:bg-card p-6 rounded-2xl border-l-4 border-{{ $color }}-500 shadow-md hover:shadow-xl transition-all duration-300">
+    class="relative flex flex-col w-full max-w-full bg-card p-6 rounded-2xl border-l-4 border-{{ $color }}-500 shadow-xl hover:shadow-primary/30 transition-all duration-300">
 
-    <div class="flex items-center justify-between gap-3">
+    <div class="flex items-center justify-between gap-3 mb-2">
         <h4 class="font-bold text-foreground text-xl leading-snug">{{ $title }}</h4>
         <span
-            class="text-xs font-semibold px-3 py-1 rounded-full border border-{{ $color }}-400/50 text-{{ $color }}-600 bg-{{ $color }}-100/20 backdrop-blur-sm whitespace-nowrap">
+            class="text-xs font-semibold px-3 py-1 rounded-full border border-{{ $color }}-400/50 text-{{ $color }}-600 bg-{{ $color }}-100/20 backdrop-blur-sm whitespace-nowrap drop-shadow">
             {{ $cardLabel }}
         </span>
     </div>
 
-    <div class="flex flex-row items-center justify-between gap-4 mt-4">
+    <div class="flex flex-row items-center justify-between gap-4 mt-2">
         <div class="flex flex-row flex-wrap gap-4 text-sm text-muted-foreground">
             <div class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-{{ $color }}-500" fill="none"
@@ -38,7 +38,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8 7V3m8 4V3m-9 8h10m-12 8h14a2 2 0 002-2V7a2 2 0 00-2-2h-1V3h-2v2H8V3H6v2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span>{{ \Carbon\Carbon::parse($date)->translatedFormat('d F Y') }}</span>
+                <span class="font-semibold">{{ \Carbon\Carbon::parse($date)->translatedFormat('d F Y') }}</span>
             </div>
             <div class="flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-{{ $color }}-500" fill="none"
@@ -46,14 +46,14 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 8v4l3 3m6 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>{{ $time }}</span>
+                <span class="font-semibold">{{ $time }}</span>
             </div>
         </div>
 
         @if ($url && $url !== '#')
             <a href="{{ $url }}"
-                class="px-4 py-2 text-sm rounded-lg font-semibold transition-all duration-300
-               {{ $isPast ? 'bg-muted text-muted-foreground hover:bg-muted/80' : 'bg-gradient-to-r from-primary to-primary/80 text-white shadow hover:shadow-lg hover:scale-[1.05]' }}">
+                class="px-5 py-2 text-sm rounded-lg font-semibold transition-all duration-300
+               {{ $isPast ? 'bg-muted text-muted-foreground hover:bg-muted/80' : 'bg-gradient-to-r from-' . $color . '-500 to-' . $color . '-400 text-white shadow-lg hover:scale-[1.05] focus:outline-none focus:ring-2 focus:ring-' . $color . '-400' }}">
                 {{ $buttonText }}
             </a>
         @else
@@ -62,5 +62,4 @@
             </span>
         @endif
     </div>
-
 </div>

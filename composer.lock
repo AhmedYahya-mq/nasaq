@@ -4,8 +4,42 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0cfe8443ebe43088a2db01e1a33f8e8e",
+    "content-hash": "fe962438e56280640f95e502f878bcf8",
     "packages": [
+        {
+            "name": "ahmed/gallery-images",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "C:/gallery-images",
+                "reference": "beb35b9f130253c3b8aade41ea70d963a7b00bb5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ahmed\\GalleryImages\\GalleryImagesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ahmed\\GalleryImages\\": "src/"
+                }
+            },
+            "scripts": {
+                "post-install-cmd": [
+                    "Ahmed\\GalleryImages\\ComposerScripts::copyFiles"
+                ],
+                "post-update-cmd": [
+                    "Ahmed\\GalleryImages\\ComposerScripts::copyFiles"
+                ]
+            },
+            "description": "Laravel package to manage images with trait and API/web routes",
+            "transport-options": {
+                "relative": false
+            }
+        },
         {
             "name": "bacon/bacon-qr-code",
             "version": "v3.0.1",
@@ -9283,7 +9317,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "ahmed/gallery-images": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

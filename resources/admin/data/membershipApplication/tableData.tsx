@@ -1,4 +1,4 @@
-import { MembershipApplication } from "@/types/membershipApplication";
+import { MembershipApplication } from "@/types/model/membershipApplication";
 import { applicationStatusOptions, canResubmitOptions, paymentStatusOptions } from "./tableOptions";
 import { ExtendedColumnDef } from "@/types";
 import { TableCell } from "@/components/ui/table";
@@ -44,7 +44,7 @@ export const columns: ExtendedColumnDef<MembershipApplication>[] = [
     },
     {
         header: "Actions", accessorKey: "actions",
-        cell: actionsCell, nonHideable: true
+        cell: actionsCell(), nonHideable: true
     },
 ];
 
@@ -88,4 +88,6 @@ function renderPaymentStatus() {
         );
     };
 }
+
+export const applications: MembershipApplication[] = [];
 

@@ -27,7 +27,7 @@ import { store, update } from "@/routes/admin/membership";
 import { Membership } from "@/types/model/membership.d";
 import { Form } from "@inertiajs/react";
 import { LoaderCircleIcon } from "lucide-react";
-import { Page, PageProps } from "@inertiajs/core/types/types";
+// Removed unused @inertiajs/core types (use @inertiajs/react Page if needed)
 import { useContext, useEffect, useRef, useState } from "react";
 import DynamicInputList from "../ui/DynamicInputList";
 import { updateTranslation } from "@/actions/App/Http/Controllers/User/MembershipController";
@@ -58,7 +58,7 @@ function FormComponent({ tableHook }: { tableHook: any }) {
         setNumFeatures(item?.features?.length ?? 1);
     }, [item]);
 
-    const resetAndClose = (page?: Page<PageProps>) => {
+    const resetAndClose = (page?: any) => {
         formRef.current?.reset();
         if (page?.props?.membership) {
             const membership = page.props.membership as Membership;
