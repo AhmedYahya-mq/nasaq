@@ -19,6 +19,9 @@
 /storage/*.key
 /storage/pail
 /vendor
+/resources/admin/actions
+/resources/admin/routes
+/resources/js/routes
 Homestead.json
 Homestead.yaml
 Thumbs.db
