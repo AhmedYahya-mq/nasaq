@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
             \Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse::class => \App\Http\Responses\AuthClient\TwoFactorChallengeViewResponse::class,
             \Laravel\Fortify\Contracts\RequestPasswordResetLinkViewResponse::class => \App\Http\Responses\AuthClient\RequestPasswordResetLinkViewResponse::class,
             \Laravel\Fortify\Contracts\ResetPasswordViewResponse::class => \App\Http\Responses\AuthClient\ResetPasswordViewResponse::class,
+            \Laravel\Fortify\Contracts\RegisterViewResponse::class => \App\Http\Responses\AuthClient\RegisterViewResponse::class,
 
             // profile client
             \App\Contract\User\Profile\PhotoResponse::class => \App\Http\Responses\User\Profile\PhotoResponse::class,

@@ -55,7 +55,7 @@ return [
     'highlighted_event' => [
         'default_title' => '📹 الاجتماع الافتراضي الشهري',
         'default_location' => '📍 قاعة المؤتمرات - جدة',
-        'register_now_button' => '🚀 سجّل الآن',
+        'register_now_button' => 'سجّل الآن',
     ],
 
        'countdown' => [

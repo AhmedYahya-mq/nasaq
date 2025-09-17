@@ -43,7 +43,7 @@
 
         <!-- الصورة -->
         <div class="relative not-sm:p-2 not-md:order-1">
-            <img src="https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?ixlib=rb-4.0.3&q=80&auto=format&fit=crop&w=1200"
+            <img src="{{ asset('images/about.png') }}"
                  alt="Community Collaboration"
                  class="rounded-2xl shadow-lg object-cover aspect-[6/4]" />
         </div>

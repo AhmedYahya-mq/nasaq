@@ -585,6 +585,148 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
     
     blogs.form = blogsForm
+/**
+ * @see routes/user.php:77
+ * @route '/blog'
+ */
+export const blog = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: blog.url(options),
+    method: 'get',
+})
+
+blog.definition = {
+    methods: ["get","head"],
+    url: '/blog',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:77
+ * @route '/blog'
+ */
+blog.url = (options?: RouteQueryOptions) => {
+    return blog.definition.url + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:77
+ * @route '/blog'
+ */
+blog.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: blog.url(options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:77
+ * @route '/blog'
+ */
+blog.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: blog.url(options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:77
+ * @route '/blog'
+ */
+    const blogForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: blog.url(options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:77
+ * @route '/blog'
+ */
+        blogForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: blog.url(options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:77
+ * @route '/blog'
+ */
+        blogForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: blog.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    blog.form = blogForm
+/**
+ * @see routes/user.php:81
+ * @route '/price'
+ */
+export const price = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: price.url(options),
+    method: 'get',
+})
+
+price.definition = {
+    methods: ["get","head"],
+    url: '/price',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:81
+ * @route '/price'
+ */
+price.url = (options?: RouteQueryOptions) => {
+    return price.definition.url + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:81
+ * @route '/price'
+ */
+price.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: price.url(options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:81
+ * @route '/price'
+ */
+price.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: price.url(options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:81
+ * @route '/price'
+ */
+    const priceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: price.url(options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:81
+ * @route '/price'
+ */
+        priceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: price.url(options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:81
+ * @route '/price'
+ */
+        priceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: price.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    price.form = priceForm
 const client = {
     twoFactor,
 locale,
@@ -597,6 +739,8 @@ library,
 archives,
 archive,
 blogs,
+blog,
+price,
 }
 
 export default client

@@ -14,7 +14,8 @@ return [
     */
 
     // == مفاتيح عامة لمكون Info-Box ==
-    'more_details'          => 'المزيد من التفاصيل',
+    'read_more'          => 'المزيد من التفاصيل',
+    'show_less'       => 'إظهار أقل',
     'payment_bank_label'    => 'البنك',
     'payment_account_label' => 'رقم الحساب',
     'payment_iban_label'    => 'الآيبان',

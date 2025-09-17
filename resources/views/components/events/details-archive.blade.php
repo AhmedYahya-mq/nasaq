@@ -13,9 +13,9 @@
             'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80',
         'description' => __('archive.sample_event.description' ),
         'videos' => [
-            ['id' => 'qN3_A_MD5to', 'title' => __('archive.sample_event.videos.0')],
-            ['id' => '3_ga-OOig_s', 'title' => __('archive.sample_event.videos.1')],
-            ['id' => 'M_V-2B2F-40', 'title' => __('archive.sample_event.videos.2')],
+            ['id' => '7Nz3dhQJ6bI', 'title' => __('archive.sample_event.videos.0')],
+            ['id' => 'B9GC5VhlYt4', 'title' => __('archive.sample_event.videos.1')],
+            ['id' => 'i1ZPDfT5jtE', 'title' => __('archive.sample_event.videos.2')],
         ],
         'images' => [
             'https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop',

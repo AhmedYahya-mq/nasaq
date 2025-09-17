@@ -58,7 +58,7 @@ return [
         'highlighted_event' => [
         'default_title' => '📹 Monthly Virtual Meeting',
         'default_location' => '📍 Conference Hall - Jeddah',
-        'register_now_button' => ' Register Now',
+        'register_now_button' => 'Register Now',
     ],
         'countdown' => [
         'days' => 'Days',

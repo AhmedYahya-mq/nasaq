@@ -11,10 +11,16 @@ return [
         'route' => "client.about",
         'active' => fn() => request()->routeIs(['client.about', 'client.locale.about']),
     ],
+
     [
         'name' => "header.events",
         'route' => "client.events",
         'active' => fn() => request()->routeIs(['client.events', 'client.locale.events']),
+    ],
+    [
+        'name' => 'header.archives',
+        'route' => 'client.archives',
+        'active' => fn() => request()->routeIs(['client.archives', 'client.locale.archives', 'client.archive', 'client.locale.archive'])
     ],
     // library
     [
@@ -27,6 +33,12 @@ return [
         'name' => 'header.blogs',
         'route' => 'client.blogs',
         'active' => fn() => request()->routeIs(['client.blogs', 'client.locale.blogs'])
+    ],
+    // price
+    [
+        'name' => 'header.pricing',
+        'route' => 'client.price',
+        'active' => fn() => request()->routeIs(['client.price', 'client.locale.price'])
     ],
     // [
     //     "name" => "header.resources",

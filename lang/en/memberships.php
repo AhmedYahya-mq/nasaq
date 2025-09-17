@@ -14,7 +14,8 @@ return [
     */
 
     // == General keys for Info-Box Component ==
-    'more_details'          => 'More Details',
+    'read_more'          => 'More Details',
+    'show_less'       => 'Show Less',
     'payment_bank_label'    => 'Bank',
     'payment_account_label' => 'Account Number',
     'payment_iban_label'    => 'IBAN',

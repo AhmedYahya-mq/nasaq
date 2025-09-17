@@ -20,7 +20,7 @@
 @endphp
 
 <div
-    class="relative flex flex-col w-full max-w-full bg-card p-6 rounded-2xl border-l-4 border-{{ $color }}-500 shadow-xl hover:shadow-primary/30 transition-all duration-300">
+   {{ $attributes->merge(['class' => 'relative flex flex-col w-full h-full max-w-full bg-card p-6 rounded-2xl border-l-4 border-' . $color . '-500 shadow-xl hover:shadow-primary/30 transition-all duration-300']) }}>
 
     <div class="flex items-center justify-between gap-3 mb-2">
         <h4 class="font-bold text-foreground text-xl leading-snug">{{ $title }}</h4>
@@ -52,8 +52,7 @@
 
         @if ($url && $url !== '#')
             <a href="{{ $url }}"
-                class="px-5 py-2 text-sm rounded-lg font-semibold transition-all duration-300
-               {{ $isPast ? 'bg-muted text-muted-foreground hover:bg-muted/80' : 'bg-gradient-to-r from-' . $color . '-500 to-' . $color . '-400 text-white shadow-lg hover:scale-[1.05] focus:outline-none focus:ring-2 focus:ring-' . $color . '-400' }}">
+                class="px-4 py-2 text-sm rounded-lg font-semibold transition-all duration-300 badget">
                 {{ $buttonText }}
             </a>
         @else

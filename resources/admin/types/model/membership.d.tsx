@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ColumnLabels } from "..";
-import IconRial from "@/components/icon-rial";
+import IconRial from "@/components/icons/icon-rial";
 import { formatTimeUnit } from "@/lib/utils";
 
 export interface Membership {

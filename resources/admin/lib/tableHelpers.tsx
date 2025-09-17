@@ -1,7 +1,7 @@
 import { TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { EditIcon, Trash2Icon } from "lucide-react";
-import IconRial from "@/components/icon-rial";
+import IconRial from "@/components/icons/icon-rial";
 import { GlobeIcon } from "lucide-react"; // Added for translation button
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatterNumber } from "./utils";

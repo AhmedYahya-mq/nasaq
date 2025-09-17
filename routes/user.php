@@ -73,3 +73,11 @@ Route::get('/archive', function(){
 Route::get('/blogs', function () {
     return view('blogs');
 })->name('blogs');
+
+Route::get('/blog/', function ($slug='example-blog-post') {
+    return view('blog-details', ['slug' => $slug]);
+})->name('blog');
+
+Route::get('/price', function () {
+    return view('price');
+})->name('price');

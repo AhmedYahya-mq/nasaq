@@ -25,9 +25,9 @@
 
         {{-- 2. شبكة عرض بطاقات الأرشيف (باستخدام المكون x-events.archive-card) --}}
         <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
             <x-events.archive-card
                 :title="__('archive.samples.0.title')"
+                description="هذا وصف مختصر للحدث الأول يوضح فكرة عامة عن محتوى الحدث ويمكن أن يكون نصاً طويلاً لكنه سيظهر في 3 أسطر فقط."
                 date="2025-06-05"
                 time="06:00 مساءً"
                 imageUrl="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1170"
@@ -38,6 +38,7 @@
 
             <x-events.archive-card
                 :title="__('archive.samples.1.title' )"
+                description="وصف مختصر للحدث الثاني، يوضح تفاصيل أو أهداف الحدث بشكل سريع وموجز."
                 date="2025-05-20"
                 time="07:00 مساءً"
                 imageUrl="https://images.unsplash.com/photo-1555066931-4365d14bab8c"
@@ -48,15 +49,14 @@
 
             <x-events.archive-card
                 :title="__('archive.samples.2.title' )"
+                description="وصف مختصر للحدث الثالث، يمكن أن يحتوي على معلومات إضافية أو دعوة للحضور."
                 date="2025-04-15"
                 time="08:30 مساءً"
-                imageUrl="https://images.unsplash.com/photo-1620712943543-275d2911cf28?auto=format&fit=crop&w=1332"
+                imageUrl="https://igtsservice.com/uploads/files/29343_1705924344.jpg"
                 filesUrl="#"
                 registrationUrl="#"
                 class="h-full"
             />
-
-
         </div>
 
         {{-- 3. ترقيم الصفحات (Pagination  ) --}}

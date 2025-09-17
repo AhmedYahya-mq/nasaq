@@ -4,9 +4,14 @@ return [
     'home' => 'الرئيسية',
     'about' => 'من نحن',
     'events' => 'الفعاليات',
-    'library'=>'المكتبة الرقمية',
-    'blogs'=>'المدونة',
-
+    'description_events' => 'اطلع على فعالياتنا القادمة',
+    'library' => 'المكتبة الرقمية',
+    'description_library' => 'استكشف مجموعتنا من الموارد الرقمية',
+    'blogs' => 'المدونة',
+    'archives' => 'الأرشيف',
+    'description_archives' => 'تصفح أرشيف مقالاتنا ومواردنا',
+    'archive' => 'تفاصيل الأرشيف',
+    'discover' => 'أكتشف',
 
     'features' => 'الميزات',
     'design' => 'التصميم',

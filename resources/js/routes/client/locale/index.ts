@@ -768,6 +768,194 @@ blogs.head = (args?: { locale?: string | number } | [locale: string | number ] |
         })
     
     blogs.form = blogsForm
+/**
+ * @see routes/user.php:77
+ * @route '/{locale?}/blog'
+ */
+export const blog = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: blog.url(args, options),
+    method: 'get',
+})
+
+blog.definition = {
+    methods: ["get","head"],
+    url: '/{locale?}/blog',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:77
+ * @route '/{locale?}/blog'
+ */
+blog.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { locale: args }
+    }
+
+    
+    if (Array.isArray(args)) {
+        args = {
+                    locale: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    validateParameters(args, [
+            "locale",
+        ])
+
+    const parsedArgs = {
+                        locale: args?.locale,
+                }
+
+    return blog.definition.url
+            .replace('{locale?}', parsedArgs.locale?.toString() ?? '')
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:77
+ * @route '/{locale?}/blog'
+ */
+blog.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: blog.url(args, options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:77
+ * @route '/{locale?}/blog'
+ */
+blog.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: blog.url(args, options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:77
+ * @route '/{locale?}/blog'
+ */
+    const blogForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: blog.url(args, options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:77
+ * @route '/{locale?}/blog'
+ */
+        blogForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: blog.url(args, options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:77
+ * @route '/{locale?}/blog'
+ */
+        blogForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: blog.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    blog.form = blogForm
+/**
+ * @see routes/user.php:81
+ * @route '/{locale?}/price'
+ */
+export const price = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: price.url(args, options),
+    method: 'get',
+})
+
+price.definition = {
+    methods: ["get","head"],
+    url: '/{locale?}/price',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+ * @see routes/user.php:81
+ * @route '/{locale?}/price'
+ */
+price.url = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { locale: args }
+    }
+
+    
+    if (Array.isArray(args)) {
+        args = {
+                    locale: args[0],
+                }
+    }
+
+    args = applyUrlDefaults(args)
+
+    validateParameters(args, [
+            "locale",
+        ])
+
+    const parsedArgs = {
+                        locale: args?.locale,
+                }
+
+    return price.definition.url
+            .replace('{locale?}', parsedArgs.locale?.toString() ?? '')
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+ * @see routes/user.php:81
+ * @route '/{locale?}/price'
+ */
+price.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: price.url(args, options),
+    method: 'get',
+})
+/**
+ * @see routes/user.php:81
+ * @route '/{locale?}/price'
+ */
+price.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: price.url(args, options),
+    method: 'head',
+})
+
+    /**
+ * @see routes/user.php:81
+ * @route '/{locale?}/price'
+ */
+    const priceForm = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: price.url(args, options),
+        method: 'get',
+    })
+
+            /**
+ * @see routes/user.php:81
+ * @route '/{locale?}/price'
+ */
+        priceForm.get = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: price.url(args, options),
+            method: 'get',
+        })
+            /**
+ * @see routes/user.php:81
+ * @route '/{locale?}/price'
+ */
+        priceForm.head = (args?: { locale?: string | number } | [locale: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: price.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    price.form = priceForm
 const locale = {
     profile,
 twoFactor,
@@ -779,6 +967,8 @@ library,
 archives,
 archive,
 blogs,
+blog,
+price,
 }
 
 export default locale
