@@ -83,8 +83,8 @@
     },
     "repositories": [
         {
-            "type": "git",
-            "url": "git@github.com:AhmedYahya-mq/gallery-images.git"
+            "type": "vcs",
+            "url": "https://github.com/AhmedYahya-mq/gallery-images.git"
         }
     ],
     "minimum-stability": "stable",
