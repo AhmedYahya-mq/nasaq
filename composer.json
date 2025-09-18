@@ -10,7 +10,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "ahmed/gallery-images": "@dev",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/fortify": "^1.29",
         "laravel/framework": "^12.0",
@@ -19,7 +18,8 @@
         "mobiledetect/mobiledetectlib": "^4.8",
         "propaganistas/laravel-phone": "^6.0",
         "spatie/laravel-permission": "^6.21",
-        "spatie/laravel-translatable": "^6.11"
+        "spatie/laravel-translatable": "^6.11",
+        "ahmed/gallery-images": "dev-main"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -81,6 +81,12 @@
             "php-http/discovery": true
         }
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:AhmedYahya-mq/gallery-images.git"
+        }
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true
 }

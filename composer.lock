@@ -4,16 +4,17 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef82d785926a2c02799336bfaee4cb49",
+    "content-hash": "2df967afeef5d6b5d6181f124d17f75c",
     "packages": [
         {
             "name": "ahmed/gallery-images",
             "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "C:/gallery-images",
-                "reference": "beb35b9f130253c3b8aade41ea70d963a7b00bb5"
+            "source": {
+                "type": "git",
+                "url": "git@github.com:AhmedYahya-mq/gallery-images.git",
+                "reference": "059e65707dd2f1ee2e85b8370aaf8babdd0a6d50"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -36,9 +37,7 @@
                 ]
             },
             "description": "Laravel package to manage images with trait and API/web routes",
-            "transport-options": {
-                "relative": false
-            }
+            "time": "2025-09-18T23:24:45+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
