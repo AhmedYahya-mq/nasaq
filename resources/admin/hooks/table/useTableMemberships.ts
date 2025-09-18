@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/utils";
 import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { confirmAlertDialog } from '@/components/custom/ConfirmDialog';
 
 /**
  * هوك لإدارة جدول العضويات مع دعم البحث، الإضافة، التعديل، الحذف، والترجمة
@@ -14,7 +15,7 @@ import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedR
  * @param handleDelete دالة الحذف التي تستدعى عند حذف عنصر
  * @returns جميع الدوال والحالات اللازمة لإدارة الجدول
  */
-export function useTableMemberships({ memberships, handleDelete }: { memberships: Membership[], handleDelete?: (fn: () => Promise<boolean>, targetItem: any) => void }) {
+export function useTableMemberships({ memberships }: { memberships: Membership[] }) {
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
     const [tableData, setTableData] = useState<Membership[]>(memberships);
@@ -67,18 +68,24 @@ export function useTableMemberships({ memberships, handleDelete }: { memberships
      * @param item العنصر المستهدف للحذف
      * @return void
      */
-    const deleteRow = (item: Membership) => {
-        handleDelete?.(async () => {
-            let isSuccess = false;
-            await axios.delete(destroy(item.id).url).then(() => {
-                setTableData(prev => prev.filter(row => row.id !== item.id));
-                toast.success(`تم حذف عضوية ${item.name} بنجاح`);
-                isSuccess = true;
-            }).catch((error) => {
-                toast.error(getErrorMessage(error.status, `العضوية ${item.name}`))
-            });
-            return isSuccess;
-        }, item);
+    const deleteRow = async (item: Membership) => {
+        const ok = await confirmAlertDialog({
+            title: "هل أنت متأكد؟",
+            description: `سيتم حذف العضوية ${item.name} نهائيًا.`
+        });
+        if (!ok) return;
+        const toastId= toast.loading(`جاري حذف عضوية ${item.name}...`);
+        let isSuccess = false;
+        await axios.delete(destroy(item.id).url).then(() => {
+            setTableData(prev => prev.filter(row => row.id !== item.id));
+            toast.success(`تم حذف عضوية ${item.name} بنجاح`);
+            isSuccess = true;
+        }).catch((error) => {
+            toast.error(getErrorMessage(error.status, `العضوية ${item.name}`))
+        }).finally(() => {
+            toast.dismiss(toastId);
+        });
+        return isSuccess;
     };
 
     /**

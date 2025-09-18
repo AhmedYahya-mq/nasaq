@@ -149,6 +149,8 @@ return [
         'features.*' => 'Feature',
         'requirements.*' => 'Requirement',
         'description' => 'Description',
+        'image_id' => 'Image',
+        'featured_image' => 'Featured Image',
     ],
 
 ];

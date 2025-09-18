@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch justify-center">
+        <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 gap-y-24 items-stretch justify-center">
             <x-ui.blog-card :title="__('home.blogs.items.0.title')" image="blog1.jpg" :excerpt="__('home.blogs.items.0.excerpt')" />
 
             <x-ui.blog-card :title="__('home.blogs.items.1.title')" image="blog2.jpg" :excerpt="__('home.blogs.items.1.excerpt')" />

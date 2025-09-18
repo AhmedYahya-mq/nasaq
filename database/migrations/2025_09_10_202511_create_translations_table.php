@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('record_id');
             $table->string('locale');
             $table->string('field');
-            $table->longText('value');
+            $table->string('value');
             $table->timestamps();
 
             $table->index(['table_name', 'record_id', 'locale', 'field']);

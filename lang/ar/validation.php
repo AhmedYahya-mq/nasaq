@@ -166,6 +166,8 @@ return [
         'features.*' => 'الميزة',
         'requirements.*' => 'المتطلب',
         'description' => 'الوصف',
+        'image_id' => 'الصورة',
+        'featured_image' => 'الصورة المميزة',
     ],
 
 ];

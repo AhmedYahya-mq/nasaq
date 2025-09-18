@@ -31,7 +31,7 @@
     </nav>
 
     <ul x-data x-bind:class="$store.menu.isOpen ? 'bounce-in-left' : 'slide-out-right'"
-        class="lg:pb-3 lg:!hidden h-dvh max-h-[calc(100dvh-6.9rem)] flex-center origin-left bounce-in flex-col absolute top-16 left-0  z-50 bg-background w-full gap-x-1 scrollbar">
+        class="lg:pb-3 pt-3 lg:!hidden h-dvh max-h-[calc(100dvh-6.9rem)] flex-center origin-left bounce-in flex-col absolute top-16 left-0  z-50 bg-background w-full gap-x-1 scrollbar">
         {{-- Mobile Menu Items --}}
         @foreach ($menus as $menu)
             <x-mobile-menu :menu="$menu" />

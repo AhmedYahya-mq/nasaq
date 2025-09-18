@@ -20,6 +20,9 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
 
     // blog Routes
     Route::get('blogs',[BlogController::class,'index'])->name('blogs');
+    Route::post('blogs', [BlogController::class, 'store'])->name('blogs.store');
+    Route::put('blogs/{id}', [BlogController::class, 'update'])->name('blogs.update');
+    Route::put('blogs/{id}/translation', [BlogController::class, 'updateTranslation'])->name('blogs.update.translation');
     Route::delete('blogs/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
 
     Route::get('membershipApplications', function () {

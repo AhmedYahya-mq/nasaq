@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe962438e56280640f95e502f878bcf8",
+    "content-hash": "ef82d785926a2c02799336bfaee4cb49",
     "packages": [
         {
             "name": "ahmed/gallery-images",

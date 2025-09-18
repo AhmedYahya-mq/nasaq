@@ -10,6 +10,7 @@ class MobileMenu extends Component
 {
     public $menu;
     public $hasSubMenu;
+     public $isActive=false;
 
     /**
      * Create a new component instance.
@@ -18,6 +19,7 @@ class MobileMenu extends Component
     {
         $this->menu = $menu;
         $this->hasSubMenu = isset($menu['subMenu']) && count($menu['subMenu']) > 0;
+        $this->isActive = $menu['active']() ?? false;
     }
 
     /**

@@ -8,6 +8,7 @@ import { Blog } from "@/types/model/blogs.d";
 import { actionsCell, centeredTextCell, dateCell, descriptionCell, textCell } from "@/lib/tableHelpers";
 import { ButtonsActions, ExtendedColumnDef } from "@/types/ui/table/table";
 import { destroy } from "@/routes/admin/blogs";
+import { confirmAlertDialog } from "@/components/custom/ConfirmDialog";
 
 /**
  * هوك لإدارة جدول العضويات مع دعم البحث، الإضافة، التعديل، الحذف، والترجمة
@@ -15,7 +16,7 @@ import { destroy } from "@/routes/admin/blogs";
  * @param handleDelete دالة الحذف التي تستدعى عند حذف عنصر
  * @returns جميع الدوال والحالات اللازمة لإدارة الجدول
  */
-export function useTableBlogs({ blogs, handleDelete }: { blogs: Blog[], handleDelete?: (fn: () => Promise<boolean>, targetItem: any) => void }) {
+export function useTableBlogs({ blogs }: { blogs: Blog[] }) {
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
     const [tableData, setTableData] = useState<Blog[]>(blogs);
@@ -45,7 +46,7 @@ export function useTableBlogs({ blogs, handleDelete }: { blogs: Blog[], handleDe
      */
     const addRow = (blog: Blog) => {
         setTableData(prev => [blog, ...prev]);
-        toast.success(`تم إضافة عضوية ${blog.title} بنجاح`);
+        toast.success(`تم إضافة المدونة ${blog.title} بنجاح`);
     };
 
     /**
@@ -61,7 +62,7 @@ export function useTableBlogs({ blogs, handleDelete }: { blogs: Blog[], handleDe
             toast.success(`تمت ترجمة العضوية ${blog?.title} بنجاح`);
             return;
         }
-        toast.success(`تم تحديث عضوية ${blog.title} بنجاح`);
+        toast.success(`تم تحديث المدونة ${blog.title} بنجاح`);
     };
 
     /**
@@ -69,18 +70,24 @@ export function useTableBlogs({ blogs, handleDelete }: { blogs: Blog[], handleDe
      * @param item العنصر المستهدف للحذف
      * @return void
      */
-    const deleteRow = (item: Blog) => {
-        handleDelete?.(async () => {
-            let isSuccess = false;
-            await axios.delete(destroy(item.id).url).then(() => {
-                setTableData(prev => prev.filter(row => row.id !== item.id));
-                toast.success(`تم حذف ${item.title} بنجاح`);
-                isSuccess = true;
-            }).catch((error) => {
-                toast.error(getErrorMessage(error.status, `المدونة ${item.title}`))
-            });
-            return isSuccess;
-        }, item);
+    const deleteRow = async (item: Blog) => {
+        const ok = await confirmAlertDialog({
+            title: "هل أنت متأكد؟",
+            description: `سيتم حذف المدونة ${item.title} نهائيًا.`
+        });
+        if (!ok) return;
+        const toastId = toast.loading(`جاري حذف المدونة ${item.title}...`);
+        let isSuccess = false;
+        await axios.delete(destroy(item.id).url).then(() => {
+            setTableData(prev => prev.filter(row => row.id !== item.id));
+            toast.success(`تم حذف المدونة ${item.title} بنجاح`);
+            isSuccess = true;
+        }).catch((error) => {
+            toast.error(getErrorMessage(error.status, `العضوية ${item.title}`))
+        }).finally(() => {
+            toast.dismiss(toastId);
+        });
+        return isSuccess;
     };
 
     /**

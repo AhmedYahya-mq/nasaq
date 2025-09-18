@@ -28,7 +28,7 @@
     "dependencies": {
         "@alpinejs/focus": "^3.14.9",
         "@headlessui/react": "^2.2.0",
-        "@inertiajs/progress": "^0.2.7",
+        "@inertiajs/progress": "^0.1.2",
         "@inertiajs/react": "^2.1.0",
         "@popperjs/core": "^2.11.8",
         "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -85,7 +85,8 @@
         "toastr": "^2.1.4",
         "typescript": "^5.7.2",
         "vaul": "^1.1.2",
-        "vite": "^7.0.4"
+        "vite": "^7.0.4",
+        "zustand": "^5.0.8"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.5",

@@ -4,7 +4,6 @@ namespace App;
 
 use App\Models\Translation;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Support\Facades\Log;
 
 trait HasTranslations
 {
@@ -13,8 +12,8 @@ trait HasTranslations
     {
         $appends = parent::getAppends();
 
-        if (property_exists($this, 'translatable') && is_array($this->translatable)) {
-            $appends = array_merge($appends, $this->translatable);
+        if (property_exists($this, 'translatableFields') && is_array($this->translatableFields)) {
+            $appends = array_merge($appends, $this->translatableFields);
         }
 
         return $appends;
@@ -24,7 +23,7 @@ trait HasTranslations
      * العلاقة مع جدول الترجمات
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function translations()
+    public function translationsField()
     {
         return $this->hasMany(Translation::class, 'record_id')
             ->where('table_name', $this->getTable());
@@ -36,13 +35,13 @@ trait HasTranslations
      * @param string|null $locale اللغة المطلوبة (افتراضيًا لغة التطبيق)
      * @return string|null القيمة المترجمة أو null إذا لم توجد
      */
-    public function translate($field, $locale = null)
+    public function translateField($field, $locale = null)
     {
         $locale = $locale ?: app()->getLocale();
-        if (!in_array($field, $this->translatable)) {
+        if (!in_array($field, $this->translatableFields)) {
             return null;
         }
-        $translation = $this->translations
+        $translation = $this->translationsField
             ->where('field', $field)
             ->where('locale', $locale)
             ->first();
@@ -67,12 +66,12 @@ trait HasTranslations
         }
         $table = $query->getModel()->getTable();
 
-        return $query->with(['translations' => function ($q) use ($fields, $locale, $table) {
+        return $query->with(['translationsField' => function ($q) use ($fields, $locale, $table) {
             $q->whereIn('locale', $locale)
                 ->where('table_name', $table);
 
             if (!empty($fields)) {
-                $allowed = array_intersect($fields, $this->translatable);
+                $allowed = array_intersect($fields, $this->translatableFields);
                 $q->whereIn('field', $allowed);
             }
         }]);
@@ -89,7 +88,7 @@ trait HasTranslations
     {
         $locale = $locale ?: app()->getLocale();
         foreach ($data as $field => $value) {
-            if (!in_array($field, $this->translatable)) {
+            if (!in_array($field, $this->translatableFields)) {
                 continue;
             }
             Translation::updateOrCreate(
@@ -114,7 +113,7 @@ trait HasTranslations
      */
     public function __get($key)
     {
-        $translated = $this->translate($key);
+        $translated = $this->translateField($key);
         if ($translated !== null) {
             return $translated;
         }
@@ -139,11 +138,11 @@ trait HasTranslations
         $table = $query->getModel()->getTable();
 
         if (!empty($fields)) {
-            $fields = array_intersect($fields, $this->translatable);
+            $fields = array_intersect($fields, $this->translatableFields);
             if (empty($fields)) return $query;
         }
 
-        return $query->whereHas('translations', function ($q) use ($fields, $term, $locale, $table) {
+        return $query->whereHas('translationsField', function ($q) use ($fields, $term, $locale, $table) {
             $q->where('table_name', $table)
                 ->where(function ($subQ) use ($fields, $term, $locale, $table) {
                     if (empty($fields)) {
@@ -160,5 +159,38 @@ trait HasTranslations
                     }
                 });
         });
+    }
+
+    /**
+     * حذف الترجمة لحقل أو أكثر
+     *
+     * @param string|array $fields اسم الحقل أو مصفوفة من الحقول
+     * @param string|null $locale اللغة المطلوبة (افتراضيًا لغة التطبيق)
+     * @return void
+     */
+    public function deleteTranslations($fields, $locale = null): void
+    {
+        $locale = $locale ?: app()->getLocale();
+        $fields = is_array($fields) ? $fields : [$fields];
+
+        Translation::where('table_name', $this->getTable())
+            ->where('record_id', $this->id)
+            ->whereIn('field', $fields)
+            ->when($locale, function ($q) use ($locale) {
+                $q->where('locale', $locale);
+            })
+            ->delete();
+    }
+
+    /**
+     * حذف جميع الترجمات المرتبطة بالنموذج
+     *
+     * @return void
+     */
+    public function clearTranslations(): void
+    {
+        Translation::where('table_name', $this->getTable())
+            ->where('record_id', $this->id)
+            ->delete();
     }
 }

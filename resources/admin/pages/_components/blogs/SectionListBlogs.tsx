@@ -4,14 +4,11 @@ import { getColumns } from "@/data/membership/tableData";
 import SectionListGeneric from "../SectionListGeneric";
 import FormComponent from "./FormComponent";
 import { usePage } from "@inertiajs/react";
-import AlertConfirmContext from "@/context/AlertConfirmContext";
 import { Blog, blogColumnLabels } from "@/types/model/blogs.d";
 import { useTableBlogs } from "@/hooks/table/useTableBlogs";
 
 export default function SectionListBlogs(): JSX.Element {
     const { blogs } = usePage<{ blogs: Blog[] }>().props;
-    const { handleDelete } = useContext(AlertConfirmContext);
-
     const {
         tableData,
         addRow,
@@ -21,7 +18,7 @@ export default function SectionListBlogs(): JSX.Element {
         translateRow,
         setColumns,
         ...hookProps
-    } = useTableBlogs({ blogs, handleDelete });
+    } = useTableBlogs({ blogs });
 
 
     const genericListProps = { ...hookProps, deleteRow };

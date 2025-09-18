@@ -6,25 +6,28 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
-export function translateField(
-    item: Membership,
-    field: keyof Membership,
+export function translateField<T extends Record<string, any>>(
+    item: T,
+    field: keyof T,
     isTranslate: boolean
-) {
-    if (!item) {
-        return "";
-    }
-    const key = `${field}` as keyof Membership;
-    const fallbackKey = `${field}_en` as keyof Membership;
+): any {
+    if (!item) return "";
+
+    const key = field;
+    const fallbackKey = `${String(field)}_en` as keyof T;
+
     let defaultValue: any = "";
     if (Array.isArray(item[key])) {
         defaultValue = [];
     }
+
     if (isTranslate) {
         return (item[fallbackKey] as any) ?? (item[key] as any) ?? defaultValue;
     }
+
     return (item[key] as any) ?? defaultValue;
 }
+
 
 
 
@@ -70,21 +73,21 @@ export function formatterNumber(value: number | string, locale = "ar-SA", curren
 
 type TimeUnit = "day" | "week" | "month";
 export function formatTimeUnit(count: number | string, unit: TimeUnit): string {
-  const n = typeof count === "string" ? parseInt(count, 10) : count;
-  if (isNaN(n) || n < 0) return "";
+    const n = typeof count === "string" ? parseInt(count, 10) : count;
+    if (isNaN(n) || n < 0) return "";
 
-  const map: Record<TimeUnit, [string, string, string, string]> = {
-    day: ["يوم", "يومان", "أيام", "يومًا"],
-    week: ["أسبوع", "أسبوعان", "أسابيع", "أسبوعًا"],
-    month: ["شهر", "شهران", "أشهر", "شهرًا"],
-  };
+    const map: Record<TimeUnit, [string, string, string, string]> = {
+        day: ["يوم", "يومان", "أيام", "يومًا"],
+        week: ["أسبوع", "أسبوعان", "أسابيع", "أسبوعًا"],
+        month: ["شهر", "شهران", "أشهر", "شهرًا"],
+    };
 
-  const [singular, dual, plural3to10, pluralOver10] = map[unit];
+    const [singular, dual, plural3to10, pluralOver10] = map[unit];
 
-  if (n === 1) return singular;
-  if (n === 2) return dual;
-  if (n >= 3 && n <= 10) return `${n} ${plural3to10}`;
-  return `${n} ${pluralOver10}`;
+    if (n === 1) return singular;
+    if (n === 2) return dual;
+    if (n >= 3 && n <= 10) return `${n} ${plural3to10}`;
+    return `${n} ${pluralOver10}`;
 }
 
 

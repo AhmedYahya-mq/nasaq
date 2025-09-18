@@ -2,24 +2,28 @@
 
 namespace App\Models;
 
+use Ahmed\GalleryImages\HasPhotos;
 use App\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations as TranslatableHasTranslations;
 
 class Blog extends Model
 {
-     use HasTranslations, HasFactory;
+     use HasTranslations, HasFactory, TranslatableHasTranslations, HasPhotos;
 
     protected $fillable = [
-        'featured_image',
         'admin_id',
         'views',
         'slug',
+        'content',
     ];
 
-    protected $translatable = [
-        'title',
+    public $translatable = [
         'content',
+    ];
+    protected $translatableFields = [
+        'title',
         'excerpt',
     ];
 
