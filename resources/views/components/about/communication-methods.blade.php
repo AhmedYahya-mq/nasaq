@@ -3,7 +3,7 @@
     $methodsConfig = __('about.contact_section.methods');
 
     // تعريف الأيقونات والألوان لكل طريقة تواصل
-    $contactMethods = config('app.social_media', []);
+    $socials = config('socials', []);
 
 @endphp
 
@@ -76,16 +76,16 @@
                 <h3 class="text-xl font-bold text-foreground mb-6">{{ __('about.contact_section.quick_links.title') }}
                 </h3>
                 <div class="space-y-4">
-                    @foreach ($contactMethods as $method)
-                        @if (env('CONTACT_' . strtoupper($method['env_key'])))
-                            <a href="{{ $method['url'] }}" target="_blank" rel="noopener noreferrer"
+                    @foreach ($socials as $social)
+                       @if (!empty($social['url']) && $social['url'] !== '#')
+                            <a href="{{ $social['url'] }}" target="_blank" rel="noopener noreferrer"
                                 class="group flex items-center p-4 rounded-xl bg-card border border-border shadow-sm hover:shadow-lg hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1">
                                 <div
-                                    class="flex-shrink-0 w-12 h-12 rounded-lg {{ $method['bg_color'] }}  flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
-                                    <x-ui.icon :name="$method['icon']" class="w-6 h-6 fill-white" fill="#fff" />
+                                    class="flex-shrink-0 w-12 h-12 rounded-lg {{ $social['bg_color'] }}  flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
+                                    <x-ui.icon :name="$social['icon']" class="w-6 h-6 fill-white" fill="#fff" />
                                 </div>
                                 <div class="ms-4">
-                                    <p class="text-lg font-semibold text-foreground">{{ $method['env_key'] }}</p>
+                                    <p class="text-lg font-semibold text-foreground">{{ $social['env_key'] }}</p>
                                     <p class="text-sm text-muted-foreground">
                                         {{ __('about.contact_section.quick_links.action_text') }}</p>
                                 </div>
