@@ -7,7 +7,7 @@
             <img src="{{ asset('favicon.ico') }}" alt="Nasaq" class="size-8">
             <h3 class="text-lg font-semibold text-primary">{{ __('messages.nsasq') }}</h3>
         </a>
-        <div class="flex max-[685px]:flex-wrap max-[685px]:justify-center space-x-4 mt-4 md:mt-0">
+        <div class="flex flex-wrap justify-center space-x-4 mt-4 md:mt-0">
             <a href="{{ route('client.home') }}" class="text-muted-foreground hover:text-primary transition">الرئيسية</a>
             <a href="{{ route('client.blog') }}"
                 class="text-muted-foreground hover:text-primary transition">المدونات</a>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="flex  gap-4 max-[685px]:flex-col justify-between items-center">
-        <div class="flex max-[685px]:flex-wrap max-[685px]:justify-center space-x-4">
+        <div class="flex flex-wrap justify-center space-x-4">
             @foreach ($socials as $social)
                 @if (!empty($social['url']) && $social['url'] !== '#')
                     <a href="{{ $social['url'] }}" target="_blank" rel="noopener noreferrer"
