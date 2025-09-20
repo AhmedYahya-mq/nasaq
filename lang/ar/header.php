@@ -62,6 +62,6 @@ return [
     'security' => 'الأمان',
     'your_site_secured' => 'تأمين موقعك',
 
-    'pricing' => 'الأسعار',
+    'memberships' => 'العضويات',
     'contact' => 'اتصل بنا',
 ];

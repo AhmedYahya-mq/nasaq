@@ -78,6 +78,6 @@ Route::get('/blog/', function ($slug='example-blog-post') {
     return view('blog-details', ['slug' => $slug]);
 })->name('blog');
 
-Route::get('/price', function () {
-    return view('price');
-})->name('price');
+Route::get('/memberships', function () {
+    return view('memberships');
+})->name('memberships');

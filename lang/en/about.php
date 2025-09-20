@@ -10,7 +10,7 @@ return [
         'point2' => 'Access to advanced training and professional development.',
         'point3' => 'A supportive community fostering collaboration and innovation.',
         'cta_primary' => 'Join Now',
-        'cta_secondary' => 'Discover Our Vision',
+        'cta_secondary' => 'Our Events',
     ],
 'vision_title' => 'Our Vision',
     'vision_text'  => 'We aim to be the leading professional platform that reshapes the presence of clinical nutrition specialists and empowers them to make a meaningful impact across diverse pathways: clinical, academic, research, media, and entrepreneurship.',

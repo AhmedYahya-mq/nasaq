@@ -11,7 +11,7 @@
             <a href="{{ route('client.library') }}" class="text-muted-foreground hover:text-primary transition">المكتبة الرقمية</a>
             <a href="{{ route('client.archives') }}" class="text-muted-foreground hover:text-primary transition">الأرشيف</a>
             <a href="{{ route('client.about') }}" class="text-muted-foreground hover:text-primary transition">من نحن</a>
-            <a href="{{ route('client.price') }}" class="text-muted-foreground hover:text-primary transition">العضويات</a>
+            <a href="{{ route('client.memberships') }}" class="text-muted-foreground hover:text-primary transition">العضويات</a>
         </div>
     </div>
 

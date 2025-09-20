@@ -34,11 +34,11 @@ return [
         'route' => 'client.blogs',
         'active' => ['client.blogs', 'client.locale.blogs']
     ],
-    // price
+    // memberships
     [
-        'name' => 'header.pricing',
-        'route' => 'client.price',
-        'active' => ['client.price', 'client.locale.price']
+        'name' => 'header.memberships',
+        'route' => 'client.memberships',
+        'active' => ['client.memberships', 'client.locale.memberships']
     ],
     // [
     //     "name" => "header.resources",

@@ -63,6 +63,6 @@ return [
     'security' => 'Security',
     'your_site_secured' => 'Your site secured',
 
-    'pricing' => 'Pricing',
+    'memberships' => 'Memberships',
     'contact' => 'Contact',
 ];

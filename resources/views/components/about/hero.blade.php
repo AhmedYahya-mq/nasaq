@@ -30,11 +30,11 @@
 
             <!-- الأزرار -->
             <div class="flex gap-4 justify-center lg:justify-start" >
-                <a href="#memberships"
+                <a href="{{ route('client.memberships') }}"
                    class="py-2 px-4 text-base sm:text-lg font-semibold rounded-2xl bg-primary text-accent-foreground hover:bg-primary/90 transition-all shadow-md hover:shadow-xl">
                     {{ __('about.hero.cta_primary') }}
                 </a>
-                <a href="#vision"
+                <a href="{{ route('client.events') }}"
                    class="py-2 px-4 text-base sm:text-lg font-semibold rounded-2xl border border-primary text-primary hover:bg-primary/5 transition-all">
                     {{ __('about.hero.cta_secondary') }}
                 </a>

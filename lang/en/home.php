@@ -4,7 +4,7 @@ return [
     'hero' => [
         'title' => 'Therapeutic Nutrition Community',
         'description' => 'Nasq is a platform and community specialized in therapeutic nutrition, aiming to provide reliable and practical scientific content for health and nutrition enthusiasts. The platform brings together experts, specialists, and individuals who want to improve their dietary lifestyle.',
-        'cta' => 'Register Now',
+        'cta' => 'Join Now',
 
         'card1_title' => '📚 Your Reference Anytime, Anywhere',
         'card1_text'  => 'The digital library provides you with reliable and up-to-date scientific content to help you develop your skills and build your medical expertise with confidence.',
