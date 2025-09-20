@@ -1,4 +1,7 @@
 <x-layouts.guest-layout title="الرئيسية">
+    @push('scripts')
+        @vite('resources/js/pages/events.js')
+    @endpush
     <x-sections.hero />
     {{-- <x-sections.hero-section /> --}}
     <x-sections.goals-section />
