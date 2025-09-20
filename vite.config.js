@@ -37,6 +37,7 @@ export default defineConfig({
         alias: {
             '@': path.resolve(__dirname, 'resources/admin'),
             '@client': path.resolve(__dirname, 'resources/js'),
+            '@fonts': path.resolve(__dirname, 'resources/fonts'),
         },
     },
     build: {

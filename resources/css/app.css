@@ -1,4 +1,3 @@
-@import url("https://use.typekit.net/hyn4jdf.css");
 @import 'tailwindcss';
 @plugin 'tailwindcss-animate';
 @config "../../tailwind.config.js";
@@ -12,10 +11,47 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Regular 400 */
+@font-face {
+  font-family: 'Tajawal';
+  src: url('@fonts/Tajawal/Tajawal-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Light 300 */
+@font-face {
+  font-family: 'Tajawal';
+  src: url('@fonts/Tajawal/Tajawal-Light-Regular.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Medium 500 */
+@font-face {
+  font-family: 'Tajawal';
+  src: url('@fonts/Tajawal/Tajawal-Medium-Regular.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Black 900 */
+@font-face {
+  font-family: 'Tajawal';
+  src: url('@fonts/Tajawal/Tajawal-Black-Regular.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 
 
 @theme {
-    --font-sans: 'Cairo',
+    --font-sans: 'Tajawal',
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --radius-lg: var(--radius);
@@ -68,6 +104,11 @@
 
 *{
     font-family: var(--font-sans);
+}
+
+/* الاستخدام */
+body {
+  font-family: var(--font-sans);
 }
 
 /* Variables */
