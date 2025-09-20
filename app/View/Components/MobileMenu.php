@@ -19,7 +19,7 @@ class MobileMenu extends Component
     {
         $this->menu = $menu;
         $this->hasSubMenu = isset($menu['subMenu']) && count($menu['subMenu']) > 0;
-        $this->isActive = $menu['active']() ?? false;
+        $this->isActive = request()->routeIs($menu['active'] ?? []) ?? false;
     }
 
     /**

@@ -1,7 +1,7 @@
 @props(['name', 'class' => 'w-6 h-6'])
 
 @if (view()->exists("components.icons.$name"))
-    @include("components.icons.$name", ['class' => $class])
+    @include("components.icons.$name", ['class' => $class, 'attributes' => $attributes])
 @else
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="{{ $class }}">
         <path fill-rule="evenodd" clip-rule="evenodd"

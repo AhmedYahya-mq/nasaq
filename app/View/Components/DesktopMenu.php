@@ -20,7 +20,7 @@ class DesktopMenu extends Component
     {
         $this->menu = $menu;
         $this->hasSubMenu = isset($menu['subMenu']) && count($menu['subMenu']) > 0;
-        $this->isActive = $menu['active']() ?? false;
+        $this->isActive = request()->routeIs($menu['active'] ?? []) ?? false;
     }
     /**
      * Get the view / contents that represent the component.

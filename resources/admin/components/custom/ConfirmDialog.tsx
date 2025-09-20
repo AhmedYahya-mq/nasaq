@@ -35,7 +35,7 @@ export function confirmAlertDialog({ title, description }: { title: string, desc
                     </AlertDialogHeader>
                     <AlertDialogFooter className="flex gap-2 justify-end">
                         <AlertDialogCancel asChild>
-                            <Button onClick={() => handleClose(false)}>إلغاء</Button>
+                            <Button className="!badget-red-500" onClick={() => handleClose(false)}>إلغاء</Button>
                         </AlertDialogCancel>
                         <AlertDialogAction asChild>
                             <Button variant="destructive" onClick={() => handleClose(true)}>تأكيد</Button>
