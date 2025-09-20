@@ -20,7 +20,7 @@
                 <x-ui.toggle-menu-profile :user="Auth::guard()->user() "/>
             @else
                 <a href="{{ route('login') }}"
-                    class="bg-background/5 relative md:px-4 px-2 py-1 shadow rounded-xl flex-center">
+                    class="badget-70 hover:badget-80 transition relative md:px-4 px-2 py-1 shadow rounded-xl flex-center">
                     تسجيل الدخول
                 </a>
             @endauth

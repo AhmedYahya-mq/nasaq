@@ -74,7 +74,7 @@
                         <p class="text-center text-sm text-muted-foreground pt-4 animate-fade-in-down"
                             style="animation-delay: 800ms;">
                             {{ __('register.login_prompt') }}
-                            <a href="#"
+                            <a href="{{ route('login') }}"
                                 class="font-semibold text-primary hover:text-primary/80 transition-colors">{{ __('register.login_link') }}</a>
                         </p>
                     </form>
