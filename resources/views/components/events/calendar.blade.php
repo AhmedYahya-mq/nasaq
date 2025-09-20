@@ -79,6 +79,7 @@
         flex flex-wrap gap-2 justify-between mb-2
         sm:flex-nowrap
         sm:mb-2
+        px-0.5
     ">
         <template x-for="day in weekDays" :key="day.iso">
             <div

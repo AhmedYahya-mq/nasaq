@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MembershipApplictionController;
 use App\Http\Controllers\User\BlogController;
 use App\Http\Controllers\User\MembershipController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,11 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
     Route::put('membership/{membership}/translation', [MembershipController::class, 'updateTranslation'])->name('membership.update.translation');
     Route::delete('membership/{id}', [MembershipController::class, 'destroy'])->name('membership.destroy');
 
+    // Membership Application Routes
+    Route::get('membershipApplications', [MembershipApplictionController::class, 'index'])->name('membershipApplications');
+    // Route::put('membershipApplications/{id}/approve', [MembershipController::class, 'approve'])->name('membershipApplications.approve');
+    // Route::put('membershipApplications/{id}/reject', [MembershipController::class, 'reject'])->name('membershipApplications.reject');
+
 
     // blog Routes
     Route::get('blogs',[BlogController::class,'index'])->name('blogs');
@@ -24,10 +30,6 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
     Route::put('blogs/{id}', [BlogController::class, 'update'])->name('blogs.update');
     Route::put('blogs/{id}/translation', [BlogController::class, 'updateTranslation'])->name('blogs.update.translation');
     Route::delete('blogs/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
-
-    Route::get('membershipApplications', function () {
-        return Inertia::render('membershipApplication');
-    })->name('membershipApplications');
 });
 
 require __DIR__ . '/settings.php';

@@ -2,8 +2,8 @@
 
 return [
     'hero' => [
-        'title' => 'Therapeutic Nutrition Community',
-        'description' => 'Nasq is a platform and community specialized in therapeutic nutrition, aiming to provide reliable and practical scientific content for health and nutrition enthusiasts. The platform brings together experts, specialists, and individuals who want to improve their dietary lifestyle.',
+        'title' => 'About Us - Nasq Community',
+        'description' => 'We are "Nasq", a professional Saudi community for therapeutic nutrition specialists, a community for communication and knowledge exchange among practitioners in various fields of therapeutic nutrition.',
         'cta' => 'Join Now',
 
         'card1_title' => '📚 Your Reference Anytime, Anywhere',
@@ -19,19 +19,19 @@ return [
     'goals' => [
         'title' => 'Our Goals',
         'goal1_title' => 'Building the Professional Network',
-        'goal1_desc'  => 'Establishing a Saudi specialized network including therapeutic nutrition specialists from all career paths to enhance professional communication and collaboration.',
+        'goal1_desc'  => ' Building a professional Saudi network of therapeutic nutrition specialists from various paths.',
 
         'goal2_title' => 'Interactive Meetings',
-        'goal2_desc'  => 'Organizing quarterly face-to-face meetings aimed at continuous education, constructive discussion, exchanging professional experiences, and building strong professional relationships.',
+        'goal2_desc'  => 'Creating quarterly face-to-face meetings aimed at: education, discussion, experience exchange, and relationship building.',
 
         'goal3_title' => 'Career Path Development',
-        'goal3_desc'  => 'Enabling nutrition specialists to build flexible and influential career paths within and outside the health system, opening new horizons for professional growth.',
+        'goal3_desc'  => 'Empowering nutrition specialists to build flexible and impactful career paths inside and outside the healthcare system. ',
 
         'goal4_title' => 'Enhancing Professional Visibility',
-        'goal4_desc'  => 'Increasing professional visibility through social media platforms, health media, and participation in specialized scientific conferences.',
+        'goal4_desc'  => 'Enhancing the professional visibility of specialists through social media platforms, health media, and participation in specialized scientific conferences.',
 
         'goal5_title' => 'Supporting Innovation and Initiatives',
-        'goal5_desc'  => 'Opening the field for innovative nutritional initiatives and projects that serve the community and support innovation in therapeutic nutrition and public health.',
+        'goal5_desc'  => 'Opening the field for nutritional initiatives and projects that serve the community and support innovation.',
     ],
 
     'numbers' => [

@@ -2,7 +2,7 @@
     @push('scripts')
         @vite('resources/js/pages/events.js')
     @endpush
-    <x-sections.hero />
+    <x-sections.hero2 />
     {{-- <x-sections.hero-section /> --}}
     <x-sections.goals-section />
     <x-sections.num-section />

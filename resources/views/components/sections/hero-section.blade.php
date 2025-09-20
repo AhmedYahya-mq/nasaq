@@ -11,7 +11,7 @@
         </div>
 
         <div class="flex items-center justify-center *:not-first:p-2 aspect-[3/2] *:not-first:w-[250px] relative h-[calc(100dvh-6.9rem)] w-full lg:aspect-square order-1 lg:order-2">
-            <img src="{{ asset('images/image_heror.png') }}" class="size-auto" alt="{{ config('app.name') }}">
+            <img src="{{ asset('images/froot.webp') }}" class="size-auto" alt="{{ config('app.name') }}">
 
             <div class="absolute top-[15%] left-2  bg-muted/60 shadow rounded-xl">
                 <h2 class="text-xs font-medium">{{ __('home.hero.card1_title') }}</h2>
