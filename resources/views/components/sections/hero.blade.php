@@ -63,7 +63,7 @@
             </p>
             <button aria-label="{{ __('home.hero.cta') }}"
                 class="group relative overflow-hidden bg-primary !text-white px-4 py-2 rounded-lg">
-                <a class="text-white" href="{{ '/' }}">{{ __('home.hero.cta') }}</a>
+                <a class="text-white" href="{{ route('client.memberships') }}">{{ __('home.hero.cta') }}</a>
 
                 <!-- لمعة -->
                 <span
