@@ -13,35 +13,12 @@ return [
     |
     */
 
-    // == General keys for Info-Box Component ==
-    'read_more'          => 'More Details',
-    'show_less'       => 'Show Less',
-    'payment_bank_label'    => 'Bank',
-    'payment_account_label' => 'Account Number',
-    'payment_iban_label'    => 'IBAN',
 
-    // == Registration Section: Top Info Box ==
-    'info_box' => [
-        'title'         => 'Invitation to Join the Professional Community for Clinical Dietitians',
-        'subtitle'      => '🎯 A call for specialists and those interested in clinical nutrition',
-        'description'   => 'We announce the launch of the professional community for clinical dietitians, which meets every 3 months to enhance communication and develop professional practice.',
-        'highlights'    => [
-            'Exchange of experiences and knowledge',
-            'Discussion of the latest scientific and clinical updates',
-            'Development of nutritional initiatives and projects',
-            'Building a strong and supportive professional network',
-            'Professional presence on social media platforms',
-        ],
-        'link_label'    => 'Our LinkedIn Page',
-        'payment_title' => '💳 Payment Details',
-        'payment_bank'  => 'AlAhli Bank', // The actual bank name
-        'payment_note'  => 'Please transfer the registration fee (70 SAR) and attach a photo of the transfer receipt.',
-    ],
 
     // == Registration Section: Form Header ==
     'form_header' => [
-        'title'    => 'Join Us',
-        'subtitle' => 'A few simple steps to book your seat. Please fill in the data accurately.',
+        'title'    => 'Complete Order Now',
+        'subtitle' => 'Complete your membership application now and fill out the form to finalize your registration',
     ],
 
     // == Registration Section: Personal Information ==

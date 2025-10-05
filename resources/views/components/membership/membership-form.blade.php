@@ -3,18 +3,6 @@
 
         <div class="mt-16 bg-card border border-border shadow-2xl shadow-primary/10 rounded-3xl overflow-hidden">
 
-            {{-- تم تحويل جميع النصوص داخل المكون إلى مفاتيح ترجمة من ملف 'memberships' --}}
-            <x-about.info icon="<svg>...</svg>" :title="__('memberships.info_box.title')" :subtitle="__('memberships.info_box.subtitle')" :description="__('memberships.info_box.description')" :highlights="__('memberships.info_box.highlights')"
-                :link="[
-                    'url' => 'https://www.linkedin.com/company/nasaq-community-of-nutrition-therapy/?viewAsMember=true',
-                    'label' => __('memberships.info_box.link_label'),
-                ]" :payment="[
-                    'title' => __('memberships.info_box.payment_title'),
-                    'bank' => __('memberships.info_box.payment_bank'),
-                    'account' => '86100001829608',
-                    'iban' => 'SA7210000086100001829608',
-                    'note' => __('memberships.info_box.payment_note'),
-                ]" highlight />
 
             <div class="p-8 md:p-10 bg-gradient-to-r from-primary/5 to-accent/5 border-b border-border text-center">
                 <h2 class="text-xl md:text-2xl font-bold text-foreground">{{ __('memberships.form_header.title') }}</h2>
