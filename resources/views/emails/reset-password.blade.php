@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إعادة تعيين كلمة المرور</title>
+    <title>{{ __('mails.Reset_Password') }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,30 +85,30 @@
         </center>
         <div class="email-container">
             <div class="email-content">
-                <h3>مرحباً!</h3>
-                <p>لقد تلقيت هذا البريد الإلكتروني لأننا تلقينا طلب إعادة تعيين كلمة المرور لحسابك.</p>
-                <center><a href="{{ $url ?? "" }}" class="email-button"
-                        style="color:#ffffff">إعادة تعيين كلمة
-                        المرور</a></center>
-                <p>سينتهي رابط إعادة تعيين كلمة المرور هذا خلال 60 دقيقة.</p>
-                <p>إذا لم تطلب إعادة تعيين كلمة المرور، يمكنك تجاهل هذه الرسالة.</p>
-                <p>مع تحيات، فريق فرصتي</p>
+                <h3>{{ __('mails.Hello') }}</h3>
+                <p>{{ __('mails.You_are_receiving_this_email_because_we_received_a_password_reset_request_for_your_account.') }}</p>
+                <center>
+                    <a href="{{ $url ?? "" }}" class="email-button" style="color:#ffffff">
+                        {{ __('mails.Reset_Password') }}
+                    </a>
+                </center>
+                <p>{{ __('mails.This_password_reset_link_will_expire_in_60_minutes.') }}</p>
+                <p>{{ __('mails.If_you_did_not_request_a_password_reset,_no_further_action_is_required.') }}</p>
+                <p>{{ __('mails.Regards,_Team') }}</p>
             </div>
             <hr>
             <div class="email-footer">
                 <p>
-                    إذا كنت تواجه مشكلة في النقر فوق زر "إعادة تعيين كلمة المرور"، انسخ ولصق عنوان URL أدناه في
-                    متصفح
-                    الويب
-                    الخاص بك: <a
-                        href="{{ $url ?? "" }}">{{ $url ?? "" }}</a>
+                    {{ __('mails.If_you’re_having_trouble_clicking_the_"Reset_Password"_button,_copy_and_paste_the_URL_below_into_your_web_browser:') }}
+                    <a href="{{ $url ?? "" }}">{{ $url ?? "" }}</a>
                 </p>
             </div>
         </div>
         <center>
-            <div class="email-copyrit">© 2024 Core. All rights reserved.</div>
+            <div class="email-copyrit">© 2024 Core. {{ __('mails.All_rights_reserved.') }}</div>
         </center>
     </div>
 </body>
 
+</html>
 </html>

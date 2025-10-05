@@ -4,7 +4,7 @@ import type { Node as PMNode } from "prosemirror-model";
 import { NodeSelection, Selection } from "prosemirror-state";
 import { Button } from "@/components/ui/button";
 import { Image as ImageIcon } from "lucide-react";
-import StudioImages from "@/components/custom/StudioImages";
+import StudioImages from "@/components/custom/studio-images/StudioImages";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -141,7 +141,7 @@ function LoadingField(props: {
 export default function ImageControl({ editor }: { editor?: EditorLike }) {
     // Studio/Dialog states
     const [showStudio, setShowStudio] = useState(false);
-    const [pendingImage, setPendingImage] = useState<{ path: string; width?: string | number; height?: string | number } | null>(null);
+    const [pendingImage, setPendingImage] = useState<{ url: string; width?: string | number; height?: string | number } | null>(null);
 
     // Editing states (shared for popover + dialog)
     const [imgWidth, setImgWidth] = useState<string>("");
@@ -430,9 +430,9 @@ export default function ImageControl({ editor }: { editor?: EditorLike }) {
                                 value={imgLoading}
                                 onChange={setImgLoading}
                             />
-                            {pendingImage?.path ? (
+                            {pendingImage?.url ? (
                                 <img
-                                    src={pendingImage.path}
+                                    src={pendingImage.url}
                                     alt="معاينة"
                                     className="max-w-full mx-auto rounded border border-gray-200"
                                 />
@@ -443,9 +443,9 @@ export default function ImageControl({ editor }: { editor?: EditorLike }) {
                         <Button
                             type="button"
                             onClick={() => {
-                                if (!pendingImage?.path) return;
+                                if (!pendingImage?.url) return;
                                 insertImage(
-                                    pendingImage.path,
+                                    pendingImage.url,
                                     imgWidth,
                                     imgHeight,
                                     imgAlt,

@@ -6,7 +6,7 @@ return [
         'main' => 'Meetings and Events',
         'subtitle' => 'Discover our upcoming and past events, and be part of the "Nasaq" community that connects you with experts and practical workshops.',
         'upcoming_events' => 'Upcoming Events',
-        'interactive_calendar' => 'Interactive Calendar',
+        'interactive_calendar' => 'Event Calendar',
         'past_events_archive' => 'Past Events Archive',
         'view_all_upcoming' => 'View All Upcoming Events',
     ],
@@ -58,7 +58,7 @@ return [
         'highlighted_event' => [
         'default_title' => '📹 Monthly Virtual Meeting',
         'default_location' => '📍 Conference Hall - Jeddah',
-        'register_now_button' => ' Register Now',
+        'register_now_button' => 'Register Now',
     ],
         'countdown' => [
         'days' => 'Days',

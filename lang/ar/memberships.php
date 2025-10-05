@@ -14,7 +14,8 @@ return [
     */
 
     // == مفاتيح عامة لمكون Info-Box ==
-    'more_details'          => 'المزيد من التفاصيل',
+    'read_more'          => 'المزيد من التفاصيل',
+    'show_less'       => 'إظهار أقل',
     'payment_bank_label'    => 'البنك',
     'payment_account_label' => 'رقم الحساب',
     'payment_iban_label'    => 'الآيبان',
@@ -85,5 +86,9 @@ return [
 
     // == قسم التسجيل: زر الإرسال ==
     'submit_button' => 'إتمام التسجيل الآن',
+    'save_percentage' => 'حفظ (:percentage%)',
+    'save_amount' => 'وفر :amount ريال سعودي',
+    // احصل على 12 شهرًا مقابل 130 سنة (السعر العادي 150ريال). يتم التجديد بسعر  150 ريال/سنة.
+    'discounted_price_note' => 'احصل على :months أشهر مقابل :discounted_price ريال (السعر العادي :regular_price ريال). يتم التجديد بسعر :regular_price ريال/سنة.',
 ];
 

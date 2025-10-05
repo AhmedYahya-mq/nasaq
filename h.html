@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>بطاقة العضوية</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card-container {
+            text-align: center;
+        }
+        .membership-card {
+            width: 600px;
+            height: 350px;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            border-radius: 15px;
+            color: white;
+            position: relative;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .card-info {
+            position: absolute;
+            top: 40px;
+            left: 160px;
+        }
+        .card-info h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .card-info p {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .qr-code {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 120px;
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="card-container">
+    <div id="membershipCard" class="membership-card">
+        <img src="https://via.placeholder.com/120" alt="الصورة الشخصية" class="profile-img">
+        <div class="card-info">
+            <h2 id="userName">أحمد</h2>
+            <p id="membershipName">عضوية ذهبية</p>
+            <p id="membershipStatus">Active</p>
+            <p id="membershipDates">01/01/2025 - 31/12/2025</p>
+        </div>
+        <img src="https://via.placeholder.com/120?text=QR" alt="QR Code" class="qr-code">
+    </div>
+    <br>
+    <button id="downloadBtn">تحميل البطاقة كصورة</button>
+</div>
+
+<script>
+    const downloadBtn = document.getElementById('downloadBtn');
+    const card = document.getElementById('membershipCard');
+
+    downloadBtn.addEventListener('click', () => {
+        html2canvas(card).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'membership-card.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    });
+</script>
+</body>
+</html>

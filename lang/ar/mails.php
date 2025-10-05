@@ -1,0 +1,22 @@
+<?php
+return [
+    'Membership_Request_Status' => 'حالة طلب العضوية',
+    'Community_Logo' => 'شعار المجتمع',
+    'Hello' => 'مرحباً',
+    'Admin_Notes' => 'ملاحظات الإدارة',
+    'Submission_Date' => 'تاريخ التقديم',
+    'Thank_you_for_submitting_your_request!_We_are_happy_to_have_you_interested_or_joining_the_community.' => 'شكراً لتقديم طلبك! يسعدنا اهتمامك أو انضمامك إلى المجتمع.',
+    'Verify_Email_Address' => 'التحقق من عنوان البريد الإلكتروني',
+    'Click_the_button_below_to_verify_your_email_address.' => 'الرجاء الضغط على الزر أدناه للتحقق من عنوان بريدك الإلكتروني.',
+    'This_verification_link_will_expire_in_60_minutes.' => 'سينتهي رابط التحقق من عنوان البريد الإلكتروني هذا خلال 60 دقيقة.',
+    'If_you_did_not_create_an_account,_no_further_action_is_required.' => 'إذا لم تقم بإنشاء حساب، فلن تكون هناك حاجة إلى أي إجراء آخر.',
+    'Regards,_Team' => 'مع تحيات، فريق فرصتي',
+    'If_you’re_having_trouble_clicking_the_"Verify_Email_Address"_button,_copy_and_paste_the_URL_below_into_your_web_browser:' => 'إذا كنت تواجه مشكلة في النقر فوق زر "التحقق من عنوان البريد الإلكتروني"، انسخ ولصق عنوان URL أدناه في متصفح الويب الخاص بك:',
+    'Reset_Password' => 'إعادة تعيين كلمة المرور',
+    'You_are_receiving_this_email_because_we_received_a_password_reset_request_for_your_account.' => 'لقد تلقيت هذا البريد الإلكتروني لأننا تلقينا طلب إعادة تعيين كلمة المرور لحسابك.',
+    'This_password_reset_link_will_expire_in_60_minutes.' => 'سينتهي رابط إعادة تعيين كلمة المرور هذا خلال 60 دقيقة.',
+    'If_you_did_not_request_a_password_reset,_no_further_action_is_required.' => 'إذا لم تطلب إعادة تعيين كلمة المرور، يمكنك تجاهل هذه الرسالة.',
+    'If_you’re_having_trouble_clicking_the_"Reset_Password"_button,_copy_and_paste_the_URL_below_into_your_web_browser:' => 'إذا كنت تواجه مشكلة في النقر فوق زر "إعادة تعيين كلمة المرور"، انسخ ولصق عنوان URL أدناه في متصفح الويب الخاص بك:',
+    'All_rights_reserved.' => 'جميع الحقوق محفوظة.',
+    'Visit_Community' => 'زيارة المجتمع',
+];

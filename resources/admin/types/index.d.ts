@@ -90,6 +90,14 @@ export type ExtendedColumnDef<TData, TValue = any> = ColumnDef<TData, TValue> & 
     nonHideable?: boolean;
 };
 
+export type ButtonsActions = {
+    onEdit?: (item: any) => void;
+    onDelete?: (item: any) => void;
+    onTranslate?: (item: any) => void;
+    onView?: (item: any) => void;
+    [key: string]: ((...args: any[]) => void) | undefined;
+};
+
 export interface ColumnLabels {
     label: string;
     prefix?: React.ReactNode;

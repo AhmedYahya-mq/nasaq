@@ -10,4 +10,5 @@ return [
     'dark' => 'Dark',
     'light' => 'Light',
     'system' => 'System',
+    'Payment successful, please complete your membership application.' => 'Payment successful, please complete your membership application.',
 ];

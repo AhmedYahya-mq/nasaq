@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Routing\RouteGroup;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\RoutePath;
+use Inertia\Inertia;
+use Mpdf\Mpdf;
 
-Route::group(['middleware' => ['web'], 'as' => 'client.'], function () {
+Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function () {
     Route::group(['prefix' => '{locale?}', 'where' => ['locale' => 'en|ar'], "as" => "locale."], function () {
         require __DIR__ . '/user.php';
     });
@@ -12,9 +13,8 @@ Route::group(['middleware' => ['web'], 'as' => 'client.'], function () {
 });
 
 
-
+Route::get('upload',fn()=>"upload")->name('upload');
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     require __DIR__ . '/admin.php';
 });
-
 

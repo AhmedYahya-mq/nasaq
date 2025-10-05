@@ -4,29 +4,41 @@ return [
     [
         "name" => "header.home",
         'route' => "client.home",
-        'active' => fn() => request()->routeIs(['client.home', 'client.locale.home']),
+        'active' => ['client.home', 'client.locale.home'],
     ],
     [
         "name" => "header.about",
         'route' => "client.about",
-        'active' => fn() => request()->routeIs(['client.about', 'client.locale.about']),
+        'active' => ['client.about', 'client.locale.about'],
     ],
+
     [
         'name' => "header.events",
         'route' => "client.events",
-        'active' => fn() => request()->routeIs(['client.events', 'client.locale.events']),
+        'active' => ['client.events', 'client.locale.events'],
+    ],
+    [
+        'name' => 'header.archives',
+        'route' => 'client.archives',
+        'active' => ['client.archives', 'client.locale.archives', 'client.archive', 'client.locale.archive']
     ],
     // library
     [
         'name' => 'header.library',
         'route' => 'client.library',
-        'active' => fn() => request()->routeIs(['client.library', 'client.locale.library'])
+        'active' => ['client.library', 'client.locale.library']
     ],
     // blogs
     [
         'name' => 'header.blogs',
         'route' => 'client.blogs',
-        'active' => fn() => request()->routeIs(['client.blogs', 'client.locale.blogs'])
+        'active' => ['client.blogs', 'client.locale.blogs']
+    ],
+    // memberships
+    [
+        'name' => 'header.memberships',
+        'route' => 'client.memberships',
+        'active' => ['client.memberships', 'client.locale.memberships']
     ],
     // [
     //     "name" => "header.resources",

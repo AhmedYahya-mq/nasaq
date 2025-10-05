@@ -14,11 +14,11 @@ class BlogResponse implements \App\Contract\User\Response\BlogResponse
      *
      * @return Response
      */
-    public function toResponseMembership(Blog $blog)
+    public function toResponseBlog(Blog $blog)
     {
-        return Inertia::render('user/memberships/membership', [
+        return Inertia::render('user/blogs', [
             'membership' => app(BlogResource::class, ['resource' => $blog])
-        ])->with('success', __('Membership created successfully'));
+        ])->with('success', __('Blog created successfully'));
     }
 
     /**

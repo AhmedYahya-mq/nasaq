@@ -13,6 +13,7 @@ import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 // Props
 type Props = {
     value?: string;
+    name?: string;
     onChange?: (value: string) => void;
     placeholder?: string;
     minHeight?: number | string;
@@ -84,6 +85,7 @@ const DEFAULT_ACTIONS: ToolbarAction[] = [
 const TiptapEditor = forwardRef<Editor | null, Props>(function TiptapEditor(
     {
         value = "",
+        name,
         onChange,
         placeholder = "ابدأ الكتابة هنا...",
         minHeight = 500,
@@ -242,7 +244,7 @@ const TiptapEditor = forwardRef<Editor | null, Props>(function TiptapEditor(
                     className="relative scrollbar" ref={scrollContainerRef}>
                     <EditorContent
                         editor={editor}
-
+                        name={name}
                         className={cn(
                             "tiptap prose relative prose-sm sm:prose-base dark:prose-invert max-w-none w-full p-5  focus:outline-none text-foreground [&_.tiptap]:focus:outline-none [&_.tiptap>p]:my-3 [&_.tiptap>h2]:text-2xl [&_.tiptap>h2]:font-bold [&_.tiptap>h2]:mt-6 [&_.tiptap>h2]:mb-3",
                             contentClassName

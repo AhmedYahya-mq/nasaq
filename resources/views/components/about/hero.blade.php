@@ -30,11 +30,11 @@
 
             <!-- الأزرار -->
             <div class="flex gap-4 justify-center lg:justify-start" >
-                <a href="#memberships"
+                <a href="{{ route('client.memberships') }}"
                    class="py-2 px-4 text-base sm:text-lg font-semibold rounded-2xl bg-primary text-accent-foreground hover:bg-primary/90 transition-all shadow-md hover:shadow-xl">
                     {{ __('about.hero.cta_primary') }}
                 </a>
-                <a href="#vision"
+                <a href="{{ route('client.events') }}"
                    class="py-2 px-4 text-base sm:text-lg font-semibold rounded-2xl border border-primary text-primary hover:bg-primary/5 transition-all">
                     {{ __('about.hero.cta_secondary') }}
                 </a>
@@ -43,7 +43,7 @@
 
         <!-- الصورة -->
         <div class="relative not-sm:p-2 not-md:order-1">
-            <img src="https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?ixlib=rb-4.0.3&q=80&auto=format&fit=crop&w=1200"
+            <img src="{{ asset('images/about.png') }}"
                  alt="Community Collaboration"
                  class="rounded-2xl shadow-lg object-cover aspect-[6/4]" />
         </div>

@@ -1,0 +1,22 @@
+<?
+return [
+    'Membership Request Status' => 'Membership Request Status',
+    'Community Logo' => 'Community Logo',
+    'Hello' => 'Hello',
+    'Admin Notes' => 'Admin Notes',
+    'Submission Date' => 'Submission Date',
+    'Thank you for submitting your request! We are happy to have you interested or joining the community.' => 'Thank you for submitting your request! We are happy to have you interested or joining the community.',
+    'Verify Email Address' => 'Verify Email Address',
+    'Click the button below to verify your email address.' => 'Click the button below to verify your email address.',
+    'This verification link will expire in 60 minutes.' => 'This verification link will expire in 60 minutes.',
+    'If you did not create an account, no further action is required.' => 'If you did not create an account, no further action is required.',
+    'Regards, Team' => 'Regards, Team',
+    'If you’re having trouble clicking the "Verify Email Address" button, copy and paste the URL below into your web browser:' => 'If you’re having trouble clicking the "Verify Email Address" button, copy and paste the URL below into your web browser:',
+    'Reset Password' => 'Reset Password',
+    'You are receiving this email because we received a password reset request for your account.' => 'You are receiving this email because we received a password reset request for your account.',
+    'This password reset link will expire in 60 minutes.' => 'This password reset link will expire in 60 minutes.',
+    'If you did not request a password reset, no further action is required.' => 'If you did not request a password reset, no further action is required.',
+    'If you’re having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser:' => 'If you’re having trouble clicking the "Reset Password" button, copy and paste the URL below into your web browser:',
+    'All rights reserved.' => 'All rights reserved.',
+    'Visit Community' => 'Visit Community',
+];

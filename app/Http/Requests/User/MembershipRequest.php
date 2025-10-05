@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class MembershipRequest extends FormRequest implements \App\Contract\User\Request\MembershipRequest
 {
@@ -30,14 +31,18 @@ class MembershipRequest extends FormRequest implements \App\Contract\User\Reques
             // Scalars
             'is_active' => 'sometimes|in:true,false,1,0',
             'price' => ($isCreate ? 'required' : 'sometimes') . '|numeric|min:0',
-            'discounted_price' => 'nullable|numeric|min:0|lte:price',
-            'duration_days' => 'nullable|integer|min:1',
+            'discounted_price' => 'nullable|numeric|min:0|lt:price',
+            'level' => [
+                'nullable',
+                'integer',
+                'min:1',
+                Rule::unique('memberships', 'level')->ignore($this->membership?->id),
+            ],
             'requirements' => ($isCreate ? 'required' : 'sometimes') . '|array',
             'requirements.*' => 'required|string|max:255',
 
             'features' => ($isCreate ? 'required' : 'sometimes') . '|array',
             'features.*' => 'required|string|max:255',
-            'sort_order' => 'sometimes|integer|min:0',
         ];
     }
 
@@ -46,8 +51,6 @@ class MembershipRequest extends FormRequest implements \App\Contract\User\Reques
         $data = $this->all();
         $defultValues = [
             'is_active' => true,
-            'sort_order' => 0,
-            'duration_days' => 365,
             'discounted_price' => null,
         ];
         foreach ($defultValues as $field => $value) {

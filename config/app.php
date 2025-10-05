@@ -123,6 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'locales'=> env('APP_LOCALES', 'en,ar'),
-
+    'locales' => env('APP_LOCALES', 'en,ar'),
 ];

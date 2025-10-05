@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Ahmed\GalleryImages\Models\Photo;
 use App\Models\Blog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -14,12 +15,15 @@ class BlogFactory extends Factory
     {
         $title = $this->faker->sentence();
         $content = $this->faker->paragraph();
-        $excerpt = $this->faker->text(100);
+        $content_en = \Faker\Factory::create('en_US')->paragraph();
 
         return [
             'admin_id' => 1,
             'views' => $this->faker->numberBetween(0, 1000),
-            'featured_image' => $this->faker->imageUrl(800, 600),
+            'content' => [
+                'ar' => $content,
+                'en' => $content_en,
+            ],
             'slug' => Str::slug($title),
         ];
     }
@@ -33,12 +37,11 @@ class BlogFactory extends Factory
             $translations = [
                 'en' => [
                     'title' => $fakerEn->sentence(),
-                    'content' => $fakerEn->paragraph(),
+
                     'excerpt' => $fakerEn->text(100),
                 ],
                 'ar' => [
                     'title' => $fakerAr->sentence(),
-                    'content' => $fakerAr->paragraph(),
                     'excerpt' => $fakerAr->text(100),
                 ],
             ];
@@ -46,6 +49,8 @@ class BlogFactory extends Factory
             foreach ($translations as $locale => $data) {
                 $blog->updateTranslations($data, $locale);
             }
+
+            $blog->syncPhotosById(Photo::inRandomOrder()->limit(1)->pluck('id')->toArray());
         });
     }
 }

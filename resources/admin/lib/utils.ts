@@ -6,25 +6,28 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
-export function translateField(
-    item: Membership,
-    field: keyof Membership,
+export function translateField<T extends Record<string, any>>(
+    item: T,
+    field: keyof T,
     isTranslate: boolean
-) {
-    if (!item) {
-        return "";
-    }
-    const key = `${field}` as keyof Membership;
-    const fallbackKey = `${field}_en` as keyof Membership;
+): any {
+    if (!item) return "";
+
+    const key = field;
+    const fallbackKey = `${String(field)}_en` as keyof T;
+
     let defaultValue: any = "";
     if (Array.isArray(item[key])) {
         defaultValue = [];
     }
+
     if (isTranslate) {
         return (item[fallbackKey] as any) ?? (item[key] as any) ?? defaultValue;
     }
+
     return (item[key] as any) ?? defaultValue;
 }
+
 
 
 
@@ -35,7 +38,7 @@ export function isIsoDate(value: any) {
 }
 
 
-export function formatDate(value: string) {
+export function formatDate(value: string, iTime = true): string {
     const date = new Date(value);
     if (isNaN(date.getTime())) return value;
     const day = String(date.getDate()).padStart(2, "0");
@@ -43,7 +46,10 @@ export function formatDate(value: string) {
     const year = date.getFullYear();
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
-    return `${hours}:${minutes} ${year}-${month}-${day}`;
+    if (iTime) {
+        return `${hours}:${minutes} ${year}-${month}-${day}`;
+    }
+    return `${year}-${month}-${day}`;
 }
 
 
@@ -70,21 +76,21 @@ export function formatterNumber(value: number | string, locale = "ar-SA", curren
 
 type TimeUnit = "day" | "week" | "month";
 export function formatTimeUnit(count: number | string, unit: TimeUnit): string {
-  const n = typeof count === "string" ? parseInt(count, 10) : count;
-  if (isNaN(n) || n < 0) return "";
+    const n = typeof count === "string" ? parseInt(count, 10) : count;
+    if (isNaN(n) || n < 0) return "";
 
-  const map: Record<TimeUnit, [string, string, string, string]> = {
-    day: ["يوم", "يومان", "أيام", "يومًا"],
-    week: ["أسبوع", "أسبوعان", "أسابيع", "أسبوعًا"],
-    month: ["شهر", "شهران", "أشهر", "شهرًا"],
-  };
+    const map: Record<TimeUnit, [string, string, string, string]> = {
+        day: ["يوم", "يومان", "أيام", "يومًا"],
+        week: ["أسبوع", "أسبوعان", "أسابيع", "أسبوعًا"],
+        month: ["شهر", "شهران", "أشهر", "شهرًا"],
+    };
 
-  const [singular, dual, plural3to10, pluralOver10] = map[unit];
+    const [singular, dual, plural3to10, pluralOver10] = map[unit];
 
-  if (n === 1) return singular;
-  if (n === 2) return dual;
-  if (n >= 3 && n <= 10) return `${n} ${plural3to10}`;
-  return `${n} ${pluralOver10}`;
+    if (n === 1) return singular;
+    if (n === 2) return dual;
+    if (n >= 3 && n <= 10) return `${n} ${plural3to10}`;
+    return `${n} ${pluralOver10}`;
 }
 
 
@@ -134,5 +140,57 @@ export function getErrorMessage(status: number, field?: string): string {
         default:
             return "حدث خطأ غير متوقع. حاول مرة أخرى.";
     }
+}
+
+
+
+export const formatFullDate = (date: any, isTime = true) => {
+    if (!(date instanceof Date)) {
+        date = new Date(date);
+    }
+    if (isNaN(date.getTime())) return date;
+    // مصر
+    return date.toLocaleString({
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        ...(isTime ? { hour: "2-digit", minute: "2-digit", hour12: false } : {})
+    });
+};
+
+
+export function arabicPluralize(count: number, { singular, dual, plural }: { singular: string; dual: string; plural: string; }): string {
+    if (count === 0) {
+        return `لا يوجد ${plural}`;
+    } else if (count === 1) {
+        return `${singular}`;
+    } else if (count === 2) {
+        return `${dual}`;
+    } else if (count >= 3 && count <= 10) {
+        return `${count} ${plural}`;
+    } else {
+        return `${count} ${singular}`;
+    }
+}
+
+/**
+ * تحديث رابط المتصفح بدون إعادة تحميل الصفحة
+ * @param baseUrl رابط الصفحة الأساسي
+ * @param params كائن الـ params لتضمينه في الرابط
+ * @param excludeKeys مصفوفة أسماء المفاتيح التي تريد استبعادها (مثل 'type_api')
+ */
+export function updateBrowserUrl(baseUrl: string, params: Record<string, any>, excludeKeys: string[] = []) {
+    const filteredParams = Object.entries(params).reduce<Record<string, any>>((acc, [key, value]) => {
+        if (!excludeKeys.includes(key) && value !== '' && value !== null && value !== undefined) {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
+
+    const queryString = new URLSearchParams(filteredParams).toString();
+    const newUrl = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+
+    window.history.replaceState({}, '', newUrl);
+    return newUrl;
 }
 

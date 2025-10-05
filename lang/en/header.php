@@ -4,8 +4,14 @@ return [
     'home' => 'Home',
     'about' => 'About',
     'events' => 'Events',
+    'description_events' => 'Check out our upcoming events',
     'library'=>'Digital Library',
+    'description_library' => 'Explore our collection of digital resources',
     'blogs'=>'Blogs',
+    'archives'=>'Archives',
+    'description_archives' => 'Browse our archive of articles and resources',
+    'archive'=>'Archive Details',
+    'discover' => 'Discover',
 
 
     'features' => 'Features',
@@ -57,6 +63,6 @@ return [
     'security' => 'Security',
     'your_site_secured' => 'Your site secured',
 
-    'pricing' => 'Pricing',
+    'memberships' => 'Memberships',
     'contact' => 'Contact',
 ];

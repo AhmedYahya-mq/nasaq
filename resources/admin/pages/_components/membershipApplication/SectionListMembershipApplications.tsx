@@ -1,20 +1,92 @@
-import { JSX } from "react";
-import { ComboboxSelect } from "../ComboboxSelect";
-import { applicationStatusOptions, canResubmitOptions, paymentStatusOptions } from "@/data/membershipApplication/tableOptions";
-import { useTableMembershipApplications } from "@/hooks/table/useTableMembershipApplications";
-import { columns } from "@/data/membershipApplication/tableData";
-import SectionListGeneric from "../SectionListGeneric";
-import DialogMembershipApplicationsCard from "./DialogMembershipApplicationsCard";
+import { JSX, useState } from "react";
+import { EmailList } from "./MailList";
+import { EmailDetail } from "./EmailDetail";
+import { MembershipApplication } from "@/types/model/membershipApplication";
+ // hook للتحقق من حجم الشاشة
+import { useMembershipApplications } from "@/hooks/useMembershipApplications"; // hook لجلب البيانات وإدارة البحث والفلترة
+import { useIsMobile } from "@/hooks/use-mobile";
 
-export default function SectionListMemberships(): JSX.Element {
-    const initHook = useTableMembershipApplications({ applications: [], columns }) as any;
+
+interface SectionListMembershipsProps {
+  alawysMobile?: boolean;
+  member_id?: number | string;
+}
+
+export default function SectionListMemberships({
+  alawysMobile = false,
+  member_id,
+}: SectionListMembershipsProps): JSX.Element {
+  const [selectedApplication, setSelectedApplication] =
+    useState<MembershipApplication | null>(null);
+
+  // استخدم custom breakpoint 1115px
+  const isMobile = useIsMobile(1115);
+
+  // استخدام custom hook لإدارة البيانات
+  const {
+    pagination,
+    loading,
+    searchQuery,
+    setSearchQuery,
+    selectedFolder,
+    setSelectedFolder,
+    handlePageChange,
+  } = useMembershipApplications({ member_id });
+  
+  const handleAppSelect = (application: MembershipApplication) => {
+    scrollTo(0, 0);
+    setSelectedApplication(application);
+  };
+
+  // نسخة mobile/tablet
+  if (isMobile || alawysMobile) {
     return (
-        <SectionListGeneric initHook={initHook}>
-            <div className="flex  items-center flex-wrap gap-3.5 mt-6 mb-4" >
-                <ComboboxSelect className="flex-1 min-w-[100px]" data={paymentStatusOptions} commandEmptyText={('حالة الدفع')} placeholder="حالة الدفع" onSelect={initHook.setPaymentStatusFilter} value={initHook.paymentStatusFilter} />
-                <ComboboxSelect className="flex-1 min-w-[100px]" data={applicationStatusOptions} commandEmptyText={('حالة الطلب')} placeholder="حالة الطلب" onSelect={initHook.setApplicationStatusFilter} value={initHook.applicationStatusFilter} />
-                <ComboboxSelect className="flex-1 min-w-[100px]" data={canResubmitOptions} commandEmptyText={('إعادة التقديم')} placeholder="إعادة التقديم" onSelect={initHook.setCanResubmitFilter} value={initHook.canResubmitFilter} />
-            </div>
-        </SectionListGeneric>
+      <div className="flex flex-1 h-full">
+        {!selectedApplication ? (
+          <EmailList
+            pagination={pagination}
+            selectedApplication={selectedApplication}
+            onApplicationSelect={handleAppSelect}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onPageChange={handlePageChange}
+            selectedFolder={selectedFolder}
+            onFolderChange={setSelectedFolder}
+            loading={loading}
+          />
+        ) : (
+          <div className="flex-1 flex flex-col">
+            <EmailDetail
+              application={selectedApplication}
+              onApplicationSelect={handleAppSelect}
+              onBack={() => setSelectedApplication(null)}
+            />
+          </div>
+        )}
+      </div>
     );
+  }
+
+  // نسخة desktop
+  return (
+    <div className="grid grid-cols-[24rem_1fr] h-full">
+      <div className="">
+        <EmailList
+          pagination={pagination}
+          selectedApplication={selectedApplication}
+          onApplicationSelect={handleAppSelect}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          onPageChange={handlePageChange}
+          selectedFolder={selectedFolder}
+          onFolderChange={setSelectedFolder}
+          loading={loading}
+        />
+      </div>
+      <EmailDetail
+        application={selectedApplication}
+        onApplicationSelect={handleAppSelect}
+      />
+    </div>
+  );
 }

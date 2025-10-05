@@ -1,48 +1,99 @@
-{{-- resources/views/components/forms/select.blade.php --}}
 @props([
     'name',
     'label',
     'required' => false,
+    'value' => null,
+    'options' => [], // ['value' => 'Label']
+    'placeholder' => __('Select an option'),
+    'disabled' => false,
+    'isSearch' => false, // خاصية تفعيل البحث داخل الخيارات
+    'multiple' => false, // خاصية تفعيل الاختيار المتعدد
+    'x_model' => null,
 ])
 
-@php
-    $baseClasses = 'block w-full px-4 py-3 pr-10 rounded-lg border shadow-sm bg-background text-foreground
-                   focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition appearance-none';
-    $errorClasses = $errors->has($name)
-        ? 'border-destructive focus:ring-destructive focus:border-destructive'
-        : 'border-border';
-@endphp
+<div class="w-full" x-data="{
+    open: false,
+    search: '',
+    multiple: {{ $multiple ? 'true' : 'false' }},
+    isSearch: {{ $isSearch ? 'true' : 'false' }},
+    selected: @js($multiple ? (is_array($value) ? $value : []) : $value),
+    options: @js($options),
 
-<div class="w-full">
-    {{-- العنوان --}}
-    <label for="{{ $name }}" class="block text-sm font-medium text-muted-foreground mb-2">
-        {{ $label }}
-        @if($required)
-            <span class="text-destructive">*</span>
-        @endif
-    </label>
+    get filteredOptions() {
+        if (!this.isSearch || !this.search) return this.options;
+        return Object.fromEntries(
+            Object.entries(this.options).filter(([val, label]) =>
+                label.toLowerCase().includes(this.search.toLowerCase())
+            )
+        );
+    },
 
-    {{-- القائمة --}}
+    toggleOption(val) {
+        if (this.multiple) {
+            if (this.selected.includes(val)) {
+                this.selected = this.selected.filter(v => v !== val);
+            } else {
+                this.selected.push(val);
+            }
+        } else {
+            this.selected = val;
+            this.open = false;
+        }
+    },
+
+    isSelected(val) {
+        return this.multiple ? this.selected.includes(val) : this.selected === val;
+    },
+
+    get displayLabel() {
+        if (this.multiple) {
+            return this.selected.length ?
+                this.selected.map(v => this.options[v]).join(', ') :
+                '';
+        }
+        return this.selected ? this.options[this.selected] : '';
+    }
+}" x-modelable="selected"  {{ $attributes }} >
+
+    {{-- الحقل --}}
     <div class="relative">
-        <select
-            name="{{ $name }}"
-            id="{{ $name }}"
-            {{ $required ? 'required' : '' }}
-            {{ $attributes->class([$baseClasses, $errorClasses]) }}
-        >
-            {{ $slot }}
-        </select>
+        <x-forms.input  @click="open = !open" :id="$name" :label="$label" :readonly="true"
+            :name="$multiple ? '' : $name" :required="$required" x-bind:value="displayLabel" :placeholder="$placeholder" icon="arrow-up-down"
+            iconPosition="trailing" />
 
-        {{-- سهم صغير لليمين --}}
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg class="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"/>
-            </svg>
+        {{-- القائمة --}}
+        <div x-show="open" @click.away="open=false" x-transition
+            class="absolute z-[100] mt-1 w-full bg-background border rounded-md shadow max-h-60 scrollbar">
+
+            <template x-if="isSearch">
+                <div class="p-2 border-b sticky top-0 bg-background z-10">
+                    <input type="text" x-model="search" placeholder="{{ __('Search...') }}"
+                        class="w-full px-2 py-1 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-primary" />
+                </div>
+            </template>
+            <ul>
+                {{-- الخيارات --}}
+                <template x-for="[val, label] in Object.entries(filteredOptions)" :key="val">
+                    <li @click="toggleOption(val)"
+                        class="px-4 py-1.5 flex justify-between items-center cursor-pointer hover:bg-primary/35 transition"
+                        :class="{ 'bg-primary/25': isSelected(val) }">
+                        <span x-text="label"></span>
+                        <span x-show="isSelected(val)">
+                            <x-ui.icon name="check" class="size-4 text-primary" />
+                        </span>
+                    </li>
+                </template>
+            </ul>
+
         </div>
     </div>
 
-    {{-- رسالة الخطأ --}}
-    @error($name)
-        <p class="mt-2 text-sm text-destructive font-medium">{{ $message }}</p>
-    @enderror
+    {{-- hidden inputs (عشان الفورم يرسل القيم) --}}
+    <template x-if="multiple">
+        <div>
+            <template x-for="val in selected" :key="val">
+                <input :x-model="$x_model" type="hidden" :name="'{{ $name }}[]'" :value="val" />
+            </template>
+        </div>
+    </template>
 </div>

@@ -1,6 +1,7 @@
 import { AppContent } from '@/components/app-content';
 import { AppHeader } from '@/components/app-header';
 import { AppShell } from '@/components/app-shell';
+import { ConfirmInDiv } from '@/components/custom/ConfirmDialog';
 import { Toaster } from '@/components/ui/sonner';
 import { type BreadcrumbItem } from '@/types';
 import type { PropsWithChildren } from 'react';
@@ -10,7 +11,8 @@ export default function AppHeaderLayout({ children, breadcrumbs }: PropsWithChil
         <AppShell>
             <AppHeader breadcrumbs={breadcrumbs} />
             <AppContent>{children}</AppContent>
-             <Toaster position="top-center" richColors/>
+            <ConfirmInDiv />
+            <Toaster position="top-center" richColors />
         </AppShell>
     );
 }

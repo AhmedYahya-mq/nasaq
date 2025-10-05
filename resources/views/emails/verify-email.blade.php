@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التحقق من عنوان البريد الإلكتروني</title>
+    <title>{{ __('mails.Verify_Email_Address') }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,27 +85,27 @@
         </center>
         <div class="email-container">
             <div class="email-content">
-                <h3>مرحباً!</h3>
-                <p>الرجاء الضغط على الزر أدناه للتحقق من عنوان بريدك الإلكتروني.</p>
-                <center><a href="{{ $url ?? "" }}" class="email-button"
-                        style="color:#ffffff">التحقق من عنوان البريد الإلكتروني</a></center>
-                <p>سينتهي رابط التحقق من عنوان البريد الإلكتروني هذا خلال 60 دقيقة.</p>
-                <p>إذا لم تقم بإنشاء حساب، فلن تكون هناك حاجة إلى أي إجراء آخر..</p>
-                <p>مع تحيات، فريق فرصتي</p>
+                <h3>{{ __('mails.Hello') }}</h3>
+                <p>{{ __('mails.Click_the_button_below_to_verify_your_email_address.') }}</p>
+                <center>
+                    <a href="{{ $url ?? "" }}" class="email-button" style="color:#ffffff">
+                        {{ __('mails.Verify_Email_Address') }}
+                    </a>
+                </center>
+                <p>{{ __('mails.This_verification_link_will_expire_in_60_minutes.') }}</p>
+                <p>{{ __('mails.If_you_did_not_create_an_account,_no_further_action_is_required.') }}</p>
+                <p>{{ __('mails.Regards,_Team') }}</p>
             </div>
             <hr>
             <div class="email-footer">
                 <p>
-                    إذا كنت تواجه مشكلة في النقر فوق زر "التحقق من عنوان البريد الإلكتروني"، انسخ ولصق عنوان URL
-                    أدناه في متصفح
-                    الويب
-                    الخاص بك: <a
-                        href="{{ $url ?? "" }}">{{ $url ?? "" }}</a>
+                    {{ __('mails.If_you’re_having_trouble_clicking_the_"Verify_Email_Address"_button,_copy_and_paste_the_URL_below_into_your_web_browser:') }}
+                    <a href="{{ $url ?? "" }}">{{ $url ?? "" }}</a>
                 </p>
             </div>
         </div>
         <center>
-            <div class="email-copyrit">© 2024 Core. All rights reserved.</div>
+            <div class="email-copyrit">© 2024 Core. {{ __('mails.All_rights_reserved.') }}</div>
         </center>
     </div>
 </body>

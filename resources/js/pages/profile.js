@@ -10,11 +10,11 @@ import { confirm, disable, enable, qrCode, recoveryCodes, regenerateRecoveryCode
 import { modelStore } from '@client/stores/model';
 
 document.addEventListener('alpine:init', function () {
-    window.Alpine.data('profileForm', profileForm);
-    window.Alpine.data('photoProfile', photoProfile);
-    window.Alpine.data('passwordChange', passwordChange);
-    window.Alpine.data('twoFactorAuth', twoFactorAuth);
-    modelStore(window.Alpine);
+    Alpine.data('profileForm', profileForm);
+    Alpine.data('photoProfile', photoProfile);
+    Alpine.data('passwordChange', passwordChange);
+    Alpine.data('twoFactorAuth', twoFactorAuth);
+    modelStore(Alpine);
 });
 
 
@@ -43,6 +43,7 @@ function profileForm(user = null) {
                 address: user.address || '',
                 birthday: user.birthday ? formatDate(user.birthday, 'DD-MM-YYYY') : null,
                 job_title: user.job_title || '',
+                employment_status: user.employment_status || '',
                 bio: user.bio || '',
             };
             this.isVerificationRequired = user.email_verified_at === null;
@@ -51,7 +52,7 @@ function profileForm(user = null) {
         },
         reset() {
             this.form = { ...this.original };
-            window.intlTelInput.number = this.form.phone || '';
+            intlTelInput.number = this.form.phone || '';
         },
         updateField(key, value) {
             this.form[key] = value;

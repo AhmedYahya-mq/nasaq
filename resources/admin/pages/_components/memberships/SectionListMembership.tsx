@@ -1,16 +1,13 @@
-import { JSX, useContext, useMemo } from "react";
+import { JSX } from "react";
 import { useTableMemberships } from "@/hooks/table/useTableMemberships";
-import { getColumns } from "@/data/membership/tableData";
 import SectionListGeneric from "../SectionListGeneric";
 import FormComponent from "./FormComponent";
 import { usePage } from "@inertiajs/react";
-import { Membership, membershipColumnLabels } from "@/types/model/membership.d";
-import AlertConfirmContext from "@/context/AlertConfirmContext";
+import { Membership } from "@/types/model/membership.d";
+import { membershipColumnLabels } from "@/tables/labels";
 
 export default function SectionListMemberships(): JSX.Element {
     const { memberships } = usePage<{ memberships: Membership[] }>().props;
-    const { handleDelete } = useContext(AlertConfirmContext);
-
     const {
         tableData,
         addRow,
@@ -20,12 +17,7 @@ export default function SectionListMemberships(): JSX.Element {
         translateRow,
         setColumns,
         ...hookProps
-    } = useTableMemberships({ memberships, handleDelete });
-
-    useMemo(
-        () => {setColumns(getColumns({ onEdit: editRow, onDelete: deleteRow, onTranslate: translateRow }));},
-        []
-    );
+    } = useTableMemberships({ memberships });
 
     const genericListProps = { ...hookProps, deleteRow };
     const formProps = { addRow, updateRow };

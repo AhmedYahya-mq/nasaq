@@ -8,6 +8,10 @@
     'class' => '',
     'icon' => null,
     'iconPosition' => 'leading',
+    'required' => false,
+    'readonly' => false,
+    'disabled' => false,
+
 ])
 
 <div class="w-full">
@@ -27,7 +31,7 @@
         <input
             {{ $attributes }} type="{{ $type }}" name="{{ $name }}" id="{{ $id }}" value="{{ $value }}"
             placeholder="{{ $placeholder }}" aria-label="{{ $placeholder ?: $label }}"
-
+            {{ $required ? 'required' : '' }} {{ $readonly ? 'readonly' : '' }} {{ $disabled ? 'disabled' : '' }}
             class="w-full rtl:rtl bg-background text-[0.8125rem] font-normal appearance-none px-[0.9rem] py-2 border border-border rounded-sm outline-none focus:border-primary transition-colors ease-in-out duration-150
             @if ($icon && $iconPosition === 'leading') ltr:pl-10 rtl:pr-10 @endif
             @if ($icon && $iconPosition === 'trailing') ltr:pr-10 rtl:pl-10 @endif

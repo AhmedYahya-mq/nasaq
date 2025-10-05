@@ -161,15 +161,21 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                         </div>
 
                                         <div className="grid gap-3">
-                                            <Label htmlFor="membership-duration">مدة العضوية (بالأيام)</Label>
+                                            <Label htmlFor="level">
+                                                مستوى العضوية
+                                            </Label>
                                             <Input
-                                                id="membership-duration"
+                                                id="level"
                                                 type="number"
                                                 min="1"
-                                                placeholder="30"
-                                                name="duration_days"
-                                                defaultValue={item?.duration_days!}
+                                                placeholder="1"
+                                                name="level"
+                                                defaultValue={item?.level!}
                                             />
+                                            {/* شرح وانه بامكانه يكون فاضية وهوه راح يحطه تلقائي أعلى مستوىة */}
+                                            <small className="text-muted-foreground">
+                                                أدخل مستوى العضوية (1: أساسي، 2: قياسي، 3: مميز). إذا تُرك فارغًا، سيتم تعيينه تلقائيًا إلى أعلى مستوى متاح.
+                                            </small>
                                             <InputError message={errors.duration_days} />
                                         </div>
                                     </>
@@ -194,21 +200,6 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>
-                                        </div>
-
-                                        <div className="grid gap-3">
-                                            <Label htmlFor="membership-sort-order">
-                                                ترتيب العضوية (الأقل يظهر أولاً)
-                                            </Label>
-                                            <Input
-                                                id="membership-sort-order"
-                                                type="number"
-                                                min="0"
-                                                placeholder="0"
-                                                name="sort_order"
-                                                defaultValue={item?.sort_order!}
-                                            />
-                                            <InputError message={errors.sort_order} />
                                         </div>
                                     </>
                                 )}

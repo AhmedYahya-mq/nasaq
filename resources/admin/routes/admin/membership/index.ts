@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 import update from './update'
 /**
 * @see \App\Http\Controllers\User\MembershipController::store
- * @see app/Http/Controllers/User/MembershipController.php:17
+ * @see app/Http/Controllers/User/MembershipController.php:23
  * @route '/admin/membership'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -17,7 +17,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\User\MembershipController::store
- * @see app/Http/Controllers/User/MembershipController.php:17
+ * @see app/Http/Controllers/User/MembershipController.php:23
  * @route '/admin/membership'
  */
 store.url = (options?: RouteQueryOptions) => {
@@ -26,7 +26,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\User\MembershipController::store
- * @see app/Http/Controllers/User/MembershipController.php:17
+ * @see app/Http/Controllers/User/MembershipController.php:23
  * @route '/admin/membership'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -36,7 +36,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
 * @see \App\Http\Controllers\User\MembershipController::store
- * @see app/Http/Controllers/User/MembershipController.php:17
+ * @see app/Http/Controllers/User/MembershipController.php:23
  * @route '/admin/membership'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -46,7 +46,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
 * @see \App\Http\Controllers\User\MembershipController::store
- * @see app/Http/Controllers/User/MembershipController.php:17
+ * @see app/Http/Controllers/User/MembershipController.php:23
  * @route '/admin/membership'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -57,7 +57,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\User\MembershipController::update
- * @see app/Http/Controllers/User/MembershipController.php:23
+ * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
 export const update = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -72,7 +72,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\User\MembershipController::update
- * @see app/Http/Controllers/User/MembershipController.php:23
+ * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
 update.url = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -105,7 +105,7 @@ update.url = (args: { membership: number | { id: number } } | [membership: numbe
 
 /**
 * @see \App\Http\Controllers\User\MembershipController::update
- * @see app/Http/Controllers/User/MembershipController.php:23
+ * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
 update.put = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -115,7 +115,7 @@ update.put = (args: { membership: number | { id: number } } | [membership: numbe
 
     /**
 * @see \App\Http\Controllers\User\MembershipController::update
- * @see app/Http/Controllers/User/MembershipController.php:23
+ * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
     const updateForm = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -130,7 +130,7 @@ update.put = (args: { membership: number | { id: number } } | [membership: numbe
 
             /**
 * @see \App\Http\Controllers\User\MembershipController::update
- * @see app/Http/Controllers/User/MembershipController.php:23
+ * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
         updateForm.put = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -146,7 +146,7 @@ update.put = (args: { membership: number | { id: number } } | [membership: numbe
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\User\MembershipController::destroy
- * @see app/Http/Controllers/User/MembershipController.php:43
+ * @see app/Http/Controllers/User/MembershipController.php:49
  * @route '/admin/membership/{id}'
  */
 export const destroy = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -161,7 +161,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\User\MembershipController::destroy
- * @see app/Http/Controllers/User/MembershipController.php:43
+ * @see app/Http/Controllers/User/MembershipController.php:49
  * @route '/admin/membership/{id}'
  */
 destroy.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -189,7 +189,7 @@ destroy.url = (args: { id: string | number } | [id: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\User\MembershipController::destroy
- * @see app/Http/Controllers/User/MembershipController.php:43
+ * @see app/Http/Controllers/User/MembershipController.php:49
  * @route '/admin/membership/{id}'
  */
 destroy.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -199,7 +199,7 @@ destroy.delete = (args: { id: string | number } | [id: string | number ] | strin
 
     /**
 * @see \App\Http\Controllers\User\MembershipController::destroy
- * @see app/Http/Controllers/User/MembershipController.php:43
+ * @see app/Http/Controllers/User/MembershipController.php:49
  * @route '/admin/membership/{id}'
  */
     const destroyForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -214,7 +214,7 @@ destroy.delete = (args: { id: string | number } | [id: string | number ] | strin
 
             /**
 * @see \App\Http\Controllers\User\MembershipController::destroy
- * @see app/Http/Controllers/User/MembershipController.php:43
+ * @see app/Http/Controllers/User/MembershipController.php:49
  * @route '/admin/membership/{id}'
  */
         destroyForm.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -1,4 +1,3 @@
-import { columns } from './../../data/membershipApplication/tableData';
 import { useState, useMemo, useEffect, useContext } from "react";
 import { Membership } from "@/types/model/membership.d";
 import OpenFormContext from "@/context/OpenFormContext";
@@ -7,6 +6,10 @@ import axios from "axios";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/utils";
 import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { confirmAlertDialog } from '@/components/custom/ConfirmDialog';
+import { ButtonsActions, ExtendedColumnDef } from '@/types';
+import { actionsCell, booleanBadgeCell, centeredTextCell, descriptionCell, sarCurrencyCell, SwitchCell, textCell } from "@/components/table";
+
 
 /**
  * هوك لإدارة جدول العضويات مع دعم البحث، الإضافة، التعديل، الحذف، والترجمة
@@ -14,7 +17,7 @@ import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedR
  * @param handleDelete دالة الحذف التي تستدعى عند حذف عنصر
  * @returns جميع الدوال والحالات اللازمة لإدارة الجدول
  */
-export function useTableMemberships({ memberships, handleDelete }: { memberships: Membership[], handleDelete?: (fn: () => Promise<boolean>, targetItem: any) => void }) {
+export function useTableMemberships({ memberships }: { memberships: Membership[] }) {
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
     const [tableData, setTableData] = useState<Membership[]>(memberships);
@@ -24,6 +27,7 @@ export function useTableMemberships({ memberships, handleDelete }: { memberships
 
     useEffect(() => {
         setIsClient(true);
+        setColumns(getColumns({ onEdit: editRow, onDelete: deleteRow, onTranslate: translateRow }));
     }, []);
 
     /**
@@ -46,6 +50,7 @@ export function useTableMemberships({ memberships, handleDelete }: { memberships
         toast.success(`تم إضافة عضوية ${newMembership.name} بنجاح`);
     };
 
+
     /**
      * تحديث بيانات صف موجود في الجدول
      * @param updatedMembership العضوية بعد التحديث
@@ -67,18 +72,24 @@ export function useTableMemberships({ memberships, handleDelete }: { memberships
      * @param item العنصر المستهدف للحذف
      * @return void
      */
-    const deleteRow = (item: Membership) => {
-        handleDelete?.(async () => {
-            let isSuccess = false;
-            await axios.delete(destroy(item.id).url).then(() => {
-                setTableData(prev => prev.filter(row => row.id !== item.id));
-                toast.success(`تم حذف عضوية ${item.name} بنجاح`);
-                isSuccess = true;
-            }).catch((error) => {
-                toast.error(getErrorMessage(error.status, `العضوية ${item.name}`))
-            });
-            return isSuccess;
-        }, item);
+    const deleteRow = async (item: Membership) => {
+        const ok = await confirmAlertDialog({
+            title: "هل أنت متأكد؟",
+            description: `سيتم حذف العضوية ${item.name} نهائيًا.`
+        });
+        if (!ok) return;
+        const toastId = toast.loading(`جاري حذف عضوية ${item.name}...`);
+        let isSuccess = false;
+        await axios.delete(destroy(item.id).url).then(() => {
+            setTableData(prev => prev.filter(row => row.id !== item.id));
+            toast.success(`تم حذف عضوية ${item.name} بنجاح`);
+            isSuccess = true;
+        }).catch((error) => {
+            toast.error(getErrorMessage(error.status, `العضوية ${item.name}`))
+        }).finally(() => {
+            toast.dismiss(toastId);
+        });
+        return isSuccess;
     };
 
     /**
@@ -126,3 +137,44 @@ export function useTableMemberships({ memberships, handleDelete }: { memberships
         translateRow,
     };
 }
+
+const getColumns = ({ onEdit, onDelete, onTranslate }: ButtonsActions): ExtendedColumnDef<Membership>[] => [
+    {
+        accessorKey: "id", header: "ID",
+        cell: centeredTextCell
+    },
+    {
+        accessorKey: "name", header: "اسم العضوية",
+        cell: textCell
+    },
+    {
+        accessorKey: "description", header: "الوصف",
+        cell: descriptionCell
+    },
+    {
+        accessorKey: "price", header: "السعر (ر.س)",
+        cell: sarCurrencyCell
+    },
+    {
+        accessorKey: "discounted_price",
+        header: "السعر بعد الخصم (ر.س)",
+        cell: sarCurrencyCell
+    },
+    {
+        accessorKey: "is_active",
+        header: "الحالة",
+        cell: booleanBadgeCell("نشطة", "غير نشطة"),
+    },
+    {
+        accessorKey: "duration_days",
+        header: "المدة (يوم)",
+        cell: centeredTextCell
+    },
+    {
+        header: "Actions",
+        id: "actions",
+        accessorKey: "actions",
+         nonHideable: true,
+        cell: actionsCell({onEdit, onDelete, onTranslate})
+    },
+];

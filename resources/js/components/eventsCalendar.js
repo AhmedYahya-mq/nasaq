@@ -1,103 +1,96 @@
-/**
- * مكون تقويم الفعاليات لـ Alpine.js.
- *
- * هذا المكون يعرض تقويمًا شهريًا ويتيح للمستخدم التنقل بين الشهور
- * وعرض الفعاليات المسجلة في كل يوم.
- *
- * @param {Array} initialEvents - مصفوفة الفعاليات الأولية التي يتم تمريرها من Blade.
- * @param {Object} translations - كائن يحتوي على النصوص المترجمة من Blade.
- * @returns {Object} - كائن Alpine.js الذي يحتوي على الحالة والسلوك.
- */
-export default function eventsCalendar(initialEvents = [], translations = {}) {
+export default function eventsCalendar(events, trans, startDate, endDate) {
     return {
-        // --- الحالة (State) ---
-        month: new Date().getMonth(),
-        year: new Date().getFullYear(),
-        daysInMonth: [],
-        blankdays: [],
-        events: initialEvents,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        currentStartDate: null,
+        currentEndDate: null,
+        weekDays: [],
+        dayNames: trans.dayNames,
+        monthNames: trans.monthNames,
+        weekTitle: '',
         selectedDate: null,
         selectedEvents: [],
         showModal: false,
         modalTitle: '',
+        isPrevDisabled: false,
+        isNextDisabled: false,
+        trans: { no_events: trans.no_events, events_for: trans.events_for },
 
-        // استخدام الترجمات الممررة أو قيم إنجليزية افتراضية كبديل
-        dayNames: translations.dayNames || ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        monthNames: translations.monthNames || ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        trans: translations, // الاحتفاظ بالكائن الكامل للوصول إلى نصوص أخرى
-
-        // --- السلوك (Methods) ---
-
-        /**
-         * دالة التهيئة، يتم استدعاؤها عند تحميل المكون عبر x-init.
-         */
         init() {
-            this.calculateDays();
+            // ابدأ من تاريخ اليوم أو startDate إذا اليوم خارج النطاق
+            let today = new Date();
+            if (today < this.startDate) today = new Date(this.startDate);
+            if (today > this.endDate) today = new Date(this.endDate);
+            this.setWeek(today);
         },
 
-        /**
-         * تحسب عدد الأيام في الشهر الحالي والأيام الفارغة في بدايته.
-         */
-        calculateDays() {
-            const firstDayOfMonth = new Date(this.year, this.month, 1).getDay();
-            const daysInCurrentMonth = new Date(this.year, this.month + 1, 0).getDate();
+        setWeek(date) {
+            // بداية الأسبوع (الأحد)
+            let day = date.getDay();
+            let startOfWeek = new Date(date);
+            startOfWeek.setDate(date.getDate() - day);
 
-            this.blankdays = Array.from({ length: firstDayOfMonth }, (_, i) => i + 1);
-            this.daysInMonth = Array.from({ length: daysInCurrentMonth }, (_, i) => i + 1);
+            // إذا بداية الأسبوع قبل startDate، عدلها
+            if (startOfWeek < this.startDate) startOfWeek = new Date(this.startDate);
+
+            // احسب أيام الأسبوع (7 أيام أو حتى نهاية النطاق)
+            this.weekDays = [];
+            for (let i = 0; i < 7; i++) {
+                let d = new Date(startOfWeek);
+                d.setDate(startOfWeek.getDate() + i);
+                if (d > this.endDate) break;
+                let iso = d.toISOString().split('T')[0];
+                let eventsCount = events.filter(e => e.iso_date === iso).length;
+                this.weekDays.push({
+                    date: d,
+                    iso: iso,
+                    dayName: this.dayNames[d.getDay()],
+                    month: d.getMonth(),
+                    year: d.getFullYear(),
+                    eventsCount: eventsCount
+                });
+            }
+
+            // التاريخ الكامل لأول وآخر يوم
+            this.currentStartDate = this.weekDays.length ? this.weekDays[0].iso : null;
+            this.currentEndDate = this.weekDays.length ? this.weekDays[this.weekDays.length - 1].iso : null;
+
+            // عنوان الأسبوع: الشهر الحالي + السنة لأول يوم
+            if (this.weekDays.length) {
+                let first = this.weekDays[0];
+                this.weekTitle = `${this.monthNames[first.month]} ${first.year}`;
+            } else {
+                this.weekTitle = '';
+            }
+
+            // تعطيل الأزرار إذا وصل للنهاية أو البداية
+            this.isPrevDisabled = (this.weekDays.length && this.weekDays[0].iso === this.startDate.toISOString().split('T')[0]);
+            this.isNextDisabled = (this.weekDays.length && this.weekDays[this.weekDays.length - 1].iso === this.endDate.toISOString().split('T')[0]);
         },
 
-        /**
-         * ينتقل إلى الشهر السابق ويعيد حساب الأيام.
-         */
         prev() {
-            if (this.month === 0) {
-                this.month = 11;
-                this.year--;
-            } else {
-                this.month--;
-            }
-            this.calculateDays();
+            if (this.isPrevDisabled) return;
+            let firstDay = new Date(this.weekDays[0].date);
+            firstDay.setDate(firstDay.getDate() - 7);
+            if (firstDay < this.startDate) firstDay = new Date(this.startDate);
+            this.setWeek(firstDay);
         },
-
-        /**
-         * ينتقل إلى الشهر التالي ويعيد حساب الأيام.
-         */
         next() {
-            if (this.month === 11) {
-                this.month = 0;
-                this.year++;
-            } else {
-                this.month++;
-            }
-            this.calculateDays();
+            if (this.isNextDisabled) return;
+            let lastDay = new Date(this.weekDays[this.weekDays.length - 1].date);
+            lastDay.setDate(lastDay.getDate() + 1);
+            if (lastDay > this.endDate) return;
+            this.setWeek(lastDay);
         },
-
-        /**
-         * يبحث عن الفعاليات الخاصة بيوم معين.
-         */
-        eventsForDate(date) {
-            const checkDate = new Date(Date.UTC(this.year, this.month, date));
-            const isoDate = checkDate.toISOString().split('T')[0];
-            return this.events.filter(e => e.iso_date === isoDate);
-        },
-
-        /**
-         * يفتح النافذة المنبثقة ويعرض فعاليات اليوم المحدد.
-         */
-        openDay(date) {
-            this.selectedDate = date;
-            const fullDate = new Date(this.year, this.month, date);
-
-            this.modalTitle = `${this.trans.events_for || 'Events for'} ${this.dayNames[fullDate.getDay()]}, ${date} ${this.monthNames[this.month]}`;
-            this.selectedEvents = this.eventsForDate(date);
+        openDay(day) {
+            this.selectedDate = day.date;
+            this.modalTitle = `${this.trans.events_for} ${day.dayName}, ${day.date.getDate()} ${this.monthNames[day.month]}`;
+            this.selectedEvents = events.filter(e => e.iso_date === day.iso);
             this.showModal = true;
         },
-
-        /**
-         * يتحقق مما إذا كان اليوم الحالي هو اليوم المحدد (لتطبيق التنسيق الخاص).
-         */
-        isSelected(date) {
-            return this.showModal && this.selectedDate === date;
+        isSelected(day) {
+            return this.showModal && this.selectedDate && day.date.toISOString() === this.selectedDate.toISOString();
         }
-    };
+    }
 }
+

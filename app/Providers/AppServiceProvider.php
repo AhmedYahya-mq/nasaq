@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
             \Laravel\Fortify\Contracts\TwoFactorChallengeViewResponse::class => \App\Http\Responses\AuthClient\TwoFactorChallengeViewResponse::class,
             \Laravel\Fortify\Contracts\RequestPasswordResetLinkViewResponse::class => \App\Http\Responses\AuthClient\RequestPasswordResetLinkViewResponse::class,
             \Laravel\Fortify\Contracts\ResetPasswordViewResponse::class => \App\Http\Responses\AuthClient\ResetPasswordViewResponse::class,
+            \Laravel\Fortify\Contracts\RegisterViewResponse::class => \App\Http\Responses\AuthClient\RegisterViewResponse::class,
 
             // profile client
             \App\Contract\User\Profile\PhotoResponse::class => \App\Http\Responses\User\Profile\PhotoResponse::class,
@@ -36,6 +37,11 @@ class AppServiceProvider extends ServiceProvider
             // Response Admin
             \App\Contract\User\Response\MembershipResponse::class => \App\Http\Responses\User\MembershipResponse::class,
             \App\Contract\User\Response\BlogResponse::class => \App\Http\Responses\User\BlogResponse::class,
+            \App\Contract\User\Response\MembershipApplicationResponse::class => \App\Http\Responses\User\MembershipApplicationResponse::class,
+            \App\Contract\User\Response\UserResponse::class => \App\Http\Responses\User\UserResponse::class,
+
+            // Response Payment
+            \App\Contract\User\Response\PaymentResponse::class => \App\Http\Responses\User\PaymentResponse::class,
 
         ];
         $bindingRequests = [
@@ -43,19 +49,41 @@ class AppServiceProvider extends ServiceProvider
             \App\Contract\User\Profile\PhotoRequest::class => \App\Http\Requests\User\Profile\PhotoRequest::class,
             // Membership
             \App\Contract\User\Request\MembershipRequest::class => \App\Http\Requests\User\MembershipRequest::class,
+            \App\Contract\User\Request\MembershipApplicationRequest::class => \App\Http\Requests\User\MembershipApplicationRequest::class,
             // blog
             \App\Contract\User\Request\BlogRequest::class => \App\Http\Requests\User\BlogRequest::class,
+            // user
+            \App\Contract\User\Request\UserRequest::class => \App\Http\Requests\User\UserRequest::class,
+            // payment
+            \App\Contract\User\Request\PaymentRequest::class => \App\Http\Requests\User\PaymentRequest::class,
+            \App\Contract\User\Request\PaymentCallbackRequest::class => \App\Http\Requests\User\PaymentCallbackRequest::class,
         ];
         $bindingResources = [
             // Membership
             \App\Contract\User\Resource\MembershipResource::class => \App\Http\Resources\Membership\MembershipResource::class,
             \App\Contract\User\Resource\MembershipCollection::class => \App\Http\Resources\Membership\MembershipCollection::class,
+            \App\Contract\User\Resource\MembershipApplicationResource::class => \App\Http\Resources\MembershipApplication\MembershipApplicationResource::class,
+            \App\Contract\User\Resource\MembershipApplicationCollection::class => \App\Http\Resources\MembershipApplication\MembershipApplicationCollection::class,
             // blog
             \App\Contract\User\Resource\BlogResource::class => \App\Http\Resources\Blog\BlogResource::class,
             \App\Contract\User\Resource\BlogCollection::class => \App\Http\Resources\Blog\BlogCollection::class,
+
+            // user
+            \App\Contract\User\Resource\UserResource::class => \App\Http\Resources\User\UserResource::class,
+            \App\Contract\User\Resource\UserCollection::class => \App\Http\Resources\User\UserCollection::class,
+
+            // payment
+            \App\Contract\User\Resource\PaymentResource::class => \App\Http\Resources\Payment\PaymentResource::class,
+            \App\Contract\User\Resource\PaymentCollection::class => \App\Http\Resources\Payment\PaymentCollection::class,
         ];
 
-        $bindings = array_merge($bindingResponses, $bindingRequests, $bindingResources);
+        $bindingActions = [
+            // payment
+            \App\Contract\Actions\CreatePaymentIntent::class => \App\Actions\Payment\CreatePaymentIntent::class,
+            \App\Contract\Actions\PaymentCallback::class => \App\Actions\Payment\PaymentCallback::class,
+        ];
+
+        $bindings = array_merge($bindingResponses, $bindingRequests, $bindingResources, $bindingActions);
         foreach ($bindings as $abstract => $concrete) {
             $this->app->bind($abstract, $concrete);
         }

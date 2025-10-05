@@ -6,7 +6,7 @@
     <div class="container mx-auto px-4">
 
         <div class="text-center mb-12">
-            <h3 class="text-2x1 text-foreground text-primary">📚 {{ __('library.section_title') }}</h3>
+            <h3 class="text-2x1 text-primary">📚 {{ __('library.section_title') }}</h3>
             <p class="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
                 {{ __('library.section_subtitle') }}
             </p>

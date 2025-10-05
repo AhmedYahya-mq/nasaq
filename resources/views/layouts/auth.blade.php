@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ isset($title) ? __($title) . ' | ' : '' }}{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ isset($title) ? __($title) . ' | ' : '' }}{{ config('app.name', 'Nasaq') }}</title>
     @stack('scripts')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

@@ -9,12 +9,23 @@ use Illuminate\View\Component;
 class CardProfile extends Component
 {
     public $user;
+    public $draftApplication;
+    public $hasDraftApplication;
+    public $draftMembershipName;
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
         $this->user = auth()->user();
+        $this->draftApplication = $this->user->draftMembershipApplication();
+        $this->hasDraftApplication = !is_null($this->draftApplication);
+
+        
+        $this->draftMembershipName = $this->hasDraftApplication
+            ? $this->draftApplication->membership?->name
+            : null;
     }
 
     /**
