@@ -31,6 +31,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'birthday' => ['required', 'date'],
             'address' => ['nullable', 'string', 'max:255'],
             'job_title' => ['nullable', 'string', 'max:255'],
+            'employment_status' => ['nullable', 'string', 'max:50', Rule::in(\App\Enums\EmploymentStatus::getValues())],
             'bio' => ['nullable', 'string', 'max:500'],
         ])->validateWithBag('updateProfileInformation');
 

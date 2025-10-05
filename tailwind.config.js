@@ -1,5 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin');
+const fs = require('fs');
+const path = require('path');
+
+const flattenColorPalette = (colors) => {
+    const result = {};
+    const process = (obj, prefix = '') => {
+        Object.entries(obj).forEach(([key, value]) => {
+            if (typeof value === 'string') {
+                result[prefix ? `${prefix}-${key}` : key] = value;
+            } else if (typeof value === 'object' && value !== null) {
+                process(value, prefix ? `${prefix}-${key}` : key);
+            }
+        });
+    };
+    process(colors);
+    return result;
+};
+
 
 module.exports = {
     darkMode: ['class'],
@@ -112,28 +130,7 @@ module.exports = {
                     'color': 'var(--badget-color)',
                 }
             });
-
-            // 2. تحضير قيم الألوان
-            const colorValuesBadget = {
-                'red': "#ff0000",
-                'green': "#00ff00",
-                'blue': "#0000ff",
-                'yellow': "#ffff00",
-                'purple': "#800080",
-                'pink': "#ff00ff",
-                'orange': "#ffa500",
-                'brown': "#a52a2a",
-                'grey': "#808080",
-                ...Object.entries(theme('colors')).reduce((acc, [name, value]) => {
-                    if (typeof value === 'string') {
-                        acc[name] = value;
-                    } else if (value && typeof value === 'object') {
-                        acc[name] = value[500] || value.DEFAULT;
-                    }
-                    return acc;
-                }, {})
-            };
-
+            const flatColors = flattenColorPalette(theme('colors'));
             // 3. معالجة الألوان
             matchUtilities(
                 {
@@ -144,8 +141,7 @@ module.exports = {
                     }),
                 },
                 {
-                    values: colorValuesBadget,
-                    supportsNegativeValues: false,
+                    values: flatColors,
                     type: 'color'
                 }
             );
@@ -174,7 +170,6 @@ module.exports = {
                     type: 'number'
                 }
             );
-
         }),
     ],
 };

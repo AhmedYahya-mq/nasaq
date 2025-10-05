@@ -55,7 +55,7 @@ const TableCustomize: FC<TableCustomizeProps> = ({ children, columns = [], class
 
   return (
     <TableProvider value={{ visibleColumns }}>
-      <div ref={tableRef} className="scrollbar">
+      <div ref={tableRef} className="scrollbar *:!overflow-x-visible">
         <Table className={className}>
           {typeof children === "function" ? children(visibleColumns) : children}
         </Table>

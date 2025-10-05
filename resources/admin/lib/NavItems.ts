@@ -1,6 +1,6 @@
-import { blogs, dashboard, membership, membershipApplications } from "@/routes/admin";
+import { blogs, dashboard, members, membership, membershipApplications } from "@/routes/admin";
 import { NavItem } from "@/types";
-import { LayoutGrid, Mail, Users } from "lucide-react";
+import { LayoutGrid, Mail, NewspaperIcon, Users } from "lucide-react";
 
 const mainNavItems: NavItem[] = [
     {
@@ -25,12 +25,17 @@ const mainNavItems: NavItem[] = [
                 href: membershipApplications(),
                 isActive: false,
             },
+            {
+                title: 'الاعضاء',
+                href: members(),
+                isActive: false,
+            }
         ],
     },
     {
         title: 'المدونات',
         href: blogs(),
-        icon: Users,
+        icon: NewspaperIcon,
         isActive: false,
     },
 ];

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Ahmed\GalleryImages\HasPhotos;
-use App\HasTranslations;
+use App\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations as TranslatableHasTranslations;

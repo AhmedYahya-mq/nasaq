@@ -24,7 +24,14 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
-
+        $middleware->alias(
+            [
+                'blocked' => \App\Http\Middleware\BlockMiddleware::class,
+                'item.exists' => \App\Http\Middleware\CheckItemExists::class,
+                'prevent.duplicate' => \App\Http\Middleware\PreventDuplicateRequest::class,
+                'payment.check' => \App\Http\Middleware\CheckPaymentMiddleware::class,
+            ]
+        );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

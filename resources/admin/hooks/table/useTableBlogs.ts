@@ -5,10 +5,10 @@ import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/utils";
 import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { Blog } from "@/types/model/blogs.d";
-import { actionsCell, centeredTextCell, dateCell, descriptionCell, textCell } from "@/lib/tableHelpers";
 import { ButtonsActions, ExtendedColumnDef } from "@/types/ui/table/table";
 import { destroy } from "@/routes/admin/blogs";
 import { confirmAlertDialog } from "@/components/custom/ConfirmDialog";
+import { actionsCell, centeredTextCell, dateCell, descriptionCell, textCell } from "@/components/table";
 
 /**
  * هوك لإدارة جدول العضويات مع دعم البحث، الإضافة، التعديل، الحذف، والترجمة
@@ -160,10 +160,10 @@ const getColumns = ({ onEdit, onDelete, onTranslate }: ButtonsActions): Extended
     },
     {
         accessorKey: "created_at", header: "تاريخ الإنشاء",
-        cell: dateCell
+        cell: dateCell()
     },
     {
         header: "Actions", accessorKey: "actions", nonHideable: true,
-        cell: actionsCell(onEdit, onDelete, onTranslate)
+        cell: actionsCell({onEdit, onDelete, onTranslate})
     },
 ];

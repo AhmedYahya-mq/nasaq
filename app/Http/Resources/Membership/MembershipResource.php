@@ -29,7 +29,7 @@ class MembershipResource extends JsonResource
             'requirements_en' => $this->getTranslation('requirements','en') ?? [],
             'features' => $this->getTranslation('features','ar') ?? [],
             'features_en' => $this->getTranslation('features','en') ?? [],
-            'sort_order' => $this->sort_order,
+            'level' => $this->level,
             'is_active' => $this->is_active,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

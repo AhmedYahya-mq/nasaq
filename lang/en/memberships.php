@@ -85,4 +85,8 @@ return [
     ],
     // == Registration Section: Submit Button ==
     'submit_button' => 'Complete Registration Now',
+    'save_percentage' => 'Save (:percentage%)',
+    'save_amount' => 'Save :amount SAR',
+    // Get 12 months for US$ 124.32 (regular price US$ 575.52). Renewing at US$ 10.99/month.
+    'discounted_price_note' => 'Get :months months for :discounted_price SAR (regular price :regular_price SAR). Renewing at :regular_price SAR/month.',
 ];

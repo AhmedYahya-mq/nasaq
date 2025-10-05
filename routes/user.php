@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\MembershipApplictionController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\Settings\ProfileController;
 use App\Http\Controllers\User\Settings\SecurityController;
 use App\Http\Middleware\RequirePassword;
+use App\Http\Resources\MembershipApplication\MembershipApplicationCollection;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController;
@@ -46,6 +48,17 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::delete(RoutePath::for("sessions.destroy", "settings/sessions"), [\App\Http\Controllers\User\Settings\OtherBrowserSessionsController::class, 'destroy'])
         ->middleware(RequirePassword::using())
         ->name('sessions.destroy');
+
+    Route::group(['prefix' => 'payment', 'as' => 'pay.'], function () {
+        Route::get('{type}/{id}', [\App\Http\Controllers\PayController::class, 'index'])->name('index')->middleware('item.exists');
+        Route::post('create/', [\App\Http\Controllers\PayController::class, 'createPayment'])->name('create')->middleware('prevent.duplicate');
+        Route::get('callback', [\App\Http\Controllers\PayController::class, 'handleCallback'])->name('callback');
+        Route::get('success', [\App\Http\Controllers\PayController::class, 'success'])->name('success');
+        Route::get('failure', [\App\Http\Controllers\PayController::class, 'failure'])->name('failure');
+        Route::post('refund', [\App\Http\Controllers\PayController::class, 'refund'])->name('refund');
+        Route::get('status/{paymentId}', [\App\Http\Controllers\PayController::class, 'paymentStatus'])->name('status');
+    });
+    Route::get('membership/{application}/request',[MembershipApplictionController::class, 'create'])->name('membership.request')->middleware('payment.check');
 });
 
 Route::get('/', HomeController::class)->name('home');
@@ -66,7 +79,7 @@ Route::get('/archives', function () {
     return view('archives');
 })->name('archives');
 
-Route::get('/archive', function(){
+Route::get('/archive', function () {
     return view('details-archive');
 })->name('archive');
 
@@ -74,7 +87,7 @@ Route::get('/blogs', function () {
     return view('blogs');
 })->name('blogs');
 
-Route::get('/blog/', function ($slug='example-blog-post') {
+Route::get('/blog/', function ($slug = 'example-blog-post') {
     return view('blog-details', ['slug' => $slug]);
 })->name('blog');
 

@@ -6,6 +6,6 @@ export default function loading() {
         setTimeout(() => {
             document.getElementById('loading').remove();
             document.body.style.overflowY = 'auto';
-        }, 0);
+        }, 500);
     });
 }

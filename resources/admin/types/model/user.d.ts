@@ -10,8 +10,3 @@ export interface User {
     [key: string]: unknown;
 }
 
-export interface Customer {
-    name: string;
-    email: string;
-    avatar: string;
-}

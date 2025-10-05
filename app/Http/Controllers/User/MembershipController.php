@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\User;
 
 use App\Contract\User\Request\MembershipRequest;
+use App\Contract\User\Resource\MembershipCollection;
 use App\Contract\User\Response\MembershipResponse;
 use App\Http\Controllers\Controller;
 
 class MembershipController extends Controller
 {
+
+    public function __invoke()
+    {
+        return app(MembershipCollection::class, ['resource' => \App\Models\Membership::all()])->toResponse(request());   
+    }
 
     public function index(): MembershipResponse
     {

@@ -67,6 +67,14 @@
                 </template>
             </div>
             <div>
+                <x-forms.select id="employment_status" name="employment_status" x-model="form.employment_status"
+                    label="الحالة الوظيفية" :options="\App\Enums\EmploymentStatus::toKeyValueArray()" />
+
+                <template x-if="errors.employment_status">
+                    <div class="text-sm text-destructive" x-text="errors.employment_status"></div>
+                </template>
+            </div>
+            <div>
                 <x-forms.text-area name="bio" x-model="form.bio" label="نبذه عنك" placeholder="تحدث عن نفسك" />
                 <template x-if="errors.bio">
                     <div class="text-sm text-destructive" x-text="errors.bio"></div>
@@ -76,13 +84,16 @@
         <div class="absolute bottom-0 rtl:left-5 ltr:right-5 flex items-center gap-3 rtl:flex-row-reverse">
             <div class="flex gap-3">
                 <button :disabled="disabled"
-                    class=" badget badget-primary hover:badget-80 disabled:badget-primary/35 transition-colors py-2 px-3 rounded-md hover:bg-primary/60 cursor-pointer"
+                    class="flex rtl:flex-row-reverse items-center gap-1.5 badget badget-primary hover:badget-80 disabled:badget-primary/35 transition-colors py-2 px-3 rounded-md hover:bg-primary/60 cursor-pointer"
                     aria-label="تحديث">
+                    {{-- اضهار علامة تحميل --}}
+                    <span x-show="disabled" class="border-2 border-primary border-r-transparent inline-block rounded-full size-4 animate-spin"></span>
                     تحديث
                 </button>
                 <button type="button" :disabled="disabled" @click="reset"
                     class="badget badget-destructive hover:badget-70 disabled:badget-destructive/35 py-2 px-3 rounded-md transition-colors cursor-pointer"
                     aria-label="تحديث">
+
                     الغاء
                 </button>
             </div>

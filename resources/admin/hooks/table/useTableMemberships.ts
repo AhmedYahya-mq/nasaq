@@ -1,4 +1,3 @@
-import { columns } from './../../data/membershipApplication/tableData';
 import { useState, useMemo, useEffect, useContext } from "react";
 import { Membership } from "@/types/model/membership.d";
 import OpenFormContext from "@/context/OpenFormContext";
@@ -8,6 +7,9 @@ import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/utils";
 import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { confirmAlertDialog } from '@/components/custom/ConfirmDialog';
+import { ButtonsActions, ExtendedColumnDef } from '@/types';
+import { actionsCell, booleanBadgeCell, centeredTextCell, descriptionCell, sarCurrencyCell, SwitchCell, textCell } from "@/components/table";
+
 
 /**
  * هوك لإدارة جدول العضويات مع دعم البحث، الإضافة، التعديل، الحذف، والترجمة
@@ -25,6 +27,7 @@ export function useTableMemberships({ memberships }: { memberships: Membership[]
 
     useEffect(() => {
         setIsClient(true);
+        setColumns(getColumns({ onEdit: editRow, onDelete: deleteRow, onTranslate: translateRow }));
     }, []);
 
     /**
@@ -46,6 +49,7 @@ export function useTableMemberships({ memberships }: { memberships: Membership[]
         setTableData(prev => [newMembership, ...prev]);
         toast.success(`تم إضافة عضوية ${newMembership.name} بنجاح`);
     };
+
 
     /**
      * تحديث بيانات صف موجود في الجدول
@@ -74,7 +78,7 @@ export function useTableMemberships({ memberships }: { memberships: Membership[]
             description: `سيتم حذف العضوية ${item.name} نهائيًا.`
         });
         if (!ok) return;
-        const toastId= toast.loading(`جاري حذف عضوية ${item.name}...`);
+        const toastId = toast.loading(`جاري حذف عضوية ${item.name}...`);
         let isSuccess = false;
         await axios.delete(destroy(item.id).url).then(() => {
             setTableData(prev => prev.filter(row => row.id !== item.id));
@@ -133,3 +137,44 @@ export function useTableMemberships({ memberships }: { memberships: Membership[]
         translateRow,
     };
 }
+
+const getColumns = ({ onEdit, onDelete, onTranslate }: ButtonsActions): ExtendedColumnDef<Membership>[] => [
+    {
+        accessorKey: "id", header: "ID",
+        cell: centeredTextCell
+    },
+    {
+        accessorKey: "name", header: "اسم العضوية",
+        cell: textCell
+    },
+    {
+        accessorKey: "description", header: "الوصف",
+        cell: descriptionCell
+    },
+    {
+        accessorKey: "price", header: "السعر (ر.س)",
+        cell: sarCurrencyCell
+    },
+    {
+        accessorKey: "discounted_price",
+        header: "السعر بعد الخصم (ر.س)",
+        cell: sarCurrencyCell
+    },
+    {
+        accessorKey: "is_active",
+        header: "الحالة",
+        cell: booleanBadgeCell("نشطة", "غير نشطة"),
+    },
+    {
+        accessorKey: "duration_days",
+        header: "المدة (يوم)",
+        cell: centeredTextCell
+    },
+    {
+        header: "Actions",
+        id: "actions",
+        accessorKey: "actions",
+         nonHideable: true,
+        cell: actionsCell({onEdit, onDelete, onTranslate})
+    },
+];

@@ -10,6 +10,14 @@
 @source '../views';
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant light (&:not(*:is(.dark *)));
+@custom-variant pending (&:is(.pending *));
+@custom-variant approved (&:is(.approved *));
+@custom-variant rejected (&:is(.rejected *));
+@custom-variant canceled (&:is(.canceled *));
+@custom-variant completed (&:is(.completed *));
+@custom-variant in-progress (&:is(.in-progress *));
+
 
 /* Regular 400 */
 @font-face {
@@ -232,7 +240,6 @@ body {
     .iti__country.iti__highlight {
         @apply hover:!bg-accent/35;
     }
-
 }
 
 @layer utilities {
@@ -318,6 +325,8 @@ body {
     background-color: var(--scrollbar-thumb-hover-color);
 }
 
+
+
 /* دخول مع ارتداد */
 @keyframes bounce-in-left {
     0% {
@@ -366,3 +375,5 @@ body {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
+
+

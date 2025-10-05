@@ -21,6 +21,14 @@ return new class extends Migration
 
             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->index('slug');
+            // content longText index is not supported in many databases
+            $table->fullText('content');
+
+            $table->index('admin_id');
+            $table->index('views');
+            $table->index('created_at');
+            $table->index('updated_at');
+
         });
     }
 

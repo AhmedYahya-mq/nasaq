@@ -7,6 +7,7 @@
 
     <section class="h-screen flex items-center justify-center">
         <div class="container mx-auto">
+
             <div
                 class="flex flex-col lg:flex-row w-full max-w-6xl mx-auto bg-card rounded-2xl shadow-2xl overflow-hidden animate-card-enter border border-border/20">
                 <div class="w-full lg:w-1/2 p-8 sm:p-12 bg-primary/20 flex flex-col justify-center">
@@ -15,7 +16,11 @@
                             {{ $title }}</h2>
                         <p class="text-lg text-muted-foreground mt-2">{{ $subtitle }}</p>
                     </div>
-
+                    <div class="text-center  mb-2 animate-fade-in-down">
+                        @error('access')
+                            <p class="mt-1 text-sm text-destructive">{{ $message }}</p>
+                        @enderror
+                    </div>
                     <form action="{{ route('login') }}" method="POST" class="space-y-6">
                         @csrf
                         @if (session('status'))

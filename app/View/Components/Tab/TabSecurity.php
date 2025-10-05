@@ -2,7 +2,7 @@
 
 namespace App\View\Components\Tab;
 
-use App\Agent;
+use App\Services\Agent;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\View\View;
