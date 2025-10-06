@@ -1,10 +1,8 @@
-
 <div x-data="{
     showFilters: false,
     search: '',
     activeFilter: 'All',
-    books: [
-        {
+    books: [{
             id: 1,
             title: 'مقدمة في البرمجة',
             authors: ['أحمد علي'],
@@ -67,8 +65,9 @@
     <div x-show="showFilters" x-transition class="flex justify-center gap-2 flex-wrap mt-2">
         <template x-for="filter in ['All', 'Programming', 'AI', 'Web Development', 'Science']" :key="filter">
             <button @click="activeFilter = filter; showFilters = false"
-                class="px-3 py-1.5 text-xs md:text-sm font-semibold rounded-full border transition
-                       :class=\"activeFilter === filter ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-accent/20'\">
+                class="px-3 py-1.5 text-xs md:text-sm font-semibold rounded-full border transition"
+                :class="activeFilter === filter ? 'bg-primary text-primary-foreground' :
+                    'bg-card text-muted-foreground hover:bg-accent/20'">
                 <span x-text="filter"></span>
             </button>
         </template>
@@ -76,10 +75,12 @@
 
     <!-- شبكة الكتب -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <template x-for="book in books.filter(b =>
+        <template
+            x-for="book in books.filter(b =>
             (activeFilter === 'All' || b.type === activeFilter) &&
             b.title.toLowerCase().includes(search.toLowerCase())
-        )" :key="book.id">
+        )"
+            :key="book.id">
             <div class="group relative overflow-hidden rounded-xl bg-card shadow-md p-4 hover:shadow-lg transition">
                 <!-- صورة الغلاف -->
                 <div class="w-full h-48 overflow-hidden rounded-md">
@@ -89,7 +90,8 @@
 
                 <!-- عنوان الكتاب والمؤلفين -->
                 <div class="mt-2">
-                    <h3 class="text-md font-semibold line-clamp-2 group-hover:text-primary transition-colors" x-text="book.title"></h3>
+                    <h3 class="text-md font-semibold line-clamp-2 group-hover:text-primary transition-colors"
+                        x-text="book.title"></h3>
                     <p class="text-sm text-muted-foreground" x-text="'by ' + book.authors.join(', ')"></p>
                 </div>
 
@@ -108,11 +110,14 @@
                 </div>
 
                 <!-- تأثير الهور Hover Accent -->
-                <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div
+                    class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                </div>
             </div>
         </template>
 
-        <template x-if="books.filter(b =>
+        <template
+            x-if="books.filter(b =>
             (activeFilter === 'All' || b.type === activeFilter) &&
             b.title.toLowerCase().includes(search.toLowerCase())
         ).length === 0">
