@@ -68,7 +68,7 @@
         <template x-for="filter in ['All', 'Programming', 'AI', 'Web Development', 'Science']" :key="filter">
             <button @click="activeFilter = filter; showFilters = false"
                 class="px-3 py-1.5 text-xs md:text-sm font-semibold rounded-full border transition
-                       :class=\"activeFilter === filter ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-accent/20'\">
+                       :class="activeFilter === filter ? 'bg-primary text-primary-foreground' : 'bg-card text-muted-foreground hover:bg-accent/20'\">
                 <span x-text="filter"></span>
             </button>
         </template>
