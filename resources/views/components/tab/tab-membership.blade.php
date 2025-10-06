@@ -17,31 +17,7 @@
     لا تغيير هنا - الكود سليم وممتاز
     ========================================================
 --}}
-<div x-data="{
-        async downloadTransparent() {
-            const card = $refs.card;
-            if (!card) return;
-
-            // إضافة بسيطة: تأخير بسيط لضمان اكتمال كل شيء
-            setTimeout(async () => {
-                try {
-                    const canvas = await html2canvas(card, {
-                        backgroundColor: null,
-                        scale: 2,
-                        useCORS: true
-                    });
-
-                    const link = document.createElement('a');
-                    link.download = 'membership-card.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                } catch (error) {
-                    console.error('html2canvas failed:', error);
-                    alert('فشل تحميل الصورة. قد تكون هناك مشكلة في CORS مع الصور الخارجية. تحقق من الـ Console.');
-                }
-            }, 100);
-        }
-    }"
+<div x-data="printInit"
     class="flex flex-col items-center w-full space-y-6">
 
     <!-- بطاقة العضوية -->
