@@ -94,3 +94,7 @@ Route::get('/blog/', function ($slug = 'example-blog-post') {
 Route::get('/memberships', function () {
     return view('memberships');
 })->name('memberships');
+
+Route::get('/invoice', function () {
+    return view('invoice');
+})->name('invoice');
