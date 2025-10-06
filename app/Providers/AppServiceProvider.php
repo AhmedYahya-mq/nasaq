@@ -81,6 +81,9 @@ class AppServiceProvider extends ServiceProvider
             // payment
             \App\Contract\Actions\CreatePaymentIntent::class => \App\Actions\Payment\CreatePaymentIntent::class,
             \App\Contract\Actions\PaymentCallback::class => \App\Actions\Payment\PaymentCallback::class,
+
+            // filepond
+            \App\Contract\Actions\FilePondAction::class => \App\Actions\User\FilePondAction::class,
         ];
 
         $bindings = array_merge($bindingResponses, $bindingRequests, $bindingResources, $bindingActions);
