@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Ahmed\GalleryImages\HasPhotos;
-use App\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\LaravelPackageTools\Concerns\Package\HasTranslations as PackageHasTranslations;
 use Spatie\Translatable\HasTranslations as TranslatableHasTranslations;
 
 class Blog extends Model
 {
-     use HasTranslations, HasFactory, TranslatableHasTranslations, HasPhotos;
+     use PackageHasTranslations, HasFactory, TranslatableHasTranslations, HasPhotos;
 
     protected $fillable = [
         'admin_id',
