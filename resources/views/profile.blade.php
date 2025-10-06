@@ -1,8 +1,7 @@
 <x-layouts.guest-layout title="الملف الشخصي">
 
     @push('scripts')
-        @vite(['resources/js/pages/profile.js'])
-        @vite(['resources/js/pages/print.js'])
+        @vite(['resources/js/pages/profile.js']) 
     @endpush
     <div class="flex justify-center items-center w-full mb-5">
         <div class="grid grid-cols-1 lg:grid-cols-[0.30fr_1fr] gap-2 container max-sm:px-2 mt-5">

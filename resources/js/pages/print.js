@@ -1,4 +1,5 @@
 import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf'; 
 
 document.addEventListener('alpine:init', function () {
     Alpine.data('printInit', printInit);
@@ -6,31 +7,13 @@ document.addEventListener('alpine:init', function () {
 
 function printInit() {
     return {
+        isLoadingPng: false,
+        isLoadingPdf: false,
+
         async downloadTransparent() {
             const card = this.$refs.card;
             if (!card) return;
-
-            // حفظ الأنماط الأصلية لعناصر البطاقة
-            const originalStyles = [];
-
-            // استبدال الألوان من نوع oklch أو color() بألوان آمنة مؤقتًا
-            card.querySelectorAll('*').forEach((el, index) => {
-                const style = getComputedStyle(el);
-                const color = style.color || '';
-                const bg = style.backgroundColor || '';
-
-                if (color.includes('oklch') || color.includes('color(')) {
-                    originalStyles[index] = { el, prop: 'color', value: el.style.color };
-                    el.style.color = '#000'; // لون آمن مؤقتًا
-                }
-
-                if (bg.includes('oklch') || bg.includes('color(')) {
-                    originalStyles[index] = { el, prop: 'backgroundColor', value: el.style.backgroundColor };
-                    el.style.backgroundColor = '#fff';
-                }
-            });
-
-            // تأخير بسيط لضمان اكتمال التغييرات
+            this.isLoadingPng = true;
             setTimeout(async () => {
                 try {
                     const canvas = await html2canvas(card, {
@@ -45,12 +28,43 @@ function printInit() {
                     link.click();
                 } catch (error) {
                     console.error('html2canvas failed:', error);
-                    alert('فشل تحميل الصورة. تحقق من الألوان أو الصور الخارجية.');
                 } finally {
-                    // إعادة الألوان الأصلية
-                    originalStyles.forEach((s) => {
-                        if (s && s.el && s.prop) s.el.style[s.prop] = s.value;
+                    this.isLoadingPng = false;
+                }
+            }, 100);
+        },
+
+        // ---------------------------
+        // دالة جديدة لتوليد PDF
+        async downloadPDF() {
+            const card = this.$refs.card;
+            if (!card) return;
+            this.isLoadingPdf = true;
+
+            setTimeout(async () => {
+                try {
+                    const canvas = await html2canvas(card, {
+                        backgroundColor: null,
+                        scale: 2,
+                        useCORS: true
                     });
+
+                    const imgData = canvas.toDataURL('image/png');
+
+                    // أبعاد البطاقة
+                    const pdf = new jsPDF({
+                        orientation: 'landscape',
+                        unit: 'px',
+                        format: [canvas.width, canvas.height]
+                    });
+
+                    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+                    pdf.save('membership-card.pdf');
+
+                } catch (error) {
+                    console.error('PDF generation failed:', error);
+                } finally {
+                    this.isLoadingPdf = false;
                 }
             }, 100);
         }
