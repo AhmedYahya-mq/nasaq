@@ -1,4 +1,5 @@
 <x-layouts.guest-layout title="الملف الشخصي">
+
     @push('scripts')
         @vite(['resources/js/pages/profile.js'])
     @endpush
@@ -8,9 +9,11 @@
                 <x-ui.card-profile />
             </div>
             <div class="flex flex-col">
-                <x-tabs class="w-full" default="{{ request()->get('tab', 'personalInfo') }}">
+                <x-tabs class="w-full" default="{{ request()->get('tab', 'events') }}">
                     <x-slot:header>
                         <x-tabs.tab-button id="personalInfo" label="المعلومات الشخصية" />
+                        <x-tabs.tab-button id="library" label="مكتبتي" />
+                        <x-tabs.tab-button id="events" label="الفعاليات" />
                         <x-tabs.tab-button id="requests" label="الطلبات" />
                         <x-tabs.tab-button id="changePassword" label="تغير كلمة المرور" />
                         <x-tabs.tab-button id="security" label="الأمان" />
@@ -18,9 +21,16 @@
                     <x-tabs.tab id="personalInfo">
                         <x-tab.tab-profile />
                     </x-tabs.tab>
+                    <x-tabs.tab id="library">
+                        <x-tab.tab-library />
+                    </x-tabs.tab>
+                    <x-tabs.tab id="events">
+                        <x-tab.tab-event />
+                    </x-tabs.tab>
                     <x-tabs.tab id="requests">
                         <x-tab.tab-request />
                     </x-tabs.tab>
+
                     <x-tabs.tab id="changePassword">
                         <x-tab.tab-change-password />
                     </x-tabs.tab>
