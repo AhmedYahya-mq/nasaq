@@ -3,10 +3,10 @@
 namespace App\Traits;
 
 use App\Models\Translation;
-use Illuminate\Contracts\Container\BindingResolutionException;
 
 trait HasTranslations
 {
+    protected $tempTranslations = [];
 
     public function getAppends()
     {
@@ -19,10 +19,6 @@ trait HasTranslations
         return $appends;
     }
 
-    /**
-     * العلاقة مع جدول الترجمات
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function translationsField()
     {
         return $this->hasMany(Translation::class, 'record_id')
@@ -30,17 +26,49 @@ trait HasTranslations
     }
 
     /**
-     * جلب الترجمة لحقل معين ولغة معينة
-     * @param string $field اسم الحقل المترجم
-     * @param string|null $locale اللغة المطلوبة (افتراضيًا لغة التطبيق)
-     * @return string|null القيمة المترجمة أو null إذا لم توجد
+     * الوصول إلى القيم المترجمة ديناميكيًا
      */
+    public function __get($key)
+    {
+        // التحقق من suffix اللغة (مثال: title_en)
+        foreach ($this->translatableFields as $field) {
+            if (str_starts_with($key, $field)) {
+                $locale = null;
+                // تحقق هل المستخدم وضع suffix
+                if (preg_match('/^' . $field . '_(\w{2})$/', $key, $matches)) {
+                    $locale = $matches[1];
+                }
+                return $this->translateField($field, $locale);
+            }
+        }
+
+        return parent::__get($key);
+    }
+
+    /**
+     * تعيين قيمة مترجمة ديناميكيًا
+     */
+    public function __set($key, $value)
+    {
+        foreach ($this->translatableFields as $field) {
+            if (str_starts_with($key, $field)) {
+                $locale = null;
+                if (preg_match('/^' . $field . '_(\w{2})$/', $key, $matches)) {
+                    $locale = $matches[1];
+                }
+                $this->updateTranslations([$field => $value], $locale);
+                return;
+            }
+        }
+
+        parent::__set($key, $value);
+    }
+
     public function translateField($field, $locale = null)
     {
         $locale = $locale ?: app()->getLocale();
-        if (!in_array($field, $this->translatableFields)) {
-            return null;
-        }
+        if (!in_array($field, $this->translatableFields)) return null;
+
         $translation = $this->translationsField
             ->where('field', $field)
             ->where('locale', $locale)
@@ -49,21 +77,61 @@ trait HasTranslations
         return $translation ? $translation->value : null;
     }
 
+    public function updateTranslations(array $data, $locale = null)
+    {
+        $locale = $locale ?: app()->getLocale();
+        foreach ($data as $field => $value) {
+            if (!in_array($field, $this->translatableFields)) continue;
+            Translation::updateOrCreate(
+                [
+                    'table_name' => $this->getTable(),
+                    'record_id'  => $this->id,
+                    'field'      => $field,
+                    'locale'     => $locale,
+                ],
+                ['value' => $value]
+            );
+        }
+    }
 
-    /**
-     * تحميل الترجمات مع النموذج
-     * @param mixed $query
-     * @param array $fields الأعمدة المترجمة للتحميل (افتراضيًا كل الأعمدة)
-     * @param string|array|null $locale اللغة المطلوبة (افتراضيًا لغة التطبيق)
-     * @return mixed
-     * @throws BindingResolutionException
-     */
+    public function setTranslations(array $translations)
+    {
+        if (!property_exists($this, 'translatableFields') || empty($this->translatableFields)) {
+            return $this;
+        }
+        $allowedTranslations = [];
+        foreach ($translations as $field => $locales) {
+            if (in_array($field, $this->translatableFields)) {
+                $allowedTranslations[$field] = $locales;
+            }
+        }
+        $this->tempTranslations = $allowedTranslations;
+        return $this;
+    }
+
+    public static function bootHasTranslations()
+    {
+        static::deleting(function ($model) {
+            $model->translationsField()->delete();
+        });
+
+        static::created(function ($model) {
+            if (!empty($model->tempTranslations)) {
+                foreach ($model->tempTranslations as $field => $locales) {
+                    foreach ($locales as $locale => $value) {
+                        $model->updateTranslations([$field => $value], $locale);
+                    }
+                }
+                $model->tempTranslations = [];
+            }
+        });
+    }
+
+
     public function scopeWithTranslations($query, $fields = [], $locale = null)
     {
         $locale = $locale ?: app()->getLocale();
-        if (is_string($locale)) {
-            $locale = [$locale];
-        }
+        if (is_string($locale)) $locale = [$locale];
         $table = $query->getModel()->getTable();
 
         return $query->with(['translationsField' => function ($q) use ($fields, $locale, $table) {
@@ -75,122 +143,5 @@ trait HasTranslations
                 $q->whereIn('field', $allowed);
             }
         }]);
-    }
-
-    /**
-     * تحديث أو إنشاء الترجمات
-     * @param array $data
-     * @param mixed $locale
-     * @return void
-     * @throws BindingResolutionException
-     */
-    public function updateTranslations(array $data, $locale = null)
-    {
-        $locale = $locale ?: app()->getLocale();
-        foreach ($data as $field => $value) {
-            if (!in_array($field, $this->translatableFields)) {
-                continue;
-            }
-            Translation::updateOrCreate(
-                [
-                    'table_name' => $this->getTable(),
-                    'record_id'  => $this->id,
-                    'field'      => $field,
-                    'locale'     => $locale,
-                ],
-                [
-                    'value' => $value,
-                ]
-            );
-        }
-    }
-
-    /**
-     * جلب القيمة المترجمة عند الوصول إلى خاصية النموذج
-     * @param string $key
-     * @return mixed
-     * @throws BindingResolutionException
-     */
-    public function __get($key)
-    {
-        $translated = $this->translateField($key);
-        if ($translated !== null) {
-            return $translated;
-        }
-        return parent::__get($key);
-    }
-
-
-    /**
-     * Scope بحث مرن على الأعمدة المترجمة
-     * - إذا $fields فارغة، يبحث على كل الأعمدة المترجمة
-     * - يدعم أي لغة، مع fallback
-     * @param mixed $query
-     * @param string $term مصطلح البحث
-     * @param array $fields الأعمدة المترجمة للبحث فيها (افتراضيًا كل الأعمدة)
-     * @param string|null $locale اللغة المطلوبة (افتراضيًا لغة التطبيق)
-     * @return mixed
-     * @throws BindingResolutionException
-     */
-    public function scopeSearch($query, string $term, array $fields = [], $locale = null)
-    {
-        $locale = $locale ?: app()->getLocale();
-        $table = $query->getModel()->getTable();
-
-        if (!empty($fields)) {
-            $fields = array_intersect($fields, $this->translatableFields);
-            if (empty($fields)) return $query;
-        }
-
-        return $query->whereHas('translationsField', function ($q) use ($fields, $term, $locale, $table) {
-            $q->where('table_name', $table)
-                ->where(function ($subQ) use ($fields, $term, $locale, $table) {
-                    if (empty($fields)) {
-                        $subQ->where('locale', $locale)
-                            ->where('value', 'like', "%{$term}%");
-                    } else {
-                        foreach ($fields as $field) {
-                            $subQ->orWhere(function ($sq) use ($field, $term, $locale) {
-                                $sq->where('field', $field)
-                                    ->where('locale', $locale)
-                                    ->where('value', 'like', "%{$term}%");
-                            });
-                        }
-                    }
-                });
-        });
-    }
-
-    /**
-     * حذف الترجمة لحقل أو أكثر
-     *
-     * @param string|array $fields اسم الحقل أو مصفوفة من الحقول
-     * @param string|null $locale اللغة المطلوبة (افتراضيًا لغة التطبيق)
-     * @return void
-     */
-    public function deleteTranslations($fields, $locale = null): void
-    {
-        $locale = $locale ?: app()->getLocale();
-        $fields = is_array($fields) ? $fields : [$fields];
-
-        Translation::where('table_name', $this->getTable())
-            ->where('record_id', $this->id)
-            ->whereIn('field', $fields)
-            ->when($locale, function ($q) use ($locale) {
-                $q->where('locale', $locale);
-            })
-            ->delete();
-    }
-
-    /**
-     * حذف جميع الترجمات المرتبطة بالنموذج
-     *
-     * @return void
-     */
-    public function clearTranslations(): void
-    {
-        Translation::where('table_name', $this->getTable())
-            ->where('record_id', $this->id)
-            ->delete();
     }
 }

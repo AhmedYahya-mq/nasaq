@@ -24,6 +24,7 @@ class MembershipResource extends JsonResource
             'description_en' => $this->getTranslation('description','en') ?? '',
             'price' => $this->price,
             'discounted_price' => $this->discounted_price,
+            'percent_discount' => $this->percent_discount * 100,
             'duration_days' => $this->duration_days,
             'requirements' => $this->getTranslation('requirements','ar') ?? [],
             'requirements_en' => $this->getTranslation('requirements','en') ?? [],
@@ -35,4 +36,5 @@ class MembershipResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
+
 }

@@ -21,7 +21,7 @@ export default function fileUploadComponent(options) {
 
         init() {
             this.pond = FilePond.create(this.$refs.filepondInput, {
-                name: 'file',
+                name: options.multiple ? `file[]` : 'file',
                 required: options.required,
                 allowMultiple: options.multiple,
                 maxFileSize: options.maxSize,
@@ -37,7 +37,20 @@ export default function fileUploadComponent(options) {
                         ...revert(),
                         headers: { 'X-CSRF-TOKEN': options.csrf },
                     },
-                    
+                    restore: (uniqueFileId, load, error, progress, abort, headers) => {
+                        axios.get(restore(uniqueFileId), {
+                            responseType: 'blob',
+                            headers: { 'X-CSRF-TOKEN': options.csrf },
+                        })
+                            .then(res => {
+                                load(res.data);
+                            })
+                            .catch(() => error('Restore failed'));
+                    },
+                    remove: {
+                        ...remove(),
+                        headers: { 'X-CSRF-TOKEN': options.csrf },
+                    },
                 },
                 labelIdle: options.labelIdle,
                 labelFileProcessing: options.labelFileProcessing,

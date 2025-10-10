@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -30,9 +31,10 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
             'email' => [
                 'required',
                 'string',
+                'lowercase',
                 'email',
                 'max:255',
-                Rule::unique('users', 'email')->ignore($user?->id),
+                Rule::unique(User::class)->ignore($user->id),
             ],
             'phone' => ['required', 'phone:AUTO'],
             'birthday' => ['nullable', 'date'],
@@ -69,7 +71,7 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
         } else {
             $data['password'] = bcrypt($data['password']);
         }
-        
+
         if (isset($data['email'])) {
             $data['email'] = strtolower(trim($data['email']));
         }

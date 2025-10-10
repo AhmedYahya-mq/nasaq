@@ -1,9 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
-import { blogs, membership } from '@/routes/admin';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
-import OpenFormProvider from '@/providers/OpenFormProvider';
-import SectionListBlogs from '../_components/blogs/SectionListBlogs';
 import { Members } from '@/types/model/members';
 import DetailsMember from '../_components/members/DetailsMember';
 

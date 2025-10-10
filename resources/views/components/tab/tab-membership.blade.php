@@ -1,17 +1,5 @@
 {{-- resources/views/components/membership-card.blade.php --}}
 
-@props([
-    'userName' => 'أحمد محمد',
-    'membershipName' => 'عضوية بلاتينية',
-    'memberId' => '#2024-0012',
-    'joinDate' => '15/03/2024',
-    'membershipStatus' => 'نشط',
-    'membershipDates' => '01/01/2025 - 31/12/2025',
-    'profileImage' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80',
-    'qrCode' => 'https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=MemberID-2024-0012',
-    'downloadable' => true,
-])
-
 @push('scripts')
     @vite(['resources/js/pages/print.js'])
     <style>
@@ -96,14 +84,14 @@
         }
 
         .user-name {
-            font-size: 28px;
+            font-size: 20px;
             margin-bottom: 10px;
             font-weight: 700;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .membership-type {
-            font-size: 18px;
+            font-size: 16px;
             margin-bottom: 25px;
             color: #f5d547;
             font-weight: 600;
@@ -133,7 +121,7 @@
 
         .info-value {
             display: block;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             color: #fff;
         }
@@ -162,7 +150,6 @@
         }
     </style>
 @endpush
-
 <div x-data="printInit" class="flex flex-col items-center w-full space-y-6">
     <!-- بطاقة العضوية -->
     <div class="scrollbar flex flex-col items-center w-full m-0 p-0">
@@ -171,44 +158,44 @@
                 class="absolute top-3 rtl:left-3 ltr:right-3 w-10 h-10 opacity-20">
             <div class="card-left">
                 <div class="profile-img-container">
-                    <img src="{{ $profileImage }}" alt="الصورة الشخصية" class="profile-img">
+                    <img data-photo-profile src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="profile-img">
                 </div>
-                <img src="{{ $qrCode }}" alt="QR Code" class="qr-code">
+                <img src="{{ $user->profileQrCodePng() }}" alt="QR Code" class="qr-code">
             </div>
 
             <div class="card-right">
-                <h1 class="user-name" id="userName">{{ $userName }}</h1>
-                <div class="membership-type" id="membershipName">عضوية الأخصائي المرخّص</div>
+                <h1 class="user-name" id="userName">{{ $user->name }}</h1>
+                <div class="membership-type" id="membershipName">{{ $user->membership_name }}</div>
 
                 <div class="info-grid">
                     <div class="info-item">
                         <span class="info-label">رقم العضوية</span>
-                        <span class="info-value">{{ $memberId }}</span>
+                        <span class="info-value">{{ $user->membership_id }}</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">تاريخ الإنضمام</span>
-                        <span class="info-value">{{ $joinDate }}</span>
+                        <span class="info-value">{{ $user->created_at->format('d/m/Y') }}</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">الحالة</span>
-                        <span class="info-value status-active" id="membershipStatus">{{ $membershipStatus }}</span>
+                        <span class="info-value status-active"
+                            id="membershipStatus">{{ $user->membership_status->label() }}</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">فترة العضوية</span>
-                        <span class="info-value" id="membershipDates">{{ $membershipDates }}</span>
+                        <span class="info-value"
+                            id="membershipDates">{{ $user->membership_started_at->format('d/m/Y') . ' - ' . $user->membership_expires_at->format('d/m/Y') }}</span>
                     </div>
                 </div>
 
                 <div class="card-footer">
                     <div class="logo">مجتمع نسق</div>
-                    <div class="card-id">البطاقة شخصية وغير قابلة للتحويل</div>
+                    <div class="card-id">بطاقة عضوية وغير قابلة للتحويل</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- أزرار التحكم -->
-    @if ($downloadable)
         <div class="flex flex-col md:flex-row items-center gap-4">
             <button @click="downloadTransparent"
                 class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5"
@@ -225,6 +212,4 @@
                 <span> تنزيل البطاقة pdf</span>
             </button>
         </div>
-    @endif
-
 </div>

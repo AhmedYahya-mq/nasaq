@@ -1,6 +1,6 @@
-import { blogs, dashboard, members, membership, membershipApplications } from "@/routes/admin";
+import { blogs, dashboard, events, members, membership, membershipApplications } from "@/routes/admin";
 import { NavItem } from "@/types";
-import { LayoutGrid, Mail, NewspaperIcon, Users } from "lucide-react";
+import { Calendar, LayoutGrid, Mail, NewspaperIcon, Users } from "lucide-react";
 
 const mainNavItems: NavItem[] = [
     {
@@ -36,6 +36,12 @@ const mainNavItems: NavItem[] = [
         title: 'المدونات',
         href: blogs(),
         icon: NewspaperIcon,
+        isActive: false,
+    },
+     {
+        title: 'الفعاليات',
+        href: events(),
+        icon: Calendar,
         isActive: false,
     },
 ];

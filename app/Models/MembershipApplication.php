@@ -8,6 +8,7 @@ use App\Traits\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /** @package App\Models */
 class MembershipApplication extends Model
@@ -24,6 +25,7 @@ class MembershipApplication extends Model
         'current_employer',
         'scfhs_number',
         'status',
+        'is_resubmit',
         'submitted_at',
         'reviewed_at',
         'admin_notes',
@@ -34,6 +36,7 @@ class MembershipApplication extends Model
         'employment_status' => EmploymentStatus::class,
         'submitted_at' => 'datetime',
         'reviewed_at' => 'datetime',
+        'is_resubmit' => 'boolean',
     ];
 
 
@@ -187,6 +190,11 @@ class MembershipApplication extends Model
         return $q->where('status', EnumsMembershipApplication::Cancelled);
     }
 
+    public function scopeNotDraft($query)
+    {
+        return $query->where('status', '<>', EnumsMembershipApplication::Draft);
+    }
+
     /**
      * أمثلة استخدام
      */
@@ -199,15 +207,17 @@ class MembershipApplication extends Model
 
     public function sendRequestStatusNotification()
     {
-        $this->user->notify(new \App\Notifications\UserRequestStatusNotification($this));
+        try {
+            $this->user->notify(new \App\Notifications\UserRequestStatusNotification($this));
+        } catch (\Throwable $e) {
+            Log::error("Failed to send notification: " . $e->getMessage());
+        }
     }
 
-    /**
-     * فلترة الطلبات حسب باراميترات البحث والفلترة
-     */
-    public static function filterQuery($params = [])
+    // داخل الموديل MembershipApplication
+    public static function filterQuery($params = [], $builder = null)
     {
-        $query = self::query();
+        $query = $builder ?? self::query();
 
         // فلترة حسب العضو
         if (!empty($params['member_id'])) {
@@ -219,7 +229,7 @@ class MembershipApplication extends Model
             $query->where('status', $params['status']);
         }
 
-        // فلترة حسب البحث (اسم العضو، ايميل العضو، اسم العضوية، رقم الهاتف فقط)
+        // فلترة حسب البحث
         if (!empty($params['search'])) {
             $search = $params['search'];
             $query->where(function ($q) use ($search) {
@@ -237,11 +247,15 @@ class MembershipApplication extends Model
         return $query;
     }
 
-    /**
-     * جلب الطلبات paginated مع الفلاتر
-     */
-    public static function paginateFiltered($params = [], $perPage = 10)
+    public static function paginateFiltered($params = [], $perPage = 10, $builder = null)
     {
-        return self::filterQuery($params)->paginate($perPage);
+        $query = self::filterQuery($params, $builder);
+        return $query->paginate($perPage);
+    }
+
+    // إضافة Scope على Builder
+    public function scopePaginateFiltered($query, $params = [], $perPage = 10)
+    {
+        return self::filterQuery($params, $query)->paginate($perPage);
     }
 }

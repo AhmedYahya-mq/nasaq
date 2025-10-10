@@ -40,6 +40,7 @@ return [
       'calendar' => [
         'today_events' => 'Today\'s Events',
         'no_events' => 'No events for this day.',
+        'events_for' => 'Events for',
         'close' => 'Close',
         'day_names' => [
             'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
@@ -74,8 +75,28 @@ return [
         'workshop' => 'Workshop',
     ],
 
-    'button' => [
+    'buttons' => [
         'past' => 'Watch Recording',
+        'pay_registration' => 'Pay',
+        'free_registration' => 'Registration',
+    ],
+
+    'labels'=>[
+        'free' => 'Free',
+        'paid' => 'Paid',
+        'upcoming' => 'Upcoming',
+        'ongoing' => 'Ongoing',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+    ],
+
+    'messages' => [
+        'no_upcoming_events' => 'No upcoming events at the moment. Please check back later for updates on our latest events and activities.',
+        'already_registered' => 'You have already registered for this event.',
+        'registration_success' => 'Registration successful! We look forward to your participation in the event.',
+        'payment_required' => 'This event requires payment. Please proceed to the payment page to complete your registration.',
+        'payment_success' => 'Payment successful! Your registration for the event is now confirmed.',
+        'payment_failed' => 'Payment failed. Please try again or contact support if the issue persists.',
     ],
 
     'past_label' => 'Past',

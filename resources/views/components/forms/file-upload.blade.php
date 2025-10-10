@@ -2,8 +2,8 @@
     'title' => __('memberships.upload.default_title'),
     'subtitle' => __('memberships.upload.default_subtitle'),
     'name' => 'file',
+    'value' => null,
     'required' => false,
-    'server' => null,
     'multiple' => false,
     'accepted' =>
         'image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -19,8 +19,8 @@
         'maxSize' => $maxSize,
         'accepted' => $accepted,
         'maxFiles' => $maxFiles,
-        'server' => $server,
         'csrf' => csrf_token(),
+        'value' => old($name, $value),
         'labelIdle' =>
             "
                 <div class='flex flex-col items-center justify-center p-6 text-center'>

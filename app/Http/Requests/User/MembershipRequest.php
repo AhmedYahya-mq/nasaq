@@ -32,6 +32,7 @@ class MembershipRequest extends FormRequest implements \App\Contract\User\Reques
             'is_active' => 'sometimes|in:true,false,1,0',
             'price' => ($isCreate ? 'required' : 'sometimes') . '|numeric|min:0',
             'discounted_price' => 'nullable|numeric|min:0|lt:price',
+            'percent_discount' => 'nullable|numeric|min:0|max:100',
             'level' => [
                 'nullable',
                 'integer',
@@ -52,6 +53,7 @@ class MembershipRequest extends FormRequest implements \App\Contract\User\Reques
         $defultValues = [
             'is_active' => true,
             'discounted_price' => null,
+            'percent_discount' => 0.00,
         ];
         foreach ($defultValues as $field => $value) {
             if (!isset($data[$field])) {

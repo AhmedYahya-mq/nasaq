@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Enums\EmploymentStatus;
 use App\Enums\MembershipStatus;
 use App\Notifications\EmailVerificationNotification;
 use App\Notifications\ResetPasswordNotification;
+use App\Traits\ProfileQrCode;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,7 +17,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use HasFactory, Notifiable, TwoFactorAuthenticatable, ProfileQrCode;
     // خاصية داخلية تحدد الـ guard
     protected $guard = 'web';
 
@@ -28,6 +27,7 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'photo',
@@ -36,9 +36,13 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
         'address',
         'job_title',
         'employment_status',
+        'national_id',
+        'current_employer',
+        'scfhs_number',
         'bio',
         'password',
         'membership_id',
+        'member_id',
         'membership_started_at',
         'membership_expires_at',
         'is_active',
@@ -63,6 +67,7 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
         'membership_status',
         'membership_name',
         'remaining_days',
+        'profile_link'
     ];
 
     /**
@@ -94,6 +99,12 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    // profile_link
+    public function getProfileLinkAttribute()
+    {
+        return route('members.show', $this->id);
     }
 
     /**

@@ -43,6 +43,9 @@ class AppServiceProvider extends ServiceProvider
             // Response Payment
             \App\Contract\User\Response\PaymentResponse::class => \App\Http\Responses\User\PaymentResponse::class,
 
+            // Event
+            \App\Contract\User\Response\EventResponse::class => \App\Http\Responses\User\EventResponse::class,
+
         ];
         $bindingRequests = [
             // user profile
@@ -57,6 +60,12 @@ class AppServiceProvider extends ServiceProvider
             // payment
             \App\Contract\User\Request\PaymentRequest::class => \App\Http\Requests\User\PaymentRequest::class,
             \App\Contract\User\Request\PaymentCallbackRequest::class => \App\Http\Requests\User\PaymentCallbackRequest::class,
+
+            // Membership Application
+            \App\Contract\User\Request\MembershipAppRequest::class => \App\Http\Requests\User\MembershipAppRequest::class,
+
+            // Event
+            \App\Contract\User\Request\EventRequest::class => \App\Http\Requests\User\EventRequest::class,
         ];
         $bindingResources = [
             // Membership
@@ -75,6 +84,12 @@ class AppServiceProvider extends ServiceProvider
             // payment
             \App\Contract\User\Resource\PaymentResource::class => \App\Http\Resources\Payment\PaymentResource::class,
             \App\Contract\User\Resource\PaymentCollection::class => \App\Http\Resources\Payment\PaymentCollection::class,
+
+            // Event
+            \App\Contract\User\Resource\EventResource::class => \App\Http\Resources\Event\EventResource::class,
+            \App\Contract\User\Resource\EventCollection::class => \App\Http\Resources\Event\EventCollection::class,
+            \App\Contract\User\Resource\EventRegistrationResource::class => \App\Http\Resources\EventRegistration\EventRegistrationResource::class,
+            \App\Contract\User\Resource\EventRegistrationCollection::class => \App\Http\Resources\EventRegistration\EventRegistrationCollection::class,
         ];
 
         $bindingActions = [
@@ -84,6 +99,9 @@ class AppServiceProvider extends ServiceProvider
 
             // filepond
             \App\Contract\Actions\FilePondAction::class => \App\Actions\User\FilePondAction::class,
+
+            // Membership Application
+            \App\Contract\Actions\MembershipRequestAction::class => \App\Actions\User\MembershipRequestAction::class,
         ];
 
         $bindings = array_merge($bindingResponses, $bindingRequests, $bindingResources, $bindingActions);

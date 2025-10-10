@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\FilePondController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function () {
     Route::group(['prefix' => '{locale?}', 'where' => ['locale' => 'en|ar'], "as" => "locale."], function () {
@@ -14,8 +16,12 @@ Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function (
     Route::post('/filepond/remove', [FilePondController::class, 'remove'])->name('filepond.remove');
 });
 
-
-Route::get('upload', fn() => "upload")->name('upload');
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     require __DIR__ . '/admin.php';
 });
+Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(function () {
+    Route::get('members/{user}', function($user){
+        return  redirect()->route('admin.members.show', ['user' => $user]);
+    })->name('members.show');
+});
+

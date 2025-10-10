@@ -27,6 +27,7 @@ export default function DialogComponenet({
                             <div className="grid grid-cols-1 gap-4 @sm:grid-cols-2">
                                 {Object.entries(selectedRow).map(([key, value]) => {
                                     const colConfig = columnLabels[key] || {};
+                                    if (colConfig.hidden) return null;
                                     return (
                                         <div key={key} className="flex flex-col">
                                             <span className="font-medium badget-foreground px-1 rounded-sm">

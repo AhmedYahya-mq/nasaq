@@ -44,6 +44,7 @@ export default function DetailsMember({ member }: { member: Members }) {
 }
 
 function Account({ member }: { member: Members }) {
+
     const renewMembershipA = async () => {
         const ok = await confirmAlertDialog({
             title: 'تأكيد تجديد العضوية',
@@ -154,11 +155,11 @@ function Account({ member }: { member: Members }) {
                     <div className="grid @md:grid-cols-2 gap-3">
                         <div className="grid gap-3">
                             <Label htmlFor="tabs-demo-name">رقم البطاقة الشخصية</Label>
-                            <Input readOnly id="tabs-demo-name" defaultValue={member.membership_Application?.national_id ?? 'لايوجد رقم هوية'} />
+                            <Input readOnly id="tabs-demo-name" defaultValue={member.national_id ?? 'لايوجد رقم هوية'} />
                         </div>
                         <div className="grid gap-3">
                             <Label htmlFor="tabs-demo-username">رقم هيئة التخصصات الصحية</Label>
-                            <Input id="tabs-demo-username" readOnly className="ltr text-end" defaultValue={member.membership_Application?.scfhs_number ?? 'لايوجد رقم هيئة'} />
+                            <Input id="tabs-demo-username" readOnly className="ltr text-end" defaultValue={member.scfhs_number ?? 'لايوجد رقم هيئة'} />
                         </div>
                     </div>
                     <div className="grid @md:grid-cols-2 @xl:grid-cols-3 gap-3">
@@ -172,7 +173,7 @@ function Account({ member }: { member: Members }) {
                         </div>
                         <div className="grid gap-3 @xl:col-span-1 @md:col-span-2">
                             <Label htmlFor="tabs-demo-username">جهة العمل الحالية</Label>
-                            <Input id="tabs-demo-username" readOnly className="ltr text-end" defaultValue={member.membership_Application?.current_employer ?? 'لا يوجد'} />
+                            <Input id="tabs-demo-username" readOnly className="ltr text-end" defaultValue={member.current_employer ?? 'لا يوجد'} />
                         </div>
                     </div>
                     <div className="grid gap-3">

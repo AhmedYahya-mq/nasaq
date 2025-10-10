@@ -8,18 +8,19 @@
                 </p>
             </div>
             <!-- جسم الفورم -->
-            <form action="" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
+            <form action="{{ route('client.membership.request', ['application' => $application]) }}" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
+                @csrf
                 <div class="space-y-10">
                     <!-- المجموعة الأولى: البيانات الشخصية -->
                     <fieldset class="space-y-6">
                         <legend class="text-lg font-semibold text-foreground pb-3 border-b-2 border-primary/20 w-full">
                             {{ __('memberships.personal_info.title') }}
                         </legend>
-                        <x-forms.input name="full_name" :value="$user->name" :label="__('memberships.personal_info.full_name')" required />
+                        <x-forms.input name="name" :value="$user->name" :label="__('memberships.personal_info.full_name')" required />
                         <x-forms.input name="email" type="email" :value="$user->email" :label="__('memberships.personal_info.email')" required />
                         <x-forms.tel-input name="phone" :value="$user->phone" :label="__('memberships.personal_info.phone')" placeholder="05xxxxxxxx"
                             required />
-                        <x-forms.input name="national_id" :value="old('national_id', $application->application)" :label="__('memberships.personal_info.id_number')" required />
+                        <x-forms.input name="national_id" :value="old('national_id')" :label="__('memberships.personal_info.id_number')" required />
                     </fieldset>
 
                     <!-- المجموعة الثانية: المعلومات المهنية -->
@@ -36,9 +37,9 @@
 
                     <!-- المجموعة الثالثة: إثبات التسجيل (التصميم النهائي) -->
                     <fieldset>
-                        <x-forms.file-upload name="payment_proof" :title="__('memberships.proof.title')" :subtitle="__('memberships.proof.upload_subtitle')"
-                            :server="route('upload')" maxFiles="5" multiple='true' required />
-                        @error('payment_proof')
+                        <x-forms.file-upload name="file" :title="__('memberships.proof.title')" :subtitle="__('memberships.proof.upload_subtitle')"
+                             maxFiles="5" multiple='true' required />
+                        @error('file')
                             <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
                         @enderror
                     </fieldset>

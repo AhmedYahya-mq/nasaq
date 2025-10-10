@@ -15,7 +15,9 @@
                         <x-tabs.tab-button id="personalInfo" label="المعلومات الشخصية" />
                         <x-tabs.tab-button id="library" label="مكتبتي" />
                         <x-tabs.tab-button id="events" label="الفعاليات" />
-                        <x-tabs.tab-button id="membership" label="عضويتي " />
+                        @if (auth()->user()->currentMemberships())
+                            <x-tabs.tab-button id="membership" label="عضويتي " />
+                        @endif
                         <x-tabs.tab-button id="requests" label="الطلبات" />
                         <x-tabs.tab-button id="changePassword" label="تغير كلمة المرور" />
                         <x-tabs.tab-button id="security" label="الأمان" />
@@ -29,9 +31,11 @@
                     <x-tabs.tab id="events">
                         <x-tab.tab-event />
                     </x-tabs.tab>
-                    <x-tabs.tab id="membership">
-                        <x-tab.tab-membership />
-                    </x-tabs.tab>
+                    @if (auth()->user()->currentMemberships())
+                        <x-tabs.tab id="membership">
+                            <x-tab.tab-membership />
+                        </x-tabs.tab>
+                    @endif
                     <x-tabs.tab id="requests">
                         <x-tab.tab-request />
                     </x-tabs.tab>

@@ -23,16 +23,20 @@ class CheckPaymentMiddleware
         if (!$user || $application->user_id !== $user->id) {
             return $this->deny('You do not have permission to access this membership application.', 403);
         }
-        // 3. تأكد من وجود الدفع
+        // 3. تحقق من الحالة يجب ان تكون draft
+        if (!$application->status->isDreft()) {
+            return $this->deny('This membership application cannot proceed to payment.', 403);
+        }
+        // 4. تأكد من وجود الدفع
         $payment = $application->payment;
         if (!$payment) {
             return $this->redirectToPayment($application, 'You need to complete the payment before proceeding.');
         }
-        // 4. تحقق أن الدفع تم فعلاً
+        // 5. تحقق أن الدفع تم فعلاً
         if (!$application->isPaymentDone()) {
             return $this->redirectToPayment($application, 'Payment is not completed yet.');
         }
-        // 5. تحقق أن الدفع يخص نفس العضوية
+        // 6. تحقق أن الدفع يخص نفس العضوية
         if (
             $payment->payable_type !== \App\Models\Membership::class ||
             $payment->payable_id !== $application->membership_id

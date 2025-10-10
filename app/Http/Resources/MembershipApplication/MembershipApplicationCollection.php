@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class MembershipApplicationCollection extends ResourceCollection
 {
-    public static $wrap = null;
+    public static $wrap = 'events';
     protected $minimal = false;
 
 

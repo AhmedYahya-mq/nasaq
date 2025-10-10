@@ -90,7 +90,6 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                     ref={formRef}
                     {...formProps}
                     disableWhileProcessing
-
                     headers={{
                         'X-Locale': isTranslate ? 'en' : 'ar',
                     }}
