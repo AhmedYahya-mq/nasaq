@@ -23,9 +23,6 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        if($this->minimal) {
-            
-        }
         return [
             'id' => $this->id,
             'ulid' => $this->ulid,

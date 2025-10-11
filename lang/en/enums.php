@@ -83,5 +83,32 @@ return [
         'microsoft_teams' => 'This event will be held via Microsoft Teams. Please ensure you have the Microsoft Teams application installed and a stable internet connection.',
         'other' => 'This event will be held using another platform. Please check the event details for more information.',
     ],
+
+    'library_type' => [
+        'E-books' => 'E-books',
+        'Research Papers' => 'Research Papers',
+        'Tutorials' => 'Tutorials',
+        'Case Studies' => 'Case Studies',
+        'White Papers' => 'White Papers',
+    ],
+    'library_type_message' => [
+        'E-books' => 'Explore our collection of e-books covering various topics and genres.',
+        'Research Papers' => 'Access a wide range of research papers from different fields and disciplines.',
+        'Tutorials' => 'Find step-by-step tutorials to help you learn new skills and techniques.',
+        'Case Studies' => 'Read detailed case studies that provide insights into real-world scenarios.',
+        'White Papers' => 'Discover in-depth white papers on industry trends and best practices.',
+    ],
+
+    'library_status' => [
+        'draft' => 'Draft',
+        'published' => 'Published',
+        'archived' => 'Archived',
+    ],
+
+    'library_status_message' => [
+        'draft' => 'This library item is currently in draft status and is not yet available to the public.',
+        'published' => 'This library item is published and available for access by users.',
+        'archived' => 'This library item has been archived and is no longer actively maintained or updated.',
+    ],
     
 ];

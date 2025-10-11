@@ -46,6 +46,9 @@ class AppServiceProvider extends ServiceProvider
             // Event
             \App\Contract\User\Response\EventResponse::class => \App\Http\Responses\User\EventResponse::class,
 
+            // Library
+            \App\Contract\User\Response\LibraryResponse::class => \App\Http\Responses\User\LibraryResponse::class,
+
         ];
         $bindingRequests = [
             // user profile

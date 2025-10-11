@@ -49,7 +49,7 @@ class EventResponse implements ResponeEventResponse
     public function toResponse($request)
     {
         // pagtinated
-        $events = Event::withTranslations()->orderBy('start_at', 'desc')->paginate($request->get('per_page', 1));
+        $events = Event::withTranslations()->orderBy('start_at', 'desc')->paginate($request->get('per_page', 10));
         $events = app(EventCollection::class, ['resource' => $events, 'minimal' => true]);
         return Inertia::render('user/events', [
             'events' => $events,

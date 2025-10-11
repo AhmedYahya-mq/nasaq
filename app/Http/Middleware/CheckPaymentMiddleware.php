@@ -32,6 +32,7 @@ class CheckPaymentMiddleware
         if (!$payment) {
             return $this->redirectToPayment($application, 'You need to complete the payment before proceeding.');
         }
+        
         // 5. تحقق أن الدفع تم فعلاً
         if (!$application->isPaymentDone()) {
             return $this->redirectToPayment($application, 'Payment is not completed yet.');

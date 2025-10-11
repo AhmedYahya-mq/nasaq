@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\EmploymentStatus;
 use App\Enums\MembershipStatus;
+use App\Enums\PaymentStatus;
 use App\Notifications\EmailVerificationNotification;
 use App\Notifications\ResetPasswordNotification;
 use App\Traits\ProfileQrCode;
@@ -113,12 +114,13 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
             ->withTimestamps();
     }
 
-
-    public function isPurchasedByUser($itemId): bool
+    // auth()->user()->isPurchasedByUser($itemId) 1 1
+    public function isPurchasedByUser($itemId, $type = Event::class): bool
     {
         return $this->payments()
+            ->where('payable_type', $type)
             ->where('payable_id', $itemId)
-            ->where('status', 'paid')
+            ->where('status', PaymentStatus::Paid)
             ->exists();
     }
 

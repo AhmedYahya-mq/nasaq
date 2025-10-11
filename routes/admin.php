@@ -3,6 +3,7 @@
 use App\Http\Controllers\User\EventController;
 use App\Http\Controllers\MembershipApplictionController;
 use App\Http\Controllers\User\BlogController;
+use App\Http\Controllers\User\LibraryController;
 use App\Http\Controllers\User\MembershipController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,9 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
     Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
     Route::put('events/{event}/toggle-featured', [EventController::class, 'toogleFutured'])->name('events.toggleFeatured');
+
+    // library Routes
+    Route::get('library', [LibraryController::class, 'index'])->name('library');
 });
 
 require __DIR__ . '/settings.php';
