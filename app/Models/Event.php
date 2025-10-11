@@ -244,6 +244,12 @@ class Event extends Model
         return $this->event_status->isUpcoming() && $this->start_at > $now && !$this->isFull();
     }
 
+    // تحقق من ان الحدث بدأ
+    public function hasStarted()
+    {
+        $now = Carbon::now();
+        return $this->start_at <= $now;
+    }
     // تحقق من ان المستخدم الذي برسل id مسجل في الحدث
     public function isUserRegistered($userId)
     {

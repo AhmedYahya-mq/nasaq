@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('published_at')->nullable();
             $table->year('publication_year')->nullable();
             $table->enum('status', LibraryStatus::getValues())->default(LibraryStatus::Draft);
-            $table->enum('type', LibraryType::getValues())->default(LibraryType::Draft);
+            $table->enum('type', LibraryType::getValues())->default(LibraryType::Ebook);
             $table->integer('price')->default(0);
             $table->decimal('discount')->default(0);
             $table->string('path');

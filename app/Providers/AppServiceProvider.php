@@ -93,8 +93,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Contract\User\Resource\EventCollection::class => \App\Http\Resources\Event\EventCollection::class,
             \App\Contract\User\Resource\EventRegistrationResource::class => \App\Http\Resources\EventRegistration\EventRegistrationResource::class,
             \App\Contract\User\Resource\EventRegistrationCollection::class => \App\Http\Resources\EventRegistration\EventRegistrationCollection::class,
-        ];
 
+            // Library
+            \App\Contract\User\Resource\LibraryResource::class => \App\Http\Resources\Library\LibraryResource::class,
+            \App\Contract\User\Resource\LibraryCollection::class => \App\Http\Resources\Library\LibraryCollection::class,
+        ];
         $bindingActions = [
             // payment
             \App\Contract\Actions\CreatePaymentIntent::class => \App\Actions\Payment\CreatePaymentIntent::class,
