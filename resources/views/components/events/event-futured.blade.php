@@ -1,5 +1,5 @@
 <div
-    class="relative overflow-hidden rounded-xl shadow-lg
+    class="relative rounded-xl shadow-lg
             bg-gradient-to-br from-primary/10 via-background to-accent/10
             px-4 py-8 sm:px-2 sm:py-4 lg:px-8 flex flex-col lg:grid lg:grid-cols-3 gap-8 sm:gap-4
             transition-all duration-500 hover:shadow-primary/40 group">
@@ -65,7 +65,7 @@
                 <x-events.countdown :date="$event->start_at" />
             </div>
         </div>
-        <a href="#"
+        <a href="{{ route('client.event.register', ['event' => $event]) }}"
             class="relative px-8 sm:px-4 py-3 sm:py-2 font-bold text-base md:text-base lg:text-xl rounded-xl shadow-lg overflow-hidden
                    badget
                    group-hover:shadow-primary/50 hover:shadow-sm transition-all duration-500
@@ -73,7 +73,30 @@
                    before:-translate-x-full group-hover:before:translate-x-full before:transition-transform before:duration-700
                    focus:outline-none focus:ring-2 focus:ring-primary
                    active:scale-95">
-            {{ __('events.highlighted_event.register_now_button') }}
+            <div class="flex gap-2 items-center justify-center">
+                <span>
+                    {{ __('events.buttons.now_registration') }}
+                </span>
+                @if (!$event->isFree())
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="text-center flex">
+                            <div class="text-[16px] font-bold leading-tight">{{ $event->final_price }}</div>
+                            <x-ui.icon name="riyal" class="inline h-4 w-4" />
+                        </div>
+                        @if ($event->isDiscounted())
+                            <div class="text-center flex text-muted-foreground line-through">
+                                <div class="text-xs font-bold leading-tight">{{ $event->price }}</div>
+                                <x-ui.icon name="riyal" class="inline h-4 w-4" />
+                            </div>
+                        @endif
+                    </div>
+                @endif
+            </div>
         </a>
     </div>
+    @if ($event->isDiscounted())
+        <div class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+            خصم
+        </div>
+    @endif
 </div>

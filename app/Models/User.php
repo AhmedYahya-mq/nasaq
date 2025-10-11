@@ -101,6 +101,27 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
         return $this->hasMany(Payment::class);
     }
 
+    public function eventRegistrations()
+    {
+        return $this->hasMany(EventRegistration::class);
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class, 'event_registrations')
+            ->withPivot(['is_attended', 'joined_at', 'join_ip', 'join_link'])
+            ->withTimestamps();
+    }
+
+
+    public function isPurchasedByUser($itemId): bool
+    {
+        return $this->payments()
+            ->where('payable_id', $itemId)
+            ->where('status', 'paid')
+            ->exists();
+    }
+
     // profile_link
     public function getProfileLinkAttribute()
     {

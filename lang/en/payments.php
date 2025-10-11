@@ -32,4 +32,8 @@ return [
     'Verify' => 'Verify',
     'Minute' => 'minute',
     'Guest' => 'Guest',
+    'Membership Discount' => 'Membership Discount',
+    'You_have_already_purchased_this_item' => 'You have already purchased this :item.',
+    'item' => 'item',
+    'event' => 'event',
 ];

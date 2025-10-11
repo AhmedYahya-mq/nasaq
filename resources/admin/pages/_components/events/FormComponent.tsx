@@ -9,7 +9,6 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import OpenFormContext from "@/context/OpenFormContext";
@@ -308,8 +307,10 @@ function FormComponent({ tableHook }: { tableHook: any }) {
 
     const resetAndClose = (page?: any) => {
         formRef.current?.reset();
-        if (page?.props?.event) {
-            const event = page.props.event;
+        if (page?.props?.event?.event) {
+            const event = page.props.event.event;
+            console.log(page?.props);
+
             item ? updateRow(event, isTranslate) : addRow(event);
         }
         setIsTranslate?.(false);

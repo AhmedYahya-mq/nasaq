@@ -6,6 +6,7 @@ use App\Contract\User\Request\EventRequest;
 use App\Contract\User\Response\EventResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\EventRegistration;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -74,8 +75,16 @@ class EventController extends Controller
 
     public function toogleFutured(Event $event)
     {
+        Event::where('is_featured', true)->update(['is_featured' => false]);
         $event->is_featured = !$event->is_featured;
         $event->save();
-        return app(EventResponse::class, ['event' => $event])->toResponseJson();
+
+        return app(EventResponse::class, ['event' => $event])->toResponseApi();
+    }
+
+    public function register(Event $event)
+    {
+        EventRegistration::registerUserToEvent($event->id, auth()->id());
+        return back()->with('success', __('events.messages.registration_successful'));
     }
 }

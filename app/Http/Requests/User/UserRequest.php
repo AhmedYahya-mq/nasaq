@@ -24,7 +24,7 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
 
     public function rules(): array
     {
-        $user = $this->route('user'); // المستخدم إذا كان التحديث، null إذا إضافة
+        $user = $this->route('user');
 
         return [
             'name' => ['required', 'string', 'max:255'],
@@ -34,7 +34,7 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($user->id),
+                Rule::unique('users', 'email')->ignore($user?->id),
             ],
             'phone' => ['required', 'phone:AUTO'],
             'birthday' => ['nullable', 'date'],

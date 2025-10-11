@@ -23,7 +23,6 @@ export function useTableMembers({ members }: { members: Members[] }) {
     const [columns, setColumns] = useState<any[]>([]);
 
     useEffect(() => {
-
         setIsClient(true);
         setColumns(getColumns({ onEdit: editRow, onDelete: deleteRow, onView: viewMember, onChange: toggleBlockMember }));
     }, []);

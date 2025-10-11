@@ -3,7 +3,7 @@ import OpenFormContext from "@/context/OpenFormContext";
 import axios from "axios";
 import { toast } from "sonner";
 import { getErrorMessage } from "@/lib/utils";
-import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { EventModel } from "@/types/model/events";
 import { ExtendedColumnDef, ButtonsActions } from "@/types";
 import { confirmAlertDialog } from "@/components/custom/ConfirmDialog";
@@ -14,8 +14,9 @@ import { router } from "@inertiajs/react";
 export function useTableEvent({ events }: { events: Pagination<EventModel> }) {
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
-    const [tableData, setTableData] = useState<EventModel[]>(events.data);
-
+    const [tableData, setTableData] = useState<EventModel[]>(events?.data);
+    const [meta, setMeta] = useState(events?.meta);
+    const [links, setLinks] = useState(events?.links); 
     const [selectedRow, setSelectedRow] = useState<EventModel | null>(null);
     const { openEdit, openTranslate } = useContext(OpenFormContext);
     const [columns, setColumns] = useState<any[]>([]);
@@ -40,6 +41,8 @@ export function useTableEvent({ events }: { events: Pagination<EventModel> }) {
 
     // تحديث بيانات صف موجود في الجدول
     const updateRow = (event: EventModel) => {
+        console.log(event);
+
         setTableData(prev =>
             prev.map(row => (row.id === event.id ? event : row))
         );
@@ -114,6 +117,8 @@ export function useTableEvent({ events }: { events: Pagination<EventModel> }) {
                     preserveState: true, preserveScroll: true,
                     onSuccess: (page) => {
                         setTableData((page.props.events as Pagination<EventModel>).data);
+                        setMeta((page.props.events as Pagination<EventModel>).meta);
+                        setLinks((page.props.events as Pagination<EventModel>).links);
                     }
                 }
             );
@@ -128,6 +133,8 @@ export function useTableEvent({ events }: { events: Pagination<EventModel> }) {
                 preserveState: true, preserveScroll: true,
                 onSuccess: (page) => {
                     setTableData((page.props.events as Pagination<EventModel>).data);
+                    setMeta((page.props.events as Pagination<EventModel>).meta);
+                    setLinks((page.props.events as Pagination<EventModel>).links);
                 }
 
             }
@@ -137,12 +144,12 @@ export function useTableEvent({ events }: { events: Pagination<EventModel> }) {
     const table = useReactTable({
         data: tableData,
         columns,
-        pageCount: events.meta.last_page,
+        pageCount: meta?.last_page,
         manualPagination: true,
         meta: {
             pagination: {
-                links: events.links,
-                meta: events.meta,
+                links: links,
+                meta: meta,
             },
             onChangePage: changePage,
             onChangePageSize: changePageSize,

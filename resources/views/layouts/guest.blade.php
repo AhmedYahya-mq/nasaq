@@ -19,6 +19,9 @@
         </main>
 
         <x-footer />
+        <div class="fixed top-4 left-1/2 -translate-x-1/2 z-50">
+            <x-toast />
+        </div>
     </div>
     <x-loading />
     @stack('models')

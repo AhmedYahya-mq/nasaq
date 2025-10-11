@@ -1,10 +1,12 @@
 
+import { register } from "@client/routes/client/event";
 import { calender } from "@client/routes/client/events";
 import axios from "axios";
 
+
 export default function eventsCalendar(serverData, trans, startDate, endDate) {
     console.log(trans);
-    
+
     return {
         startDate: new Date(startDate),
         endDate: new Date(endDate),
@@ -93,7 +95,7 @@ export default function eventsCalendar(serverData, trans, startDate, endDate) {
                 this.isLoading = true;
                 const response=await axios.get(calender().url, { params: { date: day.iso } });
                 console.log(response.data);
-                
+
                 if (response.status === 200 && Array.isArray(response.data.event)) {
                     this.selectedEvents = response.data.event;
                     this.showModal = true;
@@ -107,6 +109,12 @@ export default function eventsCalendar(serverData, trans, startDate, endDate) {
                 this.isLoading = false;
             }
 
+        },
+
+        register(event) {
+            if (event && event.ulid) {
+                window.location.href = register(event.ulid).url;
+            }
         },
 
         isSelected(day) {

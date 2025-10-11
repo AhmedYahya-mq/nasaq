@@ -2,7 +2,6 @@
 
     <div class="flex flex-col items-center justify-center min-h-[100dvh] bg-gray-100 dark:bg-gray-950 p-4 sm:p-6 md:p-8">
         <div class="max-w-md w-full bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden">
-
             <!-- أيقونة نجاح -->
             <div class="px-6 py-12 flex flex-col items-center justify-center space-y-4">
                 <div class="bg-green-500 dark:bg-green-600 p-4 rounded-full">
@@ -36,7 +35,7 @@
                     <div>
                         <p class="text-gray-500 dark:text-gray-400 text-sm">{{ __('payments.Transaction ID') }}</p>
                         <p class="text-gray-900 dark:text-gray-50 font-medium">
-                            #{{ $payment->moyasar_id }}
+                            #{{ $payment->invoice_id }}
                         </p>
                     </div>
                 </div>

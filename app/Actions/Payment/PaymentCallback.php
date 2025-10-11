@@ -6,6 +6,7 @@ use App\Contract\User\Request\PaymentCallbackRequest;
 use App\Models\Payment;
 use App\Enums\PaymentStatus;
 use App\Exceptions\Payment\PaymentCallbackException;
+use App\Models\EventRegistration;
 
 class PaymentCallback implements \App\Contract\Actions\PaymentCallback
 {
@@ -29,8 +30,21 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
         if ($this->payment->payable instanceof \App\Models\Membership) {
             $this->isSubscription = true;
         }
+        if ($this->payment->payable instanceof \App\Models\Event) {
+            // create event registration
+            $this->registerUserToEvent();
+        }
     }
 
+    protected function registerUserToEvent(): void
+    {
+        $event = $this->payment->payable;
+        $user = $this->payment->user;
+        if (!$event || !$user) {
+            throw new PaymentCallbackException('Event or User not found for registration', 404);
+        }
+        EventRegistration::registerUserToEvent($event->id, $user->id);
+    }
     protected function resolvePayment(?string $moyasarId): void
     {
         $this->payment = Payment::where('moyasar_id', $moyasarId)->first();

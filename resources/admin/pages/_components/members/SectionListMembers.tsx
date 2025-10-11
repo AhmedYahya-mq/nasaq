@@ -9,6 +9,8 @@ import { membersColumnLabels } from "@/tables/labels";
 
 export default function SectionListMembers(): JSX.Element {
     const { members } = usePage<{ members: Members[] }>().props;
+    console.log(usePage().props);
+
     const {
         tableData,
         addRow,

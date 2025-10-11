@@ -11,7 +11,7 @@
         </div>
 
         <div
-            class="mb-16 relative bg-gradient-to-r from-primary/20 via-background to-background rounded-xl shadow-2xl overflow-hidden border border-primary/30">
+            class="mb-16 relative bg-gradient-to-r from-primary/20 via-background to-background rounded-xl shadow-2xl  border border-primary/30">
             <x-events.event-futured class="rounded-xl" />
         </div>
 

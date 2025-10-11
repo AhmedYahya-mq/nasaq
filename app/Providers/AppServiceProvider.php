@@ -126,11 +126,12 @@ class AppServiceProvider extends ServiceProvider
             if (array_search('auth:admin', $guards) !== false) {
                 return route('admin.login');
             }
-            return route(config('fortify.home'));
+            return route('login');
         });
 
         RedirectIfAuthenticated::redirectUsing(function ($request) {
-            if (Auth::guard('admin')->check()) {
+            $guards = $request->route()->middleware() ?? [];
+            if (array_search('auth:admin', $guards) !== false && Auth::guard('admin')->check()) {
                 return route('admin.dashboard');
             }
             return route(config('fortify.home'));

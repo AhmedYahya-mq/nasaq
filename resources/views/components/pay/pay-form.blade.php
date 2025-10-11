@@ -11,7 +11,7 @@ init()" x-cloak>
                 <img class="w-full" src="{{ asset('favicon.ico') }}" alt="{{ __('payments.Payment Image') }}">
             </div>
             <h2>
-                {{ $item->name ?? __('payments.Pay') }}
+                {{ $item->name ?? ($item->title ?? __('payments.Pay')) }}
             </h2>
         </div>
         <div class="w-full flex flex-col gap-6 not-md:order-2">
@@ -21,25 +21,38 @@ init()" x-cloak>
                     <img class="w-full" src="{{ asset('favicon.ico') }}" alt="{{ __('payments.Payment Image') }}">
                 </div>
                 <h2>
-                    {{ $item->name ?? __('payments.Pay') }}
+                    {{ $item->name ?? ($item->title ?? __('payments.Pay')) }}
                 </h2>
             </div>
             <div class="w-full border bg-card/50 p-6 rounded-lg shadow-lg">
-                <h2>
-                    {{ $item->name }} - {{ __('payments.Annual') }}
-                </h2>
-                <strong class="text-lg block mb-4 ">
-                    {{ __('payments.Price') }}:
-                    {{ $item->regular_price }} <x-ui.icon name="riyal" class="inline size-5" />
-                </strong>
-                <div class="flex flex-col ">
-                    <span>
-                        {{ __('payments.Starts At') }}: {{ now()->format('Y-m-d h:i A') }}
-                    </span>
-                    <span class="text-destructive">
-                        {{ __('payments.Ends At') }}: {{ now()->addYear()->format('Y-m-d h:i A') }}
-                    </span>
-                </div>
+                @if ($isMembership)
+                    <h2>
+                        {{ $item->name }} - {{ __('payments.Annual') }}
+                    </h2>
+                    <strong class="text-lg block mb-4 ">
+                        {{ __('payments.Price') }}:
+                        {{ $item->regular_price }} <x-ui.icon name="riyal" class="inline size-5" />
+                    </strong>
+                    <div class="flex flex-col ">
+                        <span>
+                            {{ __('payments.Starts At') }}: {{ now()->format('Y-m-d h:i A') }}
+                        </span>
+                        <span class="text-destructive">
+                            {{ __('payments.Ends At') }}: {{ now()->addYear()->format('Y-m-d h:i A') }}
+                        </span>
+                    </div>
+                @else
+                    <h2>
+                        {{ $item->title }}
+                    </h2>
+                    <p>
+                        {{ $item->description }}
+                    </p>
+                    <strong class="text-lg block">
+                        {{ __('payments.Price') }}:
+                        {{ $item->final_price }} <x-ui.icon name="riyal" class="inline size-5" />
+                    </strong>
+                @endif
             </div>
             <div class="w-full flex flex-col border bg-card/50 p-6 rounded-lg shadow-lg">
                 <div class="flex justify-between items-center">
@@ -55,8 +68,17 @@ init()" x-cloak>
                         {{ __('payments.Discount') }}:
                     </span>
                     <span class="font-semibold text-muted-foreground text-lg">
-                        {{ $item->discounted_price ? $item->price - $item->discounted_price : 0 }} <x-ui.icon
-                            name="riyal" class="inline size-5" />
+                        {{ $item->discounted_price ? $item->price - $item->discounted_price : 0 }}
+                        <x-ui.icon name="riyal" class="inline size-5" />
+                    </span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-semibold text-muted-foreground">
+                        {{ __('payments.Membership Discount') }}:
+                    </span>
+                    <span class="font-semibold text-muted-foreground text-lg">
+                        {{ $item->membership_discount }}
+                        <x-ui.icon name="riyal" class="inline size-5" />
                     </span>
                 </div>
             </div>
@@ -66,7 +88,7 @@ init()" x-cloak>
                         {{ __('payments.Total Amount') }}:
                     </span>
                     <span class="font-semibold text-muted-foreground text-lg">
-                        {{ $item->regular_price }} <x-ui.icon name="riyal" class="inline size-5" />
+                        {{ $item->regular_price ?? $item->final_price }} <x-ui.icon name="riyal" class="inline size-5" />
                     </span>
                 </div>
             </div>

@@ -18,6 +18,10 @@ class CheckEventRegister
         $event = $request->route('event'); // Route Model Binding
         $user = $request->user();
 
+        if(!$event->canUserRegister($user)) {
+            return redirect()->route('client.profile', ['tab'=>'events'])->with('error', __('events.messages.membership_required'));
+        }
+
         // 1️⃣ تحقق من وجود الحدث
         throw_if(!$event, NotFoundHttpException::class, __('events.messages.not_found'));
 
@@ -31,12 +35,14 @@ class CheckEventRegister
 
         // 4️⃣ تحقق أن المستخدم لم يسجل مسبقًا
         if ($event->isUserRegistered($user->id)) {
-            return redirect()->route('client.profile')->with('info', __('events.messages.already_registered'));
+            return redirect()->route('client.profile', ['tab'=>'events'])->with('info', __('events.messages.already_registered'));
         }
         // 5️⃣ تحقق من الدفع إذا لم يكن الحدث مجاني
         if (!$event->isFree()) {
             return $this->redirectToPayment($event);
         }
+
+
 
         return $next($request);
     }
@@ -52,7 +58,7 @@ class CheckEventRegister
     protected function redirectToPayment($event,  $message = null): Response
     {
         return redirect()
-            ->route('pay.index', [
+            ->route('client.pay.index', [
                 'type' => 'event',
                 'id' => $event->id,
             ])

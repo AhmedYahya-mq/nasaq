@@ -11,5 +11,7 @@ return [
     'light'  => 'نهاري',
     'system' => 'النظام',
     'Payment successful, please complete your membership application.' => 'تم الدفع بنجاح، يرجى إكمال طلب العضوية الخاص بك.',
+    'item' => 'العنصر',
+    'event' => 'الحدث',
 
 ];

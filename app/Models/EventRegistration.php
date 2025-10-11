@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +29,7 @@ class EventRegistration extends Model
         'joined_at',
     ];
 
-    
+
 
     public function scopeAttended($query)
     {
@@ -57,5 +57,18 @@ class EventRegistration extends Model
             return 0;
         }
         return round(($this->attended_count / $total) * 100, 2);
+    }
+
+    // داله تقوم بنشاء تسجيل جديد للمستخدم في الحدث
+    public static function registerUserToEvent($eventId, $userId, $joinIp = null, $joinLink = null)
+    {
+        return self::create([
+            'event_id' => $eventId,
+            'user_id' => $userId,
+            'join_ip' => $joinIp,
+            'join_link' => $joinLink,
+            'joined_at' => now(),
+            'is_attended' => true,
+        ]);
     }
 }

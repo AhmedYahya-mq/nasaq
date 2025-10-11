@@ -128,49 +128,159 @@
                 <template x-if="selectedEvents.length > 0">
                     <ul class="space-y-2">
                         <template x-for="event in selectedEvents" :key="event.ulid">
-                            <li class="flex items-center justify-between gap-3 card !bg-primary/15">
-                                <div class="flex-1">
-                                    <h4 class="font-semibold" x-text="event.name"></h4>
-                                    <p class="text-sm text-muted-foreground" x-text="event.time"></p>
+                            <li
+                                class="group relative bg-card rounded-xl border border-border p-4 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 shadow-sm">
+                                <!-- المحتوى الرئيسي -->
+                                <div class="flex items-start justify-between gap-3 mb-3">
+                                    <!-- معلومات الحدث -->
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="font-bold text-card-foreground text-sm leading-tight mb-1 line-clamp-2"
+                                            x-text="event.name"></h4>
+                                        <div class="flex items-center gap-2 text-xs text-muted-foreground">
+                                            <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span x-text="event.start_date"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- شارة نوع الحدث - الحل الآمن -->
+                                    <div class="flex-shrink-0">
+                                        <template
+                                            x-if="event.event_type.value === '{{ App\Enums\EventType::Virtual()->value }}'">
+                                            <div x-bind:style="`background-color: ${event.event_method.color}20; border-color: ${event.event_method.color}40`"
+                                                class="flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-lg border">
+                                                <!-- أيقونة المنصة -->
+                                                <template
+                                                    x-if="event.event_method.value === '{{ App\Enums\EventMethod::Zoom }}'">
+                                                    <x-ui.icon name="{{ App\Enums\EventMethod::Zoom()->icon() }}"
+                                                        class="size-3"
+                                                        x-bind:style="`color: ${event.event_method.color}`" />
+                                                </template>
+                                                <template
+                                                    x-if="event.event_method.value === '{{ App\Enums\EventMethod::GoogleMeet }}'">
+                                                    <x-ui.icon name="{{ App\Enums\EventMethod::GoogleMeet()->icon() }}"
+                                                        class="size-3"
+                                                        x-bind:style="`color: ${event.event_method.color}`" />
+                                                </template>
+                                                <template
+                                                    x-if="event.event_method.value === '{{ App\Enums\EventMethod::MicrosoftTeams }}'">
+                                                    <x-ui.icon
+                                                        name="{{ App\Enums\EventMethod::MicrosoftTeams()->icon() }}"
+                                                        class="size-3"
+                                                        x-bind:style="`color: ${event.event_method.color}`" />
+                                                </template>
+                                                <template
+                                                    x-if="event.event_method.value === '{{ App\Enums\EventMethod::Other }}'">
+                                                    <x-ui.icon name="{{ App\Enums\EventMethod::Other()->icon() }}"
+                                                        class="size-3"
+                                                        x-bind:style="`color: ${event.event_method.color}`" />
+                                                </template>
+                                                <span class="text-xs"
+                                                    x-bind:style="`color: ${event.event_method.color}`"
+                                                    x-text="event.event_method.name"></span>
+                                            </div>
+                                        </template>
+
+                                        <template
+                                            x-if="event.event_type.value === '{{ App\Enums\EventType::Physical()->value }}'">
+                                            <div
+                                                class="flex items-center gap-1 bg-primary/20 text-primary text-xs font-semibold px-2 py-1 rounded-lg border border-primary/30">
+                                                <x-ui.icon name="{{ App\Enums\EventType::Physical()->icon() }}"
+                                                    class="size-3" />
+                                                <span class="text-xs">حضور</span>
+                                            </div>
+                                        </template>
+                                    </div>
                                 </div>
-                                <template
-                                    x-if="event.event_type.value === '{{ App\Enums\EventType::Virtual()->value }}'">
-                                    <div :style="{ '--badget-color': event.event_method.color }"
-                                        class="flex-shrink-0 flex items-center gap-1 badget text-xs font-semibold px-2 py-1 rounded-md border">
-                                        <template
-                                            x-if="event.event_method.value === '{{ App\Enums\EventMethod::Zoom }}'">
-                                            <x-ui.icon name="{{ App\Enums\EventMethod::Zoom()->icon() }}"
-                                                class="size-4 text-primary" />
-                                        </template>
-                                        <template
-                                            x-if="event.event_method.value === '{{ App\Enums\EventMethod::GoogleMeet }}'">
-                                            <x-ui.icon name="{{ App\Enums\EventMethod::GoogleMeet()->icon() }}"
-                                                class="size-4 text-primary" />
-                                        </template>
-                                        <template
-                                            x-if="event.event_method.vlaue === '{{ App\Enums\EventMethod::MicrosoftTeams }}'">
-                                            <x-ui.icon name="{{ App\Enums\EventMethod::MicrosoftTeams()->icon() }}"
-                                                class="size-4 text-primary" />
-                                        </template>
-                                        <template
-                                            x-if="event.event_method.vlaue === '{{ App\Enums\EventMethod::Other }}'">
-                                            <x-ui.icon name="{{ App\Enums\EventMethod::Other()->icon() }}"
-                                                class="size-4 text-primary" />
-                                        </template>
-                                        <span x-text="event.event_method.name"></span>
+
+                                <!-- معلومات إضافية -->
+                                <div class="flex items-center justify-between text-xs text-muted-foreground mb-3">
+                                    <div class="flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                        <span x-text="`${event.registrations_count || 0}/${event.capacity || '∞'}`"></span>
                                     </div>
-                                </template>
-                                <template
-                                    x-if="event.event_type.value === '{{ App\Enums\EventType::Physical()->value }}'">
-                                    <div
-                                        class="flex-shrink-0 flex items-center gap-1 badget-70 text-xs font-semibold px-2 py-1 rounded-md border">
-                                        <x-ui.icon name="{{ App\Enums\EventType::Physical()->icon() }}"
-                                            class="size-4 text-primary" />
-                                        <span>
-                                            حضور
+
+                                    <!-- السعر -->
+                                    <div class="flex items-center gap-1" x-show="event.price > 0">
+                                        <span x-text="event.final_price"
+                                            class="font-semibold text-card-foreground"></span>
+                                        <span class="text-xs">
+                                            <x-ui.icon name="riyal" class="w-3 h-3 inline-block" />
                                         </span>
+                                        <span x-show="event.is_discounted"
+                                            class="text-muted-foreground line-through text-xs"
+                                            x-text="event.price"></span>
                                     </div>
-                                </template>
+                                    <div x-show="event.price == 0" class="text-green-600 font-semibold text-xs">
+                                        مجاني
+                                    </div>
+                                </div>
+
+                                <!-- شريط التقدم -->
+                                <div x-show="event.capacity > 0" class="mb-3">
+                                    <div class="w-full bg-muted rounded-full h-1.5 overflow-hidden">
+                                        <div class="h-1.5 rounded-full bg-gradient-to-r from-green-400 to-primary transition-all duration-1000"
+                                            x-bind:style="`width: ${Math.min(100, ((event.registrations_count || 0) / event.capacity) * 100)}%`">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- أزرار التسجيل -->
+                                <div class="flex items-center gap-2">
+                                    <!-- زر التسجيل المجاني -->
+                                    <template x-if="event.price == 0 && event.can_register && !event.is_registered">
+                                        <button @click="register(event)"
+                                            class="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-2 px-3 rounded-lg text-xs font-semibold transition-all duration-200 hover:shadow-md text-center flex items-center justify-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                            </svg>
+                                            تسجيل مجاني
+                                        </button>
+                                    </template>
+
+                                    <!-- زر الدفع -->
+                                    <template x-if="event.price > 0 && event.can_register && !event.is_registered">
+                                        <button @click="register(event)"
+                                            class="flex-1 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground py-2 px-3 rounded-lg text-xs font-semibold transition-all duration-200 hover:shadow-md text-center flex items-center justify-center gap-1">
+                                            <span x-text="event.final_price"></span>
+                                            <x-ui.icon name="riyal" class="w-3 h-3" />
+                                        </button>
+                                    </template>
+
+                                    <!-- مسجل مسبقاً -->
+                                    <template x-if="event.is_registered">
+                                        <div
+                                            class="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg text-xs font-semibold text-center flex items-center justify-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5 13l4 4L19 7" />
+                                            </svg>
+                                            مسجل
+                                        </div>
+                                    </template>
+
+                                    <!-- غير مسموح بالتسجيل -->
+                                    <template x-if="!event.can_register">
+                                        <div
+                                            class="flex-1 bg-muted text-muted-foreground py-2 px-3 rounded-lg text-xs font-semibold text-center flex items-center justify-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                            </svg>
+                                            عضوية مطلوبة
+                                        </div>
+                                    </template>
+                                </div>
                             </li>
                         </template>
                     </ul>
@@ -187,7 +297,8 @@
     </div>
 
     {{-- loading --}}
-    <div x-show="isLoading" x-clock class="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-3">
+    <div x-show="isLoading" x-clock
+        class="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-3">
         <div class="bg-transparent rounded-2xl flex-col shadow-lg w-24 h-24 flex items-center justify-center">
             <div class="animate-spin rounded-full h-12 w-12 border-b-transparent border-4 border-primary mb-2">
 

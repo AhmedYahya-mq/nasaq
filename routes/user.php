@@ -59,10 +59,11 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::post('refund', [\App\Http\Controllers\PayController::class, 'refund'])->name('refund');
         Route::get('status/{paymentId}', [\App\Http\Controllers\PayController::class, 'paymentStatus'])->name('status');
     });
+    
     Route::get('membership/{application}/request',[MembershipApplictionController::class, 'create'])->name('membership.request')->middleware('payment.check');
     Route::post('membership/{application}/request',[MembershipApplictionController::class, 'store'])->name('membership.request')->middleware('payment.check');
     Route::get('membership/{application}/resubmit',[MembershipApplictionController::class, 'resubmit'])->name('membership.resubmit');
-    Route::get('registration/{event}/request',[EventController::class, 'register'])->name('event.register')->middleware('payment.check');
+    Route::get('registration/{event}/request',[EventController::class, 'register'])->name('event.register')->middleware('event.register');
 });
 
 Route::get('/', HomeController::class)->name('home');

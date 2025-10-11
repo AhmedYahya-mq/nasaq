@@ -39,6 +39,13 @@ class EventResponse implements ResponeEventResponse
         ]);
     }
 
+    public function toResponseApi()
+    {
+        return response()->json([
+            'event' => $this->event ? app(EventResource::class, ['resource' => $this->event]) : null,
+        ]);
+    }
+
     public function toResponse($request)
     {
         // pagtinated
@@ -52,7 +59,7 @@ class EventResponse implements ResponeEventResponse
     public function toStoreResponse()
     {
         return Inertia::render('user/events', [
-            'event' => app(EventResource::class, ['resource' => $this->event]),
+            'event' => app(EventResource::class, ['resource' => $this->event, 'minimal' => true]),
         ])->with('success', __('Event created successfully'));;
     }
 }

@@ -23,6 +23,9 @@ class EventResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if($this->minimal) {
+            
+        }
         return [
             'id' => $this->id,
             'ulid' => $this->ulid,
@@ -67,6 +70,9 @@ class EventResource extends JsonResource
             'address' => $this->address_ar,
             'address_en' => $this->address_en,
             'start_at' => $this->start_at,
+            'start_date' => $this->start_at->locale(app()->getLocale())->translatedFormat('d F Y h:i A'),
+            'can_register' => $this->canUserRegister(),
+            'is_registered' => $this->isUserRegistered($request->user()->id ?? 0),
             'end_at' => $this->end_at,
             'capacity' => $this->capacity ?? 0,
             'price' => $this->price,

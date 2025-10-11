@@ -1,7 +1,7 @@
 <x-ui.dropdown-menu>
     <x-slot name="trigger">
         <button aria-label="Profile Options"
-            class="relative shadow-lg rounded-full active:scale-95 transition-transform duration-150 cursor-pointer">
+            class="relative point shadow-lg rounded-full active:scale-95 transition-transform duration-150 cursor-pointer">
             <img data-photo-profile src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" width="32" height="32"
                 class="size-8 rounded-full drop-shadow-2xl drop-shadow-card">
         </button>

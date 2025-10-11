@@ -9,12 +9,19 @@ use Illuminate\View\Component;
 class PayForm extends Component
 {
     public $item;
+    public $isMembership = false;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
+
+        if (session('payable_type') !== 'App\Models\Membership') {
+            $this->item = session('payable_type')::withTranslations()->find(session('payable_id'));
+            return;
+        }
         $this->item = session('payable_type')::find(session('payable_id'));
+        $this->isMembership = true;
     }
 
     /**

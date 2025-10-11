@@ -8,6 +8,8 @@ import { EventColumnLabels } from "@/tables/labels/EventColumnLabels";
 
 export default function SectionListEvents() {
     const events = (usePage().props.events as Pagination<EventModel>);
+    console.log(usePage().props);
+
     const {
         tableData,
         addRow,

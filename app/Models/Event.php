@@ -55,6 +55,7 @@ class Event extends Model
         'attended_count',
         'not_attended_count',
         'presentage_attended',
+        'discounted_price',
     ];
 
     public function memberships()
@@ -62,6 +63,31 @@ class Event extends Model
         return $this->belongsToMany(Membership::class, 'event_membership');
     }
 
+    public static function isPurchasable($id)
+    {
+        $event = self::find($id);
+        return $event && !$event->isFree();
+    }
+    public static function redirectRoute($id)
+    {
+        $event = self::find($id);
+        return route('client.event.register', ['event' => $event]);
+    }
+
+    // داله تتحقق اذا المستخدم المسجل اذا يمكنه تسجيل اذا في الحدث طبعا اذا الحدث لا يوجد اي عضوية مرتبطة يعني الكل يقدر يسجل مع عضوي او لا
+    public function canUserRegister()
+    {
+        $user = auth()->user();
+        if ($this->memberships()->count() === 0) {
+            return true; // الحدث مفتوح للجميع
+        }
+
+        if ($user && $user->membership) {
+            return $this->memberships()->where('membership_id', $user->membership->id)->exists();
+        }
+
+        return false;
+    }
     public function registrations()
     {
         return $this->hasMany(EventRegistration::class);
@@ -105,6 +131,27 @@ class Event extends Model
             : $this->price;
     }
 
+    // مبلغ الخصم
+    public function getDiscountedPriceAttribute(): int
+    {
+        return $this->event_discounted_price;
+    }
+
+    public function getRegularPriceInHalalasAttribute(): int
+    {
+        return (int)($this->final_price * 100);
+    }
+
+    // مبلغ الخصم حق العضوية
+    public function getMembershipDiscountAttribute(): int
+    {
+        $user = auth()->user();
+        if ($user && $user->membership && $user->membership->percent_discount > 0) {
+            return round($this->event_discounted_price * $user->membership->percent_discount);
+        }
+        return 0;
+    }
+
     // 2️⃣ السعر بعد خصم العضوية (إذا المستخدم مسجل ولديه عضوية)
     public function getMembershipDiscountedPriceAttribute(): float
     {
@@ -112,8 +159,8 @@ class Event extends Model
 
         $price = $this->event_discounted_price; // السعر بعد خصم الحدث
 
-        if ($user && $user->membership && $user->membership->discount > 0) {
-            return round($price * (1 - $user->membership->discount / 100), 2);
+        if ($user && $user->membership && $user->membership->percent_discount > 0) {
+            return $price -  round($price * $user->membership->percent_discount);
         }
 
         return $price;
@@ -190,10 +237,8 @@ class Event extends Model
         ];
     }
 
-
-
     // تحقق من ان الحدث مفتوح لتسجيل
-    public function isOpenForRegistration()
+    public function isRegistrationOpen()
     {
         $now = Carbon::now();
         return $this->event_status->isUpcoming() && $this->start_at > $now && !$this->isFull();
@@ -204,5 +249,4 @@ class Event extends Model
     {
         return $this->registrations()->where('user_id', $userId)->exists();
     }
-
 }

@@ -153,14 +153,14 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
         return PaymentPayloadDTO::fromBase(
             amount: (int) ($payable->regular_price_in_halalas ?? 0),
             currency: 'SAR',
-            description: 'Payment for ' . ($payable->name ?? 'item'),
+            description: 'Payment for ' . ($payable->name ?? $payable->title ?? 'Item'),
             callbackUrl: route('client.pay.callback'),
             metadata: [
                 'user_name' => $userName,
                 'user_email' => $userEmail,
                 'phone' => $userPhone ?? ($data['phone'] ?? null),
-                'item' => $payable->name ?? null,
-                'item_id' => $payable->id ?? null,
+                'item' => $payable->name ?? $payable->title ?? null,
+                'item_id' => $payable->id ?? $payable->uuid ?? null,
             ],
         );
     }
@@ -233,7 +233,7 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
                 'moyasar_id' => $responseDTO->id,
                 'payable_id' => $payable->id,
                 'payable_type' => get_class($payable),
-                'amount' => $payable->regular_price, // keep in SAR if your column expects SAR
+                'amount' => $payable->regular_price ?? $payable->final_price, // keep in SAR if your column expects SAR
                 'currency' => 'SAR',
                 'status' => $responseDTO->status ?: 'initiated',
                 'source_type' => $responseDTO->sourceType,
