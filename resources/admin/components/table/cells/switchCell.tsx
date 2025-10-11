@@ -6,7 +6,7 @@ export const SwitchCell =
   (onChange: (item: any) => Promise<boolean>) =>
   ({ row, getValue }: any) => {
     const item = row.original;
-    const value = Boolean(getValue()); // القيمة الحالية
+    const value = Boolean(getValue());
     const [checked, setChecked] = useState<boolean>(value);
 
     return (

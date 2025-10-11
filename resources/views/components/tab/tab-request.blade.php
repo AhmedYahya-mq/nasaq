@@ -47,9 +47,9 @@
                                     <span class="font-semibold text-orange-500">📌 ملاحظة:</span>
                                     <p class="mt-1">{{ $membershipApplication->admin_notes ?? 'لا توجد ملاحظات' }}</p>
                                 </div>
-                                @if ($membershipApplication->status->isRejected())
+                                @if ($membershipApplication->status->isRejected() && !$membershipApplication->is_resubmit)
                                     <div class="mt-2 flex justify-end">
-                                        <a href="#"
+                                        <a href="{{ route('client.membership.resubmit', ['application' => $membershipApplication]) }}"
                                             class="inline-block px-4 py-2 text-sm font-medium badget-50 badget-orange-400 light:badget-text-orange-500 border rounded-md shadow-sm hover:badget-40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                                             أعد التقديم
                                         </a>

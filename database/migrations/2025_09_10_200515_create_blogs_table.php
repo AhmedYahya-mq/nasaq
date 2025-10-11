@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->longText('content')->nullable()->after('slug');
+            $table->longText('content')->nullable();
             $table->unsignedBigInteger('admin_id');
             $table->integer('views')->default(0);
             $table->timestamps();

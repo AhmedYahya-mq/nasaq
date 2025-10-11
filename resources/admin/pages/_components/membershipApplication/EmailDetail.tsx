@@ -1,4 +1,4 @@
-import { Download, ArrowLeft } from "lucide-react";
+import { Download, ArrowLeft, ArrowUpLeftFromSquareIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,7 @@ import RejectForm from "./RejectForm";
 import { useState } from "react";
 import { toast } from "sonner";
 import { formatDate, formatFullDate } from "@/lib/utils";
+import { show } from "@/routes/admin/members";
 
 interface EmailDetailProps {
     application: MembershipApplication | null;
@@ -40,7 +41,12 @@ export function EmailDetail({ application, onBack, onApplicationSelect }: EmailD
             <div className={`p-6 border-b border-border bg-card ${onBack ? "pt-2" : ""}`}>
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
-                        <h1 className="text-xl font-semibold text-foreground">{application.user?.name}</h1>
+                        <h1 className="text-xl font-semibold text-foreground">
+                            {application.user?.name}
+                            <Link href={show(application.user?.id ?? 0).url} type="icon" className="mx-2">
+                                <ArrowUpLeftFromSquareIcon className="inline h-4 w-4" />
+                            </Link>
+                        </h1>
                         <Badge
                             style={{ backgroundColor: application.status.color }}
                             className="text-black"
@@ -55,7 +61,9 @@ export function EmailDetail({ application, onBack, onApplicationSelect }: EmailD
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <span className="font-medium text-foreground">From:</span>
-                            <span className="text-muted-foreground">{application.user?.name}</span>
+                            <span className="text-muted-foreground ">
+                                {application.user?.name}
+                            </span>
                         </div>
                         <span className="text-muted-foreground">{formatDate(application.submitted_at)}</span>
                     </div>
@@ -115,7 +123,7 @@ export function EmailDetail({ application, onBack, onApplicationSelect }: EmailD
                         {application.status.value === 'pending' && (
                             <>
                                 <Form
-                                    {...approve.form(application.id)}
+                                    {...approve.form(application.uuid)}
                                     onSuccess={(res) => {
                                         if (onApplicationSelect) {
                                             onApplicationSelect(res.props.application as MembershipApplication);
@@ -129,7 +137,7 @@ export function EmailDetail({ application, onBack, onApplicationSelect }: EmailD
                                         </Button>
                                     )}
                                 </Form>
-                                <RejectForm setApplication={(application) => onApplicationSelect(application as MembershipApplication)} applicationId={application.id} />
+                                <RejectForm setApplication={(application) => onApplicationSelect(application as MembershipApplication)} applicationId={application.uuid} />
                             </>
                         )}
                     </div>

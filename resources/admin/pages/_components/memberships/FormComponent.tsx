@@ -32,6 +32,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import DynamicInputList from "../ui/DynamicInputList";
 import { updateTranslation } from "@/actions/App/Http/Controllers/User/MembershipController";
 import { toast } from "sonner";
+import InputField from "@/components/InputField";
 
 
 
@@ -203,6 +204,20 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                         </div>
                                     </>
                                 )}
+
+                                <InputField
+                                    label="نسبة الخصم (%) (اختياري)"
+                                    id="discount"
+                                    name="percent_discount"
+                                    type="number"
+                                    min={0}
+                                    max={100}
+                                    defaultValue={item?.percent_discount ?? ""}
+                                    placeholder="100"
+                                    // اريد توضح ان القيمة بين 0 و 100
+                                    description="أدخل نسبة الخصم التي يحصل عليها الأعضاء عند الشراء في الموقع. القيمة يجب أن تكون بين 0 و 100."
+                                    errors={errors}
+                                />
 
                                 {/* المتطلبات */}
                                 <DynamicInputList

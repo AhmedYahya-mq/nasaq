@@ -102,6 +102,7 @@ export interface ColumnLabels {
     label: string;
     prefix?: React.ReactNode;
     suffix?: React.ReactNode;
+    hidden?: boolean;
     render?: (value: any) => React.ReactNode;
 }
 

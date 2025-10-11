@@ -30,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'item.exists' => \App\Http\Middleware\CheckItemExists::class,
                 'prevent.duplicate' => \App\Http\Middleware\PreventDuplicateRequest::class,
                 'payment.check' => \App\Http\Middleware\CheckPaymentMiddleware::class,
+                'event.register' => \App\Http\Middleware\CheckEventRegister::class,
             ]
         );
     })

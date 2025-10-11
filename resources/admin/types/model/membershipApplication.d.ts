@@ -3,6 +3,7 @@ import { MembershipAppEmploymentStatus, MembershipAppStatues } from "../enums/me
 
 export interface MembershipApplication {
     id: number;
+    uuid: string;
     user?: MembershipUser;
     status: MembershipAppStatues;
     employment_status?: MembershipAppEmploymentStatus;

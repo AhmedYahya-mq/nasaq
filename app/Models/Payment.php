@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 class Payment extends Model
 {
@@ -12,6 +13,7 @@ class Payment extends Model
 
     protected $fillable = [
         'user_id',
+        'invoice_id',
         'moyasar_id',
         'payable_id',
         'payable_type',
@@ -45,6 +47,15 @@ class Payment extends Model
         static::updated(function ($payment) {
             if ($payment->isDirty('status')) {
                 event(new \App\Events\PaymentStatusChanged($payment));
+            }
+        });
+
+        static::creating(function ($payment) {
+            if (empty($payment->invoice_id)) {
+                $year = date('Y');
+                $lastId = DB::table('payments')->max('id') ?? 0;
+                $nextId = $lastId + 1;
+                $payment->invoice_id = 'NQ_' . $year . str_pad($nextId, 6, '0', STR_PAD_LEFT);
             }
         });
     }

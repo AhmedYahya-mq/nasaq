@@ -8,12 +8,13 @@ use Illuminate\View\Component;
 
 class TabMembership extends Component
 {
+    public $user;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        $this->user = auth()->user();
     }
 
     /**

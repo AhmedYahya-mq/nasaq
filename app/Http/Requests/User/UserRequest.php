@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\User;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -23,13 +24,14 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
 
     public function rules(): array
     {
-        $user = $this->route('user'); // المستخدم إذا كان التحديث، null إذا إضافة
+        $user = $this->route('user');
 
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
+                'lowercase',
                 'email',
                 'max:255',
                 Rule::unique('users', 'email')->ignore($user?->id),
@@ -69,7 +71,7 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
         } else {
             $data['password'] = bcrypt($data['password']);
         }
-        
+
         if (isset($data['email'])) {
             $data['email'] = strtolower(trim($data['email']));
         }

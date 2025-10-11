@@ -43,6 +43,12 @@ class AppServiceProvider extends ServiceProvider
             // Response Payment
             \App\Contract\User\Response\PaymentResponse::class => \App\Http\Responses\User\PaymentResponse::class,
 
+            // Event
+            \App\Contract\User\Response\EventResponse::class => \App\Http\Responses\User\EventResponse::class,
+
+            // Library
+            \App\Contract\User\Response\LibraryResponse::class => \App\Http\Responses\User\LibraryResponse::class,
+
         ];
         $bindingRequests = [
             // user profile
@@ -57,6 +63,12 @@ class AppServiceProvider extends ServiceProvider
             // payment
             \App\Contract\User\Request\PaymentRequest::class => \App\Http\Requests\User\PaymentRequest::class,
             \App\Contract\User\Request\PaymentCallbackRequest::class => \App\Http\Requests\User\PaymentCallbackRequest::class,
+
+            // Membership Application
+            \App\Contract\User\Request\MembershipAppRequest::class => \App\Http\Requests\User\MembershipAppRequest::class,
+
+            // Event
+            \App\Contract\User\Request\EventRequest::class => \App\Http\Requests\User\EventRequest::class,
         ];
         $bindingResources = [
             // Membership
@@ -75,12 +87,27 @@ class AppServiceProvider extends ServiceProvider
             // payment
             \App\Contract\User\Resource\PaymentResource::class => \App\Http\Resources\Payment\PaymentResource::class,
             \App\Contract\User\Resource\PaymentCollection::class => \App\Http\Resources\Payment\PaymentCollection::class,
-        ];
 
+            // Event
+            \App\Contract\User\Resource\EventResource::class => \App\Http\Resources\Event\EventResource::class,
+            \App\Contract\User\Resource\EventCollection::class => \App\Http\Resources\Event\EventCollection::class,
+            \App\Contract\User\Resource\EventRegistrationResource::class => \App\Http\Resources\EventRegistration\EventRegistrationResource::class,
+            \App\Contract\User\Resource\EventRegistrationCollection::class => \App\Http\Resources\EventRegistration\EventRegistrationCollection::class,
+
+            // Library
+            \App\Contract\User\Resource\LibraryResource::class => \App\Http\Resources\Library\LibraryResource::class,
+            \App\Contract\User\Resource\LibraryCollection::class => \App\Http\Resources\Library\LibraryCollection::class,
+        ];
         $bindingActions = [
             // payment
             \App\Contract\Actions\CreatePaymentIntent::class => \App\Actions\Payment\CreatePaymentIntent::class,
             \App\Contract\Actions\PaymentCallback::class => \App\Actions\Payment\PaymentCallback::class,
+
+            // filepond
+            \App\Contract\Actions\FilePondAction::class => \App\Actions\User\FilePondAction::class,
+
+            // Membership Application
+            \App\Contract\Actions\MembershipRequestAction::class => \App\Actions\User\MembershipRequestAction::class,
         ];
 
         $bindings = array_merge($bindingResponses, $bindingRequests, $bindingResources, $bindingActions);
@@ -105,11 +132,12 @@ class AppServiceProvider extends ServiceProvider
             if (array_search('auth:admin', $guards) !== false) {
                 return route('admin.login');
             }
-            return route(config('fortify.home'));
+            return route('login');
         });
 
         RedirectIfAuthenticated::redirectUsing(function ($request) {
-            if (Auth::guard('admin')->check()) {
+            $guards = $request->route()->middleware() ?? [];
+            if (array_search('auth:admin', $guards) !== false && Auth::guard('admin')->check()) {
                 return route('admin.dashboard');
             }
             return route(config('fortify.home'));

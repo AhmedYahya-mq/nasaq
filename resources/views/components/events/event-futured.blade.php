@@ -1,12 +1,5 @@
-@props([
-    'title' => __('events.highlighted_event.default_title'),
-    'date' => '2025-09-25 18:30:00',
-    'location' => __('events.highlighted_event.default_location'),
-    'url' => '#',
-])
-
 <div
-    class="relative overflow-hidden rounded-xl shadow-lg
+    class="relative rounded-xl shadow-lg
             bg-gradient-to-br from-primary/10 via-background to-accent/10
             px-4 py-8 sm:px-2 sm:py-4 lg:px-8 flex flex-col lg:grid lg:grid-cols-3 gap-8 sm:gap-4
             transition-all duration-500 hover:shadow-primary/40 group">
@@ -27,21 +20,40 @@
             before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-primary/20 dark:before:via-white/20 before:to-transparent
                    before:-translate-x-full group-hover:before:translate-x-full before:transition-transform before:duration-700
             ">
-            <h3
-                class="text-2xl lg:text-2xl font-extrabold rtl:text-right text-primary drop-shadow">
-                {{ $title }}
+            <h3 class="text-2xl lg:text-2xl font-extrabold rtl:text-right text-primary drop-shadow">
+                {{ $event->title }}
             </h3>
         </div>
         <p
             class="text-base md:text-base lg:text-xl text-muted-foreground leading-relaxed font-medium flex flex-wrap justify-center lg:justify-start gap-x-2">
             <span class="inline-flex items-center gap-1">
                 <span class="text-xl md:text-lg lg:text-xl">🗓️</span>
-                <span>{{ \Carbon\Carbon::parse($date)->translatedFormat('d F Y - h:i A') }}</span>
+                <span>{{ \Carbon\Carbon::parse($event->start_at)->translatedFormat('d F Y') }}</span>
             </span>
+            {{-- clock --}}
             <span class="inline-flex items-center gap-1">
-                <span class="text-xl md:text-lg lg:text-xl">📍</span>
-                <span>{{ $location }}</span>
+                <span class="text-xl md:text-lg lg:text-xl">⏰</span>
+                <span>{{ \Carbon\Carbon::parse($event->start_at)->translatedFormat('h:i A') }}</span>
             </span>
+            @if ($event->event_type->isVirtual())
+                <span class="inline-flex items-center gap-1">
+                    <span class="text-xl md:text-lg lg:text-xl">
+                        <x-ui.icon :name="$event->event_method->icon()" class="size-6" />
+                    </span>
+                    <span>
+                        {{ $event->event_method->label() }}
+                    </span>
+                </span>
+            @else
+                @if ($event->address)
+                    <span class="inline-flex items-center gap-1">
+                        <span class="text-xl md:text-lg lg:text-xl">
+                            <x-ui.icon name="map-pin" class="size-6 fill-primary *:fill-primary" />
+                        </span>
+                        <span>{{ $event->address }}</span>
+                    </span>
+                @endif
+            @endif
         </p>
     </div>
 
@@ -50,10 +62,10 @@
         class="flex flex-col items-center lg:items-end text-center lg:text-right space-y-6 sm:space-y-3 justify-center col-span-1">
         <div class="w-full flex justify-center lg:justify-end">
             <div class="w-full max-w-xs lg:scale-[85%] lg:text-sm">
-                <x-events.countdown :date="$date" />
+                <x-events.countdown :date="$event->start_at" />
             </div>
         </div>
-        <a href="{{ $url }}"
+        <a href="{{ route('client.event.register', ['event' => $event]) }}"
             class="relative px-8 sm:px-4 py-3 sm:py-2 font-bold text-base md:text-base lg:text-xl rounded-xl shadow-lg overflow-hidden
                    badget
                    group-hover:shadow-primary/50 hover:shadow-sm transition-all duration-500
@@ -61,7 +73,30 @@
                    before:-translate-x-full group-hover:before:translate-x-full before:transition-transform before:duration-700
                    focus:outline-none focus:ring-2 focus:ring-primary
                    active:scale-95">
-            {{ __('events.highlighted_event.register_now_button') }}
+            <div class="flex gap-2 items-center justify-center">
+                <span>
+                    {{ __('events.buttons.now_registration') }}
+                </span>
+                @if (!$event->isFree())
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="text-center flex">
+                            <div class="text-[16px] font-bold leading-tight">{{ $event->final_price }}</div>
+                            <x-ui.icon name="riyal" class="inline h-4 w-4" />
+                        </div>
+                        @if ($event->isDiscounted())
+                            <div class="text-center flex text-muted-foreground line-through">
+                                <div class="text-xs font-bold leading-tight">{{ $event->price }}</div>
+                                <x-ui.icon name="riyal" class="inline h-4 w-4" />
+                            </div>
+                        @endif
+                    </div>
+                @endif
+            </div>
         </a>
     </div>
+    @if ($event->isDiscounted())
+        <div class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+            خصم
+        </div>
+    @endif
 </div>

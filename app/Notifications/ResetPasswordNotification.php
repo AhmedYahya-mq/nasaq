@@ -29,6 +29,9 @@ class ResetPasswordNotification extends Notification
      */
     public function via(object $notifiable): array
     {
+         if (!config('app.enable_email_notifications')) {
+            return [];
+        }
         return ['mail'];
     }
 

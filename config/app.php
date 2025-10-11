@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'enable_email_notifications' => env('ENABLE_EMAIL_NOTIFICATIONS', false),
 
     /*
     |--------------------------------------------------------------------------

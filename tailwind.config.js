@@ -85,7 +85,7 @@ module.exports = {
                     '--scrollbar-thumb-width': '5px',
                     '--scrollbar-thumb-color': 'var(--primary)',
                     '--scrollbar-track-color': 'var(--muted)',
-                    '--scrollbar-thumb-hover-color': 'var(--accent)',
+                    '--scrollbar-thumb-hover-color': 'var(--primary-foreground)',
                 }
             });
 

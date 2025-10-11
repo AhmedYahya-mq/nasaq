@@ -10,6 +10,7 @@ export interface Membership {
     price: number | string;
     is_active: boolean;
     discounted_price?: number | string | null;
+    percent_discount?: number | string | null;
     duration_days?: number | null;
     requirements?: string[];
     requirements_en?: string[];

@@ -159,8 +159,11 @@ export const formatFullDate = (date: any, isTime = true) => {
 };
 
 
-export function arabicPluralize(count: number, { singular, dual, plural }: { singular: string; dual: string; plural: string; }): string {
+export function arabicPluralize(count: number, { singular, dual, plural, notfound }: { singular: string; dual: string; plural: string; notfound?: string | null }) {
     if (count === 0) {
+        if (notfound !== undefined) {
+            return notfound;
+        }
         return `لا يوجد ${plural}`;
     } else if (count === 1) {
         return `${singular}`;

@@ -30,7 +30,7 @@ class MembershipApplicationResponse implements ResponseMembershipApplicationResp
     public function toResponse($request)
     {
         $params = $request->only(['member_id', 'status', 'search', 'page', 'type_api']);
-        $paginator = \App\Models\MembershipApplication::paginateFiltered($params, 10);
+        $paginator = \App\Models\MembershipApplication::notDraft()->paginateFiltered($params, 10);
         if ($request->header('type-api') === 'api') {
             $array = $paginator->toArray();
             $meta = [

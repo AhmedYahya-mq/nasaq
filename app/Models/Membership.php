@@ -18,6 +18,7 @@ class Membership extends Model
         'is_active',
         'price',
         'discounted_price',
+        'percent_discount',
         'duration_days',
         'requirements',
         'features',
@@ -38,6 +39,7 @@ class Membership extends Model
         'description' => 'array',
         'price' => 'integer',
         'discounted_price' => 'integer',
+        'percent_discount' => 'decimal:2',
         'is_active' => 'boolean',
         'duration_days' => 'integer',
     ];
@@ -46,11 +48,6 @@ class Membership extends Model
         'is_active' => true,
         'duration_days' => 365,
         'level' => null,
-        'regular_price' => null,
-        'discounted_price' => null,
-        'regular_price_in_halalas' => null,
-        'is_discounted' => null,
-        'precentage_discount' => null,
     ];
 
     public function getRegularPriceAttribute(): float
@@ -89,12 +86,20 @@ class Membership extends Model
                 $highestLevel = Membership::max('level');
                 $membership->level = $highestLevel ? $highestLevel + 1 : 1;
             }
+            // precent_discount المستخدم يرسله 1 - 100 واحنا نخزنه 0.01 - 1.00
+            if (!is_null($membership->percent_discount) && $membership->percent_discount > 1) {
+                $membership->percent_discount = $membership->percent_discount / 100;
+            }
         });
 
         static::updating(function ($membership) {
             if (is_null($membership->level)) {
                 $highestLevel = Membership::where('id', '!=', $membership->id)->max('level');
                 $membership->level = $highestLevel ? $highestLevel + 1 : 1;
+            }
+            // precent_discount المستخدم يرسله 1 - 100 واحنا نخزنه 0.01 - 1.00
+            if (!is_null($membership->percent_discount) && $membership->percent_discount > 1) {
+                $membership->percent_discount = $membership->percent_discount / 100;
             }
         });
 
@@ -149,5 +154,15 @@ class Membership extends Model
         return $this->belongsToMany(User::class, 'user_memberships')
             ->withPivot('started_at', 'expires_at')
             ->withTimestamps();
+    }
+
+    // حساب الخصم على السعر الذي يحصل عليه العضو ارسل السعر وهوه يحسب الخصم
+    public function discountedPrice(float $price): float
+    {
+        if ($this->is_discounted && $this->percent_discount > 0) {
+            $discountAmount = ($price * $this->percent_discount) / 100;
+            return round($price - $discountAmount, 2);
+        }
+        return $price;
     }
 }

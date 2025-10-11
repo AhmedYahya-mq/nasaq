@@ -11,8 +11,16 @@ class MembershipFile extends Model
     use HasFactory;
 
     public static $path = 'membership_files/';
+
+    protected $dispatchesEvents = [
+        'deleted' => \App\Events\FileDeletedEvent::class,
+    ];
+
     protected $fillable = [
-        'membership_application_id', 'file_name', 'file_path', 'file_type',
+        'membership_application_id',
+        'file_name',
+        'file_path',
+        'file_type',
     ];
 
     protected $appends = [
@@ -25,13 +33,6 @@ class MembershipFile extends Model
         return $this->belongsTo(MembershipApplication::class);
     }
 
-    // --- حذف الملف من التخزين عند حذف السجل ---
-    protected static function booted()
-    {
-        static::deleting(function ($file) {
-            Storage::disk('public')->delete($file->file_path);
-        });
-    }
 
     // --- رفع ملف واحد أو عدة ملفات ---
     public static function storeFiles($application, $files)
@@ -51,7 +52,7 @@ class MembershipFile extends Model
     // --- Accessor: رابط الملف ---
     public function getUrlAttribute()
     {
-        return asset('storage/' . $this->file_path);
+        return $this->file_path;
     }
 
     // --- Scope: الملفات المعتمدة فقط ---

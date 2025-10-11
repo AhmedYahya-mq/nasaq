@@ -18,7 +18,7 @@ class TabRequest extends Component
         if(!$user){
             abort(403);
         }
-        $this->membershipApplications = $user->membershipApplications()->paginate(1)->appends(['tab' => 'requests']);
+        $this->membershipApplications = $user->membershipApplications()->paginate(10)->appends(['tab' => 'requests']);
     }
 
     /**

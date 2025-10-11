@@ -10,6 +10,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\PaymentStatusChanged::class => [
             \App\Listeners\CreateMembershipDraft::class,
         ],
+        \App\Events\FileDeletedEvent::class => [
+            \App\Listeners\DeleteFileFromDisk::class,
+        ],
     ];
 
     /**

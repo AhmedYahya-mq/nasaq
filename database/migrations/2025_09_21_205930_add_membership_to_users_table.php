@@ -18,10 +18,12 @@ return new class extends Migration
             $table->timestamp('membership_started_at')->nullable();
             $table->timestamp('membership_expires_at')->nullable();
             $table->enum('employment_status', EmploymentStatus::getValues())->nullable();
+            $table->string('national_id')->nullable()->after('bio');
+            $table->string('current_employer')->nullable()->after('national_id');
+            $table->string('scfhs_number')->nullable()->after('current_employer');
 
             $table->index(['membership_started_at', 'membership_expires_at'], 'membership_period_index');
-            $table->index('membership_started_at');
-            $table->index('membership_expires_at');
+            $table->index('is_active');
         });
     }
 
@@ -32,10 +34,18 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropIndex('membership_period_index');
-            $table->dropIndex(['membership_started_at']);
-            $table->dropIndex(['membership_expires_at']);
+            $table->dropIndex('users_is_active_index');
             $table->dropForeign(['membership_id']);
-            $table->dropColumn(['membership_id', 'membership_started_at', 'membership_expires_at', 'employment_status', 'is_active']);
+            $table->dropColumn([
+                'membership_id',
+                'membership_started_at',
+                'membership_expires_at',
+                'employment_status',
+                'is_active',
+                'national_id',
+                'current_employer',
+                'scfhs_number'
+            ]);
         });
     }
 };

@@ -11,4 +11,5 @@ return [
     'light' => 'Light',
     'system' => 'System',
     'Payment successful, please complete your membership application.' => 'Payment successful, please complete your membership application.',
+    'event' => 'event',
 ];

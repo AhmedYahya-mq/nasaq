@@ -377,3 +377,36 @@ body {
 }
 
 
+
+/* Grid layout */
+.filepond--item {
+    width: calc(50% - 0.5em);
+}
+
+@media (min-width: 30em) {
+    .filepond--item {
+        width: calc(50% - 0.5em);
+    }
+}
+
+@media (min-width: 50em) {
+    .filepond--item {
+        width: calc(33.33% - 0.5em);
+    }
+}
+
+
+/* Drop label */
+.filepond--drop-label {
+    @apply bg-card !border-none w-full min-h-full;
+}
+
+
+.parent *:not(.filepond--file-wrapper *) {
+    border: none !important;
+    border-style: none !important;
+    background-color: var(--card) !important;
+}
+.parent *:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *):not(.filepond--list, .filepond--list-scroller) {
+    direction: ltr !important;
+}

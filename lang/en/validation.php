@@ -166,6 +166,14 @@ return [
         'cc_exp_month' => 'Expiration Month',
         'cc_exp_year' => 'Expiration Year',
         'cc_type' => 'Card Type',
+        'file' => 'File',
+        'event_type' => 'Event Type',
+        'event_method' => 'Event Method',
+        'event_category' => 'Event Category',
+        'start_at' => 'Start At',
+        'link' => 'Link',
+        'capacity' => 'Capacity',
+        'accepted_membership_ids' => 'Accepted Memberships',
     ],
 
 ];

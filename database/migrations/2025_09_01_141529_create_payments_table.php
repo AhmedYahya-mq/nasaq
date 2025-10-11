@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_id')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('moyasar_id')->unique();
-            $table->morphs('payable'); // يضيف payable_id + payable_type
+            $table->morphs('payable');
             $table->decimal('amount', 10, 2);
             $table->string('currency')->default('SAR');
             $table->string('status')->default('initiated');
