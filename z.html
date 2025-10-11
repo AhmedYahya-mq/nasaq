@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شهادة عضوية - فخمة</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #f8f8f8;
+    font-family: 'Cairo', sans-serif;
+}
+
+.certificate {
+    max-width: 1050px;
+    margin: 60px auto;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    padding: 60px 70px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* الشعار */
+.logo {
+    width: 160px;
+    display: block;
+    margin: 0 auto 60px auto;
+}
+
+/* الجهتان */
+.sides {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 80px;
+    margin-bottom: 60px;
+}
+
+.side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right { text-align: right; direction: rtl; }
+.left { text-align: left; direction: ltr; }
+
+/* العناوين */
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #bfa45f;
+    margin-bottom: 25px;
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+}
+
+/* الفقرة المتوازنة */
+.content {
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 40px;
+    min-height: 110px; /* لضمان التوازي */
+}
+
+/* بيانات العضو */
+.member-info {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #555;
+}
+
+.info-row {
+    margin-bottom: 5px;
+}
+
+/* الفوتر */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    padding-top: 25px;
+}
+
+.signature img {
+    height: 70px;
+}
+
+.qr-code {
+    width: 85px;
+    height: 85px;
+}
+
+.unique-id {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #bfa45f;
+    flex: 1;
+}
+
+/* لمسة فخمة خفيفة */
+.certificate::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at top center, rgba(191,164,95,0.06), transparent 70%);
+    z-index: 0;
+    border-radius: 25px;
+}
+.certificate * { position: relative; z-index: 1; }
+
+/* للطباعة */
+@media print {
+    body { background: #fff; }
+    .certificate {
+        box-shadow: none;
+        margin: 0;
+        border-radius: 0;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="certificate">
+    <!-- الشعار -->
+    <img src="logo.png" alt="Logo" class="logo">
+
+    <!-- النصوص المتوازنة -->
+    <div class="sides">
+
+        <!-- الجهة اليمنى (عربي) -->
+        <div class="side right">
+            <div class="title">شهادة عضوية</div>
+            <div class="content">
+                يمنح موقع <strong>نسق</strong> هذه الشهادة للعضو الموقر تقديرًا لانضمامه المتميز، وإسهامه الإيجابي في دعم مجتمعنا، وتشجيعًا له على الاستمرار في مسيرة التميز والعطاء.
+            </div>
+            <div class="member-info">
+                <div class="info-row"><strong>الاسم:</strong> محمد أحمد علي</div>
+                <div class="info-row"><strong>نوع العضوية:</strong> ذهبية</div>
+                <div class="info-row"><strong>تاريخ الانضمام:</strong> 12/10/2025</div>
+                <div class="info-row"><strong>رقم العضوية:</strong> 0001-2025</div>
+            </div>
+        </div>
+
+        <!-- الجهة اليسرى (إنجليزي) -->
+        <div class="side left">
+            <div class="title">Membership Certificate</div>
+            <div class="content">
+                <strong>Nasq</strong> proudly grants this certificate to the esteemed member in recognition of outstanding membership, valuable contribution to our community, and continued pursuit of excellence.
+            </div>
+            <div class="member-info">
+                <div class="info-row"><strong>Name:</strong> Mohammed Ahmed Ali</div>
+                <div class="info-row"><strong>Membership Type:</strong> Gold</div>
+                <div class="info-row"><strong>Joining Date:</strong> 12/10/2025</div>
+                <div class="info-row"><strong>Membership ID:</strong> 0001-2025</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <div class="footer">
+        <div class="signature">
+            <img src="stamp.png" alt="Official Stamp">
+        </div>
+        <div class="unique-id">رقم العضوية الفريد: NASQ-0001-2025</div>
+        <img src="qr-code.png" alt="QR Code" class="qr-code">
+    </div>
+</div>
+
+</body>
+</html>
