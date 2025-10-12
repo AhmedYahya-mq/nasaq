@@ -1,5 +1,5 @@
 @props([
-    'companyName' => 'Hostinger International Ltd.',
+    'companyName' => 'Nasaq',
     'companyAddress' => '61 Lordou Vironos Street, Larnaca 6023, Cyprus',
     'companyVAT' => 'CY10301365E',
     'invoiceId' => 'HCY-9885878',
@@ -8,7 +8,7 @@
     'invoiceAmount' => '$10.17 (USD)',
     'orderNumber' => 'hb_21397004',
     'status' => 'PAID',
-    'clientName' => 'ahmed Yahya',
+    'clientName' => 'Ahmed Yahya',
     'clientEmail' => 'm733716220@gmail.com',
     'clientCountry' => 'Yemen',
     'clientPhone' => '967771508902',
@@ -42,7 +42,6 @@
     'total' => '10.17',
     'payments' => '($10.17)',
     'amountDue' => '$0.00',
-    'qrCode' => 'images/qr.png',
     'downloadable' => true,
 ])
 
@@ -57,24 +56,31 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             font-family: 'Segoe UI', Tahoma, sans-serif;
-            overflow: auto;
+            direction: ltr;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 30px;
         }
 
-        .header .invoice-title {
-            font-size: 28px;
-            font-weight: bold;
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .header img {
-            width: 80px;
-            height: 80px;
+        .header-left img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .invoice-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
         }
 
         .info-section {
@@ -104,8 +110,7 @@
             margin-bottom: 20px;
         }
 
-        th,
-        td {
+        th, td {
             border: 1px solid #ccc;
             padding: 8px 10px;
             text-align: left;
@@ -128,7 +133,7 @@
 
         .footer {
             border-top: 1px solid #ccc;
-            margin-top: 30px;
+            margin-top: 40px;
             text-align: center;
             font-size: 13px;
             color: #555;
@@ -148,14 +153,18 @@
 
 <div x-data="printInit" class="flex flex-col items-center w-full space-y-6">
 
-    <!-- الفاتورة -->
     <div class="scrollbar flex flex-col items-center w-full m-0 p-0">
         <div id="invoiceCard" x-ref="card">
+
+            <!-- Header -->
             <div class="header">
-                <div class="invoice-title">NASAQ</div>
-                <img src="{{ asset('favicon.ico') }}" alt="Logo">
+                <div class="header-left">
+                    <img src="{{ asset('favicon.ico') }}" alt="Logo">
+                    <div class="invoice-title">{{ $companyName }}</div>
+                </div>
             </div>
 
+            <!-- Info Section -->
             <div class="info-section">
                 <div class="info-block">
                     <h3>Payment Info</h3>
@@ -176,6 +185,7 @@
                 </div>
             </div>
 
+            <!-- Table -->
             <table>
                 <thead>
                     <tr>
@@ -199,51 +209,33 @@
                 </tbody>
             </table>
 
+            <!-- Totals -->
             <table class="totals">
-                <tr>
-                    <td>Total excl. VAT</td>
-                    <td>{{ $totalExclVAT }}</td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>{{ $total }}</td>
-                </tr>
-                <tr>
-                    <td>Payments</td>
-                    <td>{{ $payments }}</td>
-                </tr>
-                <tr>
-                    <td>Amount Due (USD)</td>
-                    <td>{{ $amountDue }}</td>
-                </tr>
+                <tr><td>Total excl. VAT</td><td>{{ $totalExclVAT }}</td></tr>
+                <tr><td>Total</td><td>{{ $total }}</td></tr>
+                <tr><td>Payments</td><td>{{ $payments }}</td></tr>
+                <tr><td>Amount Due (USD)</td><td>{{ $amountDue }}</td></tr>
             </table>
 
+            <!-- Footer -->
             <div class="footer">
-                <img src="{{ $qrCode }}" alt="QR" style="width:80px;margin-top:10px;"><br>
                 {{ $companyName }} © {{ date('Y') }} | VAT Reg #: {{ $companyVAT }}<br>
                 {{ $companyAddress }}
             </div>
         </div>
     </div>
 
-    <!-- أزرار التحكم -->
+    <!-- Buttons -->
     @if ($downloadable)
         <div class="flex flex-col md:flex-row items-center gap-4 no-print">
             <button @click="downloadTransparent"
-                class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5"
-                :disabled="isLoadingPng">
-                <div x-show="isLoadingPng" x-transition.opacity.duration.500ms
-                    class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
-                <span>🖼️ تنزيل الفاتورة كصورة</span>
+                class="btn flex justify-center items-center gap-2 bg-primary/40 hover:bg-primary/30 py-2 px-4 rounded mt-5">
+                🖼️ Download as Image
             </button>
             <button @click="downloadPDF"
-                class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5"
-                :disabled="isLoadingPdf">
-                <div x-show="isLoadingPdf" x-transition.opacity.duration.500ms
-                    class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
-                <span>📄 تنزيل الفاتورة PDF</span>
+                class="btn flex justify-center items-center gap-2 bg-primary/40 hover:bg-primary/30 py-2 px-4 rounded mt-5">
+                📄 Download PDF
             </button>
         </div>
     @endif
-
 </div>
