@@ -10,12 +10,14 @@ use Illuminate\View\Component;
 class ListEvents extends Component
 {
     public $events;
+    public $isPaginated = true;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($isPaginated = true)
     {
         $this->events = Event::withTranslations()->orderBy('start_at', 'desc')->paginate(request()->get('per_page', 1));
+        $this->isPaginated = $isPaginated;
     }
 
     /**

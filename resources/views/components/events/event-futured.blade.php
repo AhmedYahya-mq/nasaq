@@ -1,8 +1,9 @@
-<div
+<article
     class="relative rounded-xl shadow-lg
             bg-gradient-to-br from-primary/10 via-background to-accent/10
             px-4 py-8 sm:px-2 sm:py-4 lg:px-8 flex flex-col lg:grid lg:grid-cols-3 gap-8 sm:gap-4
-            transition-all duration-500 hover:shadow-primary/40 group">
+            transition-all duration-500 hover:shadow-primary/40 group"
+    itemscope itemtype="http://schema.org/Event">
     {{-- خلفية زخرفية متحركة --}}
     <div class="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         <div class="absolute -top-40 -left-40 w-96 h-96 bg-primary/20 blur-3xl rounded-full animate-pulse"></div>
@@ -26,7 +27,8 @@
         </div>
         <section
             class="text-base md:text-base lg:text-xl text-muted-foreground leading-relaxed font-medium flex flex-wrap justify-center lg:justify-start gap-x-2">
-            <span class="inline-flex items-center gap-1" itemprop="startDate" content="{{ \Carbon\Carbon::parse($event->start_at)->toIso8601String() }}">
+            <span class="inline-flex items-center gap-1" itemprop="startDate"
+                content="{{ \Carbon\Carbon::parse($event->start_at)->toIso8601String() }}">
                 <span class="text-xl md:text-lg lg:text-xl">🗓️</span>
                 <span>{{ \Carbon\Carbon::parse($event->start_at)->translatedFormat('d F Y') }}</span>
             </span>
@@ -45,7 +47,8 @@
                 </span>
             @else
                 @if ($event->address)
-                    <span class="inline-flex items-center gap-1" itemprop="location" itemscope itemtype="http://schema.org/Place">
+                    <span class="inline-flex items-center gap-1" itemprop="location" itemscope
+                        itemtype="http://schema.org/Place">
                         <span class="text-xl md:text-lg lg:text-xl">
                             <x-ui.icon name="map-pin" class="size-6 fill-primary *:fill-primary" />
                         </span>
@@ -57,7 +60,8 @@
     </header>
 
     {{-- العداد + الزر --}}
-    <section class="flex flex-col items-center lg:items-end text-center lg:text-right space-y-6 sm:space-y-3 justify-center col-span-1">
+    <section
+        class="flex flex-col items-center lg:items-end text-center lg:text-right space-y-6 sm:space-y-3 justify-center col-span-1">
         <div class="w-full flex justify-center lg:justify-end">
             <div class="w-full max-w-xs lg:scale-[85%] lg:text-sm">
                 <x-events.countdown :date="$event->start_at" />
@@ -77,9 +81,11 @@
                     {{ __('events.buttons.now_registration') }}
                 </span>
                 @if (!$event->isFree())
-                    <div class="flex flex-col items-center justify-center" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <div class="flex flex-col items-center justify-center" itemprop="offers" itemscope
+                        itemtype="http://schema.org/Offer">
                         <div class="text-center flex">
-                            <div class="text-[16px] font-bold leading-tight" itemprop="price">{{ $event->final_price }}</div>
+                            <div class="text-[16px] font-bold leading-tight" itemprop="price">{{ $event->final_price }}
+                            </div>
                             <x-ui.icon name="riyal" class="inline h-4 w-4" />
                             <meta itemprop="priceCurrency" content="SAR" />
                         </div>

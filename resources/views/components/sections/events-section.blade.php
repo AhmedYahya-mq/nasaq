@@ -10,8 +10,7 @@
             </p>
         </div>
 
-        <div
-            class="mb-16 relative bg-gradient-to-r from-primary/20 via-background to-background rounded-xl shadow-2xl  border border-primary/30">
+        <div class="mb-16 relative bg-gradient-to-r from-primary/20 via-background to-background rounded-xl shadow-2xl  border border-primary/30">
             <x-events.event-futured class="rounded-xl" />
         </div>
 
@@ -53,7 +52,7 @@
 
             {{-- 3. زر "مشاهدة الكل" في الأسفل --}}
             <div class="text-center mt-12">
-                <a href="{{ route("client.archives") }}" {{-- استبدل 'archive.index' باسم الـ route الصحيح --}}
+                <a href="{{ route('client.archives') }}" {{-- استبدل 'archive.index' باسم الـ route الصحيح --}}
                     class="inline-flex items-center gap-2 px-6 py-3 text-base font-semibold text-primary-foreground bg-primary rounded-lg hover:bg-primary/90 transition-colors duration-200 shadow-md">
                     <span>{{ __('events.event_titles.view_all_archives') }}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"

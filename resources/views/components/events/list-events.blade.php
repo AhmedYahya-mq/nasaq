@@ -1,4 +1,3 @@
-
 <div class="mb-8">
     <h2 class="text-2xl  w-full font-bold mb-8 text-foreground drop-shadow">
         {{ __('events.page_titles.upcoming_events') }}
@@ -14,5 +13,5 @@
         @endforelse
     </div>
 
-    {{ $events->links('pagination::tailwind') }}
+    {{ $isPaginated ? $events->links('pagination::tailwind') : '' }}
 </div>

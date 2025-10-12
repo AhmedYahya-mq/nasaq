@@ -22,7 +22,7 @@
 
             <div class="">
                 {{-- العمود الأول: الفعاليات القادمة --}}
-               <x-events.list-events/>
+               <x-events.list-events :isPaginated="false"/>
 
             </div>
         </div>
