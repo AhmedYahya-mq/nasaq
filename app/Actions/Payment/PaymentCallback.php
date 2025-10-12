@@ -58,15 +58,6 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
         return $is_saved;
     }
 
-    protected function registerUserToEvent(): void
-    {
-        $event = $this->payment->payable;
-        $user = $this->payment->user;
-        if (!$event || !$user) {
-            throw new PaymentCallbackException('Event or User not found for registration', 404);
-        }
-        EventRegistration::registerUserToEvent($event->id, $user->id);
-    }
     protected function resolvePayment(?string $moyasarId): void
     {
         $this->payment = Payment::where('moyasar_id', $moyasarId)->first();

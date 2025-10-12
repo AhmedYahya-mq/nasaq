@@ -107,10 +107,12 @@ class Event extends Model
     {
         return $this->registrations()->where('is_attended', true)->count();
     }
+
     public function getNotAttendedCountAttribute()
     {
         return $this->registrations()->where('is_attended', false)->count();
     }
+
     public function getPresentageAttendedAttribute()
     {
         $total = $this->registrations_count;

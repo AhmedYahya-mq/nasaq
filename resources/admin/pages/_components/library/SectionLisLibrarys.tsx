@@ -13,7 +13,7 @@ import { resourceColumnLabels } from "@/tables/labels/ResourceColumnLabels";
 export default function SectionLisLibrarys(): JSX.Element {
     const resources = (usePage().props.resources as Pagination<Resource>);
 
-
+    
         const {
             tableData,
             addRow,

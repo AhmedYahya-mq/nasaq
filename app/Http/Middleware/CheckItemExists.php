@@ -29,15 +29,6 @@ class CheckItemExists
         }
         // تحقق اذا المستخدم قد اشترا العنصر من قبل
         $user = $request->user();
-        if ($user && $user->isPurchasedByUser($id)) {
-            $user = $request->user();
-
-            if ($user && $user->isPurchasedByUser($id)) {
-                $previous = url()->previous() && url()->previous() !== url()->current() ? url()->previous() : route('client.home');
-                return redirect($previous)
-                    ->with('info', __('payments.You_have_already_purchased_this_item', ['item' => __('payments.' . strtolower(class_basename($modelClass)))]));
-            }
-        }
         if ($user && $user->isPurchasedByUser($id, $modelClass::payableType())) {  // هذا يكفي للتحقق
             $previous = url()->previous() && url()->previous() !== url()->current()
                 ? url()->previous()
