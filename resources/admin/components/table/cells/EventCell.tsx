@@ -1,7 +1,7 @@
 import { TableCell } from "@/components/ui/table";
 
 export const eventCell = ({ row }: any) => {
-    const event = row.original; // الصف كامل (البيانات الكاملة)
+    const event = row.original;
     return (
         <TableCell>
             <h2 className="font-medium">{event.title ?? ""}</h2>

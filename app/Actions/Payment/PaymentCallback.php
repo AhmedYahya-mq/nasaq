@@ -30,10 +30,32 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
         if ($this->payment->payable instanceof \App\Models\Membership) {
             $this->isSubscription = true;
         }
+
         if ($this->payment->payable instanceof \App\Models\Event) {
-            // create event registration
             $this->registerUserToEvent();
         }
+
+        if ($this->payment->payable instanceof \App\Models\Library) {
+            $this->savedUserToLibrary();
+        }
+    }
+
+    protected function registerUserToEvent(): void
+    {
+        $event = $this->payment->payable;
+        $user = $this->payment->user;
+        if (!$event || !$user) {
+            throw new PaymentCallbackException('Event or User not found for registration', 404);
+        }
+        EventRegistration::registerUserToEvent($event->id, $user->id);
+    }
+
+    protected function savedUserToLibrary(): bool
+    {
+        $res = $this->payment->payable;
+        $user = $this->payment->user;
+        $is_saved = $res->savedUser($user->id, $this->payment->id);
+        return $is_saved;
     }
 
     protected function registerUserToEvent(): void

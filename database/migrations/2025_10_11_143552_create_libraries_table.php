@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->ulid('ulid')->unique();
             $table->date('published_at')->nullable();
-            $table->year('publication_year')->nullable();
             $table->enum('status', LibraryStatus::getValues())->default(LibraryStatus::Draft);
             $table->enum('type', LibraryType::getValues())->default(LibraryType::Ebook);
             $table->integer('price')->default(0);
             $table->decimal('discount')->default(0);
             $table->string('path');
+            $table->string('poster')->nullable();
             $table->timestamps();
         });
 
@@ -30,6 +30,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('library_id')->constrained('libraries')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('payment_id')->nullable()->constrained('payments')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -39,6 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('libraries_users');
         Schema::dropIfExists('libraries');
     }
 };

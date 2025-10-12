@@ -6,4 +6,6 @@ use Illuminate\Contracts\Support\Responsable;
 
 interface LibraryResponse extends Responsable
 {
+    public function toResponse($request);
+    public function toResponseResource();
 }
