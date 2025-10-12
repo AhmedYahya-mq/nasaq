@@ -7,15 +7,14 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class LibraryCollection extends ResourceCollection
 {
-
-    
+    public static $wrap = null;
     /**
      * Transform the resource collection into an array.
      *
      * @return array<int|string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request)
     {
-        return parent::toArray($request);
+        return $this->collection;
     }
 }

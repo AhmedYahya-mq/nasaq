@@ -1,5 +1,5 @@
 import { TableCell } from "@/components/ui/table";
-import { EditIcon, Trash2Icon, GlobeIcon, EyeIcon } from "lucide-react";
+import { EditIcon, Trash2Icon, GlobeIcon, EyeIcon, DownloadIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 type ActionHandlers = {
@@ -7,6 +7,7 @@ type ActionHandlers = {
     onDelete?: (item: any) => void;
     onTranslate?: (item: any) => void;
     onView?: (item: any) => void;
+    onDownload?: (item: any) => void;
 };
 
 const actionMap = {
@@ -14,6 +15,7 @@ const actionMap = {
     onDelete: { Icon: Trash2Icon, color: "text-red-600", label: "حذف" },
     onTranslate: { Icon: GlobeIcon, color: "text-green-600", label: "ترجمة" },
     onView: { Icon: EyeIcon, color: "text-gray-600", label: "عرض" },
+    onDownload: { Icon: DownloadIcon, color: "text-primary", label: "تنزيل" },
 };
 
 export const actionsCell =

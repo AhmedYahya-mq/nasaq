@@ -15,14 +15,12 @@ final class LibraryStatus extends Enum
 {
     const Draft = 'draft';
     const Published = 'published';
-    const Archived = 'archived';
 
     public static function getDescription($value): string
     {
         return match ($value) {
             self::Draft => 'مسودة',
             self::Published => 'منشور',
-            self::Archived => 'مؤرشف',
             default => self::getKey($value),
         };
     }
@@ -38,7 +36,6 @@ final class LibraryStatus extends Enum
         return match ($this->value) {
             self::Draft => 'gray',
             self::Published => 'green',
-            self::Archived => 'red',
             default => 'gray',
         };
     }

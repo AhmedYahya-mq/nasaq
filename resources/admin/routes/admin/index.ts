@@ -4,6 +4,8 @@ import membershipApplications from './membershipApplications'
 import members from './members'
 import blogs from './blogs'
 import events from './events'
+import event from './event'
+import library from './library'
 import profile from './profile'
 import password from './password'
 import twoFactor from './two-factor'
@@ -79,7 +81,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     dashboard.form = dashboardForm
 /**
 * @see \App\Http\Controllers\User\MembershipController::membership
@@ -157,7 +159,7 @@ membership.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     membership.form = membershipForm
 /**
 * @see \App\Http\Controllers\User\MembershipController::memberships
@@ -235,7 +237,7 @@ memberships.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     memberships.form = membershipsForm
 /**
 * @see \App\Http\Controllers\MembershipApplictionController::membershipApplications
@@ -313,7 +315,7 @@ membershipApplications.head = (options?: RouteQueryOptions): RouteDefinition<'he
                     }),
             method: 'get',
         })
-    
+
     membershipApplications.form = membershipApplicationsForm
 /**
 * @see \App\Http\Controllers\UserController::members
@@ -391,7 +393,7 @@ members.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     members.form = membersForm
 /**
 * @see \App\Http\Controllers\User\BlogController::blogs
@@ -469,7 +471,7 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     blogs.form = blogsForm
 /**
 * @see \App\Http\Controllers\User\EventController::events
@@ -547,11 +549,11 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     events.form = eventsForm
 /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
 export const library = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -566,7 +568,7 @@ library.definition = {
 
 /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
 library.url = (options?: RouteQueryOptions) => {
@@ -575,7 +577,7 @@ library.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
 library.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -584,7 +586,7 @@ library.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
 library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -594,7 +596,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
     const libraryForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -604,7 +606,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
         libraryForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -613,7 +615,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
         libraryForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -625,7 +627,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     library.form = libraryForm
 /**
  * @see routes/settings.php:39
@@ -696,7 +698,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     appearance.form = appearanceForm
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::security
@@ -774,7 +776,7 @@ security.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     security.form = securityForm
 /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::login
@@ -852,7 +854,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
                     }),
             method: 'get',
         })
-    
+
     login.form = loginForm
 /**
 * @see \App\Http\Controllers\Auth\AuthenticatedSessionController::logout
@@ -907,7 +909,7 @@ logout.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             action: logout.url(options),
             method: 'post',
         })
-    
+
     logout.form = logoutForm
 const admin = {
     dashboard,
@@ -917,6 +919,7 @@ membershipApplications,
 members,
 blogs,
 events,
+event,
 library,
 profile,
 password,

@@ -85,18 +85,20 @@ return [
     ],
 
     'library_type' => [
-        'E-books' => 'E-books',
-        'Research Papers' => 'Research Papers',
-        'Tutorials' => 'Tutorials',
-        'Case Studies' => 'Case Studies',
-        'White Papers' => 'White Papers',
+        'ebook' => 'E-books',
+        'audio' => 'Audio',
+        'video' => 'Videos',
+        'article' => 'Articles',
+        'researchPaper' => 'Research Papers',
+        'tutorial' => 'Tutorials',
     ],
     'library_type_message' => [
-        'E-books' => 'Explore our collection of e-books covering various topics and genres.',
-        'Research Papers' => 'Access a wide range of research papers from different fields and disciplines.',
-        'Tutorials' => 'Find step-by-step tutorials to help you learn new skills and techniques.',
-        'Case Studies' => 'Read detailed case studies that provide insights into real-world scenarios.',
-        'White Papers' => 'Discover in-depth white papers on industry trends and best practices.',
+        'ebook' => 'Explore our collection of e-books covering various topics in therapeutic nutrition. Download and read at your convenience.',
+        'audio' => 'Listen to our audio resources, including podcasts and audiobooks, to enhance your knowledge on the go.',
+        'video' => 'Watch informative videos and tutorials on therapeutic nutrition, presented by experts in the field.',
+        'article' => 'Read insightful articles on the latest research and trends in therapeutic nutrition.',
+        'researchPaper' => 'Access a variety of research papers to stay updated with scientific advancements in therapeutic nutrition.',
+        'tutorial' => 'Follow step-by-step tutorials to learn new skills and techniques in therapeutic nutrition.',
     ],
 
     'library_status' => [
@@ -110,5 +112,5 @@ return [
         'published' => 'This library item is published and available for access by users.',
         'archived' => 'This library item has been archived and is no longer actively maintained or updated.',
     ],
-    
+
 ];

@@ -36,4 +36,6 @@ return [
     'You_have_already_purchased_this_item' => 'You have already purchased this :item.',
     'item' => 'item',
     'event' => 'event',
+    'membership' => 'membership',
+    'library' => 'resource',
 ];

@@ -64,6 +64,10 @@ class Membership extends Model
         return $this->discounted_price && $this->discounted_price > 0 && $this->discounted_price < $this->price;
     }
 
+    public static function payableType(): string
+    {
+        return self::class;
+    }
     // ترجع نسبة الخصم اذا كانت العضوية مخفضة السعر
     public function getPrecentageDiscountAttribute(): ?int
     {

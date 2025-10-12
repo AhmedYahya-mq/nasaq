@@ -14,29 +14,28 @@
     </div>
 
     {{-- العنوان والتاريخ والموقع --}}
-    <div class="flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 sm:space-y-2 col-span-2">
+    <header class="flex flex-col items-center lg:items-start text-center lg:text-left space-y-4 sm:space-y-2 col-span-2">
         <div
             class="relative overflow-hidden bg-primary/10 p-5 sm:p-2 rounded-2xl shadow-inner transition-transform duration-500 w-full
             before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-primary/20 dark:before:via-white/20 before:to-transparent
                    before:-translate-x-full group-hover:before:translate-x-full before:transition-transform before:duration-700
             ">
-            <h3 class="text-2xl lg:text-2xl font-extrabold rtl:text-right text-primary drop-shadow">
+            <h2 class="text-2xl lg:text-2xl font-extrabold rtl:text-right text-primary drop-shadow" itemprop="name">
                 {{ $event->title }}
-            </h3>
+            </h2>
         </div>
-        <p
+        <section
             class="text-base md:text-base lg:text-xl text-muted-foreground leading-relaxed font-medium flex flex-wrap justify-center lg:justify-start gap-x-2">
-            <span class="inline-flex items-center gap-1">
+            <span class="inline-flex items-center gap-1" itemprop="startDate" content="{{ \Carbon\Carbon::parse($event->start_at)->toIso8601String() }}">
                 <span class="text-xl md:text-lg lg:text-xl">🗓️</span>
                 <span>{{ \Carbon\Carbon::parse($event->start_at)->translatedFormat('d F Y') }}</span>
             </span>
-            {{-- clock --}}
             <span class="inline-flex items-center gap-1">
                 <span class="text-xl md:text-lg lg:text-xl">⏰</span>
                 <span>{{ \Carbon\Carbon::parse($event->start_at)->translatedFormat('h:i A') }}</span>
             </span>
             @if ($event->event_type->isVirtual())
-                <span class="inline-flex items-center gap-1">
+                <span class="inline-flex items-center gap-1" itemprop="eventType">
                     <span class="text-xl md:text-lg lg:text-xl">
                         <x-ui.icon :name="$event->event_method->icon()" class="size-6" />
                     </span>
@@ -46,20 +45,19 @@
                 </span>
             @else
                 @if ($event->address)
-                    <span class="inline-flex items-center gap-1">
+                    <span class="inline-flex items-center gap-1" itemprop="location" itemscope itemtype="http://schema.org/Place">
                         <span class="text-xl md:text-lg lg:text-xl">
                             <x-ui.icon name="map-pin" class="size-6 fill-primary *:fill-primary" />
                         </span>
-                        <span>{{ $event->address }}</span>
+                        <span itemprop="address">{{ $event->address }}</span>
                     </span>
                 @endif
             @endif
-        </p>
-    </div>
+        </section>
+    </header>
 
     {{-- العداد + الزر --}}
-    <div
-        class="flex flex-col items-center lg:items-end text-center lg:text-right space-y-6 sm:space-y-3 justify-center col-span-1">
+    <section class="flex flex-col items-center lg:items-end text-center lg:text-right space-y-6 sm:space-y-3 justify-center col-span-1">
         <div class="w-full flex justify-center lg:justify-end">
             <div class="w-full max-w-xs lg:scale-[85%] lg:text-sm">
                 <x-events.countdown :date="$event->start_at" />
@@ -72,16 +70,18 @@
                    before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent
                    before:-translate-x-full group-hover:before:translate-x-full before:transition-transform before:duration-700
                    focus:outline-none focus:ring-2 focus:ring-primary
-                   active:scale-95">
+                   active:scale-95"
+            itemprop="url">
             <div class="flex gap-2 items-center justify-center">
                 <span>
                     {{ __('events.buttons.now_registration') }}
                 </span>
                 @if (!$event->isFree())
-                    <div class="flex flex-col items-center justify-center">
+                    <div class="flex flex-col items-center justify-center" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                         <div class="text-center flex">
-                            <div class="text-[16px] font-bold leading-tight">{{ $event->final_price }}</div>
+                            <div class="text-[16px] font-bold leading-tight" itemprop="price">{{ $event->final_price }}</div>
                             <x-ui.icon name="riyal" class="inline h-4 w-4" />
+                            <meta itemprop="priceCurrency" content="SAR" />
                         </div>
                         @if ($event->isDiscounted())
                             <div class="text-center flex text-muted-foreground line-through">
@@ -93,10 +93,10 @@
                 @endif
             </div>
         </a>
-    </div>
+    </section>
     @if ($event->isDiscounted())
         <div class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">
             خصم
         </div>
     @endif
-</div>
+</article>

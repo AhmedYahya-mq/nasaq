@@ -11,6 +11,12 @@ return [
     'download_button' => 'Download',
     'free' => 'Free',
 
+    'author' => 'Author',
+    'publish_date' => 'Publish Date',
+    'type' => 'Type',
+    'new' => 'New',
+    'by' => 'By',
+
     // Filters
     'all' => 'All',
     'book' => 'Books',
@@ -33,4 +39,12 @@ return [
 
     'communication_presentation_title' => 'Effective Communication with Patients',
     'communication_presentation_desc' => 'A presentation containing practical and direct tips.',
+    'download_not_allowed' => 'You are not allowed to download this resource. Please purchase the resource first.',
+    'messages' => [
+        'not_found' => 'The resource is not found or has been deleted.',
+        'login_required' => 'Please log in to access this resource.',
+        'already_registered' => 'You have already registered for this resource. You can access it from your profile.',
+        'requires_payment' => 'This resource requires payment to access. Please complete the purchase.',
+    ],
+    'downloaded' => 'Downloaded'
 ];

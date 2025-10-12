@@ -45,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
 
             // Event
             \App\Contract\User\Response\EventResponse::class => \App\Http\Responses\User\EventResponse::class,
+            \App\Contract\User\Response\EventRegistrationResponse::class => \App\Http\Responses\User\EventRegistrationResponse::class,
 
             // Library
             \App\Contract\User\Response\LibraryResponse::class => \App\Http\Responses\User\LibraryResponse::class,
@@ -69,6 +70,9 @@ class AppServiceProvider extends ServiceProvider
 
             // Event
             \App\Contract\User\Request\EventRequest::class => \App\Http\Requests\User\EventRequest::class,
+
+            // Library
+            \App\Contract\User\Request\LibraryRequest::class => \App\Http\Requests\User\LibraryRequest::class,
         ];
         $bindingResources = [
             // Membership
@@ -108,6 +112,10 @@ class AppServiceProvider extends ServiceProvider
 
             // Membership Application
             \App\Contract\Actions\MembershipRequestAction::class => \App\Actions\User\MembershipRequestAction::class,
+
+            // Library
+            \App\Contract\Actions\FileLibraryHandler::class => \App\Actions\User\FileLibraryHandler::class,
+            \App\Contract\Actions\FileLibraryDownload::class => \App\Actions\User\FileLibraryDownload::class,
         ];
 
         $bindings = array_merge($bindingResponses, $bindingRequests, $bindingResources, $bindingActions);
