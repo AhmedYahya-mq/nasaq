@@ -4,6 +4,8 @@ import membershipApplications from './membershipApplications'
 import members from './members'
 import blogs from './blogs'
 import events from './events'
+import event from './event'
+import library from './library'
 import profile from './profile'
 import password from './password'
 import twoFactor from './two-factor'
@@ -551,7 +553,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     events.form = eventsForm
 /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
 export const library = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -566,7 +568,7 @@ library.definition = {
 
 /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
 library.url = (options?: RouteQueryOptions) => {
@@ -575,7 +577,7 @@ library.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
 library.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -584,7 +586,7 @@ library.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
 library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -594,7 +596,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
     const libraryForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -604,7 +606,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
         libraryForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -613,7 +615,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\User\LibraryController::library
- * @see app/Http/Controllers/User/LibraryController.php:11
+ * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/admin/library'
  */
         libraryForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -917,6 +919,7 @@ membershipApplications,
 members,
 blogs,
 events,
+event,
 library,
 profile,
 password,

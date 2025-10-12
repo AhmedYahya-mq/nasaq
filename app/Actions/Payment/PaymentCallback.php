@@ -30,9 +30,13 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
         if ($this->payment->payable instanceof \App\Models\Membership) {
             $this->isSubscription = true;
         }
+
         if ($this->payment->payable instanceof \App\Models\Event) {
-            // create event registration
             $this->registerUserToEvent();
+        }
+
+        if ($this->payment->payable instanceof \App\Models\Library) {
+            $this->savedUserToLibrary();
         }
     }
 
@@ -45,6 +49,15 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
         }
         EventRegistration::registerUserToEvent($event->id, $user->id);
     }
+
+    protected function savedUserToLibrary(): bool
+    {
+        $res = $this->payment->payable;
+        $user = $this->payment->user;
+        $is_saved = $res->savedUser($user->id, $this->payment->id);
+        return $is_saved;
+    }
+
     protected function resolvePayment(?string $moyasarId): void
     {
         $this->payment = Payment::where('moyasar_id', $moyasarId)->first();

@@ -44,6 +44,7 @@ interface EventRegistration {
     joined_at?: string;
     join_ip?: string | null;
     join_link?: string | null;
+    is_attended: boolean;
     created_at: string;
 }
 

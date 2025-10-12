@@ -55,8 +55,23 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
     Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
     Route::put('events/{event}/toggle-featured', [EventController::class, 'toogleFutured'])->name('events.toggleFeatured');
 
+    // Event Registration Routes
+    Route::get('event-registrations/{id}', [\App\Http\Controllers\User\EventRegistrationController::class, 'index'])->name('event.registrations');
+    Route::put('event-registrations/{registration}/toggle-attendance', [\App\Http\Controllers\User\EventRegistrationController::class, 'toogleAttendance'])->name('event.registrations.toggleAttendance');
+
     // library Routes
     Route::get('library', [LibraryController::class, 'index'])->name('library');
+    Route::post('library', [LibraryController::class, 'store'])->name('library.store');
+    Route::put('library/{res}', [LibraryController::class, 'update'])->name('library.update');
+    Route::put('library/{res}/translation', [LibraryController::class, 'updateTranslation'])->name('library.update.translation');
+    Route::delete('library/{res}', [LibraryController::class, 'destroy'])->name('library.destroy');
+    // رفع الملف و حذفه
+    Route::post('library/upload', [LibraryController::class, 'uploadFile'])->name('library.upload');
+    Route::post('library/delete-file', [LibraryController::class, 'deleteFile'])->name('library.deleteFile');
+    // download
+    Route::get('library/download/{res}', [LibraryController::class, 'download'])->name('library.download');
+    Route::post('library/upload-chunk', [LibraryController::class, 'uploadChunk'])->name('library.stream');
+    Route::get('library/upload-chunk', [LibraryController::class, 'checkUploadedChunks'])->name('library.checkUploadedChunks');
 });
 
 require __DIR__ . '/settings.php';
