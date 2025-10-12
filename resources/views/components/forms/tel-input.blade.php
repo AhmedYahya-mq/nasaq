@@ -10,7 +10,7 @@
         name="{{ $name }}_display"
         value="{{ $value }}"
         {{ $attributes }}
-        label="{{ $label ?? 'رقم الهاتف' }}"
+        label="{{ $label ?? __('about.contact_section.form.phone') }}"
         x-ref="input"
         class="w-full border rounded p-2"
     />

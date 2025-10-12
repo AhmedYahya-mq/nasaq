@@ -1,5 +1,3 @@
-{{-- resources/views/components/membership-card.blade.php --}}
-
 @push('scripts')
     @vite(['resources/js/pages/print.js'])
     <style>
@@ -212,4 +210,7 @@
                 <span> تنزيل البطاقة pdf</span>
             </button>
         </div>
+        {{-- الشهادة   --}}
+        <x-membership.certificate-hostinger-style :user="$user" />
 </div>
+

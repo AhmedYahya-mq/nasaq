@@ -30,18 +30,18 @@
                     {{ $user->membership_status->label() }}
                 </span>
                 <br>
-                <small>تنتهي في: {{ $user->membership_expires_at->format('d/m/Y') }}</small>
+                <small>{{ __('header.expires_in') }}: {{ $user->membership_expires_at->format('d/m/Y') }}</small>
             @elseif($hasDraftApplication)
                 {{-- حالة الدفع ولكن لم يقدم الطلب بعد --}}
                 <span class="text-sm font-medium text-primary">
-                    <span>{{ $draftMembershipName ?? 'طلب عضوية قيد الإعداد' }}</span>
+                    <span>{{ $draftMembershipName ?? __('header.membership_request_draft') }}</span>
                     {{-- status --}}
                     <span class="badget badget-[#B0B0B0] px-2 py-1 rounded-md text-xs font-medium ">
                         {{ $draftApplication->status->Holded() }}
                     </span>
                 </span>
             @else
-                عضوية عادي
+                {{ __('header.membership_regular') }}
             @endif
         </p>
 
@@ -50,19 +50,19 @@
             @if ($user->membership_id && !$user->membership->isHigherLevelThan())
                 <a href="#"
                     class="badget hover:badget-80 transition py-1 px-3 rounded-md hover:bg-secondary/60 cursor-pointer text-sm">
-                    ترقية العضوية
+                    {{ __('header.upgrade_membership') }}
                 </a>
             @elseif (!$user->membership_id && !$hasDraftApplication)
                 <a href="{{ route('client.memberships') }}"
                     class="badget hover:badget-80 transition py-1 px-3 rounded-md hover:bg-secondary/60 cursor-pointer text-sm">
-                    الاشتراك بعضوية
+                    {{ __('header.subscribe_membership') }}
                 </a>
             @elseif($hasDraftApplication)
                 <div class="mt-2 text-sm text-muted-foreground">
-                    طلبك لم يُقدّم بعد <br>
+                    {{ __('header.your_request_has_not_been_submitted') }} <br>
                     <a href="{{ route('client.membership.request', ['application' => $draftApplication]) }}"
                         class="text-primary hover:underline">
-                        أكمل تقديم الطلب
+                        {{ __('header.complete_request') }}
                     </a>
                 </div>
             @endif

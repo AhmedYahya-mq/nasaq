@@ -22,25 +22,7 @@
 
             <div class="">
                 {{-- العمود الأول: الفعاليات القادمة --}}
-                <div class="">
-                    <h2 class="text-2xl  w-full font-bold mb-8 text-foreground drop-shadow">
-                        {{ __('events.page_titles.upcoming_events') }}
-                    </h2>
-                    {{-- البطاقة العمودية: كل بطاقة فوق الأخرى --}}
-                    <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-4 mb-24 items-start auto-rows-fr">
-                        <x-events.event-card title="{{ __('events.event_titles.october_meeting') }}" type="zoom"
-                            date="2025-10-15" time="08:00 {{ __('events.time.evening') }}"
-                            url="https://zoom.us/register/next-month" />
-
-                        <x-events.event-card title="{{ __('events.event_titles.riyadh_meeting') }}" type="in_person"
-                            date="2025-11-05" time="06:30 {{ __('events.time.evening') }}"
-                            url="https://forms.gle/riyadh-meeting" />
-
-                        <x-events.event-card title="{{ __('events.event_titles.research_workshop') }}" type="workshop"
-                            date="2025-12-01" time="04:00 {{ __('events.time.evening') }}"
-                            url="https://forms.gle/research-workshop" />
-                    </div>
-                </div>
+               <x-events.list-events/>
 
             </div>
         </div>

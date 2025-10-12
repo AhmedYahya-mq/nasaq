@@ -8,7 +8,7 @@
             class="text-primary font-medium hover:underline absolute bottom-2 left-1/2 -translate-1/2 grid gap-0.5
                 grid-cols-[auto_auto] place-items-center">
             <x-ui.icon name="arrow-long-right" class="size-5 ltr:order-2" />
-            <span>اقرأ المزيد</span>
+            <span>{{__('blog.read_more')}}</span>
         </a>
     </div>
 </div>

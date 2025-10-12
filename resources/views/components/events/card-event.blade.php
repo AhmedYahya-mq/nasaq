@@ -5,7 +5,7 @@
     <div class="absolute inset-0 bg-gradient-to-br from-background/50 via-card to-primary/5 opacity-80"></div>
 
     <!-- شارة الفئة -->
-    <div class="absolute top-4 right-4 z-20">
+    <div class="absolute top-4 left-4 z-20">
         @php
             $badgeColor = $event->event_type->isVirtual()
                           ? $event->event_method->color()
