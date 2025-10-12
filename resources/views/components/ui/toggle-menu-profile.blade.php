@@ -34,7 +34,7 @@
             [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
             <a href="{{ route('client.profile') }}" class="flex items-center gap-2 w-full text-foreground">
                 <x-ui.icon name="user" class="size-5" />
-                <span>الملف الشخصي</span>
+                <span>{{ __('header.profile') }}</span>
             </a>
         </div>
         <form method="POST" action="{{ route('logout') }}">
@@ -47,7 +47,7 @@
                         -sm outline-hidden select-none data-[disabled]:pointer-events-none data-[inset]:pl-8
                         [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
                 <x-ui.icon name="logout" class="size-5" />
-                <input id="logout" type="submit" value="تسجيل الخروج" class="bg-transparent cursor-pointer w-full rtl:text-right">
+                <input id="logout" type="submit" value=" {{__('header.logout')}}" class="bg-transparent cursor-pointer w-full rtl:text-right">
             </label>
         </form>
     </div>

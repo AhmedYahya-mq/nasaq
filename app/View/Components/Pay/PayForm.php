@@ -17,7 +17,7 @@ class PayForm extends Component
     {
 
         if (session('payable_type') !== 'App\Models\Membership') {
-            $this->item = session('payable_type')::withTranslations()->find(session('payable_id'));
+            $this->item = session('payable_type')::find(session('payable_id'));
             return;
         }
         $this->item = session('payable_type')::find(session('payable_id'));

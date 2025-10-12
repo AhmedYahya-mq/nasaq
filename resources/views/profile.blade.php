@@ -1,4 +1,4 @@
-<x-layouts.guest-layout title="الملف الشخصي">
+<x-layouts.guest-layout title="{{ __('profile.title') }}">
 
     @push('scripts')
         @vite(['resources/js/pages/profile.js'])
@@ -12,15 +12,15 @@
             <div class="flex flex-col">
                 <x-tabs class="w-full" default="{{ request()->get('tab', 'membership') }}">
                     <x-slot:header>
-                        <x-tabs.tab-button id="personalInfo" label="المعلومات الشخصية" />
-                        <x-tabs.tab-button id="library" label="مكتبتي" />
-                        <x-tabs.tab-button id="events" label="الفعاليات" />
+                        <x-tabs.tab-button id="personalInfo" label="{{ __('header.personal_info') }}" />
+                        <x-tabs.tab-button id="library" label="{{ __('header.library') }}" />
+                        <x-tabs.tab-button id="events" label="{{ __('header.events') }}" />
                         @if (auth()->user()->currentMemberships())
-                            <x-tabs.tab-button id="membership" label="عضويتي " />
+                            <x-tabs.tab-button id="membership" label="{{ __('header.membership') }}" />
                         @endif
-                        <x-tabs.tab-button id="requests" label="الطلبات" />
-                        <x-tabs.tab-button id="changePassword" label="تغير كلمة المرور" />
-                        <x-tabs.tab-button id="security" label="الأمان" />
+                        <x-tabs.tab-button id="requests" label="{{ __('header.requests') }}" />
+                        <x-tabs.tab-button id="changePassword" label="{{ __('header.change_password') }}" />
+                        <x-tabs.tab-button id="security" label="{{ __('header.security') }}" />
                     </x-slot:header>
                     <x-tabs.tab id="personalInfo">
                         <x-tab.tab-profile />

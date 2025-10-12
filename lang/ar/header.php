@@ -12,6 +12,26 @@ return [
     'description_archives' => 'تصفح أرشيف مقالاتنا ومواردنا',
     'archive' => 'تفاصيل الأرشيف',
     'discover' => 'أكتشف',
+    'login'=>'تسجيل الدخول',
+    'profile'=>'الملف  الشخصي',
+    'logout'=>'تسجيل الخروج',
+    'personal_info'=>'المعلومات الشخصية',
+    'membership'=>'عضويتي',
+    'requests'=>'الطلبات',
+    'change_password'=>'تغير كلمة المرور',
+    'security'=>'الأمان',
+    'library'=>'مكتبتي',
+    'events'=>'الفعاليات',
+    'expires_in'=>'تنتهي في',
+    'membership_request_draft'=>'طلب عضوية قيد الإعداد',
+    'membership_regular'=>'عضوية عادية',
+    'upgrade_membership'=>'ترقية العضوية',
+    'subscribe_membership'=>'الاشتراك بعضوية',
+    'your_request_has_not_been_submitted'=>'طلبك لم يُقدّم بعد',
+    'complete_request'=>'أكمل تقديم الطلب',
+
+
+
 
     'features' => 'الميزات',
     'design' => 'التصميم',

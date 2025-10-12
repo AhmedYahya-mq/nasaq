@@ -8,18 +8,21 @@
             <h3 class="text-lg font-semibold text-primary">{{ __('messages.nsasq') }}</h3>
         </a>
         <div class="flex flex-wrap justify-center space-x-4 mt-4 md:mt-0">
-            <a href="{{ route('client.home') }}" class="text-muted-foreground hover:text-primary transition">الرئيسية</a>
-            <a href="{{ route('client.blog') }}"
-                class="text-muted-foreground hover:text-primary transition">المدونات</a>
-            <a href="{{ route('client.events') }}"
-                class="text-muted-foreground hover:text-primary transition">الفعاليات</a>
-            <a href="{{ route('client.library') }}" class="text-muted-foreground hover:text-primary transition">المكتبة
-                الرقمية</a>
-            <a href="{{ route('client.archives') }}"
-                class="text-muted-foreground hover:text-primary transition">الأرشيف</a>
-            <a href="{{ route('client.about') }}" class="text-muted-foreground hover:text-primary transition">من نحن</a>
-            <a href="{{ route('client.memberships') }}"
-                class="text-muted-foreground hover:text-primary transition">العضويات</a>
+            <a href="{{ route('client.home') }}"
+                class="text-muted-foreground hover:text-primary transition">{{ __('header.home') }}</a>
+            <a href="{{ route('client.blog') }}" class="text-muted-foreground hover:text-primary transition">
+                {{ __('header.blogs') }}</a>
+            <a href="{{ route('client.events') }}" class="text-muted-foreground hover:text-primary transition">
+                {{ __('header.events') }}</a>
+            <a href="{{ route('client.library') }}" class="text-muted-foreground hover:text-primary transition">
+                {{ __('header.library') }}
+            </a>
+            <a href="{{ route('client.archives') }}" class="text-muted-foreground hover:text-primary transition">
+                {{ __('header.archives') }}</a>
+            <a href="{{ route('client.about') }}" class="text-muted-foreground hover:text-primary transition">
+                {{ __('header.about') }}</a>
+            <a href="{{ route('client.memberships') }}" class="text-muted-foreground hover:text-primary transition">
+                {{ __('header.memberships') }}</a>
         </div>
     </div>
 

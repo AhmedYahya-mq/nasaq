@@ -14,7 +14,7 @@
                     <!-- البطاقة -->
                     <div class="rounded-lg shadow-sm border  p-5">
                         <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-bold text-sm">طلب #{{ $membershipApplication->id }}</h3>
+                            <h3 class="font-bold text-sm">{{__('profile.request')}} #{{ $membershipApplication->id }}</h3>
                             <span
                                 class="px-3 py-1 text-xs rounded-full badget approved:dark:text-white canceled:dark:text-white pending:badget-60 light:pending:!text-[#e1a900]"
                                 style="--badget-color: {{ $membershipApplication->status->color() }};">
@@ -24,18 +24,18 @@
 
                         <div class="space-y-2 text-sm">
                             <div>
-                                <span class="font-semibold">نوع العضوية:</span>
+                                <span class="font-semibold">{{__('profile.membership_type')}}:</span>
                                 {{ $membershipApplication->membershipType }}
                             </div>
                             <div>
-                                <span class="font-semibold">تاريخ التقديم:</span>
+                                <span class="font-semibold">{{__('profile.application_date')}}:</span>
                                 {{ $membershipApplication->created_at->locale($locale)->isoFormat('LLL') }}
                             </div>
                             @if ($membershipApplication->status->isDreft())
                                 <div class="mt-3 absolute bottom-5 rtl:left-12 ltr:-right-3">
                                     <a href="{{ route('client.membership.request', ['application' => $membershipApplication]) }}"
                                         class="inline-block px-2 py-1 text-sm font-medium badget-50  border rounded-md shadow-sm hover:badget-40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                                        أكمل الطلب
+                                        {{__('profile.complete_request')}}
                                     </a>
                                 </div>
                             @endif
@@ -44,14 +44,14 @@
                         @if ($membershipApplication->admin_notes && !$membershipApplication->status->isPending())
                             <div class="mt-3 rounded-md border border-orange-400 bg-orange-400/10 p-3 text-sm">
                                 <div>
-                                    <span class="font-semibold text-orange-500">📌 ملاحظة:</span>
-                                    <p class="mt-1">{{ $membershipApplication->admin_notes ?? 'لا توجد ملاحظات' }}</p>
+                                    <span class="font-semibold text-orange-500">📌 {{__('profile.note')}}:</span>
+                                    <p class="mt-1">{{ $membershipApplication->admin_notes ?? __('profile.no_notes') }}</p>
                                 </div>
                                 @if ($membershipApplication->status->isRejected() && !$membershipApplication->is_resubmit)
                                     <div class="mt-2 flex justify-end">
                                         <a href="{{ route('client.membership.resubmit', ['application' => $membershipApplication]) }}"
                                             class="inline-block px-4 py-2 text-sm font-medium badget-50 badget-orange-400 light:badget-text-orange-500 border rounded-md shadow-sm hover:badget-40 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                                            أعد التقديم
+                                            {{__('profile.resubmit_request')}}
                                         </a>
                                     </div>
                                 @endif
@@ -62,7 +62,7 @@
                 </div>
             @empty
                 <div class="text-center text-[var(--muted-foreground)] p-6">
-                    🚀 لا توجد طلبات حالياً
+                    🚀 {{__('profile.no_requests_found')}}
                 </div>
             @endforelse
             <div class="mt-4">

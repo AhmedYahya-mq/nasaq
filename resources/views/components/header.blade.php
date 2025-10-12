@@ -21,7 +21,7 @@
             @else
                 <a href="{{ route('login') }}"
                     class="badget-70 hover:badget-80 transition relative md:px-4 px-2 py-1 shadow rounded-xl flex-center">
-                    تسجيل الدخول
+                    {{ __('header.login') }}
                 </a>
             @endauth
             <div class="flex-center gap-x-1">
