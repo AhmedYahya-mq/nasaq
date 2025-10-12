@@ -66,4 +66,12 @@ return [
     'save_amount' => 'Save :amount SAR',
     // Get 12 months for US$ 124.32 (regular price US$ 575.52). Renewing at US$ 10.99/month.
     'discounted_price_note' => 'Get :months months for :discounted_price SAR (regular price :regular_price SAR). Renewing at :regular_price SAR/month.',
+
+    // Membership Request Successful Page
+    'Request Successful' => 'Membership Request Submitted Successfully',
+    'Thank you, :name! Your membership request has been submitted successfully.' => 'Thank you, :name! Your membership request has been submitted successfully and will be reviewed shortly.',
+    'Guest' => 'Guest',
+    'Membership Type' => 'Membership Type', 
+    'Submitted At' => 'Submitted At',
+    'Status' => 'Status',
 ];

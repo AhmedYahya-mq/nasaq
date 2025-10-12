@@ -190,7 +190,14 @@ return [
         'cc_type' => 'نوع البطاقة',
         'cvc' => 'CVC',
         'cc_expiry'=> 'تاريخ انتهاء البطاقة',
-
+        'file' => 'الملف',
+        'event_type' => 'نوع الحدث',
+        'event_method' => 'طريقة الحدث',
+        'event_category' => 'تصنيف الحدث',
+        'start_at' => 'تاريخ ووقت بدء الحدث',
+        'link' => 'رابط الحدث',
+        'capacity' => 'السعة',
+        'accepted_membership_ids' => 'العضويات المقبولة'
     ],
 
 ];

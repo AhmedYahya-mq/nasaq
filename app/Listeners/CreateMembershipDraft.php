@@ -12,10 +12,10 @@ class CreateMembershipDraft
     {
         $payment = $event->payment;
         if (!$payment->isPaid() || $payment->payable_type !== \App\Models\Membership::class) {
-            throw new \Exception("Payment is not for membership or not paid yet.");
+            return null;
         }
         $membershipId = $payment->payable_id;
-        MembershipApplication::firstOrCreate(
+        $app = MembershipApplication::firstOrCreate(
             [
                 'user_id' => $payment->user_id,
                 'membership_id' => $membershipId,
@@ -27,5 +27,6 @@ class CreateMembershipDraft
                 'employment_status' => $payment->user->employment_status,
             ]
         );
+        return $app;
     }
 }

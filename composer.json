@@ -12,6 +12,7 @@
         "php": "^8.2",
         "ahmed/gallery-images": "dev-main",
         "bensampo/laravel-enum": "^6.12",
+        "endroid/qr-code": "^6.0",
         "inertiajs/inertia-laravel": "^2.0",
         "intervention/image": "^3.11",
         "laravel-validation-rules/credit-card": "^1.10",

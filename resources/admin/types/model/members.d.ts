@@ -22,6 +22,9 @@ export interface Members{
     membership_started_at?: string | null;
     membership_active?: boolean;
     employment_status?: MembershipAppEmploymentStatus;
+    national_id?: string | null;
+    current_employer?: string | null;
+    scfhs_number?: string | null;
     membership_Application?: MembershipApplication; 
     membership_Applications_count?: number;
     remaining_days?: number | null;

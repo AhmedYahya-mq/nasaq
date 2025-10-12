@@ -1,30 +1,26 @@
-<section class="py-16 md:py-24 bg-gradient-to-b from-background to-muted/30">
+<section class="bg-gradient-to-b from-background to-muted/30">
     <div class="container mx-auto max-w-2xl px-4">
-
         <div class="mt-16 bg-card border border-border shadow-2xl shadow-primary/10 rounded-3xl overflow-hidden">
-
-
             <div class="p-8 md:p-10 bg-gradient-to-r from-primary/5 to-accent/5 border-b border-border text-center">
                 <h2 class="text-xl md:text-2xl font-bold text-foreground">{{ __('memberships.form_header.title') }}</h2>
                 <p class="text-muted-foreground mt-3 text-base max-w-md mx-auto">
                     {{ __('memberships.form_header.subtitle') }}
                 </p>
             </div>
-
             <!-- جسم الفورم -->
-            <form action="" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
+            <form action="{{ route('client.membership.request', ['application' => $application]) }}" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
+                @csrf
                 <div class="space-y-10">
-
                     <!-- المجموعة الأولى: البيانات الشخصية -->
                     <fieldset class="space-y-6">
                         <legend class="text-lg font-semibold text-foreground pb-3 border-b-2 border-primary/20 w-full">
                             {{ __('memberships.personal_info.title') }}
                         </legend>
-                        <x-forms.input name="full_name" :value="$user->name" :label="__('memberships.personal_info.full_name')" required />
+                        <x-forms.input name="name" :value="$user->name" :label="__('memberships.personal_info.full_name')" required />
                         <x-forms.input name="email" type="email" :value="$user->email" :label="__('memberships.personal_info.email')" required />
                         <x-forms.tel-input name="phone" :value="$user->phone" :label="__('memberships.personal_info.phone')" placeholder="05xxxxxxxx"
                             required />
-                        <x-forms.input name="national_id" :value="old('national_id', $application->application)" :label="__('memberships.personal_info.id_number')" required />
+                        <x-forms.input name="national_id" :value="old('national_id')" :label="__('memberships.personal_info.id_number')" required />
                     </fieldset>
 
                     <!-- المجموعة الثانية: المعلومات المهنية -->
@@ -32,7 +28,7 @@
                         <legend class="text-lg font-semibold text-foreground pb-3 border-b-2 border-primary/20 w-full">
                             {{ __('memberships.professional_info.title') }}
                         </legend>
-                        <x-forms.select id="employment_status" name="employment_status" :value="old('employment_status', $user->employment_status->value ?? '')" :
+                        <x-forms.select id="employment_status" name="employment_status" :value="old('employment_status', $user->employment_status->value ?? '')"
                             label="الحالة الوظيفية" :options="\App\Enums\EmploymentStatus::toKeyValueArray()" />
                         <x-forms.input name="job_title" :value="$user->job_title" :label="__('memberships.professional_info.job_title')" required />
                         <x-forms.input name="current_employer" :value="old('current_employer', $application->current_employer)" :label="__('memberships.professional_info.workplace')" />
@@ -41,9 +37,9 @@
 
                     <!-- المجموعة الثالثة: إثبات التسجيل (التصميم النهائي) -->
                     <fieldset>
-                        <x-forms.file-upload name="payment_proof" :title="__('memberships.proof.title')" :subtitle="__('memberships.proof.upload_subtitle')"
-                            :server="route('upload')" required />
-                        @error('payment_proof')
+                        <x-forms.file-upload name="file" :title="__('memberships.proof.title')" :subtitle="__('memberships.proof.upload_subtitle')"
+                             maxFiles="5" multiple='true' required />
+                        @error('file')
                             <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
                         @enderror
                     </fieldset>

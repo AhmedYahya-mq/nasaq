@@ -44,12 +44,12 @@ return [
         'scfhs_number'         => 'رقم هيئة التخصصات الصحية',
     ],
 
-     // == مفاتيح مكون رفع الملفات (التصميم الاحترافي) ==
+    // == مفاتيح مكون رفع الملفات (التصميم الاحترافي) ==
     'upload' => [
         'default_title'           => 'إرفاق المستندات',
         'default_subtitle'        => 'ارفع الملفات المطلوبة هنا.',
         'drop_or_click'           => 'اسحب الملف إلى هنا أو <span class="filepond--label-action"> تصفح جهازك </span>',
-        'supported_files_detailed'=> 'يدعم الصور (PNG, JPG) و PDF (بحد أقصى :size)',
+        'supported_files_detailed' => 'يدعم الصور (PNG, JPG) و PDF (بحد أقصى :size)',
         'processing'              => 'جاري المعالجة...',
         'complete'                => 'اكتمل الرفع',
         'tap_to_undo'             => 'اضغط للتراجع',
@@ -68,5 +68,14 @@ return [
     'save_amount' => 'وفر :amount ريال سعودي',
     // احصل على 12 شهرًا مقابل 130 سنة (السعر العادي 150ريال). يتم التجديد بسعر  150 ريال/سنة.
     'discounted_price_note' => 'احصل على :months أشهر مقابل :discounted_price ريال (السعر العادي :regular_price ريال). يتم التجديد بسعر :regular_price ريال/سنة.',
-];
 
+    // == صفحة نجاح الطلب ==
+    'Request Successful' => 'تم إرسال طلب العضوية بنجاح',
+    'Thank you, :name! Your membership request has been submitted successfully.' => 'شكرًا لك :name! تم إرسال طلب العضوية بنجاح وسيتم مراجعته قريبًا.',
+    'Guest' => 'زائر',
+    'Membership Type' => 'نوع العضوية',
+    'Submitted At' => 'تاريخ الإرسال',
+    'Status' => 'الحالة',
+    'Pending Review' => 'بانتظار المراجعة',
+    'Go to Homepage' => 'الذهاب إلى الصفحة الرئيسية',
+];

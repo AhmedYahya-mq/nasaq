@@ -2,7 +2,7 @@
 
 return [
 
-     'page_titles' => [
+    'page_titles' => [
         'main' => 'Meetings and Events',
         'subtitle' => 'Discover our upcoming and past events, and be part of the "Nasaq" community that connects you with experts and practical workshops.',
         'upcoming_events' => 'Upcoming Events',
@@ -26,8 +26,8 @@ return [
     ],
 
 
-      // archive-card
-        'archive_card' => [
+    // archive-card
+    'archive_card' => [
         'archive_tag' => 'Archive',
         'view_files' => 'View Files',
         'view_recording' => 'View Recording',
@@ -37,15 +37,33 @@ return [
     ],
 
 
-      'calendar' => [
+    'calendar' => [
         'today_events' => 'Today\'s Events',
         'no_events' => 'No events for this day.',
+        'events_for' => 'Events for',
         'close' => 'Close',
         'day_names' => [
-            'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
+            'Sun',
+            'Mon',
+            'Tue',
+            'Wed',
+            'Thu',
+            'Fri',
+            'Sat'
         ],
         'month_names' => [
-            'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
         ],
         'default_titles' => [
             'monthly_zoom' => 'Monthly Zoom Meeting',
@@ -55,27 +73,43 @@ return [
     ],
 
 
-        'highlighted_event' => [
-        'default_title' => '📹 Monthly Virtual Meeting',
-        'default_location' => '📍 Conference Hall - Jeddah',
-        'register_now_button' => 'Register Now',
-    ],
-        'countdown' => [
+    'countdown' => [
         'days' => 'Days',
         'hours' => 'Hours',
         'minutes' => 'Minutes',
         'seconds' => 'Seconds',
     ],
 
-
-    'types' => [
-        'zoom' => 'Zoom',
-        'in_person' => 'In-person',
-        'workshop' => 'Workshop',
+    'buttons' => [
+        'past' => 'Watch Recording',
+        'pay_registration' => 'Pay',
+        'free_registration' => 'Registration',
+        'now_registration' => 'Register Now',
     ],
 
-    'button' => [
-        'past' => 'Watch Recording',
+    'labels' => [
+        'free' => 'Free',
+        'paid' => 'Paid',
+        'upcoming' => 'Upcoming',
+        'ongoing' => 'Ongoing',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+        'already_registered' => 'Already Registered',
+        // اريد يدل على لا يمكنه تسجيل الان محدد العضاء لدي عضويات معينه
+        'membership_required' => 'Insufficient Membership',
+
+    ],
+
+    'messages' => [
+        'no_upcoming_events' => 'No upcoming events at the moment. Please check back later for updates on our latest events and activities.',
+        'already_registered' => 'You have already registered for this event.',
+        'registration_success' => 'Registration successful! We look forward to your participation in the event.',
+        'payment_required' => 'This event requires payment. Please proceed to the payment page to complete your registration.',
+        'payment_success' => 'Payment successful! Your registration for the event is now confirmed.',
+        'payment_failed' => 'Payment failed. Please try again or contact support if the issue persists.',
+        'registration_successful' => 'You have successfully registered for the event.',
+        'no_upcoming_events' => 'There are no upcoming events at the moment.',
+        'membership_required'   => 'This event requires a specific membership to register. Please upgrade your membership.',
     ],
 
     'past_label' => 'Past',

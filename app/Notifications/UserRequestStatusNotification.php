@@ -21,6 +21,9 @@ class UserRequestStatusNotification extends Notification
 
     public function via($notifiable)
     {
+        if (!config('app.enable_email_notifications')) {
+            return [];
+        }
         return ['mail'];
     }
 

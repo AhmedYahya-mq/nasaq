@@ -3,6 +3,7 @@ import membership from './membership'
 import membershipApplications from './membershipApplications'
 import members from './members'
 import blogs from './blogs'
+import events from './events'
 import profile from './profile'
 import password from './password'
 import twoFactor from './two-factor'
@@ -10,7 +11,7 @@ import sessions from './sessions'
 import login from './login'
 import verification from './verification'
 /**
- * @see routes/admin.php:11
+ * @see routes/admin.php:13
  * @route '/admin/dashboard'
  */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -24,7 +25,7 @@ dashboard.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see routes/admin.php:11
+ * @see routes/admin.php:13
  * @route '/admin/dashboard'
  */
 dashboard.url = (options?: RouteQueryOptions) => {
@@ -32,7 +33,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see routes/admin.php:11
+ * @see routes/admin.php:13
  * @route '/admin/dashboard'
  */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -40,7 +41,7 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see routes/admin.php:11
+ * @see routes/admin.php:13
  * @route '/admin/dashboard'
  */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -49,7 +50,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see routes/admin.php:11
+ * @see routes/admin.php:13
  * @route '/admin/dashboard'
  */
     const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -58,7 +59,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see routes/admin.php:11
+ * @see routes/admin.php:13
  * @route '/admin/dashboard'
  */
         dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -66,7 +67,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see routes/admin.php:11
+ * @see routes/admin.php:13
  * @route '/admin/dashboard'
  */
         dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -238,7 +239,7 @@ memberships.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     memberships.form = membershipsForm
 /**
 * @see \App\Http\Controllers\MembershipApplictionController::membershipApplications
- * @see app/Http/Controllers/MembershipApplictionController.php:11
+ * @see app/Http/Controllers/MembershipApplictionController.php:14
  * @route '/admin/membershipApplications'
  */
 export const membershipApplications = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -253,7 +254,7 @@ membershipApplications.definition = {
 
 /**
 * @see \App\Http\Controllers\MembershipApplictionController::membershipApplications
- * @see app/Http/Controllers/MembershipApplictionController.php:11
+ * @see app/Http/Controllers/MembershipApplictionController.php:14
  * @route '/admin/membershipApplications'
  */
 membershipApplications.url = (options?: RouteQueryOptions) => {
@@ -262,7 +263,7 @@ membershipApplications.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\MembershipApplictionController::membershipApplications
- * @see app/Http/Controllers/MembershipApplictionController.php:11
+ * @see app/Http/Controllers/MembershipApplictionController.php:14
  * @route '/admin/membershipApplications'
  */
 membershipApplications.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -271,7 +272,7 @@ membershipApplications.get = (options?: RouteQueryOptions): RouteDefinition<'get
 })
 /**
 * @see \App\Http\Controllers\MembershipApplictionController::membershipApplications
- * @see app/Http/Controllers/MembershipApplictionController.php:11
+ * @see app/Http/Controllers/MembershipApplictionController.php:14
  * @route '/admin/membershipApplications'
  */
 membershipApplications.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -281,7 +282,7 @@ membershipApplications.head = (options?: RouteQueryOptions): RouteDefinition<'he
 
     /**
 * @see \App\Http\Controllers\MembershipApplictionController::membershipApplications
- * @see app/Http/Controllers/MembershipApplictionController.php:11
+ * @see app/Http/Controllers/MembershipApplictionController.php:14
  * @route '/admin/membershipApplications'
  */
     const membershipApplicationsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -291,7 +292,7 @@ membershipApplications.head = (options?: RouteQueryOptions): RouteDefinition<'he
 
             /**
 * @see \App\Http\Controllers\MembershipApplictionController::membershipApplications
- * @see app/Http/Controllers/MembershipApplictionController.php:11
+ * @see app/Http/Controllers/MembershipApplictionController.php:14
  * @route '/admin/membershipApplications'
  */
         membershipApplicationsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -300,7 +301,7 @@ membershipApplications.head = (options?: RouteQueryOptions): RouteDefinition<'he
         })
             /**
 * @see \App\Http\Controllers\MembershipApplictionController::membershipApplications
- * @see app/Http/Controllers/MembershipApplictionController.php:11
+ * @see app/Http/Controllers/MembershipApplictionController.php:14
  * @route '/admin/membershipApplications'
  */
         membershipApplicationsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -470,6 +471,162 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
     
     blogs.form = blogsForm
+/**
+* @see \App\Http\Controllers\User\EventController::events
+ * @see app/Http/Controllers/User/EventController.php:27
+ * @route '/admin/events'
+ */
+export const events = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: events.url(options),
+    method: 'get',
+})
+
+events.definition = {
+    methods: ["get","head"],
+    url: '/admin/events',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\User\EventController::events
+ * @see app/Http/Controllers/User/EventController.php:27
+ * @route '/admin/events'
+ */
+events.url = (options?: RouteQueryOptions) => {
+    return events.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\User\EventController::events
+ * @see app/Http/Controllers/User/EventController.php:27
+ * @route '/admin/events'
+ */
+events.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: events.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\User\EventController::events
+ * @see app/Http/Controllers/User/EventController.php:27
+ * @route '/admin/events'
+ */
+events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: events.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\User\EventController::events
+ * @see app/Http/Controllers/User/EventController.php:27
+ * @route '/admin/events'
+ */
+    const eventsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: events.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\User\EventController::events
+ * @see app/Http/Controllers/User/EventController.php:27
+ * @route '/admin/events'
+ */
+        eventsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: events.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\User\EventController::events
+ * @see app/Http/Controllers/User/EventController.php:27
+ * @route '/admin/events'
+ */
+        eventsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: events.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    events.form = eventsForm
+/**
+* @see \App\Http\Controllers\User\LibraryController::library
+ * @see app/Http/Controllers/User/LibraryController.php:11
+ * @route '/admin/library'
+ */
+export const library = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: library.url(options),
+    method: 'get',
+})
+
+library.definition = {
+    methods: ["get","head"],
+    url: '/admin/library',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\User\LibraryController::library
+ * @see app/Http/Controllers/User/LibraryController.php:11
+ * @route '/admin/library'
+ */
+library.url = (options?: RouteQueryOptions) => {
+    return library.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\User\LibraryController::library
+ * @see app/Http/Controllers/User/LibraryController.php:11
+ * @route '/admin/library'
+ */
+library.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: library.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\User\LibraryController::library
+ * @see app/Http/Controllers/User/LibraryController.php:11
+ * @route '/admin/library'
+ */
+library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: library.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\User\LibraryController::library
+ * @see app/Http/Controllers/User/LibraryController.php:11
+ * @route '/admin/library'
+ */
+    const libraryForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: library.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\User\LibraryController::library
+ * @see app/Http/Controllers/User/LibraryController.php:11
+ * @route '/admin/library'
+ */
+        libraryForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: library.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\User\LibraryController::library
+ * @see app/Http/Controllers/User/LibraryController.php:11
+ * @route '/admin/library'
+ */
+        libraryForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: library.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    library.form = libraryForm
 /**
  * @see routes/settings.php:39
  * @route '/admin/settings/appearance'
@@ -759,6 +916,8 @@ memberships,
 membershipApplications,
 members,
 blogs,
+events,
+library,
 profile,
 password,
 appearance,

@@ -17,9 +17,7 @@
 
             <div
                 class="mb-16 relative bg-gradient-to-r from-primary/20 via-background to-background rounded-xl shadow-2xl overflow-hidden border border-primary/30">
-                <x-events.highlighted-event-banner title="{{ __('events.event_titles.september_meeting') }}"
-                    date="2025-09-25 18:30:00" location="{{ __('events.event_titles.zoom_location') }}"
-                    url="https://zoom.us/register/xyz" class="rounded-xl" />
+                <x-events.event-futured class="rounded-xl" />
             </div>
 
             <div class="">

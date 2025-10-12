@@ -13,6 +13,11 @@ final class MembershipStatus extends Enum
     const Active = 'active';
     const Expired = 'expired';
 
+    public function isNone(): bool
+    {
+        return $this->value === self::None;
+    }
+
     public static function getDescription($value): string
     {
         return match ($value) {

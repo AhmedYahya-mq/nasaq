@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract\Actions\MembershipRequestAction;
+use App\Contract\User\Request\MembershipAppRequest;
 use App\Contract\User\Response\MembershipApplicationResponse;
 use App\Models\MembershipApplication;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class MembershipApplictionController extends Controller
@@ -32,5 +35,15 @@ class MembershipApplictionController extends Controller
     public function create(MembershipApplication $application)
     {
         return app(MembershipApplicationResponse::class)->toCreate($application);
+    }
+
+    public function store(MembershipAppRequest $request, MembershipApplication $application, MembershipRequestAction $action)
+    {
+        return $action->execute($request, $application);
+    }
+
+    public function resubmit(MembershipApplication $application,  MembershipRequestAction $action)
+    {
+        return $action->resubmit($application);
     }
 }

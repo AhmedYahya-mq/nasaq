@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MembershipApplictionController;
+use App\Http\Controllers\User\EventController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\Settings\ProfileController;
 use App\Http\Controllers\User\Settings\SecurityController;
@@ -58,7 +59,11 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::post('refund', [\App\Http\Controllers\PayController::class, 'refund'])->name('refund');
         Route::get('status/{paymentId}', [\App\Http\Controllers\PayController::class, 'paymentStatus'])->name('status');
     });
+    
     Route::get('membership/{application}/request',[MembershipApplictionController::class, 'create'])->name('membership.request')->middleware('payment.check');
+    Route::post('membership/{application}/request',[MembershipApplictionController::class, 'store'])->name('membership.request')->middleware('payment.check');
+    Route::get('membership/{application}/resubmit',[MembershipApplictionController::class, 'resubmit'])->name('membership.resubmit');
+    Route::get('registration/{event}/request',[EventController::class, 'register'])->name('event.register')->middleware('event.register');
 });
 
 Route::get('/', HomeController::class)->name('home');
@@ -67,9 +72,8 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/events', function () {
-    return view('events');
-})->name('events');
+Route::get('/events',EventController::class)->name('events');
+Route::get('/event/calendar', [EventController::class, 'calender'])->name('events.calender');
 
 Route::get('/library', function () {
     return view('library');

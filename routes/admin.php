@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\User\EventController;
 use App\Http\Controllers\MembershipApplictionController;
 use App\Http\Controllers\User\BlogController;
+use App\Http\Controllers\User\LibraryController;
 use App\Http\Controllers\User\MembershipController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +45,18 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
     Route::put('blogs/{id}', [BlogController::class, 'update'])->name('blogs.update');
     Route::put('blogs/{id}/translation', [BlogController::class, 'updateTranslation'])->name('blogs.update.translation');
     Route::delete('blogs/{id}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+
+    // Event Routes
+    Route::get('events', [EventController::class, 'index'])->name('events');
+    Route::post('events', [EventController::class, 'store'])->name('events.store');
+    Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::put('events/{event}/translation', [EventController::class, 'updateTranslation'])->name('events.update.translation');
+    Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
+    Route::put('events/{event}/toggle-featured', [EventController::class, 'toogleFutured'])->name('events.toggleFeatured');
+
+    // library Routes
+    Route::get('library', [LibraryController::class, 'index'])->name('library');
 });
 
 require __DIR__ . '/settings.php';

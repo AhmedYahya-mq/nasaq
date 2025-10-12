@@ -26,6 +26,7 @@ class MembershipApplicationResource extends JsonResource
 
         $data = [
             'id' => $this->id,
+            'uuid' => $this->uuid,
             'membership_type' => $this->membership_type,
             'notes' => $this->notes,
             'national_id' => $this->national_id,

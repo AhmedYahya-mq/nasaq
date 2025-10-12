@@ -1,4 +1,4 @@
-import { members } from '@/routes/admin';
+
 import { useState, useMemo, useEffect, useContext } from "react";
 import OpenFormContext from "@/context/OpenFormContext";
 import axios from "axios";
@@ -23,7 +23,6 @@ export function useTableMembers({ members }: { members: Members[] }) {
     const [columns, setColumns] = useState<any[]>([]);
 
     useEffect(() => {
-
         setIsClient(true);
         setColumns(getColumns({ onEdit: editRow, onDelete: deleteRow, onView: viewMember, onChange: toggleBlockMember }));
     }, []);
