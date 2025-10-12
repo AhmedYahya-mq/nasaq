@@ -1,4 +1,3 @@
-
 <div class="@container w-full">
     {{-- البطاقة العمودية: كل بطاقة فوق الأخرى --}}
     <div class="grid grid-cols-1 @lg:grid-cols-2 gap-4 mb-12 items-start auto-rows-fr">
