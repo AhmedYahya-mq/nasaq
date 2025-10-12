@@ -47,6 +47,8 @@ export default function StudioImages({
 
     // تحميل الصور عند فتح النافذة
     useEffect(() => {
+        console.log("isOpen", isOpen);
+
         if (isOpen) loadImages();
     }, [isOpen]);
 

@@ -6,24 +6,17 @@ import { usePage } from "@inertiajs/react";
 import { useTableMembers } from "@/hooks/table/useTableMembers";
 import { Members } from "@/types/model/members";
 import { membersColumnLabels } from "@/tables/labels";
-import { Resource } from "@/types/model/resources";
-import { useTableResource } from "@/hooks/table/useTableRecource";
-import { resourceColumnLabels } from "@/tables/labels/ResourceColumnLabels";
 
 export default function SectionLisLibrarys(): JSX.Element {
-    const resources = (usePage().props.resources as Pagination<Resource>);
+    const { members } = usePage<{ members: Members[] }>().props;
 
-
-        const {
-            tableData,
-            addRow,
-            updateRow,
-            deleteRow,
-            editRow,
-            translateRow,
-            setColumns,
-            ...hookProps
-        } = useTableResource({ resources })
+    const {
+        tableData,
+        addRow,
+        updateRow,
+        setColumns,
+        ...hookProps
+    } = useTableMembers({ members });
 
 
     const genericListProps = { ...hookProps };
@@ -31,7 +24,7 @@ export default function SectionLisLibrarys(): JSX.Element {
 
     return (
         <>
-            <SectionListGeneric initHook={genericListProps} columnLabels={resourceColumnLabels} >
+            <SectionListGeneric initHook={genericListProps} columnLabels={membersColumnLabels} >
             </SectionListGeneric>
             <FormComponent tableHook={formProps} />
         </>

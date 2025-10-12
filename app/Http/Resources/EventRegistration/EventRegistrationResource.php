@@ -23,6 +23,12 @@ class EventRegistrationResource extends JsonResource implements \App\Contract\Us
             'is_attended' => $this->is_attended,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+        ];
+    }
+
+    public function with($request): array
+    {
+        return [
             'user' => [
                 'id' => $this->user->id,
                 'member_id' => $this->user->member_id,

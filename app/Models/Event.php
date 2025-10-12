@@ -68,11 +68,6 @@ class Event extends Model
         $event = self::find($id);
         return $event && !$event->isFree();
     }
-
-     public static function payableType(){
-        return Event::class;
-    }
-
     public static function redirectRoute($id)
     {
         $event = self::find($id);
@@ -161,10 +156,13 @@ class Event extends Model
     public function getMembershipDiscountedPriceAttribute(): float
     {
         $user = auth()->user();
+
         $price = $this->event_discounted_price; // السعر بعد خصم الحدث
+
         if ($user && $user->membership && $user->membership->percent_discount > 0) {
             return $price -  round($price * $user->membership->percent_discount);
         }
+
         return $price;
     }
 

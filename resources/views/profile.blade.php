@@ -3,7 +3,6 @@
     @push('scripts')
         @vite(['resources/js/pages/profile.js'])
         @vite(['resources/js/pages/membership-request.js'])
-        @vite(['resources/js/pages/library.js'])
     @endpush
     <div class="flex justify-center items-center w-full mb-5">
         <div class="grid grid-cols-1 lg:grid-cols-[0.30fr_1fr] gap-2 container max-sm:px-2 mt-5">
@@ -13,11 +12,11 @@
             <div class="flex flex-col">
                 <x-tabs class="w-full" default="{{ request()->get('tab', 'membership') }}">
                     <x-slot:header>
-                        <x-tabs.tab-button id="personalInfo" label="المعلومات الشخصية" />
-                        <x-tabs.tab-button id="library" label="مكتبتي" />
-                        <x-tabs.tab-button id="events" label="الفعاليات" />
+                        <x-tabs.tab-button id="personalInfo" label="{{ __('header.personal_info') }}" />
+                        <x-tabs.tab-button id="library" label="{{ __('header.library') }}" />
+                        <x-tabs.tab-button id="events" label="{{ __('header.events') }}" />
                         @if (auth()->user()->currentMemberships())
-                            <x-tabs.tab-button id="membership" label="عضويتي " />
+                            <x-tabs.tab-button id="membership" label="{{ __('header.membership') }}" />
                         @endif
                         <x-tabs.tab-button id="requests" label="الطلبات" />
                         <x-tabs.tab-button id="invoices" label="الفواتير" />

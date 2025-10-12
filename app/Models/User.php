@@ -107,7 +107,6 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
         return $this->hasMany(EventRegistration::class);
     }
 
-
     public function events()
     {
         return $this->belongsToMany(Event::class, 'event_registrations')
@@ -115,15 +114,8 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
             ->withTimestamps();
     }
 
-    public function libraries()
-    {
-        return $this->belongsToMany(Library::class, 'libraries_users')
-            ->withPivot('payment_id')
-            ->withTimestamps();
-    }
-
     // auth()->user()->isPurchasedByUser($itemId) 1 1
-    public function isPurchasedByUser($itemId, $type): bool
+    public function isPurchasedByUser($itemId, $type = Event::class): bool
     {
         return $this->payments()
             ->where('payable_type', $type)
@@ -600,38 +592,5 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
             ->whereHas('payment', fn($q) => $q->where('status', \App\Enums\PaymentStatus::Paid))
             ->latest('created_at')
             ->first();
-    }
-
-
-    /**
-     * تنظيف الكتب المسجلة حسب حالة الدفع
-     */
-    public function cleanRegisteredLibraries(): void
-    {
-        $this->libraries()->get()->each(function ($library) {
-            $pivot = $library->users()->where('user_id', $this->id)->first()?->pivot;
-
-            $hasPaid = $pivot?->payment_id
-                ? \App\Models\Payment::where('id', $pivot->payment_id)
-                ->where('status', \App\Enums\PaymentStatus::Paid)
-                ->exists()
-                : false;
-
-            if ($library->isFree() || $hasPaid) {
-                return;
-            }
-
-            $library->users()->detach($this->id);
-        });
-    }
-
-    /**
-     * 🔹 Scope لتنظيف وإرجاع المكتبات بعد التحقق
-     */
-    public function scopeWithCleanLibraries($query)
-    {
-        return $query->tap(function ($user) {
-            $user->cleanRegisteredLibraries();
-        });
     }
 }

@@ -12,19 +12,13 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AhmedYahya-mq/gallery-images.git",
-                "reference": "82ca25ba1923b75bbb85754e96a3a064c09df072"
+                "reference": "059e65707dd2f1ee2e85b8370aaf8babdd0a6d50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AhmedYahya-mq/gallery-images/zipball/82ca25ba1923b75bbb85754e96a3a064c09df072",
-                "reference": "82ca25ba1923b75bbb85754e96a3a064c09df072",
+                "url": "https://api.github.com/repos/AhmedYahya-mq/gallery-images/zipball/059e65707dd2f1ee2e85b8370aaf8babdd0a6d50",
+                "reference": "059e65707dd2f1ee2e85b8370aaf8babdd0a6d50",
                 "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "^10.0 || ^11.0 || ^12.0",
-                "illuminate/filesystem": "^10.0 || ^11.0 || ^12.0",
-                "illuminate/support": "^10.0 || ^11.0 || ^12.0",
-                "php": "^8.0"
             },
             "default-branch": true,
             "type": "library",
@@ -53,7 +47,7 @@
                 "source": "https://github.com/AhmedYahya-mq/gallery-images/tree/main",
                 "issues": "https://github.com/AhmedYahya-mq/gallery-images/issues"
             },
-            "time": "2025-10-12T14:06:01+00:00"
+            "time": "2025-09-18T23:24:45+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",

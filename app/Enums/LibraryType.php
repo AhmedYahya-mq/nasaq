@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Enums;
 
@@ -16,7 +14,7 @@ final class LibraryType extends Enum
     const Ebook = 'ebook';
     const Audio = 'audio';
     const Video = 'video';
-    const Article = 'article';
+    const Article= 'article';
     const ResearchPaper = 'research_paper';
     const Tutorial = 'tutorial';
 
@@ -41,12 +39,12 @@ final class LibraryType extends Enum
     public function icon(): string
     {
         return match ($this->value) {
-            self::Ebook => $this->value,
-            self::Audio => $this->value,
-            self::Video => $this->value,
-            self::Article => $this->value,
-            self::ResearchPaper => $this->value,
-            self::Tutorial => $this->value,
+            self::Ebook => 'book',
+            self::Audio => 'headphones',
+            self::Video => 'video-camera',
+            self::Article => 'file-text',
+            self::ResearchPaper => 'file-search',
+            self::Tutorial => 'graduation-cap',
             default => 'book',
         };
     }
@@ -54,25 +52,14 @@ final class LibraryType extends Enum
     public function color(): string
     {
         return match ($this->value) {
-            self::Ebook => '#1E90FF',        // أزرق داكن وواضح
-            self::Audio => '#8A2BE2',        // أرجواني مشبع
-            self::Video => '#FF4500',        // أحمر برتقالي قوي
-            self::Article => '#FFA500',      // برتقالي واضح
-            self::ResearchPaper => '#32CD32', // أخضر فاتح وواضح
-            self::Tutorial => '#4B0082',     // نيلي غامق
-            default => '#808080',            // رمادي متوسط
+            self::Ebook => 'blue',
+            self::Audio => 'purple',
+            self::Video => 'red',
+            self::Article => 'yellow',
+            self::ResearchPaper => 'green',
+            self::Tutorial => 'indigo',
+            default => 'gray',
         };
     }
 
-    public static function cases(): array
-    {
-        return [
-            self::Ebook(),
-            self::Audio(),
-            self::Video(),
-            self::Article(),
-            self::ResearchPaper(),
-            self::Tutorial(),
-        ];
-    }
 }

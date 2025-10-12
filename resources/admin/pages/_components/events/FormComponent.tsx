@@ -309,6 +309,8 @@ function FormComponent({ tableHook }: { tableHook: any }) {
         formRef.current?.reset();
         if (page?.props?.event?.event) {
             const event = page.props.event.event;
+            console.log(page?.props);
+
             item ? updateRow(event, isTranslate) : addRow(event);
         }
         setIsTranslate?.(false);

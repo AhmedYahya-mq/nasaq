@@ -113,19 +113,15 @@
                 <div
                     class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 </div>
-            </nav>
-        </header>
-        <main>
-            <div class="grid items-stretch grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @forelse ($resources as $resource)
-                    <x-library.resource-card-in-profile :resource="$resource" />
-                @empty
-                    <p class="text-center text-muted-foreground col-span-full">No resources found.</p>
-                @endforelse
             </div>
-            <div class="mt-12">
-                {{ $resources->links() }}
-            </div>
-        </main>
+        </template>
+
+        <template
+            x-if="books.filter(b =>
+            (activeFilter === 'All' || b.type === activeFilter) &&
+            b.title.toLowerCase().includes(search.toLowerCase())
+        ).length === 0">
+            <p class="text-center text-muted-foreground col-span-full py-10">📚 لم تجد أي كتب مطابقة.</p>
+        </template>
     </div>
-</section>
+</div>

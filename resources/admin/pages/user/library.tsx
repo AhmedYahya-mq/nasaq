@@ -2,8 +2,8 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import OpenFormProvider from '@/providers/OpenFormProvider';
+import SectionListEvents from '../_components/events/SectionListEvents';
 import { library } from '@/routes/admin';
-import SectionLisLibrarys from '../_components/library/SectionLisLibrarys';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -20,7 +20,7 @@ export default function PageLibrary() {
                 <div className="@container/main  flex flex-1 flex-col gap-2">
                     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
                         <OpenFormProvider>
-                           <SectionLisLibrarys />
+                           <div>library</div>
                         </OpenFormProvider>
                     </div>
                 </div>

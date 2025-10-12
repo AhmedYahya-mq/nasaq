@@ -59,15 +59,11 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::post('refund', [\App\Http\Controllers\PayController::class, 'refund'])->name('refund');
         Route::get('status/{paymentId}', [\App\Http\Controllers\PayController::class, 'paymentStatus'])->name('status');
     });
+    
     Route::get('membership/{application}/request',[MembershipApplictionController::class, 'create'])->name('membership.request')->middleware('payment.check');
     Route::post('membership/{application}/request',[MembershipApplictionController::class, 'store'])->name('membership.request')->middleware('payment.check');
     Route::get('membership/{application}/resubmit',[MembershipApplictionController::class, 'resubmit'])->name('membership.resubmit');
     Route::get('registration/{event}/request',[EventController::class, 'register'])->name('event.register')->middleware('event.register');
-
-    // حفظ المصدر الكتاب او اي شي في المكتبة حفظه في المفضلة
-    Route::get('library/{res}/saved', [\App\Http\Controllers\User\LibraryController::class, 'saved'])->name('library.saved')->middleware('library.saved');
-    // download resource
-    Route::get('library/{res}/download', [\App\Http\Controllers\User\LibraryController::class, 'download'])->name('library.download')->middleware('library.download');
 });
 
 Route::get('/', HomeController::class)->name('home');

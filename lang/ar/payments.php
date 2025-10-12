@@ -44,6 +44,4 @@ return [
     'You_have_already_purchased_this_item' => 'لقد قمت بالفعل بشراء هذا :item.',
     'item' => 'العنصر',
     'event' => 'الحدث',
-    'membership' => 'العضوية',
-    'library' => 'المورد',
 ];

@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\FilePondController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use Inertia\Inertia;
 
 Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function () {
     Route::group(['prefix' => '{locale?}', 'where' => ['locale' => 'en|ar'], "as" => "locale."], function () {

@@ -69,10 +69,10 @@ trait HasTranslations
         $locale = $locale ?: app()->getLocale();
         if (!in_array($field, $this->translatableFields)) return null;
 
-        $translation = $this->translationsField()
-        ->where('field', $field)
-        ->where('locale', $locale)
-        ->first();
+        $translation = $this->translationsField
+            ->where('field', $field)
+            ->where('locale', $locale)
+            ->first();
 
         return $translation ? $translation->value : null;
     }

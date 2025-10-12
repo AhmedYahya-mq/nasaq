@@ -15,8 +15,6 @@ class EventRegistrationCollection extends ResourceCollection
      */
     public function toArray(Request $request)
     {
-        return $this->collection->map(function ($item) use ($request) {
-            return app(\App\Contract\User\Resource\EventRegistrationResource::class, ['resource' => $item]);
-        })->all();
+        return $this->collection;
     }
 }

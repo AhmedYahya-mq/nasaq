@@ -2,24 +2,10 @@
 
 namespace App\Http\Responses\User;
 
-use App\Contract\User\Resource\LibraryCollection;
-use App\Contract\User\Resource\LibraryResource;
-use App\Models\Library;
 use Inertia\Inertia;
 
 class LibraryResponse implements \App\Contract\User\Response\LibraryResponse
 {
-    public $resource;
-    public function __construct($resource = null)
-    {
-        $this->resource = $resource;
-    }
-    public function toResponseResource()
-    {
-        return Inertia::render('user/library', [
-            'resource' => $this->resource ? app(LibraryResource::class, ['resource' => $this->resource]) : null
-        ])->with('success', __('Library item created successfully'));
-    }
 
 
 
@@ -28,12 +14,6 @@ class LibraryResponse implements \App\Contract\User\Response\LibraryResponse
      */
     public function toResponse($request)
     {
-        $resources = Library::withTranslations()->withCount('users')->orderBy('created_at', 'desc')->paginate($request->get('per_page', 10));
-        return Inertia::render(
-            'user/library',
-            [
-                'resources' => app(LibraryCollection::class, ['resource' => $resources]),
-            ]
-        )->toResponse($request);
+        return Inertia::render('user/library')->toResponse($request);
     }
 }

@@ -85,10 +85,11 @@ class EventResource extends JsonResource
 
     public function with($request)
     {
-        if ($this->minimal) {
+        if($this->minimal) {
             return [];
         }
         return [
+            'registrations' => app(EventRegistrationCollection::class, ['resource' => $this->whenLoaded('registrations')]),
             'attended_count' => $this->attended_count,
             'not_attended_count' => $this->not_attended_count,
             'presentage_attended' => $this->presentage_attended,

@@ -44,6 +44,8 @@ export default function ServerPaginationFooterTable({
         const nextLink = links.next;
         onPageChange(nextLink ?? null);
     };
+    console.log(pagination);
+    
     return (
         <div className="flex items-center justify-between px-4">
             <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">

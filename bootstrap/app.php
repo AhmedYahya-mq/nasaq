@@ -31,8 +31,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 'prevent.duplicate' => \App\Http\Middleware\PreventDuplicateRequest::class,
                 'payment.check' => \App\Http\Middleware\CheckPaymentMiddleware::class,
                 'event.register' => \App\Http\Middleware\CheckEventRegister::class,
-                'library.saved' => \App\Http\Middleware\CheckResourceMiddleware::class,
-                'library.download' => \App\Http\Middleware\CheckDownloadAccessMiddleware::class,
             ]
         );
     })

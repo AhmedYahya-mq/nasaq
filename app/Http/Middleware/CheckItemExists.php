@@ -38,16 +38,6 @@ class CheckItemExists
                     ->with('info', __('payments.You_have_already_purchased_this_item', ['item' => __('payments.' . strtolower(class_basename($modelClass)))]));
             }
         }
-        if ($user && $user->isPurchasedByUser($id, $modelClass::payableType())) {  // هذا يكفي للتحقق
-            $previous = url()->previous() && url()->previous() !== url()->current()
-                ? url()->previous()
-                : route('client.home');
-            return redirect($previous)
-                ->with('info', __('payments.You_have_already_purchased_this_item', [
-                    'item' => __('payments.' . strtolower(class_basename($modelClass)))
-                ]));
-        }
-
         // العنصر موجود، تابع الطلب
         session(['payable_type' => $modelClass, 'payable_id' => $id]);
         return $next($request);
