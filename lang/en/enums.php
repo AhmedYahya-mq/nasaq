@@ -112,5 +112,5 @@ return [
         'published' => 'This library item is published and available for access by users.',
         'archived' => 'This library item has been archived and is no longer actively maintained or updated.',
     ],
-    
+
 ];
