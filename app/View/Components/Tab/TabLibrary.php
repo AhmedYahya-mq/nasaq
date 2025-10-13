@@ -33,6 +33,7 @@ class TabLibrary extends Component
         $this->resources = $query->withTranslations([], app()->getLocale())
             ->orderBy('created_at', 'desc')
             ->paginate(10)
+            ->appends(['tab' => 'library'])
             ->withQueryString();
     }
 

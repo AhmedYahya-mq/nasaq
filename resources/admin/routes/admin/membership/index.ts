@@ -60,7 +60,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
  * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
-export const update = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+export const update = (args: { membership: string | number | { id: string | number } } | [membership: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -75,7 +75,7 @@ update.definition = {
  * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
-update.url = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+update.url = (args: { membership: string | number | { id: string | number } } | [membership: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { membership: args }
     }
@@ -108,7 +108,7 @@ update.url = (args: { membership: number | { id: number } } | [membership: numbe
  * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
-update.put = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+update.put = (args: { membership: string | number | { id: string | number } } | [membership: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
@@ -118,7 +118,7 @@ update.put = (args: { membership: number | { id: number } } | [membership: numbe
  * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
-    const updateForm = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    const updateForm = (args: { membership: string | number | { id: string | number } } | [membership: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
                     [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                         _method: 'PUT',
@@ -133,7 +133,7 @@ update.put = (args: { membership: number | { id: number } } | [membership: numbe
  * @see app/Http/Controllers/User/MembershipController.php:29
  * @route '/admin/membership/{membership}'
  */
-        updateForm.put = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        updateForm.put = (args: { membership: string | number | { id: string | number } } | [membership: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
                         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
                             _method: 'PUT',

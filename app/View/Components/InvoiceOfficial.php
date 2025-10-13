@@ -8,12 +8,15 @@ use Illuminate\View\Component;
 
 class InvoiceOfficial extends Component
 {
+    public $payment;
+    public $payable;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($payment)
     {
-        //
+        $this->payment = $payment;
+        $this->payable = $payment->payable;
     }
 
     /**

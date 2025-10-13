@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FilePondController;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,6 +14,10 @@ Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function (
     Route::delete('/filepond/revert', [FilePondController::class, 'revert'])->name('filepond.revert');
     Route::get('/filepond/restore/{id}', [FilePondController::class, 'restore'])->name('filepond.restore')->where('id', '.*');
     Route::post('/filepond/remove', [FilePondController::class, 'remove'])->name('filepond.remove');
+    Route::get('/invoice/{uuid}/', function ($uuid) {
+        $payment = Payment::where('moyasar_id', $uuid)->with(['user','payable'])->firstOrFail();
+        return view('invoice', compact('payment'));
+    })->name('invoice.print')->middleware('auth');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {

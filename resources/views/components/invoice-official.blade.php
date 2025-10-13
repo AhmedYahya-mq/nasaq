@@ -69,6 +69,7 @@
         .header-left {
             display: flex;
             align-items: center;
+            justify-content:  center;
             gap: 10px;
         }
 
@@ -168,20 +169,18 @@
             <div class="info-section">
                 <div class="info-block">
                     <h3>Payment Info</h3>
-                    <p><strong>Invoice #:</strong> {{ $invoiceId }}</p>
-                    <p><strong>Invoice Issued:</strong> {{ $invoiceDate }}</p>
-                    <p><strong>Next Billing Date:</strong> {{ $nextBillingDate }}</p>
-                    <p><strong>Invoice Amount:</strong> {{ $invoiceAmount }}</p>
-                    <p><strong>Order Nr.:</strong> {{ $orderNumber }}</p>
-                    <p><strong>Status:</strong> {{ $status }}</p>
+                    <p><strong>Invoice #:</strong> {{ $payment->invoice_id }}</p>
+                    <p><strong>Invoice Issued:</strong> {{ $payment->created_at }}</p>
+                    <p><strong>Invoice Amount:</strong> {{ $payment->amount }}</p>
+                    <p><strong>Order Nr.:</strong> {{ $payment->id }}</p>
+                    <p><strong>Status:</strong> {{ $payment->status->label('en') }}</p>
                 </div>
 
                 <div class="info-block">
                     <h3>Billed To</h3>
-                    <p><strong>Name:</strong> {{ $clientName }}</p>
-                    <p><strong>Email:</strong> {{ $clientEmail }}</p>
-                    <p><strong>Country:</strong> {{ $clientCountry }}</p>
-                    <p><strong>Phone:</strong> {{ $clientPhone }}</p>
+                    <p><strong>Name:</strong> {{ $payment->user->name }}</p>
+                    <p><strong>Email:</strong> {{ $payment->user->email }}</p>
+                    <p><strong>Phone:</strong> {{ $payment->user->phone }}</p>
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\User\Settings\ProfileController;
 use App\Http\Controllers\User\Settings\SecurityController;
 use App\Http\Middleware\RequirePassword;
 use App\Http\Resources\MembershipApplication\MembershipApplicationCollection;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController;
@@ -60,10 +61,10 @@ Route::prefix('/')->middleware('auth')->group(function () {
         Route::get('status/{paymentId}', [\App\Http\Controllers\PayController::class, 'paymentStatus'])->name('status');
     });
 
-    Route::get('membership/{application}/request',[MembershipApplictionController::class, 'create'])->name('membership.request')->middleware('payment.check');
-    Route::post('membership/{application}/request',[MembershipApplictionController::class, 'store'])->name('membership.request')->middleware('payment.check');
-    Route::get('membership/{application}/resubmit',[MembershipApplictionController::class, 'resubmit'])->name('membership.resubmit');
-    Route::get('registration/{event}/request',[EventController::class, 'register'])->name('event.register')->middleware('event.register');
+    Route::get('membership/{application}/request', [MembershipApplictionController::class, 'create'])->name('membership.request')->middleware('payment.check');
+    Route::post('membership/{application}/request', [MembershipApplictionController::class, 'store'])->name('membership.request')->middleware('payment.check');
+    Route::get('membership/{application}/resubmit', [MembershipApplictionController::class, 'resubmit'])->name('membership.resubmit');
+    Route::get('registration/{event}/request', [EventController::class, 'register'])->name('event.register')->middleware('event.register');
 
     // حفظ المصدر الكتاب او اي شي في المكتبة حفظه في المفضلة
     Route::get('library/{res}/saved', [\App\Http\Controllers\User\LibraryController::class, 'saved'])->name('library.saved')->middleware('library.saved');
@@ -77,7 +78,7 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/events',EventController::class)->name('events');
+Route::get('/events', EventController::class)->name('events');
 Route::get('/event/calendar', [EventController::class, 'calender'])->name('events.calender');
 
 Route::get('/library', function () {
@@ -103,6 +104,3 @@ Route::get('/blog/', function ($slug = 'example-blog-post') {
 Route::get('/memberships', function () {
     return view('memberships');
 })->name('memberships');
-Route::get('/invoice', function () {
-    return view('invoice');
-})->name('invoice');

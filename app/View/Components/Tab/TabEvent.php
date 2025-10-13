@@ -15,7 +15,7 @@ class TabEvent extends Component
      */
     public function __construct()
     {
-        $this->events = Auth::user()->events()->paginate(10);
+        $this->events = Auth::user()->events()->paginate(10)->appends(['tab' => 'events']);
     }
 
     /**
