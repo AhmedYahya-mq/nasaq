@@ -6,7 +6,7 @@
             position: relative;
             width: 700px;
             height: 400px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #162447 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-foreground) 100%);
             border-radius: 10px;
             position: relative;
             padding: 25px;
@@ -148,51 +148,53 @@
         }
     </style>
 @endpush
-<div x-data="printInit" class="flex flex-col items-center w-full space-y-6">
-    <!-- بطاقة العضوية -->
-    <div class="scrollbar flex flex-col items-center w-full m-0 p-0">
-        <div id="membershipCard" x-ref="card">
-            <img src="{{ asset('favicon.ico') }}" alt="logo"
-                class="absolute top-3 rtl:left-3 ltr:right-3 w-10 h-10 opacity-20">
-            <div class="card-left">
-                <div class="profile-img-container">
-                    <img data-photo-profile src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}" class="profile-img">
-                </div>
-                <img src="{{ $user->profileQrCodePng() }}" alt="QR Code" class="qr-code">
-            </div>
-
-            <div class="card-right">
-                <h1 class="user-name" id="userName">{{ $user->name }}</h1>
-                <div class="membership-type" id="membershipName">{{ $user->membership_name }}</div>
-
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">رقم العضوية</span>
-                        <span class="info-value">{{ $user->membership_id }}</span>
+<div>
+    <div x-data="printInit" class="flex flex-col items-center w-full space-y-6">
+        <!-- بطاقة العضوية -->
+        <div class="scrollbar flex flex-col items-center w-full m-0 p-0">
+            <div id="membershipCard" x-ref="card">
+                <img src="{{ asset('favicon.ico') }}" alt="{{ __(config('app.name')) }}"
+                    class="absolute top-3 rtl:left-3 ltr:right-3 w-10 h-10 opacity-20">
+                <div class="card-left">
+                    <div class="profile-img-container">
+                        <img data-photo-profile src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}"
+                            class="profile-img">
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">تاريخ الإنضمام</span>
-                        <span class="info-value">{{ $user->created_at->format('d/m/Y') }}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">الحالة</span>
-                        <span class="info-value status-active"
-                            id="membershipStatus">{{ $user->membership_status->label() }}</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">فترة العضوية</span>
-                        <span class="info-value"
-                            id="membershipDates">{{ $user->membership_started_at->format('d/m/Y') . ' - ' . $user->membership_expires_at->format('d/m/Y') }}</span>
-                    </div>
+                    <img src="{{ $user->profileQrCodePng() }}" alt="QR Code" class="qr-code">
                 </div>
 
-                <div class="card-footer">
-                    <div class="logo">مجتمع نسق</div>
-                    <div class="card-id">بطاقة عضوية وغير قابلة للتحويل</div>
+                <div class="card-right">
+                    <h1 class="user-name" id="userName">{{ $user->name }}</h1>
+                    <div class="membership-type" id="membershipName">{{ $user->membership_name }}</div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">رقم العضو</span>
+                            <span class="info-value">{{ $user->member_id }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">تاريخ الإنضمام</span>
+                            <span class="info-value">{{ $user->created_at->format('d/m/Y') }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">الحالة</span>
+                            <span class="info-value status-active"
+                                id="membershipStatus">{{ $user->membership_status->label() }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">فترة العضوية</span>
+                            <span class="info-value"
+                                id="membershipDates">{{ $user->membership_started_at->format('d/m/Y') . ' - ' . $user->membership_expires_at->format('d/m/Y') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="">مجتمع نسق</div>
+                        <div class="">بطاقة عضوية وغير قابلة للتحويل</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
         <div class="flex flex-col md:flex-row items-center gap-4">
             <button @click="downloadTransparent"
@@ -210,5 +212,8 @@
                 <span> تنزيل البطاقة pdf</span>
             </button>
         </div>
-</div>
+    </div>
 
+    <x-membership.Certificate-hostinger-style :user="$user" />
+
+</div>

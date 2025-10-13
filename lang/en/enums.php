@@ -113,4 +113,19 @@ return [
         'archived' => 'This library item has been archived and is no longer actively maintained or updated.',
     ],
 
+    'payment_status' => [
+        'initiated' => 'Initiated',
+        'paid'      => 'Paid',
+        'failed'    => 'Failed',
+        'refunded'  => 'Refunded',
+        'cancelled' => 'Cancelled',
+    ],
+
+    'payment_status_message' => [
+        'initiated' => 'Your payment process has been initiated. Please follow the instructions to complete the payment.',
+        'paid'      => 'Your payment has been successfully processed. Thank you for your purchase!',
+        'failed'    => 'Unfortunately, your payment attempt was unsuccessful. Please try again or contact support for assistance.',
+        'refunded'  => 'Your payment has been refunded. The amount should reflect in your account within a few business days.',
+        'cancelled' => 'Your payment process has been cancelled. If this was a mistake, please try again or contact support for assistance.',
+    ],
 ];

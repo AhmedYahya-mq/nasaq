@@ -147,7 +147,7 @@
                                     </div>
 
                                     <!-- شارة نوع الحدث - الحل الآمن -->
-                                    <div class="flex-shrink-0">
+                                    <div class="flex-shrink-0 ">
                                         <template
                                             x-if="event.event_type.value === '{{ App\Enums\EventType::Virtual()->value }}'">
                                             <div x-bind:style="`background-color: ${event.event_method.color}20; border-color: ${event.event_method.color}40`"
@@ -234,7 +234,7 @@
                                 <!-- أزرار التسجيل -->
                                 <div class="flex items-center gap-2">
                                     <!-- زر التسجيل المجاني -->
-                                    <template x-if="event.price == 0 && event.can_register && !event.is_registered">
+                                    <template x-if="event.price == 0 && event.can_register && !event.is_registered && !event.is_full">
                                         <button @click="register(event)"
                                             class="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-2 px-3 rounded-lg text-xs font-semibold transition-all duration-200 hover:shadow-md text-center flex items-center justify-center gap-1">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor"
@@ -247,7 +247,7 @@
                                     </template>
 
                                     <!-- زر الدفع -->
-                                    <template x-if="event.price > 0 && event.can_register && !event.is_registered">
+                                    <template x-if="event.price > 0 && event.can_register && !event.is_registered && !event.is_full">
                                         <button @click="register(event)"
                                             class="flex-1 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary text-primary-foreground py-2 px-3 rounded-lg text-xs font-semibold transition-all duration-200 hover:shadow-md text-center flex items-center justify-center gap-1">
                                             <span x-text="event.final_price"></span>
@@ -268,8 +268,20 @@
                                         </div>
                                     </template>
 
+                                    {{-- اذا كان ممتلى --}}
+                                    <template x-if="event.is_full && !event.is_registered">
+                                        <div
+                                            class="flex-1 bg-red-500 text-white py-2 px-3 rounded-lg text-xs font-semibold text-center flex items-center justify-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                            ممتلىء
+                                        </div>
+                                    </template>
                                     <!-- غير مسموح بالتسجيل -->
-                                    <template x-if="!event.can_register">
+                                    <template x-if="!event.can_register && !event.is_full">
                                         <div
                                             class="flex-1 bg-muted text-muted-foreground py-2 px-3 rounded-lg text-xs font-semibold text-center flex items-center justify-center gap-1">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor"

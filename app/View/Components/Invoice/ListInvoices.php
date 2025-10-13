@@ -26,7 +26,7 @@ class ListInvoices extends Component
                 }
             ])
             ->orderBy('created_at', 'desc')
-            ->paginate(1)->appends(['tab' => 'invoices']);
+            ->paginate(10)->appends(['tab' => 'invoices']);
     }
 
     /**

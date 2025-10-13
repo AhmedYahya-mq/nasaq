@@ -93,6 +93,7 @@ return [
         'already_registered' => 'مسجل بالفعل',
         // اريد يدل على لا يمكنه تسجيل الان محدد العضاء لدي عضويات معينه
         'membership_required' => 'العضوية غير كافية',
+        'registration_closed' => 'التسجيل مغلق',
 
     ],
 

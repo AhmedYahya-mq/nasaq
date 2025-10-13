@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Translation;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 trait HasTranslations
 {
@@ -25,16 +26,11 @@ trait HasTranslations
             ->where('table_name', $this->getTable());
     }
 
-    /**
-     * الوصول إلى القيم المترجمة ديناميكيًا
-     */
     public function __get($key)
     {
-        // التحقق من suffix اللغة (مثال: title_en)
         foreach ($this->translatableFields as $field) {
             if (str_starts_with($key, $field)) {
                 $locale = null;
-                // تحقق هل المستخدم وضع suffix
                 if (preg_match('/^' . $field . '_(\w{2})$/', $key, $matches)) {
                     $locale = $matches[1];
                 }
@@ -45,9 +41,6 @@ trait HasTranslations
         return parent::__get($key);
     }
 
-    /**
-     * تعيين قيمة مترجمة ديناميكيًا
-     */
     public function __set($key, $value)
     {
         foreach ($this->translatableFields as $field) {
@@ -82,6 +75,7 @@ trait HasTranslations
         $locale = $locale ?: app()->getLocale();
         foreach ($data as $field => $value) {
             if (!in_array($field, $this->translatableFields)) continue;
+
             Translation::updateOrCreate(
                 [
                     'table_name' => $this->getTable(),
@@ -91,10 +85,33 @@ trait HasTranslations
                 ],
                 ['value' => $value]
             );
+
+            // إضافة الترجمة التلقائية إذا غير موجودة للغة الأخرى
+            $otherLocale = $locale === 'ar' ? 'en' : 'ar';
+            $existing = Translation::where([
+                'table_name' => $this->getTable(),
+                'record_id'  => $this->id,
+                'field'      => $field,
+                'locale'     => $otherLocale,
+            ])->first();
+
+            if (!$existing) {
+                $tr = new GoogleTranslate();
+                $tr->setTarget($otherLocale);
+                $autoTranslated = $tr->translate($value);
+
+                Translation::create([
+                    'table_name' => $this->getTable(),
+                    'record_id'  => $this->id,
+                    'field'      => $field,
+                    'locale'     => $otherLocale,
+                    'value'      => $autoTranslated,
+                ]);
+            }
         }
     }
 
-    public function setTranslations(array $translations)
+    public function setTranslationsField(array $translations)
     {
         if (!property_exists($this, 'translatableFields') || empty($this->translatableFields)) {
             return $this;
@@ -126,7 +143,6 @@ trait HasTranslations
             }
         });
     }
-
 
     public function scopeWithTranslations($query, $fields = [], $locale = null)
     {

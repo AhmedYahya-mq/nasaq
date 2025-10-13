@@ -252,7 +252,13 @@ class Event extends Model
     public function hasStarted()
     {
         $now = Carbon::now();
-        return $this->start_at <= $now;
+        return $this->start_at <= $now && $this->end_at >= $now ;
+    }
+
+    public function hasEnded()
+    {
+        $now = Carbon::now();
+        return $this->end_at &&  $this->end_at < $now;
     }
     // تحقق من ان المستخدم الذي برسل id مسجل في الحدث
     public function isUserRegistered($userId)

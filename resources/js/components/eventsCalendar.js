@@ -5,7 +5,6 @@ import axios from "axios";
 
 
 export default function eventsCalendar(serverData, trans, startDate, endDate) {
-    console.log(trans);
 
     return {
         startDate: new Date(startDate),
@@ -94,8 +93,6 @@ export default function eventsCalendar(serverData, trans, startDate, endDate) {
             try {
                 this.isLoading = true;
                 const response=await axios.get(calender().url, { params: { date: day.iso } });
-                console.log(response.data);
-
                 if (response.status === 200 && Array.isArray(response.data.event)) {
                     this.selectedEvents = response.data.event;
                     this.showModal = true;

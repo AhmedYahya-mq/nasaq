@@ -14,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVerifyEmail
 {
@@ -259,9 +260,10 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
     /**
      *الحصول على أسم العضوية الحالية سوا كان نشطه ام لا
      */
-    public function getMembershipNameAttribute()
+    public function getMembershipNameAttribute($locale = null)
     {
-        return $this->membership ? $this->membership->name : null;
+        $locale = $locale ?: app()->getLocale();
+        return $this->membership ? $this->membership->getTranslation('name', $locale) : null;
     }
 
     /**
@@ -602,36 +604,24 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
             ->first();
     }
 
-
-    /**
-     * تنظيف الكتب المسجلة حسب حالة الدفع
-     */
-    public function cleanRegisteredLibraries(): void
+    public function getTranslatedName($targetLang = 'en')
     {
-        $this->libraries()->get()->each(function ($library) {
-            $pivot = $library->users()->where('user_id', $this->id)->first()?->pivot;
+        $name = $this->name;
 
-            $hasPaid = $pivot?->payment_id
-                ? \App\Models\Payment::where('id', $pivot->payment_id)
-                ->where('status', \App\Enums\PaymentStatus::Paid)
-                ->exists()
-                : false;
+        // إذا اللغة المطلوبة هي العربية وعرفنا الاسم عربي (الحروف عربية)
+        if ($targetLang === 'ar' && preg_match('/\p{Arabic}/u', $name)) {
+            return $name; // الاسم بالعربي بالفعل
+        }
 
-            if ($library->isFree() || $hasPaid) {
-                return;
-            }
+        // إذا اللغة المطلوبة هي الإنجليزية وعرفنا الاسم انجليزي (أحرف لاتينية)
+        if ($targetLang === 'en' && preg_match('/[A-Za-z]/', $name)) {
+            return $name; // الاسم بالإنجليزي بالفعل
+        }
 
-            $library->users()->detach($this->id);
-        });
-    }
+        // باقي الحالات: نترجم الاسم
+        $tr = new GoogleTranslate();
+        $tr->setTarget($targetLang);
 
-    /**
-     * 🔹 Scope لتنظيف وإرجاع المكتبات بعد التحقق
-     */
-    public function scopeWithCleanLibraries($query)
-    {
-        return $query->tap(function ($user) {
-            $user->cleanRegisteredLibraries();
-        });
+        return $tr->translate($name);
     }
 }

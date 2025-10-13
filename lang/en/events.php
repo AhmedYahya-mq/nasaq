@@ -97,6 +97,7 @@ return [
         'already_registered' => 'Already Registered',
         // اريد يدل على لا يمكنه تسجيل الان محدد العضاء لدي عضويات معينه
         'membership_required' => 'Insufficient Membership',
+        'registration_closed' => 'Registration Closed',
 
     ],
 
@@ -110,6 +111,7 @@ return [
         'registration_successful' => 'You have successfully registered for the event.',
         'no_upcoming_events' => 'There are no upcoming events at the moment.',
         'membership_required'   => 'This event requires a specific membership to register. Please upgrade your membership.',
+        'registration_closed'    => 'Registration for this event is closed.',
     ],
 
     'past_label' => 'Past',

@@ -28,13 +28,13 @@
         <section
             class="text-base md:text-base lg:text-xl text-muted-foreground leading-relaxed font-medium flex flex-wrap justify-center lg:justify-start gap-x-2">
             <span class="inline-flex items-center gap-1" itemprop="startDate"
-                content="{{ \Carbon\Carbon::parse($event->start_at)->toIso8601String() }}">
+                content="{{ $event->start_at->setTimezone('Asia/Riyadh')->toIso8601String() }}">
                 <span class="text-xl md:text-lg lg:text-xl">🗓️</span>
-                <span>{{ \Carbon\Carbon::parse($event->start_at)->translatedFormat('d F Y') }}</span>
+                <span>{{ $event->start_at->translatedFormat('d F Y') }}</span>
             </span>
             <span class="inline-flex items-center gap-1">
                 <span class="text-xl md:text-lg lg:text-xl">⏰</span>
-                <span>{{ \Carbon\Carbon::parse($event->start_at)->translatedFormat('h:i A') }}</span>
+                <span>{{ $event->start_at->setTimezone('Asia/Riyadh')->translatedFormat('h:i A') }}</span>
             </span>
             @if ($event->event_type->isVirtual())
                 <span class="inline-flex items-center gap-1" itemprop="eventType">
@@ -64,7 +64,7 @@
         class="flex flex-col items-center lg:items-end text-center lg:text-right space-y-6 sm:space-y-3 justify-center col-span-1">
         <div class="w-full flex justify-center lg:justify-end">
             <div class="w-full max-w-xs lg:scale-[85%] lg:text-sm">
-                <x-events.countdown :date="$event->start_at" />
+                <x-events.countdown :date="$event->start_at->setTimezone('Asia/Riyadh')" />
             </div>
         </div>
         <a href="{{ route('client.event.register', ['event' => $event]) }}"

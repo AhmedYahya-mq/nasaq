@@ -11,7 +11,7 @@
                 <x-ui.card-profile />
             </div>
             <div class="flex flex-col">
-                <x-tabs class="w-full" default="{{ request()->get('tab', 'membership') }}">
+                <x-tabs class="w-full" default="{{ request()->get('tab', 'events') }}">
                     <x-slot:header>
                         <x-tabs.tab-button id="personalInfo" label="المعلومات الشخصية" />
                         <x-tabs.tab-button id="library" label="مكتبتي" />
