@@ -134,7 +134,7 @@ class Event extends Model
     public function getEventDiscountedPriceAttribute(): float
     {
         return $this->discount > 0
-            ? round($this->price * (1 - $this->discount / 100), 2)
+            ? round($this->price * (1 - $this->discount / 100))
             : $this->price;
     }
 

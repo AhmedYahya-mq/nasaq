@@ -240,6 +240,9 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
                 'company' => $responseDTO->company,
                 'description' => $responseDTO->description,
                 'raw_response' => $responseDTO->raw,
+                'discount' => $payable->discounted_price ? $payable->price - (int)$payable->discounted_price : 0,
+                'membership_discount' => (int) $payable->membership_discount ?? 0,
+                'original_price' => $payable->price ?? 0,
             ]);
         });
     }

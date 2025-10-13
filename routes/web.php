@@ -15,7 +15,11 @@ Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function (
     Route::get('/filepond/restore/{id}', [FilePondController::class, 'restore'])->name('filepond.restore')->where('id', '.*');
     Route::post('/filepond/remove', [FilePondController::class, 'remove'])->name('filepond.remove');
     Route::get('/invoice/{uuid}/', function ($uuid) {
-        $payment = Payment::where('moyasar_id', $uuid)->with(['user','payable'])->firstOrFail();
+        $payment = Payment::where('moyasar_id', $uuid)->with(['user', 'payable' => function ($q) {
+            if (method_exists($q->getModel(), 'scopeWithTranslations')) {
+                $q->withTranslations();
+            }
+        }])->firstOrFail();
         return view('invoice', compact('payment'));
     })->name('invoice.print')->middleware('auth');
 });
@@ -24,8 +28,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     require __DIR__ . '/admin.php';
 });
 Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(function () {
-    Route::get('members/{user}', function($user){
+    Route::get('members/{user}', function ($user) {
         return  redirect()->route('admin.members.show', ['user' => $user]);
     })->name('members.show');
 });
-

@@ -23,6 +23,7 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
 
         $this->payment->update([
             'status' => $status->value
+            
         ]);
         if ($status->isFailed() || $status->isCancelled()) {
             throw new PaymentCallbackException($request->query('message'), 400);

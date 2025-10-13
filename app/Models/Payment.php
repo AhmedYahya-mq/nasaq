@@ -24,11 +24,17 @@ class Payment extends Model
         'company',
         'description',
         'raw_response',
+        'discount',
+        'membership_discount',
+        'original_price',
     ];
 
     protected $casts = [
         'raw_response' => 'array',
         'status' => PaymentStatus::class,
+        'amount' => 'integer',
+        'discount' => 'integer',
+        'membership_discount' => 'integer',
     ];
 
     protected $hidden = [

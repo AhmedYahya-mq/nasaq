@@ -12,23 +12,6 @@ return [
     'description_archives' => 'Browse our archive of articles and resources',
     'archive'=>'Archive Details',
     'discover' => 'Discover',
-    'login'=>'Login',
-    'profile'=>'Profile',
-    'logout'=>'Logout',
-    'personal_info'=>'Personal info',
-    'membership'=>'Membership',
-    'requests'=>'Requests',
-    'change_password'=>'Change password',
-    'security'=>'Security',
-    'expires_in'=>'Expires in',
-    'membership_request_draft'=>'Membership request draft',
-    'membership_regular'=>'Membership regular',
-    'upgrade_membership'=>'Upgrade membership',
-    'subscribe_membership'=>'Subscribe membership',
-    'your_request_has_not_been_submitted'=>'Your request has not been submitted',
-    'complete_request'=>'Complete request',
-
-
 
 
     'features' => 'Features',

@@ -1,14 +1,6 @@
 <?php
 
 return [
-    'title' => 'Blogs',
-    'description' => 'Follow our blog for the latest articles, tips, and resources in the field of nutrition and health.',
-    'search' => 'Search in the blog',
-    'read_more' => 'Read more',
-    
-
-
-
     'default_title' => 'Default Article Title',
     'default_author' => 'Default Author',
     'default_content' => '<p>This is a default article text. You can change it when passing data.</p>',

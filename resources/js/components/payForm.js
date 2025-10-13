@@ -354,7 +354,7 @@ export default function payForm() {
                     this.stcError = translate(res.data.message || "An unexpected error occurred, please try again.");
                 }
             }).catch((err) => {
-                this.stcError = translate(err.response?.data?.errors.phone?.[0] || err.response?.data?.message || "An unexpected error occurred, please try again.");
+                this.stcError = translate(err.response?.data?.errors?.phone?.[0] || err.response?.data?.message || "An unexpected error occurred, please try again.");
             }).finally(() => {
                 this.onProgress = false;
             });
