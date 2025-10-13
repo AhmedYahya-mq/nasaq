@@ -56,6 +56,7 @@
 
     <footer class="flex items-center justify-between gap-2 mt-3">
         @if ($resource->isPay(auth()->id()))
+      
             <div class="flex flex-col w-full" x-data="downloadResource(true, '{{ $resource->ulid }}', '{{ $resource->title }}')">
                 <button x-show="!isLoading && !isComplete && !errorMessage" x-on:click="startDownload()"
                     class="badget-70 badget gap-1 w-full h-10  text-center rounded-sm text-xs flex items-center justify-center cursor-pointer"

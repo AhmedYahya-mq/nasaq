@@ -20,7 +20,7 @@
         </span>
     </div>
 
-    <div class="flex items-end gap-1">
+    <div class="flex h-full items-end gap-1">
         <!-- التاريخ والوقت -->
         <div class="flex-1">
             <div class="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
@@ -45,14 +45,14 @@
             @endif
         </div>
 
-        <div class="">
+        <div class="flex flex-col items-end gap-2">
             @if ($event->hasStarted())
-                <a href="{{ $event->link ?? '#' }}"
+                <a href="{{ route('client.event.open', [$event]) }}" target="_blank" rel="noopener"
                     class="text-sm font-semibold px-1 py-1 rounded-sm border backdrop-blur-sm whitespace-nowrap"
                     style="background-color: {{ $color }}20; border-color: {{ $color }}80; color: {{ $color }};">
                     <x-ui.icon name="arrow-up-square" class="size-6 inline-block mr-1" />
                 </a>
-            @elseif($event->hasEnded())
+            @elseif($event->event_status->isCompleted())
                 <span class="text-xs font-semibold px-3 py-1 rounded-full border backdrop-blur-sm whitespace-nowrap"
                     style="background-color: {{ $color }}20; border-color: {{ $color }}80; color: {{ $color }};">
                     منتهي

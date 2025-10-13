@@ -41,7 +41,7 @@ class LibraryResource extends JsonResource
             'poster' => app(PhotoResourceContract::class, ['resource' => $this->photo]),
             'path' => $this->path,
             'price' => $this->price,
-            'discount' =>  $this->discount,
+            'discount' =>  $this->discount * 100,
             'published_at' => $this->published_at,
             'year_published' => $this->year_published,
             'created_at' => $this->created_at,

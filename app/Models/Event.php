@@ -69,7 +69,8 @@ class Event extends Model
         return $event && !$event->isFree();
     }
 
-     public static function payableType(){
+    public static function payableType()
+    {
         return Event::class;
     }
 
@@ -224,6 +225,7 @@ class Event extends Model
         $datesData = self::query()
             ->select(DB::raw('DATE(start_at) as date'), DB::raw('COUNT(*) as count'))
             ->whereDate('start_at', '>=', $today)
+            ->whereIn('event_status', [EventStatus::Upcoming, EventStatus::Ongoing])
             ->groupBy(DB::raw('DATE(start_at)'))
             ->orderBy('date')
             ->get();
@@ -252,13 +254,13 @@ class Event extends Model
     public function hasStarted()
     {
         $now = Carbon::now();
-        return $this->start_at <= $now && $this->end_at >= $now ;
+        return $this->start_at <= $now && $this->event_status->isOngoing();
     }
 
     public function hasEnded()
     {
         $now = Carbon::now();
-        return $this->end_at &&  $this->end_at < $now;
+        return $this->end_at &&  $this->end_at < $now && $this->event_status->isCompleted();
     }
     // تحقق من ان المستخدم الذي برسل id مسجل في الحدث
     public function isUserRegistered($userId)

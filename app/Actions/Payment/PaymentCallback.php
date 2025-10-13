@@ -12,6 +12,7 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
 {
     public Payment $payment;
     public bool $isSubscription = false;
+    public bool $isRenew = false;
 
     public function handle(PaymentCallbackRequest $request)
     {
@@ -23,13 +24,19 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
 
         $this->payment->update([
             'status' => $status->value
-            
+
         ]);
         if ($status->isFailed() || $status->isCancelled()) {
             throw new PaymentCallbackException($request->query('message'), 400);
         }
         if ($this->payment->payable instanceof \App\Models\Membership) {
-            $this->isSubscription = true;
+            $user = $request->user();
+            if ($user->membership_id === $this->payment->payable_id) {
+                $this->isRenew = true;
+                $user->renewMembership();
+            } else {
+                $this->isSubscription = true;
+            }
         }
 
         if ($this->payment->payable instanceof \App\Models\Event) {

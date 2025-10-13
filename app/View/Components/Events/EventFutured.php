@@ -23,6 +23,9 @@ class EventFutured extends Component
      */
     public function render(): View|Closure|string
     {
+        if (!$this->event) {
+            return '';
+        }
         return view('components.events.event-futured');
     }
 }

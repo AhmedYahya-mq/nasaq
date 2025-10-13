@@ -222,7 +222,7 @@ const getColumns = ({ onEdit, onDelete, onTranslate, onDownload }: ButtonsAction
         accessorKey: "discount",
         header: "الخصم",
         cell: ({ getValue }) => {
-            return centeredTextCell({ getValue: () => `${(getValue() * 100) || 0}%` });
+            return centeredTextCell({ getValue: () => `${(getValue()) || 0}%` });
         },
     },
     {

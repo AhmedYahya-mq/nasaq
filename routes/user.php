@@ -70,6 +70,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('library/{res}/saved', [\App\Http\Controllers\User\LibraryController::class, 'saved'])->name('library.saved')->middleware('library.saved');
     // download resource
     Route::get('library/{res}/download', [\App\Http\Controllers\User\LibraryController::class, 'download'])->name('library.download')->middleware('library.download');
+    Route::get('event/{event}/open', [EventController::class, 'redirctToEvent'])->name('event.open')->middleware('event.open');
 });
 
 Route::get('/', HomeController::class)->name('home');

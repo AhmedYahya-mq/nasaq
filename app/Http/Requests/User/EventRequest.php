@@ -8,6 +8,7 @@ use App\Enums\EventStatus;
 use App\Enums\EventType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class EventRequest extends FormRequest implements \App\Contract\User\Request\EventRequest
 {
@@ -21,7 +22,15 @@ class EventRequest extends FormRequest implements \App\Contract\User\Request\Eve
         $isCreate = $this->isMethod('post');
         $type = $this->input('event_type') ?? $this->route('event')?->event_type;
         $isTranslate = $this->route()->getActionMethod() === 'updateTranslation';
-        // القواعد للترجمة فقط
+        $isUpdateLink = $this->input('update_link', false);
+        if($isUpdateLink){
+            return [
+                'link' => ['required', 'url'],
+                 'address' => $type === EventType::Physical
+                    ? ['required', 'string', 'max:255']
+                    : ['nullable', 'string', 'max:255']
+            ];
+        }
         if ($isTranslate) {
             return [
                 'title' => ['required', 'string', 'max:100'],
@@ -31,7 +40,7 @@ class EventRequest extends FormRequest implements \App\Contract\User\Request\Eve
                     : ['nullable', 'string', 'max:255']
             ];
         }
-        // القواعد العادية
+
         return [
             'event_type' => [
                 'required',
@@ -51,39 +60,10 @@ class EventRequest extends FormRequest implements \App\Contract\User\Request\Eve
             'accepted_membership_ids.*' => ['exists:memberships,id'],
             'event_category' => [$isCreate ? 'required' : 'sometimes', Rule::in(EventCategory::getValues())],
             'start_at' => [$isCreate ? 'required' : 'sometimes', 'date', 'after_or_equal:now'],
+            'end_at' => [$isCreate ? 'nullable' : 'sometimes', 'date', 'after:start_at'],
             'link' => ['nullable', 'url'],
             'capacity' => [$isCreate ? 'nullable' : 'sometimes', 'integer', 'min:0'],
         ];
-    }
-
-
-
-    protected function passedValidation()
-    {
-        $defultValues = [
-            'event_method' => EventMethod::Zoom,
-            'event_status' => EventStatus::Upcoming,
-            'address' => null,
-            'link' => null,
-            'capacity' => null,
-            'price' => 0,
-            'discount' => 0,
-        ];
-        $data = $this->all();
-        foreach ($defultValues as $key => $value) {
-            if (empty($this->input($key))) {
-                $data[$key] = $value;
-            }
-        }
-
-        // اضافة translations
-        $translations = [];
-        foreach (['title', 'description', 'address'] as $field) {
-            if (!is_null($this->input($field)) && $this->has($field)) {
-                $translations[$field] =  $this->input("{$field}");
-            }
-        }
-        $this->merge(array_merge($data, ['translations' => $translations]));
     }
 
     protected function prepareForValidation()
@@ -95,5 +75,50 @@ class EventRequest extends FormRequest implements \App\Contract\User\Request\Eve
                 'accepted_membership_ids' => null,
             ]);
         }
+    }
+
+    protected function passedValidation()
+    {
+        $defaultValues = [
+            'event_method' => EventMethod::Zoom,
+            'event_status' => EventStatus::Upcoming,
+            'address' => null,
+            'link' => null,
+            'capacity' => null,
+            'price' => 0,
+            'discount' => 0,
+        ];
+
+        $data = $this->all();
+
+        foreach ($defaultValues as $key => $value) {
+            if (empty($this->input($key))) {
+                $data[$key] = $value;
+            }
+        }
+
+        // ضبط الحالة تلقائيًا بناءً على start_at و end_at
+        if (isset($data['start_at'])) {
+            $startAt = Carbon::parse($data['start_at']);
+            $now = Carbon::now();
+
+            if ($startAt->gt($now)) {
+                $data['event_status'] = EventStatus::Upcoming;
+            } elseif (isset($data['end_at']) && Carbon::parse($data['end_at'])->lt($now)) {
+                $data['event_status'] = EventStatus::Completed;
+            } else {
+                $data['event_status'] = EventStatus::Ongoing;
+            }
+        }
+
+        // إضافة الترجمات
+        $translations = [];
+        foreach (['title', 'description', 'address'] as $field) {
+            if (!is_null($this->input($field)) && $this->has($field)) {
+                $translations[$field] = $this->input($field);
+            }
+        }
+
+        $this->merge($data + ['translations' => $translations]);
     }
 }

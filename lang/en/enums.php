@@ -47,7 +47,7 @@ return [
     'event_status' => [
         'upcoming' => 'Upcoming',
         'ongoing' => 'Ongoing',
-        'finished' => 'Finished',
+        'completed' => 'Completed',
         'cancelled' => 'Cancelled',
     ],
     'event_status_message' => [

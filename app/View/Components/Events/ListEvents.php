@@ -16,7 +16,7 @@ class ListEvents extends Component
      */
     public function __construct($isPaginated = true)
     {
-        $this->events = Event::withTranslations()->orderBy('start_at', 'desc')->paginate(request()->get('per_page', 1));
+        $this->events = Event::withTranslations()->upcoming()->orderBy('start_at', 'desc')->paginate(request()->get('per_page', 1));
         $this->isPaginated = $isPaginated;
     }
 

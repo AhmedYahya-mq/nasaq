@@ -84,4 +84,6 @@ return [
 
     'memberships' => 'العضويات',
     'contact' => 'اتصل بنا',
+
+    'renew_membership'=>'تجديد العضوية',
 ];

@@ -37,12 +37,11 @@ class CheckEventRegister
         if ($event->isUserRegistered($user->id)) {
             return redirect()->route('client.profile', ['tab'=>'events'])->with('info', __('events.messages.already_registered'));
         }
+        
         // 5️⃣ تحقق من الدفع إذا لم يكن الحدث مجاني
         if (!$event->isFree()) {
             return $this->redirectToPayment($event);
         }
-
-
 
         return $next($request);
     }

@@ -54,6 +54,11 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
     Route::delete('events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('events/{event}', [EventController::class, 'show'])->name('events.show');
     Route::put('events/{event}/toggle-featured', [EventController::class, 'toogleFutured'])->name('events.toggleFeatured');
+    Route::put('events/{event}/cancel', [EventController::class, 'cancel'])->name('events.cancel');
+    Route::put('events/{event}/complete', [EventController::class, 'complete'])->name('events.complete');
+    Route::put('events/{event}/activate', [EventController::class, 'activate'])->name('events.activate');
+    // edit link or adrress
+    Route::put('events/{event}/update-link', [EventController::class, 'updateLink'])->name('events.updateLink');
 
     // Event Registration Routes
     Route::get('event-registrations/{id}', [\App\Http\Controllers\User\EventRegistrationController::class, 'index'])->name('event.registrations');

@@ -87,4 +87,57 @@ class EventController extends Controller
         EventRegistration::registerUserToEvent($event->id, auth()->id());
         return back()->with('success', __('events.messages.registration_successful'));
     }
+
+    public function cancel(Event $event)
+    {
+        $event->event_status = \App\Enums\EventStatus::Cancelled;
+        $event->save();
+        return app(EventResponse::class, ['event' => $event])->toResponseApi();
+    }
+
+    public function complete(Event $event)
+    {
+        $event->event_status = \App\Enums\EventStatus::Completed;
+        $event->save();
+        return app(EventResponse::class, ['event' => $event])->toResponseApi();
+    }
+
+    public function activate(Event $event)
+    {
+        $event->event_status = \App\Enums\EventStatus::Ongoing;
+        $event->save();
+        return app(EventResponse::class, ['event' => $event])->toResponseApi();
+    }
+
+    public function updateLink(EventRequest $request, Event $event)
+    {
+        $data = $request->all();
+        $event->update($data);
+        $event->updateTranslations($data['translations'] ?? [], $request->header('X-Locale', config('app.locale')));
+        if (array_key_exists('accepted_membership_ids', $data)) {
+            $event->memberships()->sync($data['accepted_membership_ids']);
+        } else {
+            $event->memberships()->detach();
+        }
+        return app(EventResponse::class, ['event' => $event])->toResponseApi();
+    }
+
+    public function redirctToEvent(Event $event)
+    {
+        $user = auth()->user();
+
+        // جلب تسجيل المستخدم للفعالية (مضمون أنه موجود بفضل Middleware)
+        $registration = EventRegistration::where('event_id', $event->id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+        $registration->update([
+            'joined_at' => now(),
+            'join_ip' => request()->ip(),
+            'join_link' => $event->link,
+            'is_attended' => true,
+        ]);
+
+        // إعادة التوجيه إلى رابط الفعالية
+        return redirect()->away($event->link);
+    }
 }

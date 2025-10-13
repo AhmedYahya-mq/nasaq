@@ -46,7 +46,7 @@ return [
     'event_status' => [
         'upcoming' => 'قادم',
         'ongoing' => 'جارٍ',
-        'finished' => 'منتهي',
+        'completed' => 'منتهي',
         'cancelled' => 'ملغى',
     ],
     'event_status_message' => [

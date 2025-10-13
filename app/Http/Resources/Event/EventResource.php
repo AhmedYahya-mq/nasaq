@@ -77,6 +77,8 @@ class EventResource extends JsonResource
             'final_price' => $this->final_price,
             'is_featured' => $this->is_featured,
             'is_full' => $this->isFull(),
+            'is_started' => $this->hasStarted(),
+            'is_ended' => $this->hasEnded(),
             'registrations_count' => $this->registrations_count,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

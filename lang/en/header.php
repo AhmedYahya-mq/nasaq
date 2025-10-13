@@ -83,4 +83,7 @@ return [
 
     'memberships' => 'Memberships',
     'contact' => 'Contact',
+    'contact_us' => 'Contact Us',
+
+    'renew_membership'=>'Renew Membership',
 ];

@@ -112,6 +112,10 @@ return [
         'no_upcoming_events' => 'There are no upcoming events at the moment.',
         'membership_required'   => 'This event requires a specific membership to register. Please upgrade your membership.',
         'registration_closed'    => 'Registration for this event is closed.',
+        'event_not_open' => 'This event is not open for registration at this time.',
+        'payid_event' => 'This event requires payment to complete your registration. Please proceed to the payment page.',
+        'not_registered' => 'You are not registered for this event.',
+        'not_link' => 'The link is not available at this time.',
     ],
 
     'past_label' => 'Past',

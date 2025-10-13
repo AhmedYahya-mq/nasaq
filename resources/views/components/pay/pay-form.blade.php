@@ -35,10 +35,10 @@ init()" x-cloak>
                     </strong>
                     <div class="flex flex-col ">
                         <span>
-                            {{ __('payments.Starts At') }}: {{ now()->format('Y-m-d h:i A') }}
+                            {{ __('payments.Starts At') }}: {{ $startAt }}
                         </span>
                         <span class="text-destructive">
-                            {{ __('payments.Ends At') }}: {{ now()->addYear()->format('Y-m-d h:i A') }}
+                            {{ __('payments.Ends At') }}: {{ $endsAt }}
                         </span>
                     </div>
                 @else
@@ -72,15 +72,17 @@ init()" x-cloak>
                         <x-ui.icon name="riyal" class="inline size-5" />
                     </span>
                 </div>
-                <div class="flex justify-between items-center">
-                    <span class="font-semibold text-muted-foreground">
-                        {{ __('payments.Membership Discount') }}:
-                    </span>
-                    <span class="font-semibold text-muted-foreground text-lg">
-                        {{ $item->membership_discount }}
-                        <x-ui.icon name="riyal" class="inline size-5" />
-                    </span>
-                </div>
+                @if (!$isMembership)
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold text-muted-foreground">
+                            {{ __('payments.Membership Discount') }}:
+                        </span>
+                        <span class="font-semibold text-muted-foreground text-lg">
+                            {{ $item->membership_discount }}
+                            <x-ui.icon name="riyal" class="inline size-5" />
+                        </span>
+                    </div>
+                @endif
             </div>
             <div class="w-full flex flex-col border bg-card/50 p-6 rounded-lg shadow-lg">
                 <div class="flex justify-between items-center">
@@ -88,7 +90,8 @@ init()" x-cloak>
                         {{ __('payments.Total Amount') }}:
                     </span>
                     <span class="font-semibold text-muted-foreground text-lg">
-                        {{ $item->regular_price ?? $item->final_price }} <x-ui.icon name="riyal" class="inline size-5" />
+                        {{ $item->regular_price ?? $item->final_price }} <x-ui.icon name="riyal"
+                            class="inline size-5" />
                     </span>
                 </div>
             </div>

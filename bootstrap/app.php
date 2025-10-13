@@ -33,6 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'event.register' => \App\Http\Middleware\CheckEventRegister::class,
                 'library.saved' => \App\Http\Middleware\CheckResourceMiddleware::class,
                 'library.download' => \App\Http\Middleware\CheckDownloadAccessMiddleware::class,
+                'event.open' => \App\Http\Middleware\CheckEventOpen::class,
             ]
         );
     })

@@ -22,6 +22,9 @@ class CalendarEvent extends Component
      */
     public function render(): View|Closure|string
     {
+        if (!$this->calendar && count($this->calendar) == 0) {
+            return '';
+        }
         return view('components.events.calendar-event');
     }
 }

@@ -22,6 +22,8 @@ interface EventModel {
     discount: number | null;
     final_price: number | null;
     registrations_count: number;
+    is_started: boolean;
+    is_ended: boolean;
     is_featured: boolean;
     is_full: boolean;
     created_at: string;

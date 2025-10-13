@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Tab;
 
+use App\Enums\EventStatus;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ class TabEvent extends Component
      */
     public function __construct()
     {
-        $this->events = Auth::user()->events()->paginate(10)->appends(['tab' => 'events']);
+        $this->events = Auth::user()->events()->where('event_status', '!=', EventStatus::Cancelled)->paginate(10)->appends(['tab' => 'events']);
     }
 
     /**
