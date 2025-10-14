@@ -22,6 +22,7 @@ class Blog extends Model
     public $translatable = [
         'content',
     ];
+    
     protected $translatableFields = [
         'title',
         'excerpt',
@@ -34,6 +35,11 @@ class Blog extends Model
     public function admin()
     {
         return $this->belongsTo(Admin::class, 'admin_id');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
 }

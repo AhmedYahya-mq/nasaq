@@ -1,20 +1,22 @@
 <?php
 
-namespace App\View\Components\Events;
+namespace App\View\Components\Blog;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CalendarEvent extends Component
+class CardBlog extends Component
 {
-    public $calendar;
+    public $blog;
+    public $photo;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($blog)
     {
-        $this->calendar = \App\Models\Event::getCalendar();
+        $this->blog = $blog;
+        $this->photo = $blog->photos->first();
     }
 
     /**
@@ -22,6 +24,6 @@ class CalendarEvent extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.events.calendar-event');
+        return view('components.blog.card-blog');
     }
 }

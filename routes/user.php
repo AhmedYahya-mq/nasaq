@@ -7,6 +7,7 @@ use App\Http\Controllers\User\Settings\ProfileController;
 use App\Http\Controllers\User\Settings\SecurityController;
 use App\Http\Middleware\RequirePassword;
 use App\Http\Resources\MembershipApplication\MembershipApplicationCollection;
+use App\Models\Blog;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -98,9 +99,10 @@ Route::get('/blogs', function () {
     return view('blogs');
 })->name('blogs');
 
-Route::get('/blog/', function ($slug = 'example-blog-post') {
-    return view('blog-details', ['slug' => $slug]);
-})->name('blog');
+Route::get('/blog/{blog}', function ($blog) {
+    $blog = Blog::withTranslations([], app()->getLocale())->where('slug', $blog)->firstOrFail();
+    return view('blog-details', ['blog' => $blog]);
+})->name('blog.details');
 
 Route::get('/memberships', function () {
     return view('memberships');

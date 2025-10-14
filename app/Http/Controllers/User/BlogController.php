@@ -17,10 +17,11 @@ class BlogController extends Controller
 
     public function store(BlogRequest $request)
     {
-        $blog = Blog::create($request->all());
+        $data = $request->only((new Blog())->getFillable());
+        $blog = Blog::create($data);
         $blog->updateTranslations(
-            $request->only(array_merge(['title', 'excerpt'], $blog->translatable ?? [])),
-            $request->header('X-Locale', 'ar')
+            $request->input('translations', []),
+            $request->header('X-Locale', config('app.locale'))
         );
         $blog->syncPhotosById($request->input('image_id', []));
         return app(BlogResponse::class)->toResponseBlog($blog);
@@ -29,23 +30,33 @@ class BlogController extends Controller
     public function update(BlogRequest $request, $id)
     {
         $blog = Blog::findOrFail($id);
-        $blog->update($request->all());
-        $blog->updateTranslations(
-            $request->only(array_merge(['title', 'excerpt'], $blog->translatable ?? [])),
-            $request->header('X-Locale', 'ar')
-        );
+        $data = $request->only($blog->getFillable());
+        $blog->update($data);
+        $translations = $request->input('translations', []);
+        if (!empty($translations)) {
+            $locale = $request->header('X-Locale', config('app.locale'));
+            $blog->updateTranslations($translations, $locale);
+        }
         if ($request->has('image_id')) {
             $blog->syncPhotosById($request->input('image_id', []));
         }
+
         return app(BlogResponse::class)->toResponseBlog($blog);
     }
+
 
     public function updateTranslation(BlogRequest $request, $id)
     {
         $blog = Blog::findOrFail($id);
-        $data = $request->only(['title', 'excerpt']);
+        $data = $request->only(['title', 'excerpt', 'content']);
         $blog->updateTranslations($data, $request->header('X-Locale', 'ar'));
-        $blog->setTranslation('content', $request->header('X-Locale', 'ar'), $data['content'] ?? $blog->content);
+        if (isset($data['content']) && !empty($data['content'])) {
+            foreach ($data['content'] as $locale => $value) {
+                $blog->setTranslation('content', $locale, $value);
+            }
+            $blog->save();
+        }
+
         $blog->save();
         return app(BlogResponse::class)->toResponseBlog($blog);
     }

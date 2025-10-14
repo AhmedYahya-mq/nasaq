@@ -57,7 +57,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\User\BlogController::update
- * @see app/Http/Controllers/User/BlogController.php:29
+ * @see app/Http/Controllers/User/BlogController.php:30
  * @route '/admin/blogs/{id}'
  */
 export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -72,7 +72,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\User\BlogController::update
- * @see app/Http/Controllers/User/BlogController.php:29
+ * @see app/Http/Controllers/User/BlogController.php:30
  * @route '/admin/blogs/{id}'
  */
 update.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -100,7 +100,7 @@ update.url = (args: { id: string | number } | [id: string | number ] | string | 
 
 /**
 * @see \App\Http\Controllers\User\BlogController::update
- * @see app/Http/Controllers/User/BlogController.php:29
+ * @see app/Http/Controllers/User/BlogController.php:30
  * @route '/admin/blogs/{id}'
  */
 update.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -110,7 +110,7 @@ update.put = (args: { id: string | number } | [id: string | number ] | string | 
 
     /**
 * @see \App\Http\Controllers\User\BlogController::update
- * @see app/Http/Controllers/User/BlogController.php:29
+ * @see app/Http/Controllers/User/BlogController.php:30
  * @route '/admin/blogs/{id}'
  */
     const updateForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -125,7 +125,7 @@ update.put = (args: { id: string | number } | [id: string | number ] | string | 
 
             /**
 * @see \App\Http\Controllers\User\BlogController::update
- * @see app/Http/Controllers/User/BlogController.php:29
+ * @see app/Http/Controllers/User/BlogController.php:30
  * @route '/admin/blogs/{id}'
  */
         updateForm.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -141,7 +141,7 @@ update.put = (args: { id: string | number } | [id: string | number ] | string | 
     update.form = updateForm
 /**
 * @see \App\Http\Controllers\User\BlogController::destroy
- * @see app/Http/Controllers/User/BlogController.php:53
+ * @see app/Http/Controllers/User/BlogController.php:64
  * @route '/admin/blogs/{id}'
  */
 export const destroy = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -156,7 +156,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\User\BlogController::destroy
- * @see app/Http/Controllers/User/BlogController.php:53
+ * @see app/Http/Controllers/User/BlogController.php:64
  * @route '/admin/blogs/{id}'
  */
 destroy.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -184,7 +184,7 @@ destroy.url = (args: { id: string | number } | [id: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\User\BlogController::destroy
- * @see app/Http/Controllers/User/BlogController.php:53
+ * @see app/Http/Controllers/User/BlogController.php:64
  * @route '/admin/blogs/{id}'
  */
 destroy.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -194,7 +194,7 @@ destroy.delete = (args: { id: string | number } | [id: string | number ] | strin
 
     /**
 * @see \App\Http\Controllers\User\BlogController::destroy
- * @see app/Http/Controllers/User/BlogController.php:53
+ * @see app/Http/Controllers/User/BlogController.php:64
  * @route '/admin/blogs/{id}'
  */
     const destroyForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -209,7 +209,7 @@ destroy.delete = (args: { id: string | number } | [id: string | number ] | strin
 
             /**
 * @see \App\Http\Controllers\User\BlogController::destroy
- * @see app/Http/Controllers/User/BlogController.php:53
+ * @see app/Http/Controllers/User/BlogController.php:64
  * @route '/admin/blogs/{id}'
  */
         destroyForm.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

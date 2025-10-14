@@ -11,7 +11,7 @@ return [
         'env_key' => 'twitter',
         'url' => env('CONTACT_TWITTER', '#'),
         'icon' => 'social.x-twitter',
-        'bg_color' => 'bg-blue-400 hover:bg-blue-500',
+        'bg_color' => 'bg-black hover:bg-black/80',
     ],
     [
         'env_key' => 'instagram',

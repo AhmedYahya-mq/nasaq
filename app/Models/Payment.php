@@ -54,6 +54,15 @@ class Payment extends Model
             if ($payment->isDirty('status')) {
                 event(new \App\Events\PaymentStatusChanged($payment));
             }
+            if ($payment->isDirty('status') && $payment->status->isPaid()) {
+                event(new \App\Events\PaymentStatusUpdated($payment));
+            }
+        });
+
+        static::created(function ($payment) {
+            if ($payment->status->isPaid()) {
+                event(new \App\Events\PaymentStatusUpdated($payment));
+            }
         });
 
         static::creating(function ($payment) {

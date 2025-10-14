@@ -114,14 +114,14 @@ export function EmailList({
                 <div className="p-2">
                     {loading ? (
                         <div className="space-y-1">{skeletonCards}</div>
-                    ) : applications.length === 0 ? (
+                    ) : applications?.length === 0 ? (
                         <div className="text-center py-8 text-muted-foreground">
                             <Mail className="h-8 w-8 mx-auto mb-2 opacity-50" />
                             <p>لا يوجد اي طلبات</p>
                         </div>
                     ) : (
                         <div className="space-y-1">
-                            {applications.map((application) => (
+                            {applications?.map((application) => (
                                 <Card
                                     key={application.id}
                                     className={cn(

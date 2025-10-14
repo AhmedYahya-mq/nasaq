@@ -283,6 +283,10 @@ init()" x-cloak>
                             </span>
                         </div>
                     </form>
+                    <p class="text-center text-sm text-destructive mt-2">
+                        {{ __('payments.Secure Payment Info') }}
+
+                    </p>
                 </div>
             </div>
         </div>

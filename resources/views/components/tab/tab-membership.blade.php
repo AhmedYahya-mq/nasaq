@@ -6,14 +6,14 @@
             position: relative;
             width: 700px;
             height: 400px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-foreground) 100%);
+            background: white;
             border-radius: 10px;
             position: relative;
             padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 5px 15px #00000026;
             display: flex;
             overflow: hidden;
-            color: white;
+            color: #5f652c;
             font-family: 'Segoe UI', Tahoma, sans-serif;
         }
 
@@ -26,11 +26,11 @@
             padding: 20px;
 
             &:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *) {
-                border-right: 2px solid rgba(255, 255, 255, 0.2);
+                border-right: 2px solid #00000033;
             }
 
             &:where(:dir(rtl), [dir="rtl"], [dir="rtl"] *) {
-                border-left: 2px solid rgba(255, 255, 255, 0.2);
+                border-left: 2px solid #00000033;
             }
         }
 
@@ -53,7 +53,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px #0000001a;
         }
 
         .membership-badge {
@@ -61,13 +61,13 @@
             bottom: -5px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            color: #f5d547;
+            background: rgba(0, 0, 0, 0.1);
+            color: #5f652c;
             padding: 4px 15px;
             border-radius: 10px;
             font-size: 13px;
             font-weight: bold;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid #00000033;
         }
 
         .qr-code {
@@ -76,8 +76,8 @@
             background: #fff;
             padding: 5px;
             border-radius: 10px;
-            border: 2px solid #f5d547;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 2px solid #5f652c;
+            box-shadow: 0 2px 5px #0000001a;
             margin-top: 15px;
         }
 
@@ -85,13 +85,13 @@
             font-size: 20px;
             margin-bottom: 10px;
             font-weight: 700;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            text-shadow: 1px 1px 2px #00000033;
         }
 
         .membership-type {
             font-size: 16px;
             margin-bottom: 25px;
-            color: #f5d547;
+            color: #5f652c;
             font-weight: 600;
         }
 
@@ -105,15 +105,15 @@
         .info-item {
             text-align: right;
             padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid #00000033;
         }
 
         .info-label {
             display: block;
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.7);
+            color: #000000b3;
             margin-bottom: 5px;
         }
 
@@ -121,7 +121,7 @@
             display: block;
             font-size: 14px;
             font-weight: 600;
-            color: #fff;
+            color: #5f652c;
         }
 
         .status-active {
@@ -134,17 +134,17 @@
             align-items: center;
             margin-top: auto;
             padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: 1px solid #00000033;
             font-size: 14px;
         }
 
         .logo {
             font-weight: bold;
-            color: #f5d547;
+            color: #5f652c;
         }
 
         .card-id {
-            color: rgba(255, 255, 255, 0.7);
+            color: #000000b3;
         }
     </style>
 @endpush
@@ -164,8 +164,8 @@
                 </div>
 
                 <div class="card-right">
-                    <h1 class="user-name" id="userName">{{ $user->name }}</h1>
-                    <div class="membership-type" id="membershipName">{{ $user->membership_name }}</div>
+                    <h1 class="user-name rtl:rtl rtl:text-right ltr:text-left" id="userName">{{ $user->name }}</h1>
+                    <div class="membership-type rtl:rtl rtl:text-right ltr:text-left" id="membershipName">{{ $user->membership_name }}</div>
 
                     <div class="info-grid">
                         <div class="info-item">
@@ -214,6 +214,6 @@
         </div>
     </div>
 
-    <x-membership.Certificate-hostinger-style :user="$user" />
+    <x-membership.certificate-hostinger-style :user="$user" />
 
 </div>

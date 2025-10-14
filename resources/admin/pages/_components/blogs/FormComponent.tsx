@@ -209,9 +209,9 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                     </Button>
                                 </DialogClose>
                                 <Button type="submit" className="cursor-pointer" disabled={processing}>
-                                    {processing && <LoaderCircleIcon className="h-4 w-4 animate-spin" />}
+                                    {processing && <LoaderCircleIcon className="h-4 w-4 animate-spin " />}
                                     {isTranslate
-                                        ? `ترجمة المدونة: ${item?.title}`
+                                        ? `ترجمة المدونة`
                                         : item
                                             ? "تحديث المدونة"
                                             : "حفظ المدونة"}

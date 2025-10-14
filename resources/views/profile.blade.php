@@ -13,16 +13,16 @@
             <div class="flex flex-col">
                 <x-tabs class="w-full" default="{{ request()->get('tab', 'events') }}">
                     <x-slot:header>
-                        <x-tabs.tab-button id="personalInfo" label="المعلومات الشخصية" />
-                        <x-tabs.tab-button id="library" label="مكتبتي" />
-                        <x-tabs.tab-button id="events" label="الفعاليات" />
+                        <x-tabs.tab-button id="personalInfo" label="{{ __('messages.profile1') }}" />
+                        <x-tabs.tab-button id="library" label="{{ __('messages.library1') }}" />
+                        <x-tabs.tab-button id="events" label="{{ __('events.title') }}" />
                         @if (auth()->user()->currentMemberships())
-                            <x-tabs.tab-button id="membership" label="عضويتي " />
+                            <x-tabs.tab-button id="membership" label="{{ __('messages.memberships1') }}" />
                         @endif
-                        <x-tabs.tab-button id="requests" label="الطلبات" />
-                        <x-tabs.tab-button id="invoices" label="الفواتير" />
-                        <x-tabs.tab-button id="changePassword" label="تغير كلمة المرور" />
-                        <x-tabs.tab-button id="security" label="الأمان" />
+                        <x-tabs.tab-button id="requests" label="{{ __('messages.request1') }}" />
+                        <x-tabs.tab-button id="invoices" label="{{ __('messages.invoices1') }}" />
+                        <x-tabs.tab-button id="changePassword" label="{{ __('messages.change_password1') }}" />
+                        <x-tabs.tab-button id="security" label="{{ __('messages.security1') }}" />
                     </x-slot:header>
                     <x-tabs.tab id="personalInfo">
                         <x-tab.tab-profile />

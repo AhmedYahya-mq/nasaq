@@ -71,7 +71,7 @@ function EventTypeSelect({ value, onChange }: { value: string, onChange: (val: s
                     <SelectGroup >
                         <SelectLabel>أنواع الفعالية</SelectLabel>
                         <SelectItem value="virtual">افتراضية</SelectItem>
-                        <SelectItem value="physical">فيزيائية</SelectItem>
+                        <SelectItem value="physical">حضوري</SelectItem>
                     </SelectGroup>
                 </SelectContent>
             </Select>

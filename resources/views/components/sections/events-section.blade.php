@@ -26,11 +26,10 @@
             <x-events.list-events />
         </div>
 
-        <div class="mb-24">
+        {{-- <div class="mb-24">
             <h2 class="text-2xl font-bold mb-8 text-foreground text-center drop-shadow">
                 {{ __('events.page_titles.past_events_archive') }}
             </h2>
-            {{-- 2. شبكة عرض بطاقات الأرشيف (باستخدام المكون x-events.archive-card) --}}
             <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <x-events.archive-card :title="__('archive.samples.0.title')"
                     description="هذا وصف مختصر للحدث الأول يوضح فكرة عامة عن محتوى الحدث ويمكن أن يكون نصاً طويلاً لكنه سيظهر في 3 أسطر فقط."
@@ -50,9 +49,8 @@
                     registrationUrl="#" class="h-full" />
             </div>
 
-            {{-- 3. زر "مشاهدة الكل" في الأسفل --}}
             <div class="text-center mt-12">
-                <a href="{{ route('client.archives') }}" {{-- استبدل 'archive.index' باسم الـ route الصحيح --}}
+                <a href="{{ route('client.archives') }}"
                     class="inline-flex items-center gap-2 px-6 py-3 text-base font-semibold text-primary-foreground bg-primary rounded-lg hover:bg-primary/90 transition-colors duration-200 shadow-md">
                     <span>{{ __('events.event_titles.view_all_archives') }}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -61,6 +59,6 @@
                     </svg>
                 </a>
             </div>
-        </div>
+        </div> --}}
     </div>
 </section>

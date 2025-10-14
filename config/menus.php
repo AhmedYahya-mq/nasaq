@@ -17,11 +17,11 @@ return [
         'route' => "client.events",
         'active' => ['client.events', 'client.locale.events'],
     ],
-    [
-        'name' => 'header.archives',
-        'route' => 'client.archives',
-        'active' => ['client.archives', 'client.locale.archives', 'client.archive', 'client.locale.archive']
-    ],
+    // [
+    //     'name' => 'header.archives',
+    //     'route' => 'client.archives',
+    //     'active' => ['client.archives', 'client.locale.archives', 'client.archive', 'client.locale.archive']
+    // ],
     // library
     [
         'name' => 'header.library',

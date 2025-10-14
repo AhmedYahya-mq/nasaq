@@ -12,7 +12,7 @@ class BlogRequest extends FormRequest implements \App\Contract\User\Request\Blog
      */
     public function authorize(): bool
     {
-         return auth('admin')->check();
+        return auth('admin')->check();
     }
 
     /**
@@ -24,8 +24,24 @@ class BlogRequest extends FormRequest implements \App\Contract\User\Request\Blog
     {
         $isCreate = $this->isMethod('post');
         return [
-            'title'=> ($isCreate ? 'required' : 'sometimes') . '|string|max:55|unique:blogs,title',
-            'content'=> ($isCreate ? 'required' : 'sometimes') . '|string',
+            'title' => [
+                ($isCreate ? 'required' : 'sometimes'),
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($isCreate) {
+                    if (!$isCreate) {
+                        return;
+                    }
+                    $exists = \App\Models\Translation::where('table_name', 'blogs')
+                        ->where('field', 'title')
+                        ->where('value', $value)
+                        ->exists();
+                    if ($exists) {
+                        $fail('هذا العنوان موجود مسبقاً.');
+                    }
+                }
+            ],
+            'content' => ($isCreate ? 'required' : 'sometimes') . '|string',
             'excerpt' => ($isCreate ? 'required' : 'sometimes') . '|string|max:255',
             'image_id' => ($isCreate ? 'required' : 'sometimes') . '|exists:photos,id',
 
@@ -48,7 +64,13 @@ class BlogRequest extends FormRequest implements \App\Contract\User\Request\Blog
                 $data[$field] = [$locale => $data[$field]];
             }
         }
+        $translations = [];
+        foreach (['title', 'excerpt'] as $field) {
+            if (!is_null($this->input($field)) && $this->has($field)) {
+                $translations[$field] = $this->input($field);
+            }
+        }
+        $data = array_merge($data, ['translations' => $translations]);
         $this->replace($data);
     }
-
 }

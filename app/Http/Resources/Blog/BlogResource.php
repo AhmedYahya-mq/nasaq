@@ -17,12 +17,12 @@ class BlogResource extends JsonResource
     {
         return  [
             'id' => $this->id,
-            'title' => $this->title,
-            'title_en' => $this->translateField('title', 'en') ?? '',
-            'content' => $this->content,
+            'title' => $this->title_ar,
+            'title_en' => $this->title_en,
+            'content' =>  $this->translate('content', 'ar') ?? '',
             'content_en' => $this->translate('content', 'en') ?? '',
-            'excerpt' => $this->excerpt,
-            'excerpt_en' => $this->translateField('excerpt', 'en') ?? '',
+            'excerpt' => $this->excerpt_ar,
+            'excerpt_en' => $this->excerpt_en,
             'slug' => $this->slug,
             'image' => $this->firstPhoto(),
             'views' => $this->views,

@@ -14,4 +14,13 @@ return [
     'item' => 'العنصر',
     'event' => 'الحدث',
 
+    'events1' => 'الفعاليات',
+    'profile1' => 'الملف الشخصي',
+    'library1' => 'المكتبة',
+    'memberships1' => 'عضويتي',
+    'request1'=>'طلباتي',
+    'invoices1'=>'الفواتير',
+    'change_password1'=>'تغيير كلمة المرور',
+    'security1'=>'الأمان',
+
 ];

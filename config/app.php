@@ -125,4 +125,7 @@ return [
     ],
 
     'locales' => env('APP_LOCALES', 'en,ar'),
+
+    
+
 ];

@@ -13,6 +13,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\FileDeletedEvent::class => [
             \App\Listeners\DeleteFileFromDisk::class,
         ],
+        \App\Events\PaymentStatusUpdated::class => [
+            \App\Listeners\SendPaymentNotificationEmail::class,
+        ],
     ];
 
     /**

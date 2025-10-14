@@ -38,11 +38,11 @@ return [
 
     'event_type' => [
         'virtual' => 'Virtual',
-        'physical' => 'Physical',
+        'physical' => 'Presence',
     ],
     'event_type_message' => [
         'virtual' => 'This event will be held online. Please ensure you have a good internet connection.',
-        'physical' => 'This event will be held at a physical location. Please review the details regarding the venue and time.',
+        'physical' => 'This event will be held at a presence location. Please review the details regarding the venue and time.',
     ],
     'event_status' => [
         'upcoming' => 'Upcoming',

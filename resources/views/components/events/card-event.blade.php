@@ -3,7 +3,8 @@
         'class' =>
             'relative w-full bg-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group cursor-pointer transform hover:-translate-y-1 border border-border',
     ]) }}
-    itemscope itemtype="http://schema.org/Event">
+    itemscope itemtype="http://schema.org/Event"
+    aria-label="{{ $event->title }}">
     <!-- الخلفية المتدرجة -->
     <div class="absolute inset-0 bg-gradient-to-br from-background/50 via-card to-primary/5 opacity-80"></div>
 
@@ -31,6 +32,7 @@
                 itemprop="name">
                 {{ $event->title }}
             </h2>
+            <meta itemprop="description" content="{{ $event->description }}">
         </header>
 
         <!-- عداد التسجيل المدمج -->
@@ -137,9 +139,10 @@
                 </div>
                 <div>
                     <div class="text-xs text-muted-foreground">التاريخ</div>
-                    <div class="text-sm font-semibold text-card-foreground">
+                    <time class="text-sm font-semibold text-card-foreground"
+                        datetime="{{ $event->start_at->toDateString() }}">
                         {{ $event->start_at->locale(app()->getLocale())->translatedFormat('d F Y') }}
-                    </div>
+                    </time>
                 </div>
             </div>
             <!-- الوقت -->
@@ -153,9 +156,10 @@
                 </div>
                 <div>
                     <div class="text-xs text-muted-foreground">الوقت</div>
-                    <div class="text-sm font-semibold text-card-foreground">
+                    <time class="text-sm font-semibold text-card-foreground"
+                        datetime="{{ $event->start_at->setTimezone('Asia/Riyadh')->format('H:i') }}">
                         {{ $event->start_at->setTimezone('Asia/Riyadh')->locale(app()->getLocale())->translatedFormat('h:i A') }}
-                    </div>
+                    </time>
                 </div>
             </div>
             <!-- الموقع -->
@@ -194,14 +198,15 @@
                 @if (!$isRegistration)
                     @if ($event->isFull())
                         <div
-                            class="flex-1 cursor-not-allowed bg-destructive text-white py-3 px-6 rounded-xl font-bold text-sm text-center">
+                            class="flex-1 cursor-not-allowed bg-destructive text-white py-3 px-6 rounded-xl font-bold text-sm text-center"
+                            aria-label="{{ __('events.labels.registration_closed') }}">
                             {{ __('events.labels.registration_closed') }}
                         </div>
                     @elseif ($event->isFree())
                         <!-- تسجيل مجاني -->
                         <a href="{{ route('client.event.register', ['event' => $event]) }}"
                             class="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-3 px-6 rounded-xl font-bold text-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 text-center"
-                            itemprop="url">
+                            itemprop="url" rel="noopener noreferrer">
                             {{ __('events.buttons.free_registration') }}
                         </a>
                     @else
@@ -209,7 +214,7 @@
                         <div class="flex-1 flex items-center justify-between gap-4">
                             <a href="{{ route('client.event.register', ['event' => $event]) }}" target="_blank"
                                 class="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-3 px-6 rounded-xl font-bold text-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 text-center"
-                                itemprop="url">
+                                itemprop="url" rel="noopener noreferrer">
                                 💳 {{ __('events.buttons.pay_registration') }}
                             </a>
                             <div class="text-right" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -230,14 +235,16 @@
                 @else
                     <!-- مسجل بالفعل -->
                     <div
-                        class="flex-1 bg-muted text-muted-foreground py-3 px-6 rounded-xl font-bold text-sm text-center">
+                        class="flex-1 bg-muted text-muted-foreground py-3 px-6 rounded-xl font-bold text-sm text-center"
+                        aria-label="{{ __('events.labels.already_registered') }}">
                         ✅ {{ __('events.labels.already_registered') }}
                     </div>
                 @endif
             @else
                 <!-- يتطلب عضوية -->
                 <div
-                    class="flex-1 bg-destructive hover:bg-destructive/90 text-white py-3 px-6 rounded-xl font-bold text-sm text-center">
+                    class="flex-1 bg-destructive hover:bg-destructive/90 text-white py-3 px-6 rounded-xl font-bold text-sm text-center"
+                    aria-label="{{ __('events.labels.membership_required') }}">
                     🔒 {{ __('events.labels.membership_required') }}
                 </div>
             @endif

@@ -3,10 +3,9 @@
         .certificate {
             width: 297mm;
             height: 210mm;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-foreground) 100%);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            background: #fff;
             padding: 30px 40px;
-            color: #1e293b;
+            color: #5f652c;
             display: flex;
             flex-direction: column;
             position: relative;
@@ -32,7 +31,6 @@
             width: 100%;
             height: 100%;
             border-radius: 24px;
-            background: radial-gradient(circle at top center, rgba(191, 164, 95, 0.08), transparent 70%);
             z-index: 0;
         }
 
@@ -52,7 +50,7 @@
         .title {
             font-size: 30px;
             font-weight: 700;
-            color: #fff;
+            color: #5f652c;
             margin-bottom: 20px;
             letter-spacing: 0.3px;
         }
@@ -60,14 +58,14 @@
         .title_ar {
             font-size: 30px;
             font-weight: 700;
-            color: #fff;
+            color: #5f652c;
             margin-bottom: 20px;
         }
 
         .content {
             font-size: 16px;
             line-height: 1.9;
-            color: #fff;
+            color: #5f652c;
             margin-bottom: 35px;
             min-height: 110px;
         }
@@ -75,7 +73,7 @@
         .member-info {
             font-size: 15px;
             line-height: 1.8;
-            color: #fff;
+            color: #5f652c;
         }
 
         .info-row {
@@ -86,7 +84,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #3d3d3d;
             margin-top: 10px;
         }
 
@@ -104,7 +102,7 @@
             text-align: center;
             font-size: 15px;
             font-weight: 600;
-            color: #fff;
+            color: #5f652c;
             margin-top: 25px;
             letter-spacing: 0.5px;
         }
@@ -117,6 +115,7 @@
         }
     </style>
 @endpush
+
 
 <div x-data="printInit" class="flex flex-col items-center w-full space-y-6 my-10">
     <div class="scrollbar flex flex-col items-center w-full m-0 p-0">
@@ -134,8 +133,8 @@
                     <!-- عربي -->
                     <div class="side right">
                         <div class="between">
-                            <div class="title_ar" dir="rtl">شهادة عضوية</div>
-                            <div class="title" dir="ltr">Membership Certificate</div>
+                            <div class="title_ar text-right" dir="rtl">شهادة عضوية</div>
+                            <div class="title text-left" dir="ltr">Membership Certificate</div>
                         </div>
                         <div class="between">
                             <div class="content text-justify" dir="rtl">
@@ -145,7 +144,7 @@
                                 وتشجيعًا له على الاستمرار في رحلة التميز والعطاء.
                             </div>
                             <div class="content text-justify" dir="ltr">
-                                <strong>Nasq Community</strong> proudly awards this certificate to the esteemed member
+                                <strong>Nasaq Community</strong> proudly awards this certificate to the esteemed member
                                 <strong>{{ $user->getTranslatedName('en') }}</strong>,
                                 in recognition of their outstanding participation, valuable contributions to the
                                 community,
@@ -155,14 +154,14 @@
 
                         <div class="member-info">
                             <div class="between">
-                                <div class="info-row" dir="rtl"><strong>الاسم:</strong>
+                                <div class="info-row text-right" dir="rtl"><strong>الاسم:</strong>
                                     {{ $user->getTranslatedName('ar') }}
                                 </div>
-                                <div class="info-row" dir="ltr"><strong>Name:</strong>
+                                <div class="info-row text-left" dir="ltr"><strong>Name:</strong>
                                     {{ $user->getTranslatedName('en') }}</div>
                             </div>
                             <div class="between">
-                                <div class="info-row" dir="rtl"><strong>نوع العضوية:</strong>
+                                <div class="info-row text-right" dir="rtl"><strong>نوع العضوية:</strong>
                                     {{ $user->membership_name }}
                                 </div>
                                 <div class="info-row text-left" dir="ltr"><strong>Membership Type:</strong>
@@ -171,7 +170,7 @@
                             </div>
                             <div class="between">
                                 <!-- التاريخ بالعربي -->
-                                <div class="info-row" dir="rtl">
+                                <div class="info-row text-right" dir="rtl">
                                     <strong>تاريخ الانضمام:</strong>
                                     {{ $user->membership_started_at->locale('ar')->isoFormat('D MMMM YYYY') }}
                                 </div>
@@ -184,7 +183,7 @@
                             </div>
 
                             <div class="between">
-                                <div class="info-row" dir="rtl"><strong>رقم العضوية:</strong>
+                                <div class="info-row text-right w-full" dir="rtl"><strong>رقم العضوية:</strong>
                                     {{ $user->member_id }}
                                 </div>
                                 <div class="info-row text-left" dir="ltr"><strong>Membership ID:</strong>
@@ -194,7 +193,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- التذييل -->
                 <div class="footer">
                     <img src="{{ $user->profileQrCodePng() }}" alt="QR Code" class="qr-code">
@@ -202,12 +200,9 @@
                         <img src="{{ asset('nasaq.png') }}" alt="Official Stamp">
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-    <!-- الأزرار -->
     <div class="flex flex-col md:flex-row items-center gap-4 no-print">
         <button @click="downloadTransparent"
             class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5"

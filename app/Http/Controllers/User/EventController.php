@@ -43,6 +43,7 @@ class EventController extends Controller
     public function update(EventRequest $request, Event $event)
     {
         $data = $request->all();
+        // اذا كان تاريخ الذي تم ارساله 
         $event->update($data);
         $event->updateTranslations($data['translations'] ?? [], $request->header('X-Locale', config('app.locale')));
         if (array_key_exists('accepted_membership_ids', $data)) {
@@ -50,6 +51,7 @@ class EventController extends Controller
         } else {
             $event->memberships()->detach();
         }
+
         return app(EventResponse::class, ['event' => $event])->toStoreResponse();
     }
 
@@ -104,7 +106,12 @@ class EventController extends Controller
 
     public function activate(Event $event)
     {
-        $event->event_status = \App\Enums\EventStatus::Ongoing;
+        $isOld= $event->start_at->isAfter(now());
+        if($isOld){
+            $event->event_status = \App\Enums\EventStatus::Upcoming;
+        }else{
+            $event->event_status = \App\Enums\EventStatus::Ongoing;
+        }
         $event->save();
         return app(EventResponse::class, ['event' => $event])->toResponseApi();
     }

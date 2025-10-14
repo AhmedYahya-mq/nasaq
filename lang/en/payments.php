@@ -38,4 +38,5 @@ return [
     'event' => 'event',
     'membership' => 'membership',
     'library' => 'resource',
+    'Secure Payment Info' => 'Note: After completing the payment, the amount cannot be refunded. Please make sure to choose carefully before completing the purchase.'
 ];

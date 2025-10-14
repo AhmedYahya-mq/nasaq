@@ -209,7 +209,7 @@ class Event extends Model
 
     public function scopeFeatured($query)
     {
-        return $query->where('is_featured', true)->orderBy('start_at', 'desc');
+        return $query->upcoming()->where('is_featured', true)->orderBy('start_at', 'desc');
     }
 
     /**
@@ -233,7 +233,7 @@ class Event extends Model
         $dates = $datesData->pluck('count', 'date')->toArray();
 
         // أكبر تاريخ من هذه الفعاليات
-        $maxDate = !empty($dates) ? max(array_keys($dates)) : null;
+        $maxDate = !empty($dates) ? max(array_keys($dates)) : now()->addWeek()->toDateString();
         $maxDatePlusOne = $maxDate ? Carbon::parse($maxDate)->addDay()->toDateString() : null;
 
         return [

@@ -122,4 +122,6 @@ return [
 
     'not_available' => 'Not available',
 
+    'title' => 'Events',
+
 ];

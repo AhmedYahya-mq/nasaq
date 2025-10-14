@@ -22,6 +22,7 @@ Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function (
         }])->firstOrFail();
         return view('invoice', compact('payment'));
     })->name('invoice.print')->middleware('auth');
+    Route::post('/contact', [\App\Http\Controllers\ContactController::class, '__invoke'])->name('contact.sendMail');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {

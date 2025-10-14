@@ -24,7 +24,7 @@
         </div>
 
         {{-- 2. شبكة عرض بطاقات الأرشيف (باستخدام المكون x-events.archive-card) --}}
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {{-- <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <x-events.archive-card
                 :title="__('archive.samples.0.title')"
                 description="هذا وصف مختصر للحدث الأول يوضح فكرة عامة عن محتوى الحدث ويمكن أن يكون نصاً طويلاً لكنه سيظهر في 3 أسطر فقط."
@@ -57,7 +57,7 @@
                 registrationUrl="#"
                 class="h-full"
             />
-        </div>
+        </div> --}}
 
         {{-- 3. ترقيم الصفحات (Pagination  ) --}}
         <div class="mt-12">

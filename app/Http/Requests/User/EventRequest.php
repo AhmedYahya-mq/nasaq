@@ -23,10 +23,10 @@ class EventRequest extends FormRequest implements \App\Contract\User\Request\Eve
         $type = $this->input('event_type') ?? $this->route('event')?->event_type;
         $isTranslate = $this->route()->getActionMethod() === 'updateTranslation';
         $isUpdateLink = $this->input('update_link', false);
-        if($isUpdateLink){
+        if ($isUpdateLink) {
             return [
                 'link' => ['required', 'url'],
-                 'address' => $type === EventType::Physical
+                'address' => $type === EventType::Physical
                     ? ['required', 'string', 'max:255']
                     : ['nullable', 'string', 'max:255']
             ];
@@ -98,14 +98,12 @@ class EventRequest extends FormRequest implements \App\Contract\User\Request\Eve
         }
 
         // ضبط الحالة تلقائيًا بناءً على start_at و end_at
-        if (isset($data['start_at'])) {
+        if (isset($data['start_at']) && !$this->input('update_link', false)) {
             $startAt = Carbon::parse($data['start_at']);
             $now = Carbon::now();
 
-            if ($startAt->gt($now)) {
+            if ($startAt->isAfter($now)) {
                 $data['event_status'] = EventStatus::Upcoming;
-            } elseif (isset($data['end_at']) && Carbon::parse($data['end_at'])->lt($now)) {
-                $data['event_status'] = EventStatus::Completed;
             } else {
                 $data['event_status'] = EventStatus::Ongoing;
             }

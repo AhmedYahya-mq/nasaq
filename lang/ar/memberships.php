@@ -78,4 +78,6 @@ return [
     'Status' => 'الحالة',
     'Pending Review' => 'بانتظار المراجعة',
     'Go to Homepage' => 'الذهاب إلى الصفحة الرئيسية',
+    'show_less' => 'أقل',
+    'read_more' => 'عرض المزيد',
 ];

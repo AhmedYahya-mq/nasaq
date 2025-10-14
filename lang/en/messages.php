@@ -12,4 +12,13 @@ return [
     'system' => 'System',
     'Payment successful, please complete your membership application.' => 'Payment successful, please complete your membership application.',
     'event' => 'event',
+
+    'events1' => 'Events',
+    'profile1' => 'Profile',
+    'library1' => 'My Library',
+    'memberships1' => 'My Membership',
+    'request1' => 'My Requests',
+    'invoices1' => 'Invoices',
+    'change_password1' => 'Change Password',
+    'security1' => 'Security',
 ];

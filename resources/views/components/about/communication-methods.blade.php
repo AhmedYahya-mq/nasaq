@@ -34,30 +34,50 @@
                     <p>{{ __('about.contact_section.form.success_message') }}</p>
                 </div>
 
-                <form @submit.prevent="submitForm" x-show="!success" class="space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <x-forms.input name="name" id="contact-name" :label="__('about.contact_section.form.name')" :placeholder="__('about.contact_section.form.name_placeholder')"
-                            x-model="formData.name" icon="user" required />
-                        <x-forms.input type="email" name="email" id="contact-email" :label="__('about.contact_section.form.email')"
-                            :placeholder="__('about.contact_section.form.email_placeholder')" x-model="formData.email" icon="mail" required />
+                <div x-text="messageError" class="text-sm text-red-600 mb-4" x-show="messageError" x-transition>
+                    
+                </div>
+
+                <form @submit.prevent="submitForm" class="space-y-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <x-forms.input name="full_name" id="contact-name" :label="__('about.contact_section.form.name')" :placeholder="__('about.contact_section.form.name_placeholder')"
+                                x-model="formData.full_name" icon="user" required />
+                            <span x-text="errors.full_name" class="text-sm text-red-600 mt-1 block">
+                            </span>
+                        </div>
+                        <div>
+                            <x-forms.input type="email" name="email" id="contact-email" :label="__('about.contact_section.form.email')"
+                                :placeholder="__('about.contact_section.form.email_placeholder')" x-model="formData.email" icon="mail" required />
+                            <span x-text="errors.email" class="text-sm text-red-600 mt-1 block"></span>
+                        </div>
                     </div>
 
-                    <x-forms.tel-input name="phone" id="contact-phone" :label="__('about.contact_section.form.phone')" :placeholder="__('about.contact_section.form.phone_placeholder')"
-                        x-model="formData.phone" />
+                    <div>
+                        <x-forms.tel-input name="phone" id="contact-phone" :label="__('about.contact_section.form.phone')" :placeholder="__('about.contact_section.form.phone_placeholder')"
+                            x-model="formData.phone" />
+                        <span x-text="errors.phone" class="text-sm text-red-600 mt-1 block"></span>
+                    </div>
 
-                    <x-forms.input name="subject" id="contact-subject" :label="__('about.contact_section.form.subject')" :placeholder="__('about.contact_section.form.subject_placeholder')"
-                        x-model="formData.subject" icon="annotation" required />
+                    <div>
+                        <x-forms.input name="subject" id="contact-subject" :label="__('about.contact_section.form.subject')" :placeholder="__('about.contact_section.form.subject_placeholder')"
+                            x-model="formData.subject" icon="annotation" required />
+                        <span x-text="errors.subject" class="text-sm text-red-600 mt-1 block"></span>
+                    </div>
 
-                    <x-forms.text-area name="message" id="contact-message" :label="__('about.contact_section.form.message')" :placeholder="__('about.contact_section.form.message_placeholder')"
-                        x-model="formData.message" rows="5" required />
+                    <div>
+                        <x-forms.text-area name="message" id="contact-message" :label="__('about.contact_section.form.message')" :placeholder="__('about.contact_section.form.message_placeholder')"
+                            x-model="formData.message" rows="5" required />
+                        <span x-text="errors.message" class="text-sm text-red-600 mt-1 block"></span>
+                    </div>
 
                     <div>
                         <button type="submit" :disabled="loading"
-                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed">
+                            class="w-full flex gap-1 justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:bg-muted disabled:cursor-not-allowed">
                             <span x-show="!loading">{{ __('about.contact_section.form.send_button') }}</span>
                             <span x-show="loading" class="flex items-center">
-                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <svg class="animate-spin mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24">
                                     <circle class="opacity-25" cx="12" cy="12" r="10"
                                         stroke="currentColor" stroke-width="4"></circle>
                                     <path class="opacity-75" fill="currentColor"
@@ -77,7 +97,7 @@
                 </h3>
                 <div class="space-y-4">
                     @foreach ($socials as $social)
-                       @if (!empty($social['url']) && $social['url'] !== '#')
+                        @if (!empty($social['url']) && $social['url'] !== '#')
                             <a href="{{ $social['url'] }}" target="_blank" rel="noopener noreferrer"
                                 class="group flex items-center p-4 rounded-xl bg-card border border-border shadow-sm hover:shadow-lg hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1">
                                 <div
@@ -106,44 +126,6 @@
 </section>
 
 {{-- السكريبتات اللازمة للمكونات (لا تحتاج لتغيير) --}}
-<script>
-    if (typeof contactForm === 'undefined') {
-        function contactForm() {
-            return {
-                formData: {
-                    name: '',
-                    email: '',
-                    phone: '',
-                    subject: '',
-                    message: ''
-                },
-                loading: false,
-                success: false,
-                submitForm() {
-                    this.loading = true;
-                    console.log('Sending data:', this.formData);
-                    setTimeout(() => {
-                        this.loading = false;
-                        this.success = true;
-                        this.formData = {
-                            name: '',
-                            email: '',
-                            phone: '',
-                            subject: '',
-                            message: ''
-                        };
-                        setTimeout(() => this.success = false, 5000);
-                    }, 2000);
-                }
-            }
-        }
-    }
-    if (typeof phoneInput === 'undefined') {
-        function phoneInput() {
-            return {
-                isValid: true,
-                error: ''
-            }
-        }
-    }
-</script>
+@push('scripts')
+    @vite('resources/js/pages/contact-form.js')
+@endpush

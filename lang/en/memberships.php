@@ -74,4 +74,7 @@ return [
     'Membership Type' => 'Membership Type', 
     'Submitted At' => 'Submitted At',
     'Status' => 'Status',
+    
+    'read_more' => 'Read More',
+    'show_less' => 'Show Less',
 ];

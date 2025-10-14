@@ -17,29 +17,22 @@
     </x-slot>
 
     <div class="flex flex-col gap-0.5">
-        {{-- زر لكل لغة --}}
         @php
-            $routeName = Route::currentRouteName();
-            $routeBase = str_replace('client.', '', $routeName);
-            $routeBase = str_replace('locale.', '', $routeBase);
-            $routeName = 'client.locale.' . $routeBase;
-            function safeLocaleRoute($routeName, $locale, $default = '/')
-            {
-                try {
-                    return route($routeName, ['locale' => $locale]);
-                } catch (Exception $e) {
-                    $url = $default . '/' . $locale . '/';
-                    return url($url);
-                }
-            }
+            $currentPath = request()->path();
+            $pathWithoutLocale = preg_replace('#^(ar|en)/#', '', $currentPath);
         @endphp
-        @foreach (['ar' => 'ar', 'en' => 'en'] as $key => $lang)
-            <a href="{{ safeLocaleRoute($routeName, $key) }}"  @class([
-                'bg-primary/35' => $locale === $key,
+
+        @foreach (['ar' => 'العربية', 'en' => 'English'] as $key => $lang)
+            @php
+                $newUrl = url($key . '/' . $pathWithoutLocale);
+            @endphp
+            <a href="{{ $newUrl }}" @class([
+                'bg-primary/35' => app()->getLocale() === $key,
                 "hover:bg-accent/20 text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4" => true,
             ])>
-                <span>{{ __('messages.' . $lang) }}</span>
+                <span>{{ $lang }}</span>
             </a>
         @endforeach
     </div>
+
     </x-dropdown-menu>
