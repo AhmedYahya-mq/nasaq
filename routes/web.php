@@ -20,8 +20,10 @@ $adminPrefix = config('app.admin_prefix', 'admin');
 Route::group(['prefix' => $adminPrefix, 'as' => 'admin.'], function () {
     require __DIR__ . '/admin.php';
 });
-Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(function () {
-    Route::get('members/{user}', function ($user) {
-        return  redirect()->route('admin.members.show', ['user' => $user]);
-    })->name('members.show');
-});
+
+Route::get('members/{user}', function ($user) {
+    if (auth('admin')->check()) {
+        abort(403, 'Admins cannot access this route.');
+    }
+    return  redirect()->route('admin.members.show', ['user' => $user]);
+})->name('members.show');
