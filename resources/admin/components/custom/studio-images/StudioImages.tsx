@@ -8,7 +8,7 @@ import UploadSection from "./UploadSection";
 import { destroy, index, store } from "@/routes/photos";
 import { ImageItem } from "@/types/model/photo";
 import { confirm } from "../../../store/confirm-dialog-store";
-import { confirmAlertDialog, confirmInDiv } from "../ConfirmDialog";
+import { confirmAlertDialog } from "../ConfirmDialog";
 
 
 // -------------------- المكون الرئيسي --------------------

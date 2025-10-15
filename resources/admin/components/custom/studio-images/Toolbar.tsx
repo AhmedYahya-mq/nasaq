@@ -28,7 +28,7 @@ const Toolbar = memo(function Toolbar({
                 {t.upload}
             </Button>
             <div className="ms-auto flex items-center gap-2 flex-wrap">
-                <input
+                {/* <input
                     placeholder={t.searchPlaceholder}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
@@ -36,7 +36,7 @@ const Toolbar = memo(function Toolbar({
                 />
                 <Button variant="outline" onClick={refresh} disabled={isLoading}>
                     {isLoading ? t.reloading : t.refresh}
-                </Button>
+                </Button> */}
             </div>
         </div>
     );
