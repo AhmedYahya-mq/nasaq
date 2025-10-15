@@ -23,6 +23,7 @@
         "mobiledetect/mobiledetectlib": "^4.8",
         "propaganistas/laravel-phone": "^6.0",
         "spatie/laravel-permission": "^6.21",
+        "spatie/laravel-sitemap": "^7.3",
         "spatie/laravel-translatable": "^6.11",
         "stichoza/google-translate-php": "^5.3"
     },

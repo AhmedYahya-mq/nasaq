@@ -65,7 +65,8 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span class="text-sm font-bold text-green-700 dark:text-green-400">{{ __('events.unlimited') }}</span>
+                            <span
+                                class="text-sm font-bold text-green-700 dark:text-green-400">{{ __('events.unlimited') }}</span>
                         </div>
                     @elseif ($event->event_status->isUpcoming())
                         <div class="flex items-center gap-2">
@@ -79,7 +80,8 @@
                 </div>
             </div>
             @if (!$isUnlimited)
-                <div class="w-full bg-muted rounded-full h-3 overflow-hidden" aria-label='{{ __('events.percentage_register') }}'>
+                <div class="w-full bg-muted rounded-full h-3 overflow-hidden"
+                    aria-label='{{ __('events.percentage_register') }}'>
                     <div class="h-3 rounded-full bg-gradient-to-r from-green-400 to-primary transition-all duration-1000 ease-out"
                         style="width: {{ $percentage }}%"></div>
                 </div>
@@ -88,8 +90,7 @@
 
         <!-- أنواع العضويات المسموحة - تصميم مضغوط -->
         @if (isset($membership_names) && count($membership_names) > 0)
-            <section
-            x-data="{
+            <section x-data="{
                 toggleMemberships() {
                     const button = event.currentTarget;
                     const list = document.getElementById('membership-list');
@@ -97,8 +98,7 @@
                     button.setAttribute('aria-expanded', !isExpanded);
                     list.classList.toggle('hidden');
                 }
-            }"
-            class="mb-4" aria-label="{{ __('events.access_membership') }}">
+            }" class="mb-4" aria-label="{{ __('events.access_membership') }}">
                 <!-- زر عرض العضويات -->
                 <button @click="toggleMemberships"
                     class="flex items-center gap-2 w-full p-2 rounded-lg hover:bg-primary/5 transition-colors duration-200 group/member"
@@ -111,7 +111,8 @@
                                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                         </div>
-                        <span class="text-sm font-medium text-card-foreground">{{ __('events.access_membership') }}</span>
+                        <span
+                            class="text-sm font-medium text-card-foreground">{{ __('events.access_membership') }}</span>
                         <span
                             class="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-full">{{ count($membership_names) }}</span>
                     </div>
@@ -264,4 +265,6 @@
     <div class="absolute ltr:right-0 rtl:left-0 top-0  w-16 h-16">
         <div class="absolute top-0 left-0 w-16 h-16 bg-primary/20 rounded-br-2xl"></div>
     </div>
+
 </article>
+

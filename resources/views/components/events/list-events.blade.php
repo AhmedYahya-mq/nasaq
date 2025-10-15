@@ -16,3 +16,52 @@
 
     {{ $isPaginated ? $events->links('pagination::tailwind') : '' }}
 </div>
+@push('seo')
+    @if ($events && $events->isNotEmpty())
+        @php
+            $structuredData = [
+                '@context' => 'https://schema.org',
+                '@type' => 'ItemList',
+                'name' => __('seo.events.title'),
+                'description' => __('seo.events.description'),
+                'itemListElement' => $events->map(function ($event, $index) {
+                    return [
+                        '@type' => 'ListItem',
+                        'position' => $index + 1,
+                        'url' => route('client.event.register', ['event' => $event]),
+                        'item' => [
+                            '@type' => 'Event',
+                            'name' => $event->title,
+                            'startDate' => $event->start_at->toIso8601String(),
+                            'endDate' => $event->end_at?->toIso8601String(),
+                            'location' => [
+                                '@type' => 'Place',
+                                'name' => $event->location_name ?? 'موقع الفعالية',
+                                'address' => $event->address ?? '',
+                            ],
+                            'image' => $event->image ?? asset('favicon.ico'),
+                            'offers' => [
+                                '@type' => 'Offer',
+                                'url' => route('client.event.register', $event),
+                                'price' => $event->final_price ?? 0,
+                                'priceCurrency' => 'SAR',
+                                'availability' =>
+                                    'https://schema.org/' .
+                                    ($event->event_status->isUpcoming() ? 'InStock' : 'SoldOut'),
+                            ],
+                            'organizer' => [
+                                '@type' => 'Organization',
+                                'name' => __('seo.site_name'),
+                                'url' => url('/'),
+                            ],
+                        ],
+                    ];
+                }),
+            ];
+        @endphp
+
+        <script type="application/ld+json">
+        {!! json_encode($structuredData, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT) !!}
+    </script>
+    @endif
+@endpush

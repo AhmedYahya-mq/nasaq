@@ -17,8 +17,8 @@
             <a href="{{ route('client.library') }}" class="text-muted-foreground hover:text-primary transition">
                 {{ __('header.library') }}
             </a>
-            <a href="{{ route('client.archives') }}" class="text-muted-foreground hover:text-primary transition">
-                {{ __('header.archives') }}</a>
+            {{-- <a href="{{ route('client.archives') }}" class="text-muted-foreground hover:text-primary transition">
+                {{ __('header.archives') }}</a> --}}
             <a href="{{ route('client.about') }}" class="text-muted-foreground hover:text-primary transition">
                 {{ __('header.about') }}</a>
             <a href="{{ route('client.memberships') }}" class="text-muted-foreground hover:text-primary transition">

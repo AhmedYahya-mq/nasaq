@@ -9,11 +9,11 @@ Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function (
         require __DIR__ . '/user.php';
     });
     require __DIR__ . '/user.php';
-    Route::post('/filepond/process', [FilePondController::class, 'process'])->name('filepond.process');
-    Route::delete('/filepond/revert', [FilePondController::class, 'revert'])->name('filepond.revert');
-    Route::get('/filepond/restore/{id}', [FilePondController::class, 'restore'])->name('filepond.restore')->where('id', '.*');
-    Route::post('/filepond/remove', [FilePondController::class, 'remove'])->name('filepond.remove');
-    Route::post('/contact', [\App\Http\Controllers\ContactController::class, '__invoke'])->name('contact.sendMail');
+    Route::post('/filepond/process', [FilePondController::class, 'process'])->middleware('auth')->name('filepond.process');
+    Route::delete('/filepond/revert', [FilePondController::class, 'revert'])->middleware('auth')->name('filepond.revert');
+    Route::get('/filepond/restore/{id}', [FilePondController::class, 'restore'])->middleware('auth')->name('filepond.restore')->where('id', '.*');
+    Route::post('/filepond/remove', [FilePondController::class, 'remove'])->middleware('auth')->name('filepond.remove');
+    Route::post('/contact', [\App\Http\Controllers\ContactController::class, '__invoke'])->defaults('not-site-map', true)->name('contact.sendMail');
 });
 
 $adminPrefix = config('app.admin_prefix', 'admin');

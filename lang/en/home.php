@@ -37,25 +37,10 @@ return [
     'numbers' => [
         'title' => 'Numbers That Reflect Our Impact',
         'desc'  => 'From every meeting to every webinar, from each new member to every scientific step, these numbers embody the impact of our medical community. Discover the true power of communication and knowledge in a thriving scientific and expert community.',
-
-        'items' => [
-            [
-                'count' => 25426445,
-                'label' => 'Active Members',
-            ],
-            [
-                'count' => 6458,
-                'label' => 'Digital Library',
-            ],
-            [
-                'count' => 654,
-                'label' => 'Regular Meetings',
-            ],
-            [
-                'count' => 254,
-                'label' => 'Interactive Webinars',
-            ],
-        ],
+        'item1_label' => 'Active Members',
+        'item2_label' => 'Digital Library',
+        'item3_label' => 'In-Person Meetings',
+        'item4_label' => 'Online Meetings',
     ],
 
     'features' => [

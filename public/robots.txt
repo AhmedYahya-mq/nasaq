@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Sitemap: https://nasaqcommunity.com/sitemap.xml

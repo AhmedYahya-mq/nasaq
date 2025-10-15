@@ -73,7 +73,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('library/{res}/download', [\App\Http\Controllers\User\LibraryController::class, 'download'])->name('library.download')->middleware('library.download');
     Route::get('event/{event}/open', [EventController::class, 'redirctToEvent'])->name('event.open')->middleware('event.open');
 
-     Route::get('/invoice/{uuid}/', function ($uuid) {
+    Route::get('/invoice/{uuid}/', function ($uuid) {
         $payment = Payment::where('moyasar_id', $uuid)->with(['user', 'payable' => function ($q) {
             if (method_exists($q->getModel(), 'scopeWithTranslations')) {
                 $q->withTranslations();
@@ -94,19 +94,19 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/events', EventController::class)->name('events');
-Route::get('/event/calendar', [EventController::class, 'calender'])->name('events.calender');
+Route::get('/event/calendar', [EventController::class, 'calender'])->defaults('not-site-map', true)->name('events.calender');
 
 Route::get('/library', function () {
     return view('library');
 })->name('library');
 
-Route::get('/archives', function () {
-    return view('archives');
-})->name('archives');
+// Route::get('/archives', function () {
+//     return view('archives');
+// })->name('archives');
 
-Route::get('/archive', function () {
-    return view('details-archive');
-})->name('archive');
+// Route::get('/archive', function () {
+//     return view('details-archive');
+// })->name('archive');
 
 Route::get('/blogs', function () {
     return view('blogs');

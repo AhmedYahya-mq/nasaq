@@ -43,7 +43,7 @@
                     {{ __('memberships.discounted_price_note', [
                         'months' => 12,
                         'discounted_price' => $membership->discounted_price,
-                        'regular_price' => $membership->price ,
+                        'regular_price' => $membership->price,
                     ]) }}
                 </div>
             @endif

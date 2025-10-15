@@ -97,4 +97,6 @@
     <div
         class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
     </div>
+    {{-- Structured Data --}}
+
 </article>

@@ -1,18 +1,16 @@
-<div
-    x-data="{
-        search: '{{ request()->get('search') }}',
-        showFilters: false,
-        submitSearch() {
-            const params = new URLSearchParams(window.location.search);
-            if (this.search) {
-                params.set('search', this.search);
-            } else {
-                params.delete('search');
-            }
-            window.location.search = params.toString();
+<div x-data="{
+    search: '{{ request()->get('search') }}',
+    showFilters: false,
+    submitSearch() {
+        const params = new URLSearchParams(window.location.search);
+        if (this.search) {
+            params.set('search', this.search);
+        } else {
+            params.delete('search');
         }
-    }"
-class="relative min-h-auto my-25 px-5 sm:px-10">
+        window.location.search = params.toString();
+    }
+}" class="relative min-h-auto my-25 px-5 sm:px-10">
     <div class="text-center mb-12">
         <h1 class="text-3xl md:text-5xl font-extrabold text-foreground mb-4 leading-tight">
             {{ __('blog.title') }}
@@ -51,3 +49,43 @@ class="relative min-h-auto my-25 px-5 sm:px-10">
         {{ $blogs->links('pagination::tailwind') }}
     @endif
 </div>
+
+@push('seo')
+    @if ($blogs && $blogs->isNotEmpty())
+        @php
+            $structuredData = [
+                '@context' => 'https://schema.org',
+                '@type' => 'ItemList',
+                'name' => __('seo.blogs.title'),
+                'description' => __('seo.blogs.description'),
+                'itemListElement' => $blogs->map(function ($blog, $index) {
+                    return [
+                        '@type' => 'ListItem',
+                        'position' => $index + 1,
+                        'url' => route('client.blog.details', ['blog' => $blog]),
+                        'item' => [
+                            '@type' => 'BlogPosting',
+                            'headline' => $blog->title,
+                            'description' => $blog->excerpt ?? substr(strip_tags($blog->content), 0, 150),
+                            'image' => optional($blog->photo)->url ?? asset('favicon.ico'),
+                            'author' => [
+                                '@type' => 'Person',
+                                'name' => $blog->author_name ?? __('seo.site_name'),
+                            ],
+                            'datePublished' => optional($blog->published_at)->format('Y-m-d'),
+                            'dateModified' => optional($blog->updated_at)->format('Y-m-d'),
+                            'mainEntityOfPage' => [
+                                '@type' => 'WebPage',
+                                '@id' => route('client.blog.details', ['blog' => $blog]),
+                            ],
+                        ],
+                    ];
+                }),
+            ];
+        @endphp
+
+        <script type="application/ld+json">
+            {!! json_encode($structuredData, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT) !!}
+        </script>
+    @endif
+@endpush
