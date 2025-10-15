@@ -207,6 +207,6 @@
         </div>
     </div>
 
-    <x-membership.certificate-hostinger-style :user="$user" />
+    <x-membership.Certificate-hostinger-style :user="$user" />
 
 </div>
