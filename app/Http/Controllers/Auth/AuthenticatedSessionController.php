@@ -61,7 +61,7 @@ class AuthenticatedSessionController extends Controller
     {
         return $this->loginPipeline($request)->then(function ($request) {
              $request->session()->regenerate();
-            return redirect()->intended(route('admin.dashboard', absolute: false));
+            return redirect()->intended(route('admin.membership', absolute: false));
         });
     }
 
