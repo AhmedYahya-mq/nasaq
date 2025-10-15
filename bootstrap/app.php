@@ -34,6 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'library.saved' => \App\Http\Middleware\CheckResourceMiddleware::class,
                 'library.download' => \App\Http\Middleware\CheckDownloadAccessMiddleware::class,
                 'event.open' => \App\Http\Middleware\CheckEventOpen::class,
+                'prevent.indexing' => \App\Http\Middleware\PreventIndexing::class,
             ]
         );
     })

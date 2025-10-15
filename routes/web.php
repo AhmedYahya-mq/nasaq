@@ -17,7 +17,11 @@ Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function (
 });
 
 $adminPrefix = config('app.admin_prefix', 'admin');
-Route::group(['prefix' => $adminPrefix, 'as' => 'admin.'], function () {
+Route::group([
+    'prefix' => $adminPrefix,
+    'as' => 'admin.',
+    'middleware' => ['prevent.indexing']
+], function () {
     require __DIR__ . '/admin.php';
 });
 
@@ -26,4 +30,4 @@ Route::get('members/{user}', function ($user) {
         abort(403, 'Admins cannot access this route.');
     }
     return  redirect()->route('admin.members.show', ['user' => $user]);
-})->name('members.show');
+})->middleware('prevent.indexing')->name('members.show');
