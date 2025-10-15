@@ -3,7 +3,7 @@ import update from './update'
 /**
 * @see \App\Http\Controllers\User\BlogController::store
  * @see app/Http/Controllers/User/BlogController.php:18
- * @route '/admin/blogs'
+ * @route '/hidden/door/zone/master/blogs'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -12,13 +12,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '/admin/blogs',
+    url: '/hidden/door/zone/master/blogs',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\User\BlogController::store
  * @see app/Http/Controllers/User/BlogController.php:18
- * @route '/admin/blogs'
+ * @route '/hidden/door/zone/master/blogs'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -27,7 +27,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\User\BlogController::store
  * @see app/Http/Controllers/User/BlogController.php:18
- * @route '/admin/blogs'
+ * @route '/hidden/door/zone/master/blogs'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -37,7 +37,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \App\Http\Controllers\User\BlogController::store
  * @see app/Http/Controllers/User/BlogController.php:18
- * @route '/admin/blogs'
+ * @route '/hidden/door/zone/master/blogs'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -47,7 +47,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \App\Http\Controllers\User\BlogController::store
  * @see app/Http/Controllers/User/BlogController.php:18
- * @route '/admin/blogs'
+ * @route '/hidden/door/zone/master/blogs'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),
@@ -58,7 +58,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\User\BlogController::update
  * @see app/Http/Controllers/User/BlogController.php:30
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
 export const update = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
@@ -67,13 +67,13 @@ export const update = (args: { id: string | number } | [id: string | number ] | 
 
 update.definition = {
     methods: ["put"],
-    url: '/admin/blogs/{id}',
+    url: '/hidden/door/zone/master/blogs/{id}',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\User\BlogController::update
  * @see app/Http/Controllers/User/BlogController.php:30
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
 update.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -101,7 +101,7 @@ update.url = (args: { id: string | number } | [id: string | number ] | string | 
 /**
 * @see \App\Http\Controllers\User\BlogController::update
  * @see app/Http/Controllers/User/BlogController.php:30
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
 update.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
@@ -111,7 +111,7 @@ update.put = (args: { id: string | number } | [id: string | number ] | string | 
     /**
 * @see \App\Http\Controllers\User\BlogController::update
  * @see app/Http/Controllers/User/BlogController.php:30
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
     const updateForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
@@ -126,7 +126,7 @@ update.put = (args: { id: string | number } | [id: string | number ] | string | 
             /**
 * @see \App\Http\Controllers\User\BlogController::update
  * @see app/Http/Controllers/User/BlogController.php:30
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
         updateForm.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
@@ -142,7 +142,7 @@ update.put = (args: { id: string | number } | [id: string | number ] | string | 
 /**
 * @see \App\Http\Controllers\User\BlogController::destroy
  * @see app/Http/Controllers/User/BlogController.php:64
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
 export const destroy = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
@@ -151,13 +151,13 @@ export const destroy = (args: { id: string | number } | [id: string | number ] |
 
 destroy.definition = {
     methods: ["delete"],
-    url: '/admin/blogs/{id}',
+    url: '/hidden/door/zone/master/blogs/{id}',
 } satisfies RouteDefinition<["delete"]>
 
 /**
 * @see \App\Http\Controllers\User\BlogController::destroy
  * @see app/Http/Controllers/User/BlogController.php:64
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
 destroy.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -185,7 +185,7 @@ destroy.url = (args: { id: string | number } | [id: string | number ] | string |
 /**
 * @see \App\Http\Controllers\User\BlogController::destroy
  * @see app/Http/Controllers/User/BlogController.php:64
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
 destroy.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
@@ -195,7 +195,7 @@ destroy.delete = (args: { id: string | number } | [id: string | number ] | strin
     /**
 * @see \App\Http\Controllers\User\BlogController::destroy
  * @see app/Http/Controllers/User/BlogController.php:64
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
     const destroyForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
@@ -210,7 +210,7 @@ destroy.delete = (args: { id: string | number } | [id: string | number ] | strin
             /**
 * @see \App\Http\Controllers\User\BlogController::destroy
  * @see app/Http/Controllers/User/BlogController.php:64
- * @route '/admin/blogs/{id}'
+ * @route '/hidden/door/zone/master/blogs/{id}'
  */
         destroyForm.delete = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {

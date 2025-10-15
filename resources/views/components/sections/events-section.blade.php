@@ -26,6 +26,7 @@
             <x-events.list-events />
         </div>
 
+         <x-events.list-events :isOld="true" />
         {{-- <div class="mb-24">
             <h2 class="text-2xl font-bold mb-8 text-foreground text-center drop-shadow">
                 {{ __('events.page_titles.past_events_archive') }}

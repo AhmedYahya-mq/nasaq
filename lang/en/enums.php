@@ -89,7 +89,7 @@ return [
         'audio' => 'Audio',
         'video' => 'Videos',
         'article' => 'Articles',
-        'researchPaper' => 'Research Papers',
+        'research_paper' => 'Research Papers',
         'tutorial' => 'Tutorials',
     ],
     'library_type_message' => [
@@ -97,7 +97,7 @@ return [
         'audio' => 'Listen to our audio resources, including podcasts and audiobooks, to enhance your knowledge on the go.',
         'video' => 'Watch informative videos and tutorials on therapeutic nutrition, presented by experts in the field.',
         'article' => 'Read insightful articles on the latest research and trends in therapeutic nutrition.',
-        'researchPaper' => 'Access a variety of research papers to stay updated with scientific advancements in therapeutic nutrition.',
+        'research_paper' => 'Access a variety of research papers to stay updated with scientific advancements in therapeutic nutrition.',
         'tutorial' => 'Follow step-by-step tutorials to learn new skills and techniques in therapeutic nutrition.',
     ],
 

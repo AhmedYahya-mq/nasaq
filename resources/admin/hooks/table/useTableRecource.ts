@@ -14,6 +14,7 @@ import { destroy, download } from "@/routes/admin/library";
 import { eventCell } from "@/components/table/cells/EventCell";
 import useProgressToast from "./t";
 import { DownloadManager } from "@/lib/download";
+import { library } from "@/routes/admin";
 
 export function useTableResource({ resources }: { resources: Pagination<Resource> }) {
     const [search, setSearch] = useState<string>("");
@@ -36,6 +37,24 @@ export function useTableResource({ resources }: { resources: Pagination<Resource
             return (!search || Object.values(res).some((val) => String(val).toLowerCase().includes(search.toLowerCase())));
         });
     }, [tableData, search]);
+
+    // البحث في البيانات وتحديثها من الخادم
+    const searchData = (text: string) => {
+        setSearch(text);
+        router.visit(
+            library().url,
+            {
+                data: { search: text },
+                preserveState: true, preserveScroll: true,
+                onSuccess: (page) => {
+                    setTableData((page.props.resources as Pagination<Resource>).data);
+                    setMeta((page.props.resources as Pagination<Resource>).meta);
+                    setLinks((page.props.resources as Pagination<Resource>).links);
+                }
+
+            }
+        );
+    }
 
     // إضافة صف جديد للجدول
     const addRow = (resource: Resource) => {
@@ -169,6 +188,7 @@ export function useTableResource({ resources }: { resources: Pagination<Resource
         search,
         tableData: filteredData,
         selectedRow,
+        searchData,
         setColumns,
         setSearch,
         setSelectedRow,

@@ -1,6 +1,18 @@
 <?php
 
 return [
+     'title' => '📑 Payment Invoices',
+    'payment_id' => 'Payment ID',
+    'invoice_id' => 'Invoice ID',
+    'service' => 'Service',
+    'paid_on' => 'Paid on',
+    'amount' => 'Amount',
+    'subscription' => 'Subscribed to membership: :name',
+    'registered_event' => 'Registered for: :title',
+    'purchased_item' => 'Purchased: :title',
+    'unknown_service' => 'Unknown service',
+    'no_purchases' => "You haven't made any purchases yet.",
+    
     'Payment Successful' => 'Payment Successful',
     'Thank you, :name! Your payment has been received successfully.' => 'Thank you, :name! Your payment has been received successfully.',
     'Amount Paid' => 'Amount Paid',

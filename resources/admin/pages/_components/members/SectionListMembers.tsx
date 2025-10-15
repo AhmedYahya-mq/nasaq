@@ -8,8 +8,7 @@ import { Members } from "@/types/model/members";
 import { membersColumnLabels } from "@/tables/labels";
 
 export default function SectionListMembers(): JSX.Element {
-    const { members } = usePage<{ members: Members[] }>().props;
-    console.log(usePage().props);
+     const members = (usePage().props.members as Pagination<Members>);
 
     const {
         tableData,

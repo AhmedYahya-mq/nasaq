@@ -19,7 +19,12 @@
     <div class="flex flex-col gap-0.5">
         @php
             $currentPath = request()->path();
-            $pathWithoutLocale = preg_replace('#^(ar|en)/#', '', $currentPath);
+            // إزالة اللغة من بداية المسار إذا كانت موجودة فعلاً
+            if (preg_match('#^(ar|en)(/|$)#', $currentPath)) {
+                $pathWithoutLocale = preg_replace('#^(ar|en)/?#', '', $currentPath);
+            } else {
+                $pathWithoutLocale = $currentPath;
+            }
         @endphp
 
         @foreach (['ar' => 'العربية', 'en' => 'English'] as $key => $lang)

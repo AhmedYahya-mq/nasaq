@@ -1,4 +1,4 @@
-<x-layouts.guest-layout title="{{ __('profile.title') }}">
+<x-layouts.guest-layout title="profile.title_profile">
 
     @push('scripts')
         @vite(['resources/js/pages/profile.js'])
@@ -11,7 +11,7 @@
                 <x-ui.card-profile />
             </div>
             <div class="flex flex-col">
-                <x-tabs class="w-full" default="{{ request()->get('tab', 'events') }}">
+                <x-tabs class="w-full" default="{{ request()->get('tab', 'personalInfo') }}">
                     <x-slot:header>
                         <x-tabs.tab-button id="personalInfo" label="{{ __('messages.profile1') }}" />
                         <x-tabs.tab-button id="library" label="{{ __('messages.library1') }}" />

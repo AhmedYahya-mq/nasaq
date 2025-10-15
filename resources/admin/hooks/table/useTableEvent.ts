@@ -1,3 +1,4 @@
+import { events } from './../../routes/admin/index';
 import { useState, useMemo, useEffect, useContext } from "react";
 import OpenFormContext from "@/context/OpenFormContext";
 import axios from "axios";
@@ -11,12 +12,13 @@ import { actionsCell, badgeCell, centeredTextCell, dateCell, SwitchCell } from "
 import { eventCell } from "@/components/table/cells/EventCell";
 import { destroy, show, toggleFeatured } from "@/routes/admin/events";
 import { router } from "@inertiajs/react";
+import { events as index } from "@/routes/admin";
 export function useTableEvent({ events }: { events: Pagination<EventModel> }) {
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
     const [tableData, setTableData] = useState<EventModel[]>(events?.data);
     const [meta, setMeta] = useState(events?.meta);
-    const [links, setLinks] = useState(events?.links); 
+    const [links, setLinks] = useState(events?.links);
     const [selectedRow, setSelectedRow] = useState<EventModel | null>(null);
     const { openEdit, openTranslate } = useContext(OpenFormContext);
     const [columns, setColumns] = useState<any[]>([]);
@@ -32,6 +34,23 @@ export function useTableEvent({ events }: { events: Pagination<EventModel> }) {
             return (!search || Object.values(item).some((val) => String(val).toLowerCase().includes(search.toLowerCase())));
         });
     }, [tableData, search]);
+
+    const searchData = (text: string) => {
+        setSearch(text);
+        router.visit(
+            index().url,
+            {
+                data: { search: text },
+                preserveState: true, preserveScroll: true,
+                onSuccess: (page) => {
+                    setTableData((page.props.events as Pagination<EventModel>).data);
+                    setMeta((page.props.events as Pagination<EventModel>).meta);
+                    setLinks((page.props.events as Pagination<EventModel>).links);
+                }
+
+            }
+        );
+    }
 
     // إضافة صف جديد للجدول
     const addRow = (event: EventModel) => {
@@ -167,6 +186,7 @@ export function useTableEvent({ events }: { events: Pagination<EventModel> }) {
         search,
         tableData: filteredData,
         selectedRow,
+        searchData,
         setColumns,
         setSearch,
         setSelectedRow,

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroy
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:21
- * @route '/admin/\u0027settings/sessions'
+ * @route '/hidden/door/zone/master/\u0027settings/sessions'
  */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(options),
@@ -11,13 +11,13 @@ export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> 
 
 destroy.definition = {
     methods: ["delete"],
-    url: '/admin/\u0027settings/sessions',
+    url: '/hidden/door/zone/master/\u0027settings/sessions',
 } satisfies RouteDefinition<["delete"]>
 
 /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroy
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:21
- * @route '/admin/\u0027settings/sessions'
+ * @route '/hidden/door/zone/master/\u0027settings/sessions'
  */
 destroy.url = (options?: RouteQueryOptions) => {
     return destroy.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ destroy.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroy
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:21
- * @route '/admin/\u0027settings/sessions'
+ * @route '/hidden/door/zone/master/\u0027settings/sessions'
  */
 destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(options),
@@ -36,7 +36,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroy
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:21
- * @route '/admin/\u0027settings/sessions'
+ * @route '/hidden/door/zone/master/\u0027settings/sessions'
  */
     const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url({
@@ -51,7 +51,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
             /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroy
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:21
- * @route '/admin/\u0027settings/sessions'
+ * @route '/hidden/door/zone/master/\u0027settings/sessions'
  */
         destroyForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url({
@@ -67,7 +67,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroyOne
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:57
- * @route '/admin/settings/sessions/{sessionId}'
+ * @route '/hidden/door/zone/master/settings/sessions/{sessionId}'
  */
 export const destroyOne = (args: { sessionId: string | number } | [sessionId: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyOne.url(args, options),
@@ -76,13 +76,13 @@ export const destroyOne = (args: { sessionId: string | number } | [sessionId: st
 
 destroyOne.definition = {
     methods: ["delete"],
-    url: '/admin/settings/sessions/{sessionId}',
+    url: '/hidden/door/zone/master/settings/sessions/{sessionId}',
 } satisfies RouteDefinition<["delete"]>
 
 /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroyOne
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:57
- * @route '/admin/settings/sessions/{sessionId}'
+ * @route '/hidden/door/zone/master/settings/sessions/{sessionId}'
  */
 destroyOne.url = (args: { sessionId: string | number } | [sessionId: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -110,7 +110,7 @@ destroyOne.url = (args: { sessionId: string | number } | [sessionId: string | nu
 /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroyOne
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:57
- * @route '/admin/settings/sessions/{sessionId}'
+ * @route '/hidden/door/zone/master/settings/sessions/{sessionId}'
  */
 destroyOne.delete = (args: { sessionId: string | number } | [sessionId: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroyOne.url(args, options),
@@ -120,7 +120,7 @@ destroyOne.delete = (args: { sessionId: string | number } | [sessionId: string |
     /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroyOne
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:57
- * @route '/admin/settings/sessions/{sessionId}'
+ * @route '/hidden/door/zone/master/settings/sessions/{sessionId}'
  */
     const destroyOneForm = (args: { sessionId: string | number } | [sessionId: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroyOne.url(args, {
@@ -135,7 +135,7 @@ destroyOne.delete = (args: { sessionId: string | number } | [sessionId: string |
             /**
 * @see \App\Http\Controllers\Settings\OtherBrowserSessionsController::destroyOne
  * @see app/Http/Controllers/Settings/OtherBrowserSessionsController.php:57
- * @route '/admin/settings/sessions/{sessionId}'
+ * @route '/hidden/door/zone/master/settings/sessions/{sessionId}'
  */
         destroyOneForm.delete = (args: { sessionId: string | number } | [sessionId: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroyOne.url(args, {

@@ -24,14 +24,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-
-            &:where(:dir(ltr), [dir="ltr"], [dir="ltr"] *) {
-                border-right: 2px solid #00000033;
-            }
-
-            &:where(:dir(rtl), [dir="rtl"], [dir="rtl"] *) {
-                border-left: 2px solid #00000033;
-            }
+            border-left: 2px solid #00000033;
         }
 
         .card-right {
@@ -151,7 +144,7 @@
 <div>
     <div x-data="printInit" class="flex flex-col items-center w-full space-y-6">
         <!-- بطاقة العضوية -->
-        <div class="scrollbar flex flex-col items-center w-full m-0 p-0">
+        <div dir="rtl" class="scrollbar flex flex-col items-center w-full m-0 p-0">
             <div id="membershipCard" x-ref="card">
                 <img src="{{ asset('favicon.ico') }}" alt="{{ __(config('app.name')) }}"
                     class="absolute top-3 rtl:left-3 ltr:right-3 w-10 h-10 opacity-20">

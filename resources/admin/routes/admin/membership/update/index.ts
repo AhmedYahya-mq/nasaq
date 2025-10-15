@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\User\MembershipController::translation
  * @see app/Http/Controllers/User/MembershipController.php:35
- * @route '/admin/membership/{membership}/translation'
+ * @route '/hidden/door/zone/master/membership/{membership}/translation'
  */
 export const translation = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: translation.url(args, options),
@@ -11,13 +11,13 @@ export const translation = (args: { membership: number | { id: number } } | [mem
 
 translation.definition = {
     methods: ["put"],
-    url: '/admin/membership/{membership}/translation',
+    url: '/hidden/door/zone/master/membership/{membership}/translation',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\User\MembershipController::translation
  * @see app/Http/Controllers/User/MembershipController.php:35
- * @route '/admin/membership/{membership}/translation'
+ * @route '/hidden/door/zone/master/membership/{membership}/translation'
  */
 translation.url = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -50,7 +50,7 @@ translation.url = (args: { membership: number | { id: number } } | [membership: 
 /**
 * @see \App\Http\Controllers\User\MembershipController::translation
  * @see app/Http/Controllers/User/MembershipController.php:35
- * @route '/admin/membership/{membership}/translation'
+ * @route '/hidden/door/zone/master/membership/{membership}/translation'
  */
 translation.put = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: translation.url(args, options),
@@ -60,7 +60,7 @@ translation.put = (args: { membership: number | { id: number } } | [membership: 
     /**
 * @see \App\Http\Controllers\User\MembershipController::translation
  * @see app/Http/Controllers/User/MembershipController.php:35
- * @route '/admin/membership/{membership}/translation'
+ * @route '/hidden/door/zone/master/membership/{membership}/translation'
  */
     const translationForm = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: translation.url(args, {
@@ -75,7 +75,7 @@ translation.put = (args: { membership: number | { id: number } } | [membership: 
             /**
 * @see \App\Http\Controllers\User\MembershipController::translation
  * @see app/Http/Controllers/User/MembershipController.php:35
- * @route '/admin/membership/{membership}/translation'
+ * @route '/hidden/door/zone/master/membership/{membership}/translation'
  */
         translationForm.put = (args: { membership: number | { id: number } } | [membership: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: translation.url(args, {

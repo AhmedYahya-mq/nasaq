@@ -2,7 +2,7 @@
 
 return [
     'enable_email_notifications' => env('ENABLE_EMAIL_NOTIFICATIONS', false),
-
+    'admin_prefix' => env('ADMIN_PREFIX', 'admin/dashboard/super/zone'),
     /*
     |--------------------------------------------------------------------------
     | Application Name

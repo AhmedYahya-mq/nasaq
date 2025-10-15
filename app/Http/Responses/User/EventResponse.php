@@ -18,11 +18,7 @@ class EventResponse implements ResponeEventResponse
 
     public function toResponseUser($request)
     {
-        // pagtinated
-        $events = Event::withTranslations()->orderBy('start_at', 'desc')->paginate($request->get('per_page', 1));
-        return view('events', [
-            'events' => $events
-        ]);
+        return view('events');
     }
 
     public function toResponseView($request)
@@ -48,13 +44,26 @@ class EventResponse implements ResponeEventResponse
 
     public function toResponse($request)
     {
-        // pagtinated
-        $events = Event::withTranslations()->orderBy('start_at', 'desc')->paginate($request->get('per_page', 10));
+        $query = Event::withTranslations()->orderBy('start_at', 'desc');
+
+        // إضافة البحث إذا جاء
+        if ($search = $request->get('search')) {
+            $query->whereHas('translationsField', function ($q) use ($search) {
+                $q->whereIn('field', ['title', 'description'])
+                    ->where('locale', 'ar')
+                    ->where('value', 'like', "%{$search}%");
+            });
+        }
+        $events = $query->paginate($request->get('per_page', 10))
+            ->withQueryString();
+
         $events = app(EventCollection::class, ['resource' => $events, 'minimal' => true]);
         return Inertia::render('user/events', [
             'events' => $events,
         ])->toResponse($request);
     }
+
+
 
     public function toStoreResponse()
     {

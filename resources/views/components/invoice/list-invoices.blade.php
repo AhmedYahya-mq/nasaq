@@ -1,7 +1,7 @@
 <div>
     <div class="w-full bg-card border border-border rounded-xl shadow-sm">
         <div class="p-4 sm:p-6 border-b border-border">
-            <h2 class="text-lg font-semibold text-foreground">📑 فواتير الدفع</h2>
+            <h2 class="text-lg font-semibold text-foreground">📑 Payment Invoices</h2>
         </div>
         <div class="flow-root">
             <div class="divide-y divide-border">
@@ -12,58 +12,55 @@
                         <div class="flex flex-wrap items-center justify-between gap-y-4 gap-x-6">
 
                             {{-- ================================================== --}}
-                            {{-- تم إزالة الـ Checkbox من هنا --}}
+                            {{-- Checkbox removed here --}}
                             {{-- ================================================== --}}
                             <div class="min-w-[150px]">
-                                <div class="text-xs text-muted-foreground">معرّف الدفع</div>
+                                <div class="text-xs text-muted-foreground">Payment ID</div>
                                 <div class="text-sm  text-foreground">{{ $payment->moyasar_id }}</div>
                             </div>
 
-                            {{-- العمود الثاني: معرف الفاتورة --}}
+                            {{-- Column 2: Invoice ID --}}
                             <div class="min-w-[150px]">
-                                <div class="text-xs text-muted-foreground">معرّف الفاتورة</div>
+                                <div class="text-xs text-muted-foreground">Invoice ID</div>
                                 <div class="text-sm  text-foreground">{{ $payment->invoice_id }}</div>
                             </div>
 
-                            {{-- العمود الثالث: الخدمة --}}
+                            {{-- Column 3: Service --}}
                             <div class="flex-1 min-w-[200px]">
-                                <div class="text-xs text-muted-foreground">الخدمة</div>
+                                <div class="text-xs text-muted-foreground">Service</div>
                                 <div class="text-sm text-foreground">
                                     @php
                                         $payable = $payment->payable;
-
                                     @endphp
 
                                     @if ($payable instanceof \App\Models\Membership)
-                                        اشتركت في عضوية: <strong>{{ $payable->name ?? 'بدون عنوان' }}</strong>
+                                        Subscribed to membership: <strong>{{ $payable->name ?? 'No title' }}</strong>
                                     @elseif ($payable instanceof \App\Models\Event)
-                                        {{-- @dd($payable->title) --}}
-                                        تسجيل في: <strong>{{ $payable->title }}</strong>
+                                        Registered for: <strong>{{ $payable->title }}</strong>
                                     @elseif ($payable instanceof \App\Models\Library)
-                                        اشتريت: <strong>{{ $payable->title }}</strong>
+                                        Purchased: <strong>{{ $payable->title }}</strong>
                                     @else
-                                        <span class="text-muted">خدمة غير معروفة</span>
+                                        <span class="text-muted">Unknown service</span>
                                     @endif
                                 </div>
                             </div>
 
-
-                            {{-- العمود الرابع: تاريخ الدفع --}}
+                            {{-- Column 4: Payment date --}}
                             <div class="min-w-[120px]">
-                                <div class="text-xs text-muted-foreground">تم الدفع في</div>
+                                <div class="text-xs text-muted-foreground">Paid on</div>
                                 <div class="text-sm text-muted-foreground">{{ $payment->created_at }}</div>
                             </div>
 
-                            {{-- العمود الخامس: القيمة --}}
+                            {{-- Column 5: Amount --}}
                             <div class="min-w-[100px]">
-                                <div class="text-xs text-muted-foreground">المبلغ</div>
-                                <div class="text-primary flex items-center  gap-1">
+                                <div class="text-xs text-muted-foreground">Amount</div>
+                                <div class="text-primary flex items-center gap-1">
                                     <span>{{ $payment->amount }}</span>
                                     <x-ui.icon name="riyal" class="size-4 fill-primary *:fill-primary" />
                                 </div>
                             </div>
 
-                            {{-- العمود السادس: أيقونة السهم (للانتقال) --}}
+                            {{-- Column 6: Arrow icon --}}
                             <div class="text-muted-foreground">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                     fill="currentColor">
@@ -76,9 +73,9 @@
                         </div>
                     </a>
                 @empty
-                    {{-- حالة عدم وجود فواتير --}}
+                    {{-- No invoices --}}
                     <div class="text-center py-12 px-6 text-muted-foreground">
-                        <p>لم تقم بأي عملية شراء بعد.</p>
+                        <p>You haven't made any purchases yet.</p>
                     </div>
                 @endforelse
 

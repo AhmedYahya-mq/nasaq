@@ -26,6 +26,7 @@ trait HasTranslations
             ->where('table_name', $this->getTable());
     }
 
+
     public function __get($key)
     {
         foreach ($this->translatableFields as $field) {

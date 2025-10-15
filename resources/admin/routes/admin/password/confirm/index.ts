@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::store
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:26
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '/admin/user/confirm-password',
+    url: '/hidden/door/zone/master/user/confirm-password',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::store
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:26
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::store
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:26
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -36,7 +36,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::store
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:26
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -46,7 +46,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::store
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:26
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),

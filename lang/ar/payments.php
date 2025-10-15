@@ -1,6 +1,18 @@
 <?php
 
 return [
+    'title' => '📑 فواتير الدفع',
+    'payment_id' => 'معرّف الدفع',
+    'invoice_id' => 'معرّف الفاتورة',
+    'service' => 'الخدمة',
+    'paid_on' => 'تم الدفع في',
+    'amount' => 'المبلغ',
+    'subscription' => 'اشتركت في عضوية: :name',
+    'registered_event' => 'تسجيل في: :title',
+    'purchased_item' => 'اشتريت: :title',
+    'unknown_service' => 'خدمة غير معروفة',
+    'no_purchases' => 'لم تقم بأي عملية شراء بعد.',
+    
     'Payment Successful' => 'تم الدفع بنجاح',
     'Thank you, :name! Your payment has been received successfully.' => 'شكراً لك، :name! تم استلام عملية الدفع بنجاح.',
     'Amount Paid' => 'المبلغ المدفوع',

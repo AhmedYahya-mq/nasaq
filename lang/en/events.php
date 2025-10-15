@@ -8,7 +8,8 @@ return [
         'upcoming_events' => 'Upcoming Events',
         'interactive_calendar' => 'Event Calendar',
         'past_events_archive' => 'Past Events Archive',
-        'view_all_upcoming' => 'View All Upcoming Events',
+        'view_all_upcoming' => 'Upcoming Events',
+        'view_all_past' => 'Past Events',
     ],
 
     'event_titles' => [
@@ -116,6 +117,7 @@ return [
         'payid_event' => 'This event requires payment to complete your registration. Please proceed to the payment page.',
         'not_registered' => 'You are not registered for this event.',
         'not_link' => 'The link is not available at this time.',
+        'no_events_past' => 'There are no past events at the moment.',
     ],
 
     'past_label' => 'Past',
@@ -123,5 +125,12 @@ return [
     'not_available' => 'Not available',
 
     'title' => 'Events',
+    'date' => 'Date',
+    'time_event' => 'Time',
+    'access_membership' => "Allowed Memberships",
+    'percentage_register' => "Registration Percentage",
+    'residual' => 'Residual',
+    'unlimited' => 'Unlimited',
+    'registered' => 'Registered',
 
 ];

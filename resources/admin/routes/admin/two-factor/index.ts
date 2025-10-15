@@ -3,7 +3,7 @@ import login from './login'
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::enable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
 export const enable = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: enable.url(options),
@@ -12,13 +12,13 @@ export const enable = (options?: RouteQueryOptions): RouteDefinition<'post'> => 
 
 enable.definition = {
     methods: ["post"],
-    url: '/admin/user/two-factor-authentication',
+    url: '/hidden/door/zone/master/user/two-factor-authentication',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::enable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
 enable.url = (options?: RouteQueryOptions) => {
     return enable.definition.url + queryParams(options)
@@ -27,7 +27,7 @@ enable.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::enable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
 enable.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: enable.url(options),
@@ -37,7 +37,7 @@ enable.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::enable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
     const enableForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: enable.url(options),
@@ -47,7 +47,7 @@ enable.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::enable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:21
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
         enableForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: enable.url(options),
@@ -58,7 +58,7 @@ enable.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedTwoFactorAuthenticationController.php:19
- * @route '/admin/user/confirmed-two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/confirmed-two-factor-authentication'
  */
 export const confirm = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: confirm.url(options),
@@ -67,13 +67,13 @@ export const confirm = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
 
 confirm.definition = {
     methods: ["post"],
-    url: '/admin/user/confirmed-two-factor-authentication',
+    url: '/hidden/door/zone/master/user/confirmed-two-factor-authentication',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedTwoFactorAuthenticationController.php:19
- * @route '/admin/user/confirmed-two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/confirmed-two-factor-authentication'
  */
 confirm.url = (options?: RouteQueryOptions) => {
     return confirm.definition.url + queryParams(options)
@@ -82,7 +82,7 @@ confirm.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedTwoFactorAuthenticationController.php:19
- * @route '/admin/user/confirmed-two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/confirmed-two-factor-authentication'
  */
 confirm.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: confirm.url(options),
@@ -92,7 +92,7 @@ confirm.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedTwoFactorAuthenticationController.php:19
- * @route '/admin/user/confirmed-two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/confirmed-two-factor-authentication'
  */
     const confirmForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: confirm.url(options),
@@ -102,7 +102,7 @@ confirm.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedTwoFactorAuthenticationController.php:19
- * @route '/admin/user/confirmed-two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/confirmed-two-factor-authentication'
  */
         confirmForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: confirm.url(options),
@@ -113,7 +113,7 @@ confirm.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
 export const disable = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: disable.url(options),
@@ -122,13 +122,13 @@ export const disable = (options?: RouteQueryOptions): RouteDefinition<'delete'> 
 
 disable.definition = {
     methods: ["delete"],
-    url: '/admin/user/two-factor-authentication',
+    url: '/hidden/door/zone/master/user/two-factor-authentication',
 } satisfies RouteDefinition<["delete"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
 disable.url = (options?: RouteQueryOptions) => {
     return disable.definition.url + queryParams(options)
@@ -137,7 +137,7 @@ disable.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
 disable.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: disable.url(options),
@@ -147,7 +147,7 @@ disable.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
     const disableForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: disable.url({
@@ -162,7 +162,7 @@ disable.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController::disable
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorAuthenticationController.php:35
- * @route '/admin/user/two-factor-authentication'
+ * @route '/hidden/door/zone/master/user/two-factor-authentication'
  */
         disableForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: disable.url({
@@ -178,7 +178,7 @@ disable.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController::qrCode
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorQrCodeController.php:16
- * @route '/admin/user/two-factor-qr-code'
+ * @route '/hidden/door/zone/master/user/two-factor-qr-code'
  */
 export const qrCode = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: qrCode.url(options),
@@ -187,13 +187,13 @@ export const qrCode = (options?: RouteQueryOptions): RouteDefinition<'get'> => (
 
 qrCode.definition = {
     methods: ["get","head"],
-    url: '/admin/user/two-factor-qr-code',
+    url: '/hidden/door/zone/master/user/two-factor-qr-code',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController::qrCode
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorQrCodeController.php:16
- * @route '/admin/user/two-factor-qr-code'
+ * @route '/hidden/door/zone/master/user/two-factor-qr-code'
  */
 qrCode.url = (options?: RouteQueryOptions) => {
     return qrCode.definition.url + queryParams(options)
@@ -202,7 +202,7 @@ qrCode.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController::qrCode
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorQrCodeController.php:16
- * @route '/admin/user/two-factor-qr-code'
+ * @route '/hidden/door/zone/master/user/two-factor-qr-code'
  */
 qrCode.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: qrCode.url(options),
@@ -211,7 +211,7 @@ qrCode.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController::qrCode
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorQrCodeController.php:16
- * @route '/admin/user/two-factor-qr-code'
+ * @route '/hidden/door/zone/master/user/two-factor-qr-code'
  */
 qrCode.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: qrCode.url(options),
@@ -221,7 +221,7 @@ qrCode.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController::qrCode
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorQrCodeController.php:16
- * @route '/admin/user/two-factor-qr-code'
+ * @route '/hidden/door/zone/master/user/two-factor-qr-code'
  */
     const qrCodeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: qrCode.url(options),
@@ -231,7 +231,7 @@ qrCode.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController::qrCode
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorQrCodeController.php:16
- * @route '/admin/user/two-factor-qr-code'
+ * @route '/hidden/door/zone/master/user/two-factor-qr-code'
  */
         qrCodeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: qrCode.url(options),
@@ -240,7 +240,7 @@ qrCode.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController::qrCode
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorQrCodeController.php:16
- * @route '/admin/user/two-factor-qr-code'
+ * @route '/hidden/door/zone/master/user/two-factor-qr-code'
  */
         qrCodeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: qrCode.url({
@@ -256,7 +256,7 @@ qrCode.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
- * @route '/admin/user/two-factor-secret-key'
+ * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
 export const secretKey = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: secretKey.url(options),
@@ -265,13 +265,13 @@ export const secretKey = (options?: RouteQueryOptions): RouteDefinition<'get'> =
 
 secretKey.definition = {
     methods: ["get","head"],
-    url: '/admin/user/two-factor-secret-key',
+    url: '/hidden/door/zone/master/user/two-factor-secret-key',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
- * @route '/admin/user/two-factor-secret-key'
+ * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
 secretKey.url = (options?: RouteQueryOptions) => {
     return secretKey.definition.url + queryParams(options)
@@ -280,7 +280,7 @@ secretKey.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
- * @route '/admin/user/two-factor-secret-key'
+ * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
 secretKey.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: secretKey.url(options),
@@ -289,7 +289,7 @@ secretKey.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
- * @route '/admin/user/two-factor-secret-key'
+ * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
 secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: secretKey.url(options),
@@ -299,7 +299,7 @@ secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
- * @route '/admin/user/two-factor-secret-key'
+ * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
     const secretKeyForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: secretKey.url(options),
@@ -309,7 +309,7 @@ secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
- * @route '/admin/user/two-factor-secret-key'
+ * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
         secretKeyForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: secretKey.url(options),
@@ -318,7 +318,7 @@ secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
  * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
- * @route '/admin/user/two-factor-secret-key'
+ * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
         secretKeyForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: secretKey.url({
@@ -334,7 +334,7 @@ secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 export const recoveryCodes = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: recoveryCodes.url(options),
@@ -343,13 +343,13 @@ export const recoveryCodes = (options?: RouteQueryOptions): RouteDefinition<'get
 
 recoveryCodes.definition = {
     methods: ["get","head"],
-    url: '/admin/user/two-factor-recovery-codes',
+    url: '/hidden/door/zone/master/user/two-factor-recovery-codes',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 recoveryCodes.url = (options?: RouteQueryOptions) => {
     return recoveryCodes.definition.url + queryParams(options)
@@ -358,7 +358,7 @@ recoveryCodes.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 recoveryCodes.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: recoveryCodes.url(options),
@@ -367,7 +367,7 @@ recoveryCodes.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: recoveryCodes.url(options),
@@ -377,7 +377,7 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
     const recoveryCodesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: recoveryCodes.url(options),
@@ -387,7 +387,7 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
             /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
         recoveryCodesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: recoveryCodes.url(options),
@@ -396,7 +396,7 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
             /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
  * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
         recoveryCodesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: recoveryCodes.url({
@@ -412,7 +412,7 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
  * @see app/Http/Controllers/Settings/SecurityController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 export const regenerateRecoveryCodes = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: regenerateRecoveryCodes.url(options),
@@ -421,13 +421,13 @@ export const regenerateRecoveryCodes = (options?: RouteQueryOptions): RouteDefin
 
 regenerateRecoveryCodes.definition = {
     methods: ["post"],
-    url: '/admin/user/two-factor-recovery-codes',
+    url: '/hidden/door/zone/master/user/two-factor-recovery-codes',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
  * @see app/Http/Controllers/Settings/SecurityController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 regenerateRecoveryCodes.url = (options?: RouteQueryOptions) => {
     return regenerateRecoveryCodes.definition.url + queryParams(options)
@@ -436,7 +436,7 @@ regenerateRecoveryCodes.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
  * @see app/Http/Controllers/Settings/SecurityController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: regenerateRecoveryCodes.url(options),
@@ -446,7 +446,7 @@ regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'p
     /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
  * @see app/Http/Controllers/Settings/SecurityController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
     const regenerateRecoveryCodesForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: regenerateRecoveryCodes.url(options),
@@ -456,7 +456,7 @@ regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'p
             /**
 * @see \App\Http\Controllers\Settings\SecurityController::regenerateRecoveryCodes
  * @see app/Http/Controllers/Settings/SecurityController.php:39
- * @route '/admin/user/two-factor-recovery-codes'
+ * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
         regenerateRecoveryCodesForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: regenerateRecoveryCodes.url(options),
@@ -467,7 +467,7 @@ regenerateRecoveryCodes.post = (options?: RouteQueryOptions): RouteDefinition<'p
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
  * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:43
- * @route '/admin/two-factor-challenge'
+ * @route '/hidden/door/zone/master/two-factor-challenge'
  */
 export const login = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: login.url(options),
@@ -476,13 +476,13 @@ export const login = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 login.definition = {
     methods: ["get","head"],
-    url: '/admin/two-factor-challenge',
+    url: '/hidden/door/zone/master/two-factor-challenge',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
  * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:43
- * @route '/admin/two-factor-challenge'
+ * @route '/hidden/door/zone/master/two-factor-challenge'
  */
 login.url = (options?: RouteQueryOptions) => {
     return login.definition.url + queryParams(options)
@@ -491,7 +491,7 @@ login.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
  * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:43
- * @route '/admin/two-factor-challenge'
+ * @route '/hidden/door/zone/master/two-factor-challenge'
  */
 login.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: login.url(options),
@@ -500,7 +500,7 @@ login.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
  * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:43
- * @route '/admin/two-factor-challenge'
+ * @route '/hidden/door/zone/master/two-factor-challenge'
  */
 login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: login.url(options),
@@ -510,7 +510,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
  * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:43
- * @route '/admin/two-factor-challenge'
+ * @route '/hidden/door/zone/master/two-factor-challenge'
  */
     const loginForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: login.url(options),
@@ -520,7 +520,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
  * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:43
- * @route '/admin/two-factor-challenge'
+ * @route '/hidden/door/zone/master/two-factor-challenge'
  */
         loginForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: login.url(options),
@@ -529,7 +529,7 @@ login.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Actions\Fortify\TwoFactorAuthenticatedSessionController::login
  * @see app/Actions/Fortify/TwoFactorAuthenticatedSessionController.php:43
- * @route '/admin/two-factor-challenge'
+ * @route '/hidden/door/zone/master/two-factor-challenge'
  */
         loginForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: login.url({

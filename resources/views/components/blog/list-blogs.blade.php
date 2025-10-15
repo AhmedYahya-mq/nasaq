@@ -1,6 +1,6 @@
-<div 
+<div
     x-data="{
-        search: '',
+        search: '{{ request()->get('search') }}',
         showFilters: false,
         submitSearch() {
             const params = new URLSearchParams(window.location.search);
@@ -30,12 +30,6 @@ class="relative min-h-auto my-25 px-5 sm:px-10">
                         <!-- شريط البحث -->
                         <x-forms.input type="search" name="search" x-model="search"
                             @keydown.enter.prevent="submitSearch()" :placeholder="$placeholder ?? __('library.search_placeholder')" icon="search" class="flex-1" />
-
-                        <!-- زر الفلترة -->
-                        <button @click="showFilters = !showFilters" aria-label="Toggle Filters"
-                            class="p-2 rounded-full border border-border bg-card hover:bg-accent/20 transition relative z-20">
-                            <x-icons.filter-icon class="h-5 w-5 text-foreground" />
-                        </button>
                     </div>
                 </div>
             </div>

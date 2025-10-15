@@ -3,8 +3,7 @@
         'class' =>
             'relative w-full bg-card rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group cursor-pointer transform hover:-translate-y-1 border border-border',
     ]) }}
-    itemscope itemtype="http://schema.org/Event"
-    aria-label="{{ $event->title }}">
+    itemscope itemtype="http://schema.org/Event" aria-label="{{ $event->title }}">
     <!-- الخلفية المتدرجة -->
     <div class="absolute inset-0 bg-gradient-to-br from-background/50 via-card to-primary/5 opacity-80"></div>
 
@@ -52,13 +51,13 @@
                 <div class="flex items-center gap-3">
                     <div class="flex items-center gap-2">
                         <div class="w-2 h-2 bg-green-500 rounded-full" aria-hidden="true"></div>
-                        <span class="text-sm font-semibold text-muted-foreground">مسجلون</span>
+                        <span class="text-sm font-semibold text-muted-foreground">{{ __('events.registered') }}</span>
                     </div>
                     <span class="text-lg font-bold text-card-foreground"
                         itemprop="attendeeCount">{{ $registered }}</span>
                 </div>
                 <div class="text-right">
-                    @if ($isUnlimited)
+                    @if ($isUnlimited && $event->event_status->isUpcoming())
                         <div class="flex items-center gap-2 bg-green-100 dark:bg-green-900/30 px-3 py-1 rounded-full">
                             <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="currentColor"
                                 viewBox="0 0 20 20" aria-hidden="true">
@@ -66,11 +65,11 @@
                                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                     clip-rule="evenodd" />
                             </svg>
-                            <span class="text-sm font-bold text-green-700 dark:text-green-400">غير محدود</span>
+                            <span class="text-sm font-bold text-green-700 dark:text-green-400">{{ __('events.unlimited') }}</span>
                         </div>
-                    @else
+                    @elseif ($event->event_status->isUpcoming())
                         <div class="flex items-center gap-2">
-                            <span class="text-sm text-muted-foreground">المتبقي</span>
+                            <span class="text-sm text-muted-foreground">{{ __('events.residual') }}</span>
                             <span
                                 class="text-lg font-bold {{ $remaining <= 10 ? 'text-red-600 dark:text-red-400' : 'text-primary' }}">
                                 {{ $remaining }}
@@ -80,7 +79,7 @@
                 </div>
             </div>
             @if (!$isUnlimited)
-                <div class="w-full bg-muted rounded-full h-3 overflow-hidden" aria-label="نسبة التسجيل">
+                <div class="w-full bg-muted rounded-full h-3 overflow-hidden" aria-label='{{ __('events.percentage_register') }}'>
                     <div class="h-3 rounded-full bg-gradient-to-r from-green-400 to-primary transition-all duration-1000 ease-out"
                         style="width: {{ $percentage }}%"></div>
                 </div>
@@ -89,9 +88,19 @@
 
         <!-- أنواع العضويات المسموحة - تصميم مضغوط -->
         @if (isset($membership_names) && count($membership_names) > 0)
-            <section class="mb-4" aria-label="العضويات المسموحة">
+            <section
+            x-data="{
+                toggleMemberships() {
+                    const button = event.currentTarget;
+                    const list = document.getElementById('membership-list');
+                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                    button.setAttribute('aria-expanded', !isExpanded);
+                    list.classList.toggle('hidden');
+                }
+            }"
+            class="mb-4" aria-label="{{ __('events.access_membership') }}">
                 <!-- زر عرض العضويات -->
-                <button onclick="toggleMemberships(this)"
+                <button @click="toggleMemberships"
                     class="flex items-center gap-2 w-full p-2 rounded-lg hover:bg-primary/5 transition-colors duration-200 group/member"
                     aria-expanded="false" aria-controls="membership-list">
                     <div class="flex items-center gap-2 flex-1">
@@ -102,7 +111,7 @@
                                     d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                             </svg>
                         </div>
-                        <span class="text-sm font-medium text-card-foreground">العضويات المسموحة</span>
+                        <span class="text-sm font-medium text-card-foreground">{{ __('events.access_membership') }}</span>
                         <span
                             class="text-xs bg-primary text-primary-foreground px-2 py-0.5 rounded-full">{{ count($membership_names) }}</span>
                     </div>
@@ -138,7 +147,7 @@
                     </svg>
                 </div>
                 <div>
-                    <div class="text-xs text-muted-foreground">التاريخ</div>
+                    <div class="text-xs text-muted-foreground">{{ __('events.date') }}</div>
                     <time class="text-sm font-semibold text-card-foreground"
                         datetime="{{ $event->start_at->toDateString() }}">
                         {{ $event->start_at->locale(app()->getLocale())->translatedFormat('d F Y') }}
@@ -155,7 +164,7 @@
                     </svg>
                 </div>
                 <div>
-                    <div class="text-xs text-muted-foreground">الوقت</div>
+                    <div class="text-xs text-muted-foreground">{{ __('events.time_event') }}</div>
                     <time class="text-sm font-semibold text-card-foreground"
                         datetime="{{ $event->start_at->setTimezone('Asia/Riyadh')->format('H:i') }}">
                         {{ $event->start_at->setTimezone('Asia/Riyadh')->locale(app()->getLocale())->translatedFormat('h:i A') }}
@@ -193,62 +202,62 @@
         </section>
 
         <!-- زر التسجيل -->
-        <footer class="flex items-center justify-between pt-4 border-t border-border">
-            @if ($event->canUserRegister())
-                @if (!$isRegistration)
-                    @if ($event->isFull())
-                        <div
-                            class="flex-1 cursor-not-allowed bg-destructive text-white py-3 px-6 rounded-xl font-bold text-sm text-center"
-                            aria-label="{{ __('events.labels.registration_closed') }}">
-                            {{ __('events.labels.registration_closed') }}
-                        </div>
-                    @elseif ($event->isFree())
-                        <!-- تسجيل مجاني -->
-                        <a href="{{ route('client.event.register', ['event' => $event]) }}"
-                            class="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-3 px-6 rounded-xl font-bold text-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 text-center"
-                            itemprop="url" rel="noopener noreferrer">
-                            {{ __('events.buttons.free_registration') }}
-                        </a>
-                    @else
-                        <!-- تسجيل مدفوع -->
-                        <div class="flex-1 flex items-center justify-between gap-4">
-                            <a href="{{ route('client.event.register', ['event' => $event]) }}" target="_blank"
+        @if ($event->event_status->isUpcoming())
+            <footer class="flex items-center justify-between pt-4 border-t border-border">
+                @if ($event->canUserRegister())
+                    @if (!$isRegistration)
+                        @if ($event->isFull())
+                            <div class="flex-1 cursor-not-allowed bg-destructive text-white py-3 px-6 rounded-xl font-bold text-sm text-center"
+                                aria-label="{{ __('events.labels.registration_closed') }}">
+                                {{ __('events.labels.registration_closed') }}
+                            </div>
+                        @elseif ($event->isFree())
+                            <!-- تسجيل مجاني -->
+                            <a href="{{ route('client.event.register', ['event' => $event]) }}"
                                 class="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-3 px-6 rounded-xl font-bold text-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 text-center"
                                 itemprop="url" rel="noopener noreferrer">
-                                💳 {{ __('events.buttons.pay_registration') }}
+                                {{ __('events.buttons.free_registration') }}
                             </a>
-                            <div class="text-right" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                @if ($event->isDiscounted())
-                                    <div class="text-xs text-muted-foreground line-through">
-                                        <span>{{ $event->price }}</span>
-                                        <x-ui.icon name="riyal" class="w-3 h-3 inline-block" />
+                        @else
+                            <!-- تسجيل مدفوع -->
+                            <div class="flex-1 flex items-center justify-between gap-4">
+                                <a href="{{ route('client.event.register', ['event' => $event]) }}" target="_blank"
+                                    class="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground py-3 px-6 rounded-xl font-bold text-sm hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 text-center"
+                                    itemprop="url" rel="noopener noreferrer">
+                                    💳 {{ __('events.buttons.pay_registration') }}
+                                </a>
+                                <div class="text-right" itemprop="offers" itemscope
+                                    itemtype="http://schema.org/Offer">
+                                    @if ($event->isDiscounted())
+                                        <div class="text-xs text-muted-foreground line-through">
+                                            <span>{{ $event->price }}</span>
+                                            <x-ui.icon name="riyal" class="w-3 h-3 inline-block" />
+                                        </div>
+                                    @endif
+                                    <div class="text-lg font-bold text-card-foreground">
+                                        <span itemprop="price">{{ $event->final_price }}</span>
+                                        <x-ui.icon name="riyal" class="w-4 h-4 inline-block" />
+                                        <meta itemprop="priceCurrency" content="SAR" />
                                     </div>
-                                @endif
-                                <div class="text-lg font-bold text-card-foreground">
-                                    <span itemprop="price">{{ $event->final_price }}</span>
-                                    <x-ui.icon name="riyal" class="w-4 h-4 inline-block" />
-                                    <meta itemprop="priceCurrency" content="SAR" />
                                 </div>
                             </div>
+                        @endif
+                    @else
+                        <!-- مسجل بالفعل -->
+                        <div class="flex-1 bg-muted text-muted-foreground py-3 px-6 rounded-xl font-bold text-sm text-center"
+                            aria-label="{{ __('events.labels.already_registered') }}">
+                            ✅ {{ __('events.labels.already_registered') }}
                         </div>
                     @endif
                 @else
-                    <!-- مسجل بالفعل -->
-                    <div
-                        class="flex-1 bg-muted text-muted-foreground py-3 px-6 rounded-xl font-bold text-sm text-center"
-                        aria-label="{{ __('events.labels.already_registered') }}">
-                        ✅ {{ __('events.labels.already_registered') }}
+                    <!-- يتطلب عضوية -->
+                    <div class="flex-1 bg-destructive hover:bg-destructive/90 text-white py-3 px-6 rounded-xl font-bold text-sm text-center"
+                        aria-label="{{ __('events.labels.membership_required') }}">
+                        🔒 {{ __('events.labels.membership_required') }}
                     </div>
                 @endif
-            @else
-                <!-- يتطلب عضوية -->
-                <div
-                    class="flex-1 bg-destructive hover:bg-destructive/90 text-white py-3 px-6 rounded-xl font-bold text-sm text-center"
-                    aria-label="{{ __('events.labels.membership_required') }}">
-                    🔒 {{ __('events.labels.membership_required') }}
-                </div>
-            @endif
-        </footer>
+            </footer>
+        @endif
     </div>
 
     <!-- تأثير زاوية ملونة -->

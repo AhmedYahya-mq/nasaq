@@ -20,7 +20,7 @@ class EventController extends Controller
     public function calender(Request $request)
     {
         $date = $request->query('date', now()->toDateString());
-        $events = Event::whereDate('start_at', $date)->get();
+        $events = Event::upcoming()->whereDate('start_at', $date)->get();
         return app(EventResponse::class, ['event' => $events])->toResponseJson();
     }
 

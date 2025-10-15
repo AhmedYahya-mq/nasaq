@@ -64,7 +64,6 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $blog = Blog::findOrFail($id);
-        $blog->clearTranslations();
         $blog->clearPhotos();
         $blog->delete();
     }

@@ -58,15 +58,10 @@
                     style="background-color: {{ $color }}20; border-color: {{ $color }}80; color: {{ $color }};">
                     <x-ui.icon name="arrow-up-square" class="size-6 inline-block mr-1" />
                 </a>
-            @elseif($event->event_status->isCompleted())
-                <span class="text-xs font-semibold px-3 py-1 rounded-full border backdrop-blur-sm whitespace-nowrap"
-                    style="background-color: {{ $color }}20; border-color: {{ $color }}80; color: {{ $color }};">
-                    منتهي
-                </span>
             @else
                 <span class="text-xs font-semibold px-3 py-1 rounded-full border backdrop-blur-sm whitespace-nowrap"
                     style="background-color: {{ $color }}20; border-color: {{ $color }}80; color: {{ $color }};">
-                    قادم
+                     {{ $event->event_status->label() }}
                 </span>
             @endif
         </div>

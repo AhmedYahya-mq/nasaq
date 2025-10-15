@@ -5,7 +5,6 @@ namespace App\Actions\Fortify;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
@@ -16,25 +15,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      *
      * @param  array<string, string>  $input
      */
-    public function update(User $user, array $input): void
+    public function update(User|Admin $user, array $input): void
     {
-        Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email:rfc,dns',
-                'max:255',
-                Rule::unique($user->getTable())->ignore($user->id),
-            ],
-            'phone' => ['required', 'phone:AUTO'],
-            'birthday' => ['required', 'date'],
-            'address' => ['nullable', 'string', 'max:255'],
-            'job_title' => ['nullable', 'string', 'max:255'],
-            'employment_status' => ['nullable', 'string', 'max:50', Rule::in(\App\Enums\EmploymentStatus::getValues())],
-            'bio' => ['nullable', 'string', 'max:500'],
-        ])->validateWithBag('updateProfileInformation');
-
+        $this->validetor($user, $input);
         $data = collect($input)
             ->filter(fn($value) => !is_null($value) && $value !== '') // تجاهل null والفارغ ''
             ->only($user->getFillable())
@@ -59,5 +42,43 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     {
         $user->forceFill(array_merge($data, ['email_verified_at' => null]))->save();
         $user->sendEmailVerificationNotification();
+    }
+
+    protected function rules(Admin|User $user): array
+    {
+        if ($user instanceof Admin) {
+            return [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    Rule::unique('admins')->ignore($user->id),
+                ],
+            ];
+        } else {
+            return [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => [
+                    'required',
+                    'string',
+                    'email:rfc,dns',
+                    'max:255',
+                    Rule::unique($user->getTable())->ignore($user->id),
+                ],
+                'phone' => ['required', 'phone:AUTO'],
+                'birthday' => ['required', 'date'],
+                'address' => ['nullable', 'string', 'max:255'],
+                'job_title' => ['nullable', 'string', 'max:255'],
+                'employment_status' => ['nullable', 'string', 'max:50', Rule::in(\App\Enums\EmploymentStatus::getValues())],
+                'bio' => ['nullable', 'string', 'max:500'],
+            ];
+        }
+    }
+
+    protected function validetor(Admin|User $user, array $data)
+    {
+        validator($data, $this->rules($user))->validateWithBag('updateProfileInformation');
     }
 }

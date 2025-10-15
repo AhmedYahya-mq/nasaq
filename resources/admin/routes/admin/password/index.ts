@@ -3,7 +3,7 @@ import confirm from './confirm'
 /**
 * @see \App\Http\Controllers\Settings\PasswordController::edit
  * @see app/Http/Controllers/Settings/PasswordController.php:18
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
 export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(options),
@@ -12,13 +12,13 @@ export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 edit.definition = {
     methods: ["get","head"],
-    url: '/admin/settings/password',
+    url: '/hidden/door/zone/master/settings/password',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Settings\PasswordController::edit
  * @see app/Http/Controllers/Settings/PasswordController.php:18
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
 edit.url = (options?: RouteQueryOptions) => {
     return edit.definition.url + queryParams(options)
@@ -27,7 +27,7 @@ edit.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Settings\PasswordController::edit
  * @see app/Http/Controllers/Settings/PasswordController.php:18
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
 edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(options),
@@ -36,7 +36,7 @@ edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\Settings\PasswordController::edit
  * @see app/Http/Controllers/Settings/PasswordController.php:18
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
 edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(options),
@@ -46,7 +46,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\Settings\PasswordController::edit
  * @see app/Http/Controllers/Settings/PasswordController.php:18
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
     const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: edit.url(options),
@@ -56,7 +56,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Settings\PasswordController::edit
  * @see app/Http/Controllers/Settings/PasswordController.php:18
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
         editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url(options),
@@ -65,7 +65,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Settings\PasswordController::edit
  * @see app/Http/Controllers/Settings/PasswordController.php:18
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
         editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url({
@@ -81,7 +81,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\Settings\PasswordController::update
  * @see app/Http/Controllers/Settings/PasswordController.php:26
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
@@ -90,13 +90,13 @@ export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => (
 
 update.definition = {
     methods: ["put"],
-    url: '/admin/settings/password',
+    url: '/hidden/door/zone/master/settings/password',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\Settings\PasswordController::update
  * @see app/Http/Controllers/Settings/PasswordController.php:26
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
 update.url = (options?: RouteQueryOptions) => {
     return update.definition.url + queryParams(options)
@@ -105,7 +105,7 @@ update.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Settings\PasswordController::update
  * @see app/Http/Controllers/Settings/PasswordController.php:26
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
 update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
@@ -115,7 +115,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     /**
 * @see \App\Http\Controllers\Settings\PasswordController::update
  * @see app/Http/Controllers/Settings/PasswordController.php:26
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
     const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url({
@@ -130,7 +130,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
             /**
 * @see \App\Http\Controllers\Settings\PasswordController::update
  * @see app/Http/Controllers/Settings/PasswordController.php:26
- * @route '/admin/settings/password'
+ * @route '/hidden/door/zone/master/settings/password'
  */
         updateForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url({
@@ -146,7 +146,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
 export const request = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: request.url(options),
@@ -155,13 +155,13 @@ export const request = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 request.definition = {
     methods: ["get","head"],
-    url: '/admin/forgot-password',
+    url: '/hidden/door/zone/master/forgot-password',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
 request.url = (options?: RouteQueryOptions) => {
     return request.definition.url + queryParams(options)
@@ -170,7 +170,7 @@ request.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
 request.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: request.url(options),
@@ -179,7 +179,7 @@ request.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
 request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: request.url(options),
@@ -189,7 +189,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
     const requestForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: request.url(options),
@@ -199,7 +199,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
         requestForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: request.url(options),
@@ -208,7 +208,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::request
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:24
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
         requestForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: request.url({
@@ -224,7 +224,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
  * @see app/Http/Controllers/Auth/NewPasswordController.php:45
- * @route '/admin/reset-password/{token}'
+ * @route '/hidden/door/zone/master/reset-password/{token}'
  */
 export const reset = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reset.url(args, options),
@@ -233,13 +233,13 @@ export const reset = (args: { token: string | number } | [token: string | number
 
 reset.definition = {
     methods: ["get","head"],
-    url: '/admin/reset-password/{token}',
+    url: '/hidden/door/zone/master/reset-password/{token}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
  * @see app/Http/Controllers/Auth/NewPasswordController.php:45
- * @route '/admin/reset-password/{token}'
+ * @route '/hidden/door/zone/master/reset-password/{token}'
  */
 reset.url = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -267,7 +267,7 @@ reset.url = (args: { token: string | number } | [token: string | number ] | stri
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
  * @see app/Http/Controllers/Auth/NewPasswordController.php:45
- * @route '/admin/reset-password/{token}'
+ * @route '/hidden/door/zone/master/reset-password/{token}'
  */
 reset.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reset.url(args, options),
@@ -276,7 +276,7 @@ reset.get = (args: { token: string | number } | [token: string | number ] | stri
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
  * @see app/Http/Controllers/Auth/NewPasswordController.php:45
- * @route '/admin/reset-password/{token}'
+ * @route '/hidden/door/zone/master/reset-password/{token}'
  */
 reset.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: reset.url(args, options),
@@ -286,7 +286,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
     /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
  * @see app/Http/Controllers/Auth/NewPasswordController.php:45
- * @route '/admin/reset-password/{token}'
+ * @route '/hidden/door/zone/master/reset-password/{token}'
  */
     const resetForm = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: reset.url(args, options),
@@ -296,7 +296,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
             /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
  * @see app/Http/Controllers/Auth/NewPasswordController.php:45
- * @route '/admin/reset-password/{token}'
+ * @route '/hidden/door/zone/master/reset-password/{token}'
  */
         resetForm.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: reset.url(args, options),
@@ -305,7 +305,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
             /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::reset
  * @see app/Http/Controllers/Auth/NewPasswordController.php:45
- * @route '/admin/reset-password/{token}'
+ * @route '/hidden/door/zone/master/reset-password/{token}'
  */
         resetForm.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: reset.url(args, {
@@ -321,7 +321,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
 export const email = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: email.url(options),
@@ -330,13 +330,13 @@ export const email = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 email.definition = {
     methods: ["post"],
-    url: '/admin/forgot-password',
+    url: '/hidden/door/zone/master/forgot-password',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
 email.url = (options?: RouteQueryOptions) => {
     return email.definition.url + queryParams(options)
@@ -345,7 +345,7 @@ email.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
 email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: email.url(options),
@@ -355,7 +355,7 @@ email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
     const emailForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: email.url(options),
@@ -365,7 +365,7 @@ email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \App\Http\Controllers\Auth\PasswordResetLinkController::email
  * @see app/Http/Controllers/Auth/PasswordResetLinkController.php:37
- * @route '/admin/forgot-password'
+ * @route '/hidden/door/zone/master/forgot-password'
  */
         emailForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: email.url(options),
@@ -376,7 +376,7 @@ email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
  * @see app/Http/Controllers/Auth/NewPasswordController.php:58
- * @route '/admin/reset-password'
+ * @route '/hidden/door/zone/master/reset-password'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -385,13 +385,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '/admin/reset-password',
+    url: '/hidden/door/zone/master/reset-password',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
  * @see app/Http/Controllers/Auth/NewPasswordController.php:58
- * @route '/admin/reset-password'
+ * @route '/hidden/door/zone/master/reset-password'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -400,7 +400,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
  * @see app/Http/Controllers/Auth/NewPasswordController.php:58
- * @route '/admin/reset-password'
+ * @route '/hidden/door/zone/master/reset-password'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -410,7 +410,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
  * @see app/Http/Controllers/Auth/NewPasswordController.php:58
- * @route '/admin/reset-password'
+ * @route '/hidden/door/zone/master/reset-password'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -420,7 +420,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \App\Http\Controllers\Auth\NewPasswordController::store
  * @see app/Http/Controllers/Auth/NewPasswordController.php:58
- * @route '/admin/reset-password'
+ * @route '/hidden/door/zone/master/reset-password'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),
@@ -431,7 +431,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
 export const confirm = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirm.url(options),
@@ -440,13 +440,13 @@ export const confirm = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 confirm.definition = {
     methods: ["get","head"],
-    url: '/admin/user/confirm-password',
+    url: '/hidden/door/zone/master/user/confirm-password',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
 confirm.url = (options?: RouteQueryOptions) => {
     return confirm.definition.url + queryParams(options)
@@ -455,7 +455,7 @@ confirm.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
 confirm.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirm.url(options),
@@ -464,7 +464,7 @@ confirm.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
 confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: confirm.url(options),
@@ -474,7 +474,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
     const confirmForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: confirm.url(options),
@@ -484,7 +484,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
         confirmForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirm.url(options),
@@ -493,7 +493,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
  * @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:18
- * @route '/admin/user/confirm-password'
+ * @route '/hidden/door/zone/master/user/confirm-password'
  */
         confirmForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirm.url({
@@ -509,7 +509,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route '/admin/user/confirmed-password-status'
+ * @route '/hidden/door/zone/master/user/confirmed-password-status'
  */
 export const confirmation = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirmation.url(options),
@@ -518,13 +518,13 @@ export const confirmation = (options?: RouteQueryOptions): RouteDefinition<'get'
 
 confirmation.definition = {
     methods: ["get","head"],
-    url: '/admin/user/confirmed-password-status',
+    url: '/hidden/door/zone/master/user/confirmed-password-status',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route '/admin/user/confirmed-password-status'
+ * @route '/hidden/door/zone/master/user/confirmed-password-status'
  */
 confirmation.url = (options?: RouteQueryOptions) => {
     return confirmation.definition.url + queryParams(options)
@@ -533,7 +533,7 @@ confirmation.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route '/admin/user/confirmed-password-status'
+ * @route '/hidden/door/zone/master/user/confirmed-password-status'
  */
 confirmation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirmation.url(options),
@@ -542,7 +542,7 @@ confirmation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route '/admin/user/confirmed-password-status'
+ * @route '/hidden/door/zone/master/user/confirmed-password-status'
  */
 confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: confirmation.url(options),
@@ -552,7 +552,7 @@ confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route '/admin/user/confirmed-password-status'
+ * @route '/hidden/door/zone/master/user/confirmed-password-status'
  */
     const confirmationForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: confirmation.url(options),
@@ -562,7 +562,7 @@ confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route '/admin/user/confirmed-password-status'
+ * @route '/hidden/door/zone/master/user/confirmed-password-status'
  */
         confirmationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirmation.url(options),
@@ -571,7 +571,7 @@ confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route '/admin/user/confirmed-password-status'
+ * @route '/hidden/door/zone/master/user/confirmed-password-status'
  */
         confirmationForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirmation.url({

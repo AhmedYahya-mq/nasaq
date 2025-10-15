@@ -10,7 +10,6 @@ import { confirmAlertDialog } from '@/components/custom/ConfirmDialog';
 import { ButtonsActions, ExtendedColumnDef } from '@/types';
 import { actionsCell, booleanBadgeCell, centeredTextCell, descriptionCell, sarCurrencyCell, SwitchCell, textCell } from "@/components/table";
 
-
 /**
  * هوك لإدارة جدول العضويات مع دعم البحث، الإضافة، التعديل، الحذف، والترجمة
  * @param memberships قائمة العضويات الأولية
@@ -21,6 +20,7 @@ export function useTableMemberships({ memberships }: { memberships: Membership[]
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
     const [tableData, setTableData] = useState<Membership[]>(memberships);
+    const [tableDataFilter, setTableDataFilter] = useState<Membership[]>(memberships);
     const [selectedRow, setSelectedRow] = useState<Membership | null>(null);
     const { openEdit, openTranslate } = useContext(OpenFormContext);
     const [columns, setColumns] = useState<any[]>([]);
@@ -34,11 +34,14 @@ export function useTableMemberships({ memberships }: { memberships: Membership[]
      * تصفية البيانات بناءً على نص البحث
      * @return قائمة العضويات المفلترة
      */
-    const filteredData = useMemo(() => {
-        return tableData.filter((item) => {
-            return (!search || Object.values(item).some((val) => String(val).toLowerCase().includes(search.toLowerCase())));
-        });
-    }, [tableData, search]);
+    const filteredData =
+        useMemo(() => {
+            const data = tableData.filter((item) => {
+                return (!search || Object.values(item).some((val) => String(val).toLowerCase().includes(search.toLowerCase())));
+            });
+            setTableDataFilter(data);
+            return data;
+        }, [tableData, search]);
 
     /**
      * إضافة صف جديد للجدول
@@ -111,7 +114,7 @@ export function useTableMemberships({ memberships }: { memberships: Membership[]
     };
 
     const table = useReactTable({
-        data: tableData,
+        data: tableDataFilter,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -174,7 +177,7 @@ const getColumns = ({ onEdit, onDelete, onTranslate }: ButtonsActions): Extended
         header: "Actions",
         id: "actions",
         accessorKey: "actions",
-         nonHideable: true,
-        cell: actionsCell({onEdit, onDelete, onTranslate})
+        nonHideable: true,
+        cell: actionsCell({ onEdit, onDelete, onTranslate })
     },
 ];

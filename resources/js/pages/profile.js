@@ -229,7 +229,14 @@ function passwordChange() {
     };
 }
 
-function twoFactorAuth(enabled) {
+function twoFactorAuth(enabled, lang = {
+    'two-factor-authentication-enabled': 'لقد قمت بتفعيل المصادقة الثنائية.',
+    'two-factor-authentication-disabled': 'لم تقم بتفعيل المصادقة الثنائية.',
+    'two-factor-authentication-confirm': 'أنت في طور تفعيل المصادقة الثنائية.',
+    'incorrect-password': 'كلمة المرور غير صحيحة.',
+    'verification-code-invalid': 'الرجاء إدخال رمز التحقق المكون من 6 أرقام.',
+    'error-occurred': 'حدث خطأ ما. حاول مرة أخرى.',
+}) {
     return {
         enabled: false,
         status: null,
@@ -243,12 +250,12 @@ function twoFactorAuth(enabled) {
         secretKey: null,
         passwordError: null,
         codeError: null,
-        title: 'لم تقم بتفعيل المصادقة الثنائية.',
+        title: lang['two-factor-authentication-disabled'],
         copyed: false,
         init() {
             this.enabled = enabled;
             if (this.enabled) {
-                this.title = 'لقد قمت بتفعيل المصادقة الثنائية.';
+                this.title = lang['two-factor-authentication-enabled'];
                 this.status = "two-factor-authentication-enabled";
             }
             this.$refs.code.addEventListener('input', (e) => {
@@ -268,17 +275,17 @@ function twoFactorAuth(enabled) {
                     ]);
                     this.qrCode = qrRes.data.svg;
                     this.secretKey = secretRes.data.secretKey;
-                    this.title = 'أنت في طور تفعيل المصادقة الثنائية.';
+                    this.title = lang['two-factor-authentication-confirm'];
                     this.confirm = false;
                 } else {
-                    this.passwordError = 'كلمة المرور غير صحيحة.';
+                    this.passwordError = lang['incorrect-password'];
                 }
 
             } catch (error) {
                 if (error.response && error.response.status === 423) {
-                    this.passwordError = error.response.data.message || 'كلمة المرور غير صحيحة.';
+                    this.passwordError = error.response.data.message || lang['incorrect-password'];
                 } else {
-                    this.passwordError = 'حدث خطأ ما. حاول مرة أخرى.';
+                    this.passwordError = lang['error-occurred'];
                 }
                 console.error('Error enabling 2FA:', error);
             } finally {
@@ -291,7 +298,7 @@ function twoFactorAuth(enabled) {
             if (this.loading) return;
             const code = this.$refs.code.value.replace(/-/g, '');
             if (code.length !== 6) {
-                this.code = 'الرجاء إدخال رمز التحقق المكون من 6 أرقام.';
+                this.code = lang['verification-code-invalid'];
                 return;
             }
             this.loading = true;
@@ -306,12 +313,12 @@ function twoFactorAuth(enabled) {
             }).then(response => {
                 this.status = 'two-factor-authentication-enabled';
                 this.codeError = null;
-                this.title = 'لقد قمت بتفعيل المصادقة الثنائية.';
+                this.title = lang['two-factor-authentication-enabled'];
             }).catch(error => {
                 if (error.response && error.response.status === 422) {
                     this.codeError = error.response?.data?.message || 'رمز التحقق غير صحيح. حاول مرة أخرى.';
                 } else {
-                    this.codeError = 'حدث خطأ ما. حاول مرة أخرى.';
+                    this.codeError = lang['error-occurred'];
                 }
                 console.error('Error confirming 2FA:', error);
             }).finally(() => {
@@ -359,7 +366,7 @@ function twoFactorAuth(enabled) {
                 this.secretKey = null;
                 this.passwordError = null;
                 this.codeError = null;
-                this.title = 'لم تقم بتفعيل المصادقة الثنائية.';
+                this.title = lang['two-factor-authentication-disabled'];
             }).catch(error => {
                 console.error('Error disabling 2FA:', error);
             }).finally(() => {

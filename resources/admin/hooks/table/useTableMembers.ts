@@ -12,12 +12,14 @@ import { actionsCell, badgeCell, centeredTextCell, dateCell, descriptionCell, Sw
 import { Members } from "@/types/model/members";
 import { block, destroy, show } from "@/routes/admin/members";
 import { router } from '@inertiajs/react';
-
+import { members as index } from "@/routes/admin";
 // هوك لإدارة جدول الأعضاء مع دعم البحث، الإضافة، التعديل، الحذف، والترجمة
-export function useTableMembers({ members }: { members: Members[] }) {
+export function useTableMembers({ members }: { members: Pagination<Members> }) {
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
-    const [tableData, setTableData] = useState<Members[]>(members);
+    const [tableData, setTableData] = useState<Members[]>(members.data);
+    const [meta, setMeta] = useState(members?.meta);
+    const [links, setLinks] = useState(members?.links);
     const [selectedRow, setSelectedRow] = useState<Members | null>(null);
     const { openEdit } = useContext(OpenFormContext);
     const [columns, setColumns] = useState<any[]>([]);
@@ -33,6 +35,24 @@ export function useTableMembers({ members }: { members: Members[] }) {
             return (!search || Object.values(item).some((val) => String(val).toLowerCase().includes(search.toLowerCase())));
         });
     }, [tableData, search]);
+
+    // دالة للبحث وتحديث البيانات من الخادم
+    const searchData = (text: string) => {
+        setSearch(text);
+        router.visit(
+            index().url,
+            {
+                data: { search: text },
+                preserveState: true, preserveScroll: true,
+                onSuccess: (page) => {
+                    setTableData((page.props.members as Pagination<Members>).data);
+                    setMeta((page.props.members as Pagination<Members>).meta);
+                    setLinks((page.props.members as Pagination<Members>).links);
+                }
+
+            }
+        );
+    }
 
     // إضافة صف جديد للجدول
     const addRow = (member: Members) => {
@@ -113,14 +133,56 @@ export function useTableMembers({ members }: { members: Members[] }) {
         router.visit(show(item.id).url);
     };
 
+
+    const changePage = (url: string | null) => {
+        if (url) {
+            router.visit(
+                url,
+                {
+                    preserveState: true, preserveScroll: true,
+                    onSuccess: (page) => {
+                        setTableData((page.props.members as Pagination<Members>).data);
+                        setMeta((page.props.members as Pagination<Members>).meta);
+                        setLinks((page.props.members as Pagination<Members>).links);
+                    }
+                }
+            );
+        }
+    }
+
+    const changePageSize = (size: number, path: string) => {
+        router.visit(
+            path,
+            {
+                data: { per_page: size },
+                preserveState: true, preserveScroll: true,
+                onSuccess: (page) => {
+                    setTableData((page.props.members as Pagination<Members>).data);
+                    setMeta((page.props.members as Pagination<Members>).meta);
+                    setLinks((page.props.members as Pagination<Members>).links);
+                }
+
+            }
+        );
+
+    }
+
     const table = useReactTable({
         data: tableData,
         columns,
+        pageCount: meta?.last_page,
+        manualPagination: true,
+        meta: {
+            pagination: {
+                links: links,
+                meta: meta,
+            },
+            onChangePage: changePage,
+            onChangePageSize: changePageSize,
+        },
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        initialState: { pagination: { pageSize: 10 } },
     });
 
     return {
@@ -129,6 +191,7 @@ export function useTableMembers({ members }: { members: Members[] }) {
         columns,
         search,
         tableData: filteredData,
+        searchData,
         selectedRow,
         setColumns,
         setSearch,
@@ -140,53 +203,53 @@ export function useTableMembers({ members }: { members: Members[] }) {
 
 // نفس أعمدة الجدول في tableData.tsx
 const getColumns = ({ onEdit, onDelete, onView, onChange }: ButtonsActions): ExtendedColumnDef<Members>[] => [
-  {
-    accessorKey: "id",
-    header: "ID",
-    cell: centeredTextCell,
-  },
-  {
-    accessorKey: "name",
-    header: "الاسم",
-    cell: textCell,
-  },
-  {
-    accessorKey: "email",
-    header: "البريد الإلكتروني",
-    cell: textCell,
-    nonHideable: true,
-  },
-  {
-    accessorKey: "phone",
-    header: "رقم الجوال",
-    cell: textCell,
-  },
-  {
-    accessorKey: "membership_name",
-    header: "نوع العضوية",
-    cell: textCell,
-  },
-  {
-    accessorKey: "membership_status",
-    header: "حالة العضوية",
-    cell: badgeCell,
-  },
-  {
-    accessorKey: "membership_expires_at",
-    header: "تاريخ انتهاء",
-    cell: dateCell(false),
-  },
-  {
-    accessorKey: "is_active",
-    header: "الحالة",
-    cell: SwitchCell(onChange as (item: Members) => Promise<boolean>),
-    nonHideable: true,
-  },
-  {
-    accessorKey: "actions",
-    header: "Actions",
-    cell: actionsCell({ onEdit, onDelete, onView }),
-    nonHideable: true,
-  }
+    {
+        accessorKey: "id",
+        header: "ID",
+        cell: centeredTextCell,
+    },
+    {
+        accessorKey: "name",
+        header: "الاسم",
+        cell: textCell,
+    },
+    {
+        accessorKey: "email",
+        header: "البريد الإلكتروني",
+        cell: textCell,
+        nonHideable: true,
+    },
+    {
+        accessorKey: "phone",
+        header: "رقم الجوال",
+        cell: textCell,
+    },
+    {
+        accessorKey: "membership_name",
+        header: "نوع العضوية",
+        cell: textCell,
+    },
+    {
+        accessorKey: "membership_status",
+        header: "حالة العضوية",
+        cell: badgeCell,
+    },
+    {
+        accessorKey: "membership_expires_at",
+        header: "تاريخ انتهاء",
+        cell: dateCell(false),
+    },
+    {
+        accessorKey: "is_active",
+        header: "الحالة",
+        cell: SwitchCell(onChange as (item: Members) => Promise<boolean>),
+        nonHideable: true,
+    },
+    {
+        accessorKey: "actions",
+        header: "Actions",
+        cell: actionsCell({ onEdit, onDelete, onView }),
+        nonHideable: true,
+    }
 ];
 

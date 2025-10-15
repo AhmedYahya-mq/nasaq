@@ -72,6 +72,19 @@ Route::prefix('/')->middleware('auth')->group(function () {
     // download resource
     Route::get('library/{res}/download', [\App\Http\Controllers\User\LibraryController::class, 'download'])->name('library.download')->middleware('library.download');
     Route::get('event/{event}/open', [EventController::class, 'redirctToEvent'])->name('event.open')->middleware('event.open');
+
+     Route::get('/invoice/{uuid}/', function ($uuid) {
+        $payment = Payment::where('moyasar_id', $uuid)->with(['user', 'payable' => function ($q) {
+            if (method_exists($q->getModel(), 'scopeWithTranslations')) {
+                $q->withTranslations();
+            }
+        }])->firstOrFail();
+        // تحثقق من ان المستخدم هو صاحب الفاتورة
+        if ($payment->user_id !== auth()->id()) {
+            abort(403);
+        }
+        return view('invoice', compact('payment'));
+    })->name('invoice.print');
 });
 
 Route::get('/', HomeController::class)->name('home');

@@ -9,6 +9,7 @@ interface HookProps {
     setSelectedRow: (v: any | null) => void;
     search: string;
     setSearch: (value: string) => void;
+    searchData?: (value: string) => void;
     isClient: boolean;
     table: any;
     columns: any[];
@@ -34,7 +35,7 @@ export default function SectionListGeneric({
             <hr className="border-t border-accent" />
             <FilterSection
                 search={initHook.search}
-                setSearch={initHook.setSearch}
+                setSearch={initHook.searchData ?? initHook.setSearch}
             />
             <hr className="border-t border-accent" />
             <CardContent>

@@ -1,24 +1,37 @@
+@php
+    $twoFA_Lang = [
+        'two-factor-authentication-enabled' => __('profile.two-factor-authentication-enabled'),
+        'two-factor-authentication-disabled' => __('profile.two-factor-authentication-disabled'),
+        'two-factor-authentication-confirm' => __('profile.two-factor-authentication-confirm'),
+        'incorrect-password' => __('profile.incorrect-password'),
+        'verification-code-invalid' => __('profile.verification-code-invalid'),
+        'error-occurred' => __('profile.error-occurred'),
+    ];
+@endphp
+
 <div>
-    <div x-data='twoFactorAuth({{ auth()->user()->two_factor_confirmed_at !== null }})' class="p-4 flex flex-col gap-4">
+    <div x-data='twoFactorAuth({{ auth()->user()->two_factor_confirmed_at !== null ? 'true' : 'false' }}, @json($twoFA_Lang))'
+        class="p-4 flex flex-col gap-4">
         <div class="flex flex-col items-end gap-3">
             <div>
                 <h6 class="text-[0.875rem] font-medium mb-1" x-text="title"></h6>
                 <p class="text-muted-foreground">
-                    عند تفعيل المصادقة الثنائية، سيتم مطالبتك برمز آمن وعشوائي أثناء المصادقة. يمكنك استرداد هذا الرمز
-                    من تطبيق Google Authenticator على هاتفك.
+                    {{ __('profile.two_factor_auth_description') }}
                 </p>
             </div>
             <div x-show='enabled' data-slot="content" class="px-6 w-full">
                 <div x-show="status === 'two-factor-authentication-confirm'" x-cloak class="mt-4 w-full">
                     <ol class="list-decimal list-inside space-y-6">
-                        <li>افتح تطبيق المصادقة على هاتفك مثل Google Authenticator أو Microsoft Authenticator أو Authy.
+                        <li>
+                            {{ __('profile.two_factor_auth_step1') }}
                         </li>
-                        <li>امسح رمز الـQR الذي يظهر لك، أو أدخل مفتاح الإعداد يدويًا إذا لم تتمكن من المسح.
+                        <li>
+                            {{ __('profile.two_factor_auth_step2') }}
                             <div class="mt-2 *:bg-white *:inline-block *:p-2">
                                 <div x-html="qrCode"></div>
                             </div>
                             <div class="mt-2 flex items-center gap-2">
-                                <span>مفتاح الإعداد:</span>
+                                <span>{{ __('profile.key_config') }}:</span>
                                 <code class="bg-background px-3 py-1 rounded-md gap-4 flex items-center">
                                     <span x-text="secretKey"></span>
                                     <button data-slot="button" @click="copyed = false; copyToClipboard(secretKey);"
@@ -33,17 +46,18 @@
                                 </code>
                             </div>
                         </li>
-                        <li>أدخل الرمز المكون من 6 أرقام الذي يولده التطبيق ثم اضغط على "تأكيد".
+                        <li>
+                            {{ __('profile.two_factor_auth_step3') }}
                             <form class="mt-2 space-y-4" @submit.prevent="confirm2FA">
                                 <div class="grid gap-2">
-                                    <x-forms.input id="code" name="code" label='رمز التحقق'
+                                    <x-forms.input id="code" name="code" :label="__('profile.code')"
                                         placeholder='xxx-xxx' x-ref="code" />
                                     <p x-show="codeError" x-text="codeError" class="text-sm text-destructive mt-1"></p>
                                 </div>
                                 <button data-slot="button" :disabled="loading"
                                     class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2 has-[&gt;svg]:px-3"
                                     type="submit">
-                                    تأكيد
+                                    {{ __('profile.two_factor_auth_confirm') }}
                                     <div x-show="loading" x-cloak>
                                         <x-ui.loading-indicator class="size-4 border-white" />
                                     </div>
@@ -54,9 +68,8 @@
                 </div>
                 <div x-show="status === 'two-factor-authentication-enabled' && showingRecoveryCodes" x-cloak
                     class="w-full">
-                    <div data-slot="card-description" class="text-muted-foreground text-sm">احفظ رموز الاسترداد هذه في
-                        مدير
-                        كلمات مرور آمن. يمكنك استخدامها لاستعادة الوصول إلى حسابك في حال فقدان جهاز المصادقة الثنائية.
+                    <div data-slot="card-description" class="text-muted-foreground text-sm">
+                        {{ __('profile.two_factor_auth_recovery_codes') }}
                     </div>
                     <code class="relative">
                         <ul class="px-3 py-4 bg-background rounded-md mt-4">
@@ -64,7 +77,7 @@
                                 <li class="font-mono text-sm" x-text="code"></li>
                             </template>
                         </ul>
-                        <div class="flex items-center gap-4 absolute top-4 left-3">
+                        <div class="flex items-center gap-4 absolute top-4 rtl:left-3 ltr:right-3">
                             <button data-slot="button" @click="downloadRecoveryCodes"
                                 class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground size-9 bg-accent !size-2.5 cursor-pointer p-1">
                                 <x-ui.icon class="size-4" name="download-rec" />
@@ -88,7 +101,7 @@
                     <button :disabled="loading || regeneration" @click="disable"
                         class="h-9 px-4 py-2 has-[&gt;svg]:px-3 bg-destructive text-white shadow-xs hover:bg-destructive/90 dark:focus-visible:ring-destructive/40 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
                         type="button">
-                        تعطيل
+                        {{ __('profile.two_factor_auth_disable') }}
                         <div x-show="loading" x-cloak>
                             <x-ui.loading-indicator class="size-4 border-white" />
                         </div>
@@ -96,7 +109,7 @@
                     <button data-slot="button" :disabled="loading || regeneration" x-show="!showingRecoveryCodes"
                         x-cloak @click="getRecoveryCodes"
                         class="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 has-[&gt;svg]:px-3 flex items-center gap-2">
-                        عرض رموز الاسترداد
+                        {{ __('profile.two_factor_auth_show_recovery_codes') }}
                         <div x-show="regeneration" x-cloak>
                             <x-ui.loading-indicator class="size-4 border-primary" />
                         </div>
@@ -104,7 +117,7 @@
                     <button data-slot="button" :disabled="loading || regeneration" x-show="showingRecoveryCodes" x-cloak
                         @click="regenerateRecoveryCodes"
                         class="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 has-[&gt;svg]:px-3 flex items-center gap-2">
-                        تجديد رموز الاسترداد
+                        {{ __('profile.two_factor_auth_regenerate_recovery_codes') }}
                         <div x-show="regeneration" x-cloak>
                             <x-ui.loading-indicator class="size-4 border-primary" />
                         </div>
@@ -115,7 +128,7 @@
                     <button data-slot="dialog-trigger"
                         class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 h-9 px-4 py-2 has-[&gt;svg]:px-3"
                         type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-«rb»"
-                        data-state="closed">تفعيل المصادقه الثنائية</button>
+                        data-state="closed">{{ __('profile.two_factor_auth_enable') }}</button>
                 </div>
             </div>
         </div>
@@ -127,26 +140,29 @@
                 x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90">
                 <div class="bg-card p-4 rounded-md shadow flex flex-col gap-4">
                     {{-- ادخل الباسورد من اجل اتمكين 2FA --}}
-                    <h3 class="text-lg font-medium">تمكين المصادقة الثنائية (2FA)</h3>
+                    <h3 class="text-lg font-medium">
+                        {{ __('profile.enable_2fa') }}
+                    </h3>
                     <p class="text-sm text-muted-foreground">
-                        لتفعيل المصادقة الثنائية وحماية حسابك، يرجى إدخال كلمة المرور الخاصة بك لتأكيد هويتك.
+                        {{ __('profile.enable_2fa') }}
                     </p>
                     <div>
                         <x-forms.input-password name="password" x-model='password' id="password_enable"
-                            label="كلمة المرور" placeholder="أدخل كلمة المرور" class="w-full" />
+                            label="{{ __('login.password') }}" placeholder="{{ __('login.password_placeholder') }}"
+                            class="w-full" />
                         <p x-show="passwordError" x-text="passwordError" class="text-sm text-destructive mt-1"></p>
                     </div>
                     <div class="flex justify-end gap-2 mt-2">
                         <button type="submit" :disabled="loading"
                             class="badget-green badget-80 hover:badget-70 px-2.5 py-1.5 rounded-md">
-                            تمكين
+                            {{ __('profile.two_factor_auth_confirm') }}
                             <div x-show="loading" x-cloak>
                                 <x-ui.loading-indicator class="size-4 border-white" />
                             </div>
                         </button>
                         <button type="reset" class="badget-red badget-80 hover:badget-70 px-2.5 py-1.5 rounded-md"
                             @click="confirm = false;password = '';">
-                            إلغاء
+                            {{ __('profile.cancel') }}
                         </button>
                     </div>
                 </div>
@@ -157,18 +173,20 @@
     <div class="mt-3">
         <div class="flex justify-between py-4 border-b border-border">
             <h2 class="text-md font-semibold">
-                سجل تسجيل الدخول
+                {{ __('profile.login_activity') }}
             </h2>
             <span x-data @click="$store.model.show()"
                 class="badget badget-red-600 cursor-pointer text-sm rounded-sm py-1 px-2">
-                تسجيل الخروج لكل
+                {{ __('profile.logout_all_sessions') }}
             </span>
         </div>
         <div class="flex flex-col gap-3 py-5 scrollbar !overflow-hidden hover:!overflow-y-auto max-h-80">
             @forelse ($sessions as $session)
                 <x-ui.device-session-item :session="$session" />
             @empty
-                <p class="text-sm text-center text-muted-foreground">لا توجد جلسات نشطة حالياً.</p>
+                <p class="text-sm text-center text-muted-foreground">
+                    {{ __('profile.no_active_sessions') }}
+                </p>
             @endforelse
         </div>
     </div>
@@ -176,35 +194,37 @@
 
 @push('models')
     <div x-data x-init="$store.model.init({{ $errors->has('password') ? 'true' : 'false' }})">
-        <div x-show="$store.model.on" x-cloak
-            @click.self="$store.model.close()"
+        <div x-show="$store.model.on" x-cloak @click.self="$store.model.close()"
             class="fixed z-50 inset-0 backdrop-blur-[2px] bg-accent-foreground/[0.04] flex items-center justify-center">
             <form action="{{ route('client.sessions.destroy') }}" method="POST" class="sm:w-[80%] md:w-1/2 w-full"
-                x-show="$store.model.on" x-cloak
-                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-90"
-                x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-200"
-                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-90">
+                x-show="$store.model.on" x-cloak x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-90">
                 @csrf
                 @method('DELETE')
                 <div class="bg-card p-4 rounded-md shadow flex flex-col gap-4">
-                    <h3 class="text-lg font-medium">تأكيد تسجيل الخروج من الجلسات</h3>
+                    <h3 class="text-lg font-medium">
+                        {{ __('profile.logout_confirmation') }}
+                    </h3>
                     <p class="text-sm text-muted-foreground">
-                        لتسجيل الخروج من جميع الجلسات النشطة، يرجى إدخال كلمة المرور الخاصة بك لتأكيد هويتك.
+                        {{ __('profile.logout_confirmation_description') }}
                     </p>
                     <div>
-                        <x-forms.input-password name="password" required aria-required="كلمة السر مطلوبة" id="password_confirm" label="كلمة المرور"
-                            placeholder="أدخل كلمة المرور" class="w-full" />
+                        <x-forms.input-password name="password" required aria-required="كلمة السر مطلوبة"
+                            id="password_confirm" label="{{ __('profile.password') }}"
+                            placeholder="{{ __('profile.password_placeholder') }}" class="w-full" />
                         @error('password')
                             <p class="text-sm text-destructive mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="flex justify-end gap-2 mt-2">
                         <button type="submit" class="badget-green badget-80 hover:badget-70 px-2.5 py-1.5 rounded-md">
-                            تسجيل الخروج من الجميع
+                            {{ __('profile.logout_all_confirm') }}
                         </button>
                         <button type="reset" @click="$store.model.close()"
                             class="badget-red badget-80 hover:badget-70 px-2.5 py-1.5 rounded-md">
-                            إلغاء
+                            {{ __('profile.cancel') }}
                         </button>
                     </div>
                 </div>

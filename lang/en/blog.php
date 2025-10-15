@@ -7,7 +7,7 @@ return [
     'search' => 'Search in the blog',
     'read_more' => 'Read more',
 
-
+    'no_blogs_found' => 'No articles found.',
 
 
     'default_title' => 'Default Article Title',

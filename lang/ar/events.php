@@ -8,6 +8,7 @@ return [
         'interactive_calendar' => 'التقويم الفعاليات',
         'past_events_archive' => 'أرشيف الفعاليات السابقة',
         'view_all_upcoming' => 'عرض كل الفعاليات القادمة',
+        'view_all_past' => 'الفعاليات السابقة',
     ],
     'event_titles' => [
         'september_meeting' => 'الاجتماع الافتراضي – سبتمبر',
@@ -112,11 +113,20 @@ return [
         'payid_event' => 'تتطلب هذه الفعالية الدفع لإتمام التسجيل. يرجى الانتقال إلى صفحة الدفع.',
         'not_registered' => 'أنت غير مسجل لهذه الفعالية. يرجى التسجيل أولاً.',
         'not_link' => 'الرابط غير متاح في الوقت الحالي.',
+        'no_events_past' => 'لا توجد فعاليات سابقة في الوقت الحالي.',
     ],
 
     'past_label' => 'منتهي',
 
     'not_available' => 'غير متاح',
-    'title' => 'الفعاليات'
+    'title' => 'الفعاليات',
+    'date' => 'التاريخ',
+    'time_event' => 'الوقت',
+    'access_membership' => "العضويات المسموحة",
+    'percentage_register' => "نسبة التسجيل",
+
+    'residual' => 'المتبقي',
+    'unlimited' => 'غير محدود',
+    'registered' => 'مسجل',
 
 ];

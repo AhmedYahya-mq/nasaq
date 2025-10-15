@@ -1,2 +1,4 @@
 
-<x-invoice.list-invoices />
+<div>
+    <x-invoice.list-invoices />
+</div>

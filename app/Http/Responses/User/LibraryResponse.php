@@ -28,12 +28,23 @@ class LibraryResponse implements \App\Contract\User\Response\LibraryResponse
      */
     public function toResponse($request)
     {
-        $resources = Library::withTranslations()->withCount('users')->orderBy('created_at', 'desc')->paginate($request->get('per_page', 10));
-        return Inertia::render(
-            'user/library',
-            [
-                'resources' => app(LibraryCollection::class, ['resource' => $resources]),
-            ]
-        )->toResponse($request);
+        $query = Library::withTranslations()->withCount('users')->orderBy('created_at', 'desc');
+
+        // البحث إذا جاء في request
+        if ($search = $request->get('search')) {
+            $query->whereHas('translationsField', function ($q) use ($search) {
+                $q->whereIn('field', ['title', 'description', 'author'])
+                    ->where('locale', 'ar')
+                    ->where('value', 'like', "%{$search}%");
+            });
+        }
+
+        // تطبيق pagination مع الاحتفاظ بالـ query string
+        $resources = $query->paginate($request->get('per_page', 10))
+            ->withQueryString();
+
+        return Inertia::render('user/library', [
+            'resources' => app(LibraryCollection::class, ['resource' => $resources]),
+        ])->toResponse($request);
     }
 }

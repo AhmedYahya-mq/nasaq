@@ -2,5 +2,5 @@
     @push('scripts')
         @vite('resources/js/pages/events.js')
     @endpush
-    <x-sections.events-section :events="$events" />
+    <x-sections.events-section />
 </x-layouts.guest-layout>

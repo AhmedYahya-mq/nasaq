@@ -22,19 +22,17 @@
                             required />
                         <x-forms.input name="national_id" :value="old('national_id')" :label="__('memberships.personal_info.id_number')" required />
                     </fieldset>
-
                     <!-- المجموعة الثانية: المعلومات المهنية -->
                     <fieldset class="space-y-6">
                         <legend class="text-lg font-semibold text-foreground pb-3 border-b-2 border-primary/20 w-full">
                             {{ __('memberships.professional_info.title') }}
                         </legend>
                         <x-forms.select id="employment_status" name="employment_status" :value="old('employment_status', $user->employment_status->value ?? '')"
-                            label="الحالة الوظيفية" :options="\App\Enums\EmploymentStatus::toKeyValueArray()" />
+                            :label="__('memberships.professional_info.status')" :options="\App\Enums\EmploymentStatus::toKeyValueArray()" />
                         <x-forms.input name="job_title" :value="$user->job_title" :label="__('memberships.professional_info.job_title')" required />
                         <x-forms.input name="current_employer" :value="old('current_employer', $application->current_employer)" :label="__('memberships.professional_info.workplace')" />
                         <x-forms.input name="scfhs_number" :value="old('scfhs_number', $application->scfhs_number)" :label="__('memberships.professional_info.scfhs_number')" required />
                     </fieldset>
-
                     <!-- المجموعة الثالثة: إثبات التسجيل (التصميم النهائي) -->
                     <fieldset>
                         <x-forms.file-upload name="file" :title="__('memberships.proof.title')" :subtitle="__('memberships.proof.upload_subtitle')"
@@ -43,9 +41,7 @@
                             <p class="text-sm text-red-600 mt-2">{{ $message }}</p>
                         @enderror
                     </fieldset>
-
                 </div>
-
                 <!-- زر الإرسال -->
                 <div class="pt-10 mt-10 border-t border-border">
                     <button type="submit"

@@ -20,6 +20,7 @@ export function useTableBlogs({ blogs }: { blogs: Blog[] }) {
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
     const [tableData, setTableData] = useState<Blog[]>(blogs);
+    const [tableDataFilter, setTableDataFilter] = useState<Blog[]>(blogs);
     const [selectedRow, setSelectedRow] = useState<Blog | null>(null);
     const { openEdit, openTranslate } = useContext(OpenFormContext);
     const [columns, setColumns] = useState<any[]>([]);
@@ -34,9 +35,11 @@ export function useTableBlogs({ blogs }: { blogs: Blog[] }) {
      * @return قائمة العضويات المفلترة
      */
     const filteredData = useMemo(() => {
-        return tableData.filter((item) => {
+        const data= tableData.filter((item) => {
             return (!search || Object.values(item).some((val) => String(val).toLowerCase().includes(search.toLowerCase())));
         });
+        setTableDataFilter(data);
+        return data;
     }, [tableData, search]);
 
     /**
@@ -109,7 +112,7 @@ export function useTableBlogs({ blogs }: { blogs: Blog[] }) {
     };
 
     const table = useReactTable({
-        data: tableData,
+        data: tableDataFilter,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
