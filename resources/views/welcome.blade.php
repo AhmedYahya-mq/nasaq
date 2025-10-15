@@ -1,31 +1,25 @@
-<x-layouts.guest-layout title="{{ 'home.page_title' }}">
+<x-layouts.guest-layout title="{{ 'seo.page_title' }}">
 
     @push('seo')
-        @php
-            $title = 'home.page_title'; // مثال: "الرئيسية"
-            $description = __('home.page_description'); // مثال: "أفضل مجتمع للتعلم والمشاركة في المعرفة والثقافة."
-            $keywords = __('home.page_keywords'); // مثال: "Nasaq, مجتمع, تعليم, مكتبة, مقالات, فعاليات"
-            $ogImage = asset('images/seo-default.jpg'); // صورة افتراضية
-        @endphp
 
         {{-- Title / Meta --}}
-        <meta name="description" content="{{ $description }}">
-        <meta name="keywords" content="{{ $keywords }}">
+        <meta name="description" content="{{ __('seo.default_description') }}">
+        <meta name="keywords" content="{{ __('seo.default_keywords') }}">
         <link rel="canonical" href="{{ url()->current() }}">
 
         {{-- Open Graph --}}
-        <meta property="og:title" content="{{ $title }}">
-        <meta property="og:description" content="{{ $description }}">
-        <meta property="og:image" content="{{ $ogImage }}">
+        <meta property="og:title" content="{{ __('seo.page_title') }}">
+        <meta property="og:description" content="{{ __('seo.page_description') }}">
+        <meta property="og:image" content="{{ asset('favicon.ico') }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:site_name" content="{{ __('seo.site_name') }}">
         <meta property="og:type" content="{{ __('seo.og_type') }}">
 
         {{-- Twitter --}}
         <meta name="twitter:card" content="{{ __('seo.twitter_card') }}">
-        <meta name="twitter:title" content="{{ $title }}">
-        <meta name="twitter:description" content="{{ $description }}">
-        <meta name="twitter:image" content="{{ $ogImage }}">
+        <meta name="twitter:title" content="{{ __('seo.page_title') }}">
+        <meta name="twitter:description" content="{{ __('seo.page_description') }}">
+        <meta name="twitter:image" content="{{ asset('favicon.ico') }}">
 
         {{-- Hreflang --}}
         <link rel="alternate" hreflang="ar" href="{{ route('client.home') }}">

@@ -17,7 +17,7 @@ import { members as index } from "@/routes/admin";
 export function useTableMembers({ members }: { members: Pagination<Members> }) {
     const [search, setSearch] = useState<string>("");
     const [isClient, setIsClient] = useState(false);
-    const [tableData, setTableData] = useState<Members[]>(members.data);
+    const [tableData, setTableData] = useState<Members[]>(members?.data);
     const [meta, setMeta] = useState(members?.meta);
     const [links, setLinks] = useState(members?.links);
     const [selectedRow, setSelectedRow] = useState<Members | null>(null);

@@ -50,7 +50,8 @@ class UserController extends Controller
             'membership_id' => 'required|exists:memberships,id',
         ]);
         try {
-            $user->subscribeMembership($request->membership_id);
+            $membership = \App\Models\Membership::findOrFail($request->membership_id);
+            $user->subscribeMembership($membership);
             return app(UserResponse::class)->toResponseMemberDatails($user);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 400);
