@@ -9,7 +9,7 @@
 
         {{-- Open Graph --}}
         <meta property="og:title" content="{{ __('seo.page_title') }}">
-        <meta property="og:description" content="{{ __('seo.page_description') }}">
+        <meta property="og:description" content="{{ __('seo.default_description') }}">
         <meta property="og:image" content="{{ asset('favicon.ico') }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:site_name" content="{{ __('seo.site_name') }}">
@@ -18,7 +18,7 @@
         {{-- Twitter --}}
         <meta name="twitter:card" content="{{ __('seo.twitter_card') }}">
         <meta name="twitter:title" content="{{ __('seo.page_title') }}">
-        <meta name="twitter:description" content="{{ __('seo.page_description') }}">
+        <meta name="twitter:description" content="{{ __('seo.default_description') }}">
         <meta name="twitter:image" content="{{ asset('favicon.ico') }}">
 
         {{-- Hreflang --}}

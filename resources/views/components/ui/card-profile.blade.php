@@ -47,7 +47,7 @@
 
         <!-- زر الاشتراك / الترقية / إكمال الطلب -->
         <div class="mt-2">
-            @if ($user->membership_id && !$user->membership->isHigherLevelThan())
+            @if ($user->membership_id)
                 <a href="{{ route('client.pay.index', ['id' => $user->membership->id, 'type' => 'membership']) }}"
                     class="badget hover:badget-80 transition py-1 px-3 rounded-md hover:bg-secondary/60 cursor-pointer text-sm">
                     {{ __('header.renew_membership') }}

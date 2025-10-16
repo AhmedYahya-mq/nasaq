@@ -7,9 +7,9 @@
 
                     <x-ui.leader-line>
                         <div class="w-full h-[140px] bg-card p-5 shadow-md rounded-lg">
-                            <h3 class="text-lg font-semibold">
+                            <h2 class="text-lg font-semibold">
                                 {{ __('home.goals.goal1_title') }}
-                            </h3>
+                            </h2>
                             <p class="text-sm text-muted-foreground mt-2">
                                 {{ __('home.goals.goal1_desc') }}
                             </p>
@@ -18,9 +18,9 @@
 
                     <x-ui.leader-line dirction="left" nath="1">
                         <div class="w-full h-[140px] bg-card p-5 shadow-md rounded-lg">
-                            <h3 class="text-lg font-semibold">
+                            <h2 class="text-lg font-semibold">
                                 {{ __('home.goals.goal2_title') }}
-                            </h3>
+                            </h2>
                             <p class="text-sm text-muted-foreground mt-2">
                                 {{ __('home.goals.goal2_desc') }}
                             </p>
@@ -29,9 +29,9 @@
 
                     <x-ui.leader-line nath="2">
                         <div class="w-full h-[140px] bg-card p-5 shadow-md rounded-lg">
-                            <h3 class="text-lg font-semibold">
+                            <h2 class="text-lg font-semibold">
                                 {{ __('home.goals.goal3_title') }}
-                            </h3>
+                            </h2>
                             <p class="text-sm text-muted-foreground mt-2">
                                 {{ __('home.goals.goal3_desc') }}
                             </p>
@@ -40,9 +40,9 @@
 
                     <x-ui.leader-line dirction="left" nath="3">
                         <div class="w-full h-[140px] bg-card p-5 shadow-md rounded-lg">
-                            <h3 class="text-lg font-semibold">
+                            <h2 class="text-lg font-semibold">
                                 {{ __('home.goals.goal4_title') }}
-                            </h3>
+                            </h2>
                             <p class="text-sm text-muted-foreground mt-2">
                                 {{ __('home.goals.goal4_desc') }}
                             </p>
@@ -51,9 +51,9 @@
 
                     <x-ui.leader-line nath="4">
                         <div class="w-full h-[140px] bg-card p-5 shadow-md rounded-lg">
-                            <h3 class="text-lg font-semibold">
+                            <h2 class="text-lg font-semibold">
                                 {{ __('home.goals.goal5_title') }}
-                            </h3>
+                            </h2>
                             <p class="text-sm text-muted-foreground mt-2">
                                 {{ __('home.goals.goal5_desc') }}
                             </p>

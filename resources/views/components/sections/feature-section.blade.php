@@ -28,8 +28,8 @@
                             </div>
                         </div>
                         <div class="md:p-7 not-md:px-5 flex justify-center items-center">
-                            <img src="{{ asset($feature['image']) }}" alt="{{ $feature['title'] }}"
-                                class="w-full h-auto object-cover brightness-100 dark:!drop-shadow-[0_35px_35px_rgba(255,255,255,0.15)] drop-shadow-[0_35px_35px_rgba(0,0,0,0.30)]" />
+                              <img src="{{ asset($feature['image']) }}" alt="{{ $feature['title'] }} image"
+                                class="w-full h-auto object-cover brightness-100 dark:!drop-shadow-[0_35px_35px_rgba(255,255,255,0.15)] drop-shadow-[0_35px_35px_rgba(0,0,0,0.30)]" loading="lazy" />
                         </div>
                     @else
                         {{-- الصورة أولاً ثم النص --}}

@@ -5,11 +5,10 @@ document.addEventListener('alpine:init', function () {
     Alpine.data('printInit', printInit);
 });
 
-function printInit() {
+function printInit(fill_name = 'card') {
     return {
         isLoadingPng: false,
         isLoadingPdf: false,
-
         async downloadTransparent() {
             const card = this.$refs.card;
             if (!card) return;
@@ -23,7 +22,7 @@ function printInit() {
                     });
 
                     const link = document.createElement('a');
-                    link.download = 'membership-card.png';
+                    link.download = fill_name + '.png';
                     link.href = canvas.toDataURL('image/png');
                     link.click();
                 } catch (error) {
@@ -59,7 +58,7 @@ function printInit() {
                     });
 
                     pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-                    pdf.save('membership-card.pdf');
+                    pdf.save(fill_name + '.pdf');
 
                 } catch (error) {
                     console.error('PDF generation failed:', error);

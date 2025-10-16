@@ -1,4 +1,4 @@
-window.downloadCard = async function(element) {
+window.downloadCard = async function(element, fill_name = 'card.png') {
     if (!element) return;
 
     const canvas = await html2canvas(element, {
@@ -8,7 +8,7 @@ window.downloadCard = async function(element) {
     });
 
     const link = document.createElement('a');
-    link.download = 'membership-card.png';
+    link.download = fill_name;
     link.href = canvas.toDataURL('image/png');
     link.click();
 }

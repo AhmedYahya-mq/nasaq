@@ -8,7 +8,7 @@
                 </p>
             </div>
             <!-- جسم الفورم -->
-            <form action="{{ route('client.membership.request', ['application' => $application]) }}" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
+            <form action="{{ route('client.membership.request.store', ['application' => $application]) }}" method="POST" enctype="multipart/form-data" class="p-8 md:p-10">
                 @csrf
                 <div class="space-y-10">
                     <!-- المجموعة الأولى: البيانات الشخصية -->
