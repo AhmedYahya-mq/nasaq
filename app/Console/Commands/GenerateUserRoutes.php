@@ -143,6 +143,7 @@ class GenerateUserRoutes extends Command
     private function writeContent(): void
     {
         foreach ($this->content as $path => $content) {
+            $path = rtrim($path, "/\\");
             $this->files->ensureDirectoryExists(dirname($path));
             $this->files->put($path, TypeScript::cleanUp(implode(PHP_EOL, $content)));
 

@@ -1,6 +1,6 @@
 export default function registerThemeStore(Alpine) {
     Alpine.store('theme', {
-        value: localStorage.getItem('theme') || 'system',
+        value: localStorage.getItem('theme') || 'light',
         set(theme) {
             this.value = theme;
             localStorage.setItem('theme', theme);
@@ -16,7 +16,6 @@ export default function registerThemeStore(Alpine) {
             if (this.value === 'system') {
                 const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                 document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
                     if (this.value === 'system') this.set('system');
                 });

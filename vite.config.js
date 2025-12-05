@@ -22,7 +22,7 @@ export default defineConfig({
         wayfinder({
             formVariants: true,
             patterns: ['app/Http/Controllers/Auth/*.php', 'app/Http/Controllers/Admin/*.php'],
-            path: 'resources/admin/',
+            path: 'resources/admin',
             command: 'php artisan wayfinder:generate-user --routes-name=admin,photos --with-form',
         }),
         wayfinder({
