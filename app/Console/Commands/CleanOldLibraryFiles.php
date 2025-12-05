@@ -25,12 +25,10 @@ class CleanOldLibraryFiles extends Command
 
                 if ($dirTime < $cutoff) {
                     Storage::disk('local')->deleteDirectory($dir);
-                    $this->info("🗑️ تم حذف المجلد: {$dir} وكل محتوياته");
                 }
             }
         }
-
-        $this->info("✅ تم فحص كل المجلدات.");
+         return Command::SUCCESS;
     }
     // php artisan library:clean 1
 }

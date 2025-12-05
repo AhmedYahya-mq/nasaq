@@ -7,7 +7,7 @@
             aria-hidden="true">
             <img src="{{ asset('images/about.png') }}"
                 class="object-cover absolute end-0 rtl:clip-path-ellipse-right ltr:clip-path-ellipse-left"
-                style="block-size: 100%" alt="Illustration about our services" loading="lazy">
+                style="block-size: 100%" alt="Nasaq about" loading="lazy">
         </div>
         <div class="text-white">
             <h1 id="hero-title" class="font-bold text-center lg:text-start text-lg md:text-xl lg:text-2xl">

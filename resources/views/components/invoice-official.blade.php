@@ -172,7 +172,7 @@
     </style>
 @endpush
 
-<div x-data="printInit" class="flex flex-col items-center w-full space-y-6 pb-10">
+<div x-data="printInit('invoice')" class="flex flex-col items-center w-full space-y-6 pb-10">
 
     <div class="scrollbar flex flex-col items-center w-full m-0 p-0">
         <div id="invoiceCard" x-ref="card">

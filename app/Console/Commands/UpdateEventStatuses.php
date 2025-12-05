@@ -20,8 +20,6 @@ class UpdateEventStatuses extends Command
         $activated = Event::where('event_status', EventStatus::Upcoming)
             ->where('start_at', '<=', $now)
             ->update(['event_status' => EventStatus::Ongoing]);
-        Log::info("Updated $activated events to ongoing");
-        $this->info("✅ Updated $activated events to active");
         return Command::SUCCESS;
     }
 }

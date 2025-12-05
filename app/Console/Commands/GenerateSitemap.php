@@ -15,13 +15,13 @@ class GenerateSitemap extends Command
 
     public function handle()
     {
-        $this->info('🚀 بدء إنشاء Sitemap للمدونة...');
 
         $sitemapsPath = public_path('sitemaps');
         if (!is_dir($sitemapsPath)) {
             mkdir($sitemapsPath, 0755, true);
         }
 
+       
         $blogs = Blog::all();
         $sitemapFile = $sitemapsPath . '/sitemap-blogs.xml';
 
@@ -29,7 +29,6 @@ class GenerateSitemap extends Command
             // إنشاء ملف XML فارغ تمامًا
             $emptyXml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>';
             file_put_contents($sitemapFile, $emptyXml);
-            $this->info('⚠️ جدول المدونات فارغ، تم إنشاء Sitemap فارغ.');
         } else {
             $sitemapBlogs = Sitemap::create();
 
@@ -53,7 +52,6 @@ class GenerateSitemap extends Command
             }
 
             $sitemapBlogs->writeToFile($sitemapFile);
-            $this->info("✅ تم تحديث Sitemap المدونة: $sitemapFile");
         }
 
         // تحديث Sitemap الرئيسي
@@ -63,6 +61,6 @@ class GenerateSitemap extends Command
             ->add(url('/sitemaps/sitemap-en.xml'));
 
         $index->writeToFile($sitemapsPath . '/sitemap.xml');
-        $this->info('✅ تم تحديث الـ sitemap الرئيسي بنجاح!');
+         return Command::SUCCESS;
     }
 }

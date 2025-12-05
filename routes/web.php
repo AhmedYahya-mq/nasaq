@@ -26,8 +26,8 @@ Route::group([
 });
 
 Route::get('members/{user}', function ($user) {
-    if (auth('admin')->check()) {
-        abort(403, 'Admins cannot access this route.');
+    if (!auth('admin')->check()) {
+        abort(403, 'هذه صفحة مخصصة للمسؤلين ولايمكنك الوصل لها');
     }
     return  redirect()->route('admin.members.show', ['user' => $user]);
 })->middleware('prevent.indexing')->name('members.show');
