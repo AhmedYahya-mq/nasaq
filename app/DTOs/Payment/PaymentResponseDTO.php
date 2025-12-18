@@ -43,7 +43,7 @@ final class PaymentResponseDTO
         $sourceType = $source['type'] ?? null;
         $company = $source['company'] ?? null;
         $description = $root['description'] ?? ($raw['description'] ?? null);
-        $errorMessage = $raw['error']['message'] ?? $root['error']['message'] ?? null;
+        $errorMessage = $raw['error']['message'] ?? $root['error']['message'] ?? $root['source']['message'] ?? null;
 
         return new self($id, PaymentStatus::tryFrom($status), $sourceType, $company, $description, $raw, $errorMessage);
     }

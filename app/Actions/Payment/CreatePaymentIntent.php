@@ -196,7 +196,18 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
     {
         try {
             $rawResponse = PaymentGateway::create($payload->toArray());
+
+            // تحقق من نجاح العملية
+            if (!$rawResponse->success) {
+                dd($rawResponse);
+                // هنا نلتقط حالات الفشل مثل M076
+                $errorCode = $rawResponse->data['type'] ?? 'unknown_error';
+                $errorMessage = $rawResponse->error ?? 'حدث خطأ غير معروف في بوابة الدفع';
+                // ممكن ترمي استثناء خاص
+                throw new PaymentGatewayException("خطأ في الدفع [$errorCode]: $errorMessage");
+            }
         } catch (Exception $e) {
+            // هذا يمسك فقط أخطاء الاتصال أو الاستثناءات الأخرى
             throw new PaymentGatewayException('فشل الاتصال ببوابة الدفع: ' . $e->getMessage(), $e->getCode());
         }
 
