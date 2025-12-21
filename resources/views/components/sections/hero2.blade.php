@@ -5,9 +5,9 @@
         style="background-image: url('{{ asset('images/hero.svg') }}');"
             class="aspect-video rtl:clip-path-circle-right ltr:clip-path-circle-left bg-size-[70px] absolute end-0 inset-y-0 hidden lg:block lg:w-[450px]"
             aria-hidden="true">
-            <img src="{{ asset('images/about.png') }}"
+            <img src="{{ asset('images/hero.png') }}"
                 class="object-cover absolute end-0 rtl:clip-path-ellipse-right ltr:clip-path-ellipse-left"
-                style="block-size: 100%" alt="Nasaq about" loading="lazy">
+                style="block-size: 100%" alt="Nasaq Hero" loading="lazy">
         </div>
         <div class="text-white">
             <h1 id="hero-title" class="font-bold text-center lg:text-start text-lg md:text-xl lg:text-2xl">
