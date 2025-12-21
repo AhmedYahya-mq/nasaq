@@ -99,16 +99,16 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                 {renderInput("job_title-1", "job_title", "المسمى الوظيفي", item?.job_title)}
                                 <div className="grid gap-3">
                                     <Label htmlFor="employment_status-1" className="required-label">الحالة الوظيفية</Label>
-                                    <Select name="employment_status" dir="rtl" defaultValue={item?.employment_status.value || "Unemployed"} required>
+                                    <Select name="employment_status" dir="rtl" defaultValue={item?.employment_status.value} required>
                                         <SelectTrigger id="employment_status-1">
                                             <SelectValue placeholder="اختر الحالة الوظيفية..." />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
                                                 <SelectLabel>الحالة الوظيفية</SelectLabel>
-                                                <SelectItem value="Unemployed">بدون عمل</SelectItem>
+                                                <SelectItem value="unemployed">بدون عمل</SelectItem>
                                                 <SelectItem value="employed">موظف</SelectItem>
-                                                <SelectItem value="Entrepreneur">
+                                                <SelectItem value="entrepreneur">
                                                     صاحب عمل
                                                 </SelectItem>
                                                 <SelectItem value="academic">
@@ -123,7 +123,7 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
-                                    <InputError message={errors.membership_id} />
+                                    <InputError message={errors.employment_status} />
                                 </div>
                                 {/* تاريخ الميلاد */}
                                 <div className="grid gap-3">
@@ -140,7 +140,7 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-auto p-0">
-                                            <Calendar mode="single" selected={date} onSelect={setDate} />
+                                            <Calendar mode="single" selected={date} onSelect={setDate} captionLayout="dropdown" />
                                         </PopoverContent>
                                     </Popover>
                                     <InputError message={errors.birthday} />

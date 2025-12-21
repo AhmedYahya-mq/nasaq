@@ -118,6 +118,9 @@ return [
     'uploaded'             => 'فشل رفع :attribute.',
     'url'                  => 'صيغة :attribute غير صالحة.',
     'uuid'                 => ':attribute يجب أن يكون UUID صالحًا.',
+    'lowercase'            => 'يجب أن يكون :attribute بأحرف صغيرة.',
+    'uppercase'            => 'يجب أن يكون :attribute بأحرف كبيرة.',
+    'mixedcase'            => 'يجب أن يحتوي :attribute على أحرف كبيرة وصغيرة.',
 
     // الرسائل المخصصة
     'phone'                => 'رقم الجوال غير صالح أو لا يناسب الدولة المحددة.',

@@ -71,7 +71,9 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        return app(UserResponse::class)->toResponseMember(User::create($request->all()));
+        $user = User::create($request->all());
+        $user->sendEmailVerificationNotification();
+        return app(UserResponse::class)->toResponseMember($user);
     }
 
     public function update(UserRequest $request, User $user)

@@ -118,6 +118,9 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
     'uuid'                 => 'The :attribute must be a valid UUID.',
+    'lowercase'            => 'The :attribute must be lowercase.',
+    'uppercase'            => 'The :attribute must be uppercase.',
+    'mixedcase'            => 'The :attribute must contain both uppercase and lowercase letters.',
 
     // Custom messages
     'phone'                => 'The phone number is invalid or does not match the specified country.',

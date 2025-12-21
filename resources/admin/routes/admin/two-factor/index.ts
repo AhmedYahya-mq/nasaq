@@ -255,7 +255,7 @@ qrCode.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     qrCode.form = qrCodeForm
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:17
  * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
 export const secretKey = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -270,7 +270,7 @@ secretKey.definition = {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:17
  * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
 secretKey.url = (options?: RouteQueryOptions) => {
@@ -279,7 +279,7 @@ secretKey.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:17
  * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
 secretKey.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -288,7 +288,7 @@ secretKey.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:17
  * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
 secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -298,7 +298,7 @@ secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:17
  * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
     const secretKeyForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -308,7 +308,7 @@ secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:17
  * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
         secretKeyForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -317,7 +317,7 @@ secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController::secretKey
- * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:18
+ * @see vendor/laravel/fortify/src/Http/Controllers/TwoFactorSecretKeyController.php:17
  * @route '/hidden/door/zone/master/user/two-factor-secret-key'
  */
         secretKeyForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -333,7 +333,7 @@ secretKey.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     secretKey.form = secretKeyForm
 /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
+ * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:19
  * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 export const recoveryCodes = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -348,7 +348,7 @@ recoveryCodes.definition = {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
+ * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:19
  * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 recoveryCodes.url = (options?: RouteQueryOptions) => {
@@ -357,7 +357,7 @@ recoveryCodes.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
+ * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:19
  * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 recoveryCodes.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -366,7 +366,7 @@ recoveryCodes.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
+ * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:19
  * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
 recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -376,7 +376,7 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
     /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
+ * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:19
  * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
     const recoveryCodesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -386,7 +386,7 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
             /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
+ * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:19
  * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
         recoveryCodesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -395,7 +395,7 @@ recoveryCodes.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
         })
             /**
 * @see \Laravel\Fortify\Http\Controllers\RecoveryCodeController::recoveryCodes
- * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:20
+ * @see vendor/laravel/fortify/src/Http/Controllers/RecoveryCodeController.php:19
  * @route '/hidden/door/zone/master/user/two-factor-recovery-codes'
  */
         recoveryCodesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

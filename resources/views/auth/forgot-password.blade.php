@@ -18,7 +18,7 @@
                                     {{ __('login.link_sent_subtitle') }}
                                 </p>
                                 <div class="mt-8">
-                                    <a href="#"
+                                    <a href="{{ route('login') }}"
                                         class="font-semibold text-primary hover:text-primary/80 transition-colors">
                                         {{ __('login.back_to_login_link') }}
                                     </a>
