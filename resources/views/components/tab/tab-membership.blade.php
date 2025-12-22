@@ -158,12 +158,13 @@
 
                 <div class="card-right">
                     <h1 class="user-name rtl:rtl rtl:text-right ltr:text-left" id="userName">{{ $user->name }}</h1>
-                    <div class="membership-type rtl:rtl rtl:text-right ltr:text-left" id="membershipName">{{ $user->membership_name }}</div>
+                    <div class="membership-type rtl:rtl rtl:text-right ltr:text-left" id="membershipName">
+                        {{ $user->membership_name }}</div>
 
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="info-label">رقم العضو</span>
-                            <span class="info-value">{{ $user->member_id }}</span>
+                            <span class="info-value">{{ $user->id }}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">تاريخ الإنضمام</span>
