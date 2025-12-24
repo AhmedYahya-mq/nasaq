@@ -116,6 +116,9 @@ class AppServiceProvider extends ServiceProvider
             // Library
             \App\Contract\Actions\FileLibraryHandler::class => \App\Actions\User\FileLibraryHandler::class,
             \App\Contract\Actions\FileLibraryDownload::class => \App\Actions\User\FileLibraryDownload::class,
+
+            // Print Action
+            \App\Contract\Actions\PrintAction::class => \App\Actions\User\PrintAction::class,
         ];
 
         $bindings = array_merge($bindingResponses, $bindingRequests, $bindingResources, $bindingActions);

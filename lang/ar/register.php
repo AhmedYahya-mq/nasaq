@@ -12,6 +12,7 @@ return [
     // النصوص التي ستمررها للمكونات
     'full_name'             => 'الاسم الكامل',
     'full_name_placeholder' => 'مثال: محمد عبدالله',
+    
     'date_of_birth'         => 'تاريخ الميلاد',
     'email'                 => 'البريد الإلكتروني',
     'email_placeholder'     => 'email@example.com',
@@ -19,6 +20,13 @@ return [
     'password'              => 'كلمة المرور',
     'password_placeholder'  => '********',
     'confirm_password'      => 'تأكيد كلمة المرور',
+
+    // جنس المستخدم
+    'gender'                => 'الجنس',
+    'gender_placeholder'    => 'اختر الجنس',
+    'male'                  => 'ذكر',
+    'female'                => 'أنثى',
+
 
 
 

@@ -35,6 +35,23 @@
                             </div>
                         </div>
 
+                        <div class="animate-fade-in-down" style="animation-delay: 350ms;">
+                            <label class="block text-sm font-medium text-muted-foreground mb-2">{{ __('register.gender') }}</label>
+                            <div class="flex items-center gap-6">
+                                <label class="inline-flex items-center space-x-2">
+                                    <input type="radio" name="gender" value="male" {{ old('gender', 'male') == 'male' ? 'checked' : '' }} class="h-4 w-4 text-primary border-border focus:primary/50" />
+                                    <span class="text-sm">{{ __('register.male') }}</span>
+                                </label>
+                                <label class="inline-flex items-center space-x-2">
+                                    <input type="radio" name="gender" value="female" {{ old('gender', 'male') == 'female' ? 'checked' : '' }} class="h-4 w-4 text-primary border-border focus:primary/50" />
+                                    <span class="text-sm">{{ __('register.female') }}</span>
+                                </label>
+                            </div>
+                            @error('gender')
+                                <p class="mt-1 text-sm text-destructive">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div class="animate-fade-in-down" style="animation-delay: 400ms;">
                             <x-forms.input type="email" name="email" id="email" value="{{ old('email') }}"
                                 :label="__('register.email')" :placeholder="__('register.email_placeholder')" icon="mail" required />

@@ -6,7 +6,6 @@ use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Writer\SvgWriter;
 
@@ -27,7 +26,7 @@ trait ProfileQrCode
             encoding: new Encoding('UTF-8'),
             errorCorrectionLevel: ErrorCorrectionLevel::Low,
             size: 300,
-            margin:0,
+            margin: 0,
             foregroundColor: new Color(0, 0, 0),
             backgroundColor: new Color(255, 255, 255),
             logoPath: __DIR__ . '/../../public/favicon.ico',
@@ -63,4 +62,7 @@ trait ProfileQrCode
 
         return $result->getString();
     }
+
+
+
 }

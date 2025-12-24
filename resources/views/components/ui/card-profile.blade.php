@@ -4,7 +4,7 @@
         class="p-1 relative bg-background transition-all border border-muted size-[120px] aspect-square mx-auto mt-5 rounded-full grid place-items-center"
         style="background: conic-gradient(var(--primary) 0% 0%, var(--background) 0% 100%);">
         <img data-photo-profile src="{{ $user->profile_photo_url }}" width="120" height="120"
-            class="size-full rounded-full" alt="{{ $user->name }}">
+            class="size-full rounded-full overflow-hidden object-cover" alt="{{ $user->name }}">
         <label for="photo" aria-label="Change Profile Picture"
             class="absolute cursor-pointer bottom-1 -right-1 bg-card active:scale-90 transition-transform e p-2 rounded-full dark:shadow-[0_0px_15px_rgba(255,255,255,0.15)]
                                 shadow-[0_0px_15px_rgba(0,0,0,0.30)]">

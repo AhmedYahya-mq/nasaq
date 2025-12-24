@@ -157,9 +157,9 @@
                 </div>
 
                 <div class="card-right">
-                    <h1 class="user-name rtl:rtl rtl:text-right ltr:text-left" id="userName">{{ $user->name }}</h1>
+                    <h1 class="user-name rtl:rtl rtl:text-right ltr:text-left" id="userName">{{ $user->getTranslatedName('en') }}</h1>
                     <div class="membership-type rtl:rtl rtl:text-right ltr:text-left" id="membershipName">
-                        {{ $user->membership_name }}</div>
+                        {{ $user->getMembershipNameAttribute('en') }}</div>
 
                     <div class="info-grid">
                         <div class="info-item">
@@ -173,7 +173,7 @@
                         <div class="info-item">
                             <span class="info-label">الحالة</span>
                             <span class="info-value status-active"
-                                id="membershipStatus">{{ $user->membership_status->label() }}</span>
+                                id="membershipStatus">{{ $user->membership_status->getLabel() }}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-label">فترة العضوية</span>
@@ -191,20 +191,22 @@
         </div>
 
         <div class="flex flex-col md:flex-row items-center gap-4">
-            <button @click="downloadTransparent"
-                class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5"
-                :disabled="isLoadingPng">
-                <div x-show="isLoadingPng" x-transition.opacity.duration.500ms
-                    class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
-                <span> تنزيل البطاقة كصورة</span>
-            </button>
-            <button @click="downloadPDF"
-                class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5"
-                :disabled="isLoadingPdf">
-                <div x-show="isLoadingPdf" x-transition.opacity.duration.500ms
-                    class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
-                <span> تنزيل البطاقة pdf</span>
-            </button>
+            <a href="{{ route('client.print.card', ['format' => 'image']) }}" target="_self">
+                <button
+                    class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5">
+                    <div x-show="isLoadingPng" x-transition.opacity.duration.500ms
+                        class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
+                    <span> تنزيل البطاقة كصورة</span>
+                </button>
+            </a>
+            <a href="{{ route('client.print.card', ['format' => 'pdf']) }}" target="_self">
+                <button
+                    class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5">
+                    <div x-show="isLoadingPdf" x-transition.opacity.duration.500ms
+                        class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
+                    <span> تنزيل البطاقة pdf</span>
+                </button>
+            </a>
         </div>
     </div>
 

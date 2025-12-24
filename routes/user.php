@@ -6,10 +6,13 @@ use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\Settings\ProfileController;
 use App\Http\Controllers\User\Settings\SecurityController;
 use App\Http\Middleware\RequirePassword;
-use App\Http\Resources\MembershipApplication\MembershipApplicationCollection;
 use App\Models\Blog;
 use App\Models\Payment;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Encoders\PngEncoder;
+use Intervention\Image\Encoders\WebpEncoder;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\ConfirmedTwoFactorAuthenticationController;
 use Laravel\Fortify\Http\Controllers\RecoveryCodeController;
@@ -17,9 +20,15 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 use Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController;
 use Laravel\Fortify\Http\Controllers\TwoFactorSecretKeyController;
 use Laravel\Fortify\RoutePath;
+use Mpdf\Mpdf;
+
+use Intervention\Image\ImageManager;
 
 Route::prefix('/')->middleware('auth')->group(function () {
     Route::get('user/profile', [ProfileController::class, 'edit'])->name('profile');
+    Route::get('/user/print-card/{format}', [\App\Http\Controllers\PrintController::class, 'printCard'])->name('print.card')->where('format', 'pdf|image');
+    Route::get('/user/print-certificate/{format}', [\App\Http\Controllers\PrintController::class, 'printCertifi'])->name('print.certificate')->where('format', 'pdf');
+
     Route::post(RoutePath::for('user.photoProfile', 'user/profile-photo'), [ProfileController::class, 'photoUpdate'])->name('profile.photo.update');
 
     if (Features::enabled(Features::twoFactorAuthentication())) {

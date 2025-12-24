@@ -32,18 +32,21 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { store, update } from "@/routes/admin/members";
 import { Members } from "@/types/model/members";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 
 function FormComponent({ tableHook }: { tableHook: any }) {
     const { item, isOpen, setOpen } = useContext(OpenFormContext);
     const formRef = useRef<any>(null);
     const { addRow, updateRow } = tableHook;
     const [date, setDate] = useState<Date | undefined>(item?.birthday ? new Date(item.birthday) : undefined);
+    const [gender, setGender] = useState<string>(item?.gender ?? 'male');
 
 
-
-    // إعادة ضبط التاريخ عند تغيير العنصر
+    // إعادة ضبط التاريخ والجنس عند تغيير العنصر
     useEffect(() => {
         setDate(item?.birthday ? new Date(item.birthday) : undefined);
+        setGender(item?.gender ?? 'male');
     }, [item]);
 
     const formProps = item ? update.form(item.id) : store.form();
@@ -97,6 +100,23 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                                 {renderInput("email-1", "email", "البريد الإلكتروني", item?.email, "email", true)}
                                 {renderInput("address-1", "address", "العنوان", item?.address)}
                                 {renderInput("job_title-1", "job_title", "المسمى الوظيفي", item?.job_title)}
+                                <div className="grid gap-3">
+                                    <Label className="required-label">الجنس</Label>
+                                    <RadioGroup defaultValue={gender} onValueChange={setGender} className="flex flex-col gap-4 w-full rtl">
+                                        <div className="flex items-center gap-6">
+                                            <div className="flex items-center gap-3">
+                                                <RadioGroupItem value="male" id="gender-male" />
+                                                <Label htmlFor="gender-male">ذكر</Label>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <RadioGroupItem value="female" id="gender-female" />
+                                                <Label htmlFor="gender-female">أنثى</Label>
+                                            </div>
+                                        </div>
+                                    </RadioGroup>
+                                    <input type="hidden" name="gender" value={gender} />
+                                    <InputError message={errors.gender} />
+                                </div>
                                 <div className="grid gap-3">
                                     <Label htmlFor="employment_status-1" className="required-label">الحالة الوظيفية</Label>
                                     <Select name="employment_status" dir="rtl" defaultValue={item?.employment_status.value} required>

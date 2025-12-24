@@ -57,6 +57,22 @@
                         <div class="text-sm text-destructive" x-text="errors.birthday"></div>
                     </template>
                 </div>
+                <div>
+                    <label class="block text-sm font-medium text-muted-foreground mb-2">{{ __('profile.gender') }}</label>
+                    <div class="flex items-center gap-6">
+                        <label class="inline-flex items-center space-x-2">
+                            <input type="radio" x-model="form.gender" value="male" class="h-4 w-4 text-primary border-border focus:ring-primary/50" />
+                            <span class="text-sm">{{ __('profile.male') }}</span>
+                        </label>
+                        <label class="inline-flex items-center space-x-2">
+                            <input type="radio" x-model="form.gender" value="female" class="h-4 w-4 text-primary border-border focus:ring-primary/50" />
+                            <span class="text-sm">{{ __('profile.female') }}</span>
+                        </label>
+                    </div>
+                    <template x-if="errors.gender">
+                        <div class="text-sm text-destructive" x-text="errors.gender"></div>
+                    </template>
+                </div>
             </div>
             <div>
                 <x-forms.input id="job-title" name="job-title" x-model="form.job_title" label="{{ __('profile.job_title') }}"

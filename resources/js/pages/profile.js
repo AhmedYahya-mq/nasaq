@@ -36,8 +36,11 @@ function profileForm(user = null) {
                 console.error('User data is required to initialize the form.');
                 return;
             }
+            console.log(user);
+
             this.form = {
                 name: user.name || '',
+                gender: user.gender || 'male',
                 email: user.email || '',
                 phone: user.phone || '',
                 address: user.address || '',

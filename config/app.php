@@ -126,6 +126,8 @@ return [
 
     'locales' => env('APP_LOCALES', 'en,ar'),
 
-    
+    'aliases' => [
+        'PDF' => Mccarlosen\LaravelMpdf\Facades\LaravelMpdf::class
+    ]
 
 ];

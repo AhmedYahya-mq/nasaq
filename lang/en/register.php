@@ -19,5 +19,11 @@ return [
     'password'              => 'Password',
     'password_placeholder'  => '********',
     'confirm_password'      => 'Confirm Password',
+
+    // User
+    'gender' => 'Gender',
+    'gender_placeholder' => 'Select Gender',
+    'male' => 'Male',
+    'female' => 'Female',
 ];
 

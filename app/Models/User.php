@@ -31,6 +31,7 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
     protected $fillable = [
         'id',
         'name',
+        'gender',
         'email',
         'photo',
         'phone',
@@ -147,7 +148,7 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
     public function getProfilePhotoUrlAttribute()
     {
         if (empty($this->photo)) {
-            return "https://ui-avatars.com/api/?name=" . urlencode($this->name) . "&bold=true&format=svg";
+            return "https://ui-avatars.com/api/?name=" . urlencode($this->getTranslatedName('en')) . "&bold=true&format=svg";
         }
         return asset('storage/' . $this->photo);
     }

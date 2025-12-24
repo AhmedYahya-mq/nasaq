@@ -40,7 +40,7 @@
         }
 
         .logo {
-            width: 95px;
+            width: 150px;
             display: block;
             margin: 0 auto 25px auto;
         }
@@ -125,7 +125,7 @@
             </div>
             <div class="certificate">
                 <!-- الشعار -->
-                <img src="{{ asset('favicon.ico') }}" alt="Logo" class="logo">
+                <img src="{{ asset('logo.png') }}" alt="Logo" class="logo">
 
 
                 <!-- النصوص المتقابلة -->
@@ -138,17 +138,22 @@
                         </div>
                         <div class="between">
                             <div class="content text-justify" dir="rtl">
-                                يمنح <strong>مجتمع نسق</strong> هذه الشهادة للعضو الموقر
-                                <strong>{{ $user->getTranslatedName('ar') }}</strong>،
-                                تقديرًا لانضمامه المتميز وإسهاماته الإيجابية في دعم المجتمع،
-                                وتشجيعًا له على الاستمرار في رحلة التميز والعطاء.
+                                @if(optional($user)->gender === 'female')
+                                    يمنح مجتمع نسق هذه الشهادة للعضو/ <strong>{{ $user->getTranslatedName('ar') }}</strong>؛
+                                    تقديرًا لعضويتها الفاعلة وإسهاماتها النوعية في تعزيز رسالة المجتمع ودعم مسيرته،
+                                    واعتزازًا بأثرها الإيجابي، مع خالص تمنياتنا لها بمزيدٍ من التميز والنجاح.
+                                @else
+                                    يمنح مجتمع نسق هذه الشهادة للعضو/ <strong>{{ $user->getTranslatedName('ar') }}</strong>؛
+                                    تقديرًا لعضويته الفاعلة وإسهاماته النوعية في تعزيز رسالة المجتمع ودعم مسيرته،
+                                    واعتزازًا بأثره الإيجابي، مع خالص تمنياتنا له بمزيدٍ من التميز والنجاح.
+                                @endif
                             </div>
                             <div class="content text-justify" dir="ltr">
-                                <strong>Nasaq Community</strong> proudly awards this certificate to the esteemed member
-                                <strong>{{ $user->getTranslatedName('en') }}</strong>,
-                                in recognition of their outstanding participation, valuable contributions to the
-                                community,
-                                and continued pursuit of excellence.
+                                @if(optional($user)->gender === 'female')
+                                    <strong>Nasaq Community</strong> awards this certificate to Ms. {{ $user->getTranslatedName('en') }}, in recognition of her active membership and outstanding contributions to advancing the community’s mission and impact, with our sincere wishes for her continued excellence and success.
+                                @else
+                                    <strong>Nasaq Community</strong> awards this certificate to Mr. {{ $user->getTranslatedName('en') }}, in recognition of his active membership and outstanding contributions to advancing the community’s mission and impact, with our sincere wishes for his continued excellence and success.
+                                @endif
                             </div>
                         </div>
 
@@ -162,7 +167,7 @@
                             </div>
                             <div class="between">
                                 <div class="info-row text-right" dir="rtl"><strong>نوع العضوية:</strong>
-                                    {{ $user->membership_name }}
+                                    {{ $user->getMembershipNameAttribute('ar') }}
                                 </div>
                                 <div class="info-row text-left" dir="ltr"><strong>Membership Type:</strong>
                                     {{ $user->getMembershipNameAttribute('en') }}
@@ -183,11 +188,11 @@
                             </div>
 
                             <div class="between">
-                                <div class="info-row text-right w-full" dir="rtl"><strong>رقم العضوية:</strong>
-                                    {{ $user->member_id }}
+                                <div class="info-row text-right w-full" dir="rtl"><strong>رقم العضو:</strong>
+                                    {{ $user->id }}
                                 </div>
-                                <div class="info-row text-left" dir="ltr"><strong>Membership ID:</strong>
-                                    {{ $user->member_id }}
+                                <div class="info-row text-left" dir="ltr"><strong>Member ID:</strong>
+                                    {{ $user->id }}
                                 </div>
                             </div>
                         </div>
@@ -204,19 +209,17 @@
         </div>
     </div>
     <div class="flex flex-col md:flex-row items-center gap-4 no-print">
-        <button @click="downloadTransparent"
-            class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5"
-            :disabled="isLoadingPng">
-            <div x-show="isLoadingPng" x-transition.opacity.duration.500ms
-                class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
-            <span> تنزيل الشهادة كصورة</span>
-        </button>
-        <button @click="downloadPDF"
-            class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5"
-            :disabled="isLoadingPdf">
-            <div x-show="isLoadingPdf" x-transition.opacity.duration.500ms
-                class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
-            <span> تنزيل الشهادة PDF</span>
-        </button>
+        {{-- <a href="{{ route('client.print.certificate', ['format' => 'image']) }}" target="_self">
+            <button
+                class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5">
+                <span> تنزيل الشهادة كصورة</span>
+            </button>
+        </a> --}}
+        <a href="{{ route('client.print.certificate', ['format' => 'pdf']) }}" target="_self">
+            <button
+                class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5">
+                <span> تنزيل الشهادة PDF</span>
+            </button>
+        </a>
     </div>
 </div>

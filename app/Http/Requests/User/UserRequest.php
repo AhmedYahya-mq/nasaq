@@ -28,6 +28,7 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
 
         return [
             'name' => ['required', 'string', 'max:255'],
+            'gender' => ['required', Rule::in(['male', 'female'])],
             'email' => [
                 'required',
                 'string',

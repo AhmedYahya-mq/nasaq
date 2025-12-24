@@ -559,7 +559,7 @@ library.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     library.form = libraryForm
 /**
- * @see [serialized-closure]:2
+ * @see routes/settings.php:39
  * @route '/hidden/door/zone/master/settings/appearance'
  */
 export const appearance = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -573,7 +573,7 @@ appearance.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
- * @see [serialized-closure]:2
+ * @see routes/settings.php:39
  * @route '/hidden/door/zone/master/settings/appearance'
  */
 appearance.url = (options?: RouteQueryOptions) => {
@@ -581,7 +581,7 @@ appearance.url = (options?: RouteQueryOptions) => {
 }
 
 /**
- * @see [serialized-closure]:2
+ * @see routes/settings.php:39
  * @route '/hidden/door/zone/master/settings/appearance'
  */
 appearance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -589,7 +589,7 @@ appearance.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     method: 'get',
 })
 /**
- * @see [serialized-closure]:2
+ * @see routes/settings.php:39
  * @route '/hidden/door/zone/master/settings/appearance'
  */
 appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -598,7 +598,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
     /**
- * @see [serialized-closure]:2
+ * @see routes/settings.php:39
  * @route '/hidden/door/zone/master/settings/appearance'
  */
     const appearanceForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -607,7 +607,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     })
 
             /**
- * @see [serialized-closure]:2
+ * @see routes/settings.php:39
  * @route '/hidden/door/zone/master/settings/appearance'
  */
         appearanceForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -615,7 +615,7 @@ appearance.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             method: 'get',
         })
             /**
- * @see [serialized-closure]:2
+ * @see routes/settings.php:39
  * @route '/hidden/door/zone/master/settings/appearance'
  */
         appearanceForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
