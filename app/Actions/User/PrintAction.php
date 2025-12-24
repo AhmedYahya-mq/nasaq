@@ -142,7 +142,8 @@ class PrintAction implements \App\Contract\Actions\PrintAction
             //
             return response($img)->header('Content-Type', 'image/png')->header('Content-Disposition', 'attachment; filename="membership-card.png"');
         }
-        $pdf = $this->printPdf(self::VIEW_CARD, self::FORMAT_CARD, ['img' => $img]);
+        $base64Img = 'data:image/png;base64,' . base64_encode($img);
+        $pdf = $this->printPdf(self::VIEW_CARD, self::FORMAT_CARD, ['img' => $base64Img]);
         return response($pdf)->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="membership-card.pdf"');
     }
