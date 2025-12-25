@@ -117,9 +117,9 @@
 @endpush
 
 
-<div x-data="printInit('certificate')" class="flex flex-col items-center w-full space-y-6 my-10">
+<div  class="flex flex-col items-center w-full space-y-6 my-10">
     <div dir="rtl" class="scrollbar flex flex-col items-center w-full m-0 p-0">
-        <div id="certificateCard" class="relative" x-ref="card">
+        <div id="certificateCard" class="relative">
             <div class="child-box z-10 opacity-5">
                 <img src="{{ asset('favicon.ico') }}" alt="Logo" class="aspect-square object-cover">
             </div>

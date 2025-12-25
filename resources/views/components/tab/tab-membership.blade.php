@@ -142,10 +142,10 @@
     </style>
 @endpush
 <div>
-    <div x-data="printInit" class="flex flex-col items-center w-full space-y-6">
+    <div  class="flex flex-col items-center w-full space-y-6">
         <!-- بطاقة العضوية -->
         <div dir="rtl" class="scrollbar flex flex-col items-center w-full m-0 p-0">
-            <div id="membershipCard" x-ref="card">
+            <div id="membershipCard">
                 <img src="{{ asset('favicon.ico') }}" alt="{{ __(config('app.name')) }}"
                     class="absolute top-3 rtl:left-3 ltr:right-3 w-10 h-10 opacity-20">
                 <div class="card-left">
