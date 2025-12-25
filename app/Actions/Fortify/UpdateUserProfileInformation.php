@@ -4,6 +4,8 @@ namespace App\Actions\Fortify;
 
 use App\Models\Admin;
 use App\Models\User;
+use App\Rules\ArabicLetters;
+use App\Rules\EnglishLetters;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
@@ -48,7 +50,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     {
         if ($user instanceof Admin) {
             return [
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:255', new ArabicLetters()],
                 'email' => [
                     'required',
                     'string',
@@ -59,7 +61,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             ];
         } else {
             return [
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:255', new ArabicLetters()],
+                'english_name' => ['required', 'string', 'max:255', new EnglishLetters()],
+                'gender' => ['required', 'string', 'max:10', Rule::in(['male', 'female'])],
                 'email' => [
                     'required',
                     'string',

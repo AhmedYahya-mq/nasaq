@@ -10,12 +10,15 @@ return [
     'login_link'    => 'سجل الدخول من هنا',
 
     // النصوص التي ستمررها للمكونات
-    'full_name'             => 'الاسم الكامل',
-    'full_name_placeholder' => 'مثال: محمد عبدالله',
-    
+    'full_name_ar'          => 'الاسم الكامل (بالعربية)',
+    'full_name_ar_placeholder' => 'مثال: محمد عبدالله',
+
+    'full_name_en'          => 'الاسم الكامل (بالإنجليزية)',
+    'full_name_en_placeholder' => 'مثال: Mohammed Abdullah',
+
     'date_of_birth'         => 'تاريخ الميلاد',
     'email'                 => 'البريد الإلكتروني',
-    'email_placeholder'     => 'email@example.com',
+    'email_placeholder'     => 'email@gmail.com',
     'phone_number'          => 'رقم الجوال',
     'password'              => 'كلمة المرور',
     'password_placeholder'  => '********',

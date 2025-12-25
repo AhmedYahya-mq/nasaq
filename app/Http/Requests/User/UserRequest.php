@@ -5,6 +5,8 @@ namespace App\Http\Requests\User;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Rules\ArabicLetters;
+use App\Rules\EnglishLetters;
 
 class UserRequest extends FormRequest implements \App\Contract\User\Request\UserRequest
 {
@@ -27,7 +29,8 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
         $user = $this->route('user');
 
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', new ArabicLetters()],
+            'english_name' => ['required', 'string', 'max:255', new EnglishLetters()],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'email' => [
                 'required',
@@ -60,6 +63,13 @@ class UserRequest extends FormRequest implements \App\Contract\User\Request\User
         if ($this->has('phone')) {
             $phone = preg_replace('/\s+/', '', $this->input('phone'));
             $this->merge(['phone' => $phone]);
+        }
+
+        // Normalize spaces for names
+        foreach (['name', 'english_name'] as $field) {
+            if ($this->has($field)) {
+                $this->merge([$field => preg_replace('/\s+/', ' ', trim($this->input($field)))]);
+            }
         }
     }
 

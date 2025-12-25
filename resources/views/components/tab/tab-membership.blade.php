@@ -150,7 +150,7 @@
                     class="absolute top-3 rtl:left-3 ltr:right-3 w-10 h-10 opacity-20">
                 <div class="card-left">
                     <div class="profile-img-container">
-                        <img data-photo-profile src="{{ $user->profile_photo_url }}" alt="{{ $user->name }}"
+                        <img data-photo-profile src="{{ $user->profile_photo_url }}" alt="{{ $user->english_name }}"
                             class="profile-img">
                     </div>
                     <img src="{{ $user->profileQrCodePng() }}" alt="QR Code" class="qr-code">

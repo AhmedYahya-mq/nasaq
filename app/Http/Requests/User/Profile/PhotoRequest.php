@@ -23,7 +23,22 @@ class PhotoRequest extends FormRequest implements \App\Contract\User\Profile\Pho
     public function rules(): array
     {
         return [
-            'photo' => ['required', 'image', 'max:1024', 'mimes:webp'],
+            // السماح بأكثر الأنواع شيوعاً للصور مع حد الحجم 2MB
+            // ملاحظة: بعض الأنواع مثل TIFF/AVIF قد لا تُعرض في جميع المتصفحات.
+            'photo' => ['required', 'image', 'max:2048', 'mimes:jpeg,jpg,png,webp,gif,bmp,svg,avif,tiff'],
+        ];
+    }
+
+    /**
+     * رسائل تحقق مخصصة لزيادة وضوح سبب الرفض للمستخدم.
+     */
+    public function messages(): array
+    {
+        return [
+            'photo.mimes' => 'الصورة الشخصية يجب أن تكون من الأنواع: JPEG, JPG, PNG, WEBP, GIF, BMP, SVG, AVIF, TIFF.',
+            'photo.max' => 'حجم الصورة يجب ألا يتجاوز 2MB.',
+            'photo.required' => 'يرجى اختيار صورة شخصية.',
+            'photo.image' => 'الملف المحدد يجب أن يكون صورة صحيحة.',
         ];
     }
 

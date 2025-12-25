@@ -18,6 +18,44 @@ document.addEventListener('alpine:init', function () {
 });
 
 
+// Lightweight toast to surface client-side errors without requiring a page refresh.
+function showToast(message, type = 'error') {
+    const existing = document.getElementById('toast-dynamic');
+    if (existing) existing.remove();
+
+    const container = document.createElement('div');
+    container.id = 'toast-dynamic';
+    container.className = 'fixed top-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-4 items-center';
+
+    const card = document.createElement('div');
+    card.className = 'card border !p-2';
+    card.style.borderColor = type === 'success' ? '#22c55e' : '#ef4444';
+
+    const messageWrapper = document.createElement('div');
+    messageWrapper.className = 'flex items-center gap-4';
+
+    const text = document.createElement('div');
+    text.className = 'toast-text';
+    text.textContent = message;
+
+    const close = document.createElement('button');
+    close.className = 'size-6 cursor-pointer';
+    close.type = 'button';
+    close.textContent = 'x';
+    close.addEventListener('click', () => container.remove());
+
+    messageWrapper.appendChild(text);
+    messageWrapper.appendChild(close);
+    card.appendChild(messageWrapper);
+    container.appendChild(card);
+    document.body.appendChild(container);
+
+    setTimeout(() => {
+        container.remove();
+    }, 5000);
+}
+
+
 
 function profileForm(user = null) {
     return {
@@ -40,6 +78,7 @@ function profileForm(user = null) {
 
             this.form = {
                 name: user.name || '',
+                english_name: user.english_name || '',
                 gender: user.gender || 'male',
                 email: user.email || '',
                 phone: user.phone || '',
@@ -124,53 +163,87 @@ function profileForm(user = null) {
         }
     };
 }
-
 function photoProfile() {
     return {
         percent: "0%",
         loading: false,
+
         async updateFile(event) {
             if (!event.target.files || event.target.files.length === 0) {
                 return;
             }
+
             const progressDiv = this.$refs.progres;
             const self = this;
             const formData = new FormData();
+
             self.loading = true;
-            const webpFile = await compressToWebP(event.target.files[0]);
-            formData.append('photo', webpFile, 'profile.webp');
-            await axios.request({
-                method: update().method,
-                url: update().url,
-                data: formData,
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                onUploadProgress: function (progressEvent) {
-                    if (progressEvent.lengthComputable) {
-                        let percentCompleted = ((progressEvent.loaded * 100) / progressEvent.total).toFixed(1);
-                        self.percent = percentCompleted + "%";
-                        console.log(self.percent);
 
-                        progressDiv.style.background =
-                            `conic-gradient(var(--primary) 0% ${percentCompleted}%, var(--background) ${percentCompleted}% 100%)`;
+            // تحقق مسبق من النوع والحجم قبل الرفع
+            const file = event.target.files[0];
+            const MAX_SIZE_BYTES = 2 * 1024 * 1024; // 2MB وفقاً لقاعدة Laravel 'max:2048'
+            const allowedTypes = ['image/webp', 'image/jpeg', 'image/png', 'image/gif', 'image/bmp', 'image/svg+xml', 'image/avif', 'image/tiff'];
+
+            if (file.size > MAX_SIZE_BYTES) {
+                self.loading = false;
+                showToast('الصورة الشخصية يجب ألا تتجاوز 2MB.', 'error');
+                return;
+            }
+            if (!allowedTypes.includes(file.type)) {
+                self.loading = false;
+                showToast('الأنواع المسموح بها: JPG, JPEG, PNG, WEBP, GIF, BMP, SVG, AVIF, TIFF.', 'error');
+                return;
+            }
+
+            // إضافة الملف كما هو
+            formData.append('photo', file, file.name);
+
+            try {
+                const response = await axios.request({
+                    method: update().method,  // دالة خارجية تحدد طريقة الطلب
+                    url: update().url,        // دالة خارجية تحدد رابط API
+                    data: formData,
+                    withCredentials: true,
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    onUploadProgress: function (progressEvent) {
+                        if (progressEvent.lengthComputable) {
+                            let percentCompleted = ((progressEvent.loaded * 100) / progressEvent.total).toFixed(1);
+                            self.percent = percentCompleted + "%";
+
+                            // تحديث خلفية شريط التقدم
+                            progressDiv.style.background =
+                                `conic-gradient(var(--primary) 0% ${percentCompleted}%, var(--background) ${percentCompleted}% 100%)`;
+                        }
                     }
-                }
-            }).then(response => {
-                this.changeSrc(response.data);
-            }).catch(error => {
+                });
 
+                // تحديث جميع صور الملف الشخصي على الصفحة
+                this.changeSrc(response.data);
+
+            } catch (error) {
                 console.error('Error uploading photo:', error);
-            }).finally(() => {
+                const message = error.response?.data?.errors?.photo?.[0]
+                    || error.response?.data?.message
+                    || 'حدث خطأ أثناء رفع الصورة. حاول مرة أخرى.';
+                // تعامل خاص مع حالة 413 (Payload Too Large) إن وجدت من الخادم
+                if (error.response?.status === 413) {
+                    showToast('حجم الملف أكبر من المسموح (2MB).', 'error');
+                } else {
+                    showToast(message, 'error');
+                }
+            } finally {
+                // إعادة تهيئة شريط التقدم وحالة التحميل
                 self.percent = "0%";
                 progressDiv.style.background =
                     `conic-gradient(var(--primary) 0% 0%, var(--background) 0% 100%)`;
                 self.loading = false;
-            });
+            }
         },
+
         changeSrc(src) {
             document.querySelectorAll('img[data-photo-profile]').forEach(img => {
                 img.src = src;
@@ -178,6 +251,7 @@ function photoProfile() {
         }
     };
 }
+
 
 function passwordChange() {
     return {

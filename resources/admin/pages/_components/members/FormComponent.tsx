@@ -95,7 +95,8 @@ function FormComponent({ tableHook }: { tableHook: any }) {
                     {({ processing, errors }) => (
                         <>
                             <div className="grid gap-4 scrollbar !overflow-hidden hover:!overflow-y-auto max-h-[calc(100vh-230px)] p-1">
-                                {renderInput("name-1", "name", "أسم العضو", item?.name, "text", true)}
+                                {renderInput("name-1", "name", "اسم العضو (عربي)", item?.name, "text", true)}
+                                {renderInput("english-name-1", "english_name", "الاسم الإنجليزي", item?.english_name, "text", true)}
                                 {renderInput("phone-1", "phone", "رقم الهاتف", item?.phone, "tel", true)}
                                 {renderInput("email-1", "email", "البريد الإلكتروني", item?.email, "email", true)}
                                 {renderInput("address-1", "address", "العنوان", item?.address)}

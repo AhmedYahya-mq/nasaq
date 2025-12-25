@@ -30,10 +30,17 @@
         <div class="@container flex flex-col gap-y-3.5">
             <div class="grid grid-cols-1 @md:grid-cols-2 gap-4">
                 <div>
-                    <x-forms.input id="first-name" name="name" label="{{ __('profile.first_name') }}" type="text" placeholder="{{ __('profile.first_name_placeholder') }}"
+                    <x-forms.input id="first-name-ar" name="name" label="{{ __('profile.first_name_ar') }}" type="text" placeholder="{{ __('profile.first_name_ar_placeholder') }}"
                         class="w-full mb-3.5" icon="user" x-model="form.name" />
                     <template x-if="errors.name">
                         <div class="text-sm text-destructive" x-text="errors.name"></div>
+                    </template>
+                </div>
+                <div>
+                    <x-forms.input id="first-name-en" name="english_name" label="{{ __('profile.first_name_en') }}" type="text" placeholder="{{ __('profile.first_name_en_placeholder') }}"
+                        class="w-full mb-3.5" icon="user" x-model="form.english_name" />
+                    <template x-if="errors.english_name">
+                        <div class="text-sm text-destructive" x-text="errors.english_name"></div>
                     </template>
                 </div>
                 <div>

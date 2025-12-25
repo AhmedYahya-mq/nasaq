@@ -10,8 +10,10 @@ return [
     'login_link'    => 'Login here',
 
     // Texts for components
-    'full_name'             => 'Full Name',
-    'full_name_placeholder' => 'e.g., Mohamed Abdullah',
+    'full_name_ar'             => 'Full Name (Arabic)',
+    'full_name_ar_placeholder' => 'e.g., Mohamed Abdullah',
+    'full_name_en'             => 'Full Name (English)',
+    'full_name_en_placeholder' => 'e.g., Mohamed Abdullah',
     'date_of_birth'         => 'Date of Birth',
     'email'                 => 'Email',
     'email_placeholder'     => 'email@example.com',

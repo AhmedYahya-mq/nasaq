@@ -4,6 +4,8 @@ namespace App\Actions\Fortify;
 
 use App\Models\Admin;
 use App\Models\User;
+use App\Rules\ArabicLetters;
+use App\Rules\EnglishLetters;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -22,7 +24,8 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', new ArabicLetters()],
+            'english_name' => ['required', 'string', 'max:255', new EnglishLetters()],
             'email' => [
                 'required',
                 'string',
@@ -37,6 +40,7 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
         return User::create([
             'name' => $input['name'],
+            'english_name' => $input['english_name'],
             'gender' => $input['gender'],
             'email' => $input['email'],
             'phone' => $input['phone'] ?? null,

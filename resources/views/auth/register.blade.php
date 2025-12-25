@@ -21,35 +21,44 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="animate-fade-in-down" style="animation-delay: 200ms;">
                                 <x-forms.input type="text" name="name" id="name" value="{{ old('name') }}"
-                                    :label="__('register.full_name')" :placeholder="__('register.full_name_placeholder')" icon="user" required />
+                                    :label="__('register.full_name_ar')" :placeholder="__('register.full_name_ar_placeholder')" icon="user" required />
                                 @error('name')
                                     <p class="mt-1 text-sm text-destructive">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="animate-fade-in-down" style="animation-delay: 300ms;">
-                                <x-forms.datepicker name="birthday" id="birthday" value="{{ old('barthday') }}"
-                                    :label="__('register.date_of_birth')" :placeholder="__('register.date_of_birth')" />
-                                @error('birthday')
+                            <div class="animate-fade-in-down" style="animation-delay: 250ms;">
+                                <x-forms.input type="text" name="english_name" id="english_name" value="{{ old('english_name') }}"
+                                    :label="__('register.full_name_en')" :placeholder="__('register.full_name_en_placeholder')" icon="user" required />
+                                @error('english_name')
                                     <p class="mt-1 text-sm text-destructive">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="animate-fade-in-down" style="animation-delay: 350ms;">
-                            <label class="block text-sm font-medium text-muted-foreground mb-2">{{ __('register.gender') }}</label>
-                            <div class="flex items-center gap-6">
-                                <label class="inline-flex items-center space-x-2">
-                                    <input type="radio" name="gender" value="male" {{ old('gender', 'male') == 'male' ? 'checked' : '' }} class="h-4 w-4 text-primary border-border focus:primary/50" />
-                                    <span class="text-sm">{{ __('register.male') }}</span>
-                                </label>
-                                <label class="inline-flex items-center space-x-2">
-                                    <input type="radio" name="gender" value="female" {{ old('gender', 'male') == 'female' ? 'checked' : '' }} class="h-4 w-4 text-primary border-border focus:primary/50" />
-                                    <span class="text-sm">{{ __('register.female') }}</span>
-                                </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="animate-fade-in-down" style="animation-delay: 300ms;">
+                                <x-forms.datepicker name="birthday" id="birthday" value="{{ old('birthday') }}"
+                                    :label="__('register.date_of_birth')" :placeholder="__('register.date_of_birth')" />
+                                @error('birthday')
+                                    <p class="mt-1 text-sm text-destructive">{{ $message }}</p>
+                                @enderror
                             </div>
-                            @error('gender')
-                                <p class="mt-1 text-sm text-destructive">{{ $message }}</p>
-                            @enderror
+                            <div class="animate-fade-in-down" style="animation-delay: 350ms;">
+                                <label class="block text-sm font-medium text-muted-foreground mb-2">{{ __('register.gender') }}</label>
+                                <div class="flex items-center gap-6">
+                                    <label class="inline-flex items-center space-x-2">
+                                        <input type="radio" name="gender" value="male" {{ old('gender', 'male') == 'male' ? 'checked' : '' }} class="h-4 w-4 text-primary border-border focus:primary/50" />
+                                        <span class="text-sm">{{ __('register.male') }}</span>
+                                    </label>
+                                    <label class="inline-flex items-center space-x-2">
+                                        <input type="radio" name="gender" value="female" {{ old('gender', 'male') == 'female' ? 'checked' : '' }} class="h-4 w-4 text-primary border-border focus:primary/50" />
+                                        <span class="text-sm">{{ __('register.female') }}</span>
+                                    </label>
+                                </div>
+                                @error('gender')
+                                    <p class="mt-1 text-sm text-destructive">{{ $message }}</p>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="animate-fade-in-down" style="animation-delay: 400ms;">

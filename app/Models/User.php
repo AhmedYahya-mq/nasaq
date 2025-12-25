@@ -31,6 +31,7 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
     protected $fillable = [
         'id',
         'name',
+        'english_name',
         'gender',
         'email',
         'photo',
@@ -608,15 +609,16 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
     public function getTranslatedName($targetLang = 'en')
     {
         $name = $this->name;
+        $englishName = $this->english_name;
 
         // إذا اللغة المطلوبة هي العربية وعرفنا الاسم عربي (الحروف عربية)
-        if ($targetLang === 'ar' && preg_match('/\p{Arabic}/u', $name)) {
+        if ($targetLang === 'ar' && preg_match('/\p{Arabic}/u', $name) && $name !== '' && $name !== null) {
             return $name; // الاسم بالعربي بالفعل
         }
 
         // إذا اللغة المطلوبة هي الإنجليزية وعرفنا الاسم انجليزي (أحرف لاتينية)
-        if ($targetLang === 'en' && preg_match('/[A-Za-z]/', $name)) {
-            return $name; // الاسم بالإنجليزي بالفعل
+        if ($targetLang === 'en' && preg_match('/[A-Za-z]/', $englishName) && $englishName !== '' && $englishName !== null) {
+            return $englishName; // الاسم بالإنجليزي بالفعل
         }
 
         // باقي الحالات: نترجم الاسم

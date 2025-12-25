@@ -124,6 +124,8 @@ return [
 
     // Custom messages
     'phone'                => 'The phone number is invalid or does not match the specified country.',
+    'arabic_letters'       => 'The :attribute must contain only Arabic letters and spaces.',
+    'english_letters'      => 'The :attribute must contain only English letters and spaces.',
 
     /*
     |--------------------------------------------------------------------------
@@ -136,6 +138,7 @@ return [
 
     'attributes' => [
         'name' => 'Name',
+        'english_name' => 'English Name',
         'email' => 'Email',
         'password' => 'Password',
         'phone' => 'Phone number',
