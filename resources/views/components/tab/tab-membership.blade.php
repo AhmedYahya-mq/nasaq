@@ -1,5 +1,4 @@
 @push('scripts')
-    @vite(['resources/js/pages/print.js'])
     <style>
         /* البطاقة الرسمية */
         #membershipCard {
@@ -194,17 +193,13 @@
             <a href="{{ route('client.print.card', ['format' => 'image']) }}" target="_self">
                 <button
                     class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5">
-                    <div x-show="isLoadingPng" x-transition.opacity.duration.500ms
-                        class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
-                    <span> تنزيل البطاقة كصورة</span>
+                     <span> تنزيل البطاقة كصورة</span>
                 </button>
             </a>
             <a href="{{ route('client.print.card', ['format' => 'pdf']) }}" target="_self">
                 <button
                     class="btn flex justify-center items-center gap-2 rtl:flex-row-reverse bg-primary/40 hover:bg-primary/30 disabled:opacity-50 py-2 px-4 rounded mt-5">
-                    <div x-show="isLoadingPdf" x-transition.opacity.duration.500ms
-                        class="border-primary border-b-transparent border-4 animate-spin size-6 rounded-full"></div>
-                    <span> تنزيل البطاقة pdf</span>
+                  <span> تنزيل البطاقة pdf</span>
                 </button>
             </a>
         </div>
