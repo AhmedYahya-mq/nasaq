@@ -74,8 +74,6 @@ function profileForm(user = null) {
                 console.error('User data is required to initialize the form.');
                 return;
             }
-            console.log(user);
-
             this.form = {
                 name: user.name || '',
                 english_name: user.english_name || '',
