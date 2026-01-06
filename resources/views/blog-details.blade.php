@@ -1,6 +1,9 @@
 <x-layouts.guest-layout title="{{ $blog->title }}">
 
     @push('seo')
+        @php
+            use Illuminate\Support\Str;
+        @endphp
         {{-- Meta Tags --}}
         <meta name="description" content="{{ $blog->excerpt ?? Str::limit(strip_tags($blog->content), 150) }}">
         <meta name="keywords" content="{{ $blog->tags?->pluck('name')?->implode(', ') ?? __('seo.default_keywords') }}">

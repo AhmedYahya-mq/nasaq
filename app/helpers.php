@@ -5,30 +5,32 @@ use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 
-function makeCircularWithShadow($path, $output = "temp_image/circle_shadow.png")
-{
-    $manager = new ImageManager(new Driver()); // تلقائي يستخدم GD أو Imagick
-    $image  = $manager->read(file_get_contents($path))->cover(300, 300);
+if (!function_exists('makeCircularWithShadow')) {
+    function makeCircularWithShadow($path, $output = "temp_image/circle_shadow.png")
+    {
+        $manager = new ImageManager(new Driver()); // تلقائي يستخدم GD أو Imagick
+        $image  = $manager->read(file_get_contents($path))->cover(300, 300);
 
-    // 1. قص لأصغر مربع
-    $size = min($image->width(), $image->height());
-    $cropped = $image->crop($size, $size);
+        // 1. قص لأصغر مربع
+        $size = min($image->width(), $image->height());
+        $cropped = $image->crop($size, $size);
 
-    // 2. إنشاء ماسك دائري كـ صورة PNG شفافة (أسود للخارج، أبيض للدائرة)
-    $mask = $manager->create($size, $size, "#00000000");
-    $mask->drawCircle($size / 2, $size / 2, function ($circle) use ($size) {
-        $circle->radius($size / 2);
-        $circle->background('#ffffff');
-        $circle->border('#000', 1);
-    });
+        // 2. إنشاء ماسك دائري كـ صورة PNG شفافة (أسود للخارج، أبيض للدائرة)
+        $mask = $manager->create($size, $size, "#00000000");
+        $mask->drawCircle($size / 2, $size / 2, function ($circle) use ($size) {
+            $circle->radius($size / 2);
+            $circle->background('#ffffff');
+            $circle->border('#000', 1);
+        });
 
-    // 3. نطبق القناع على الصورة المربعة (نستفيد من مكتبة إضافية لو احتجت mask())
-    // لو ما ثبت الحزمة التالية: composer require dialloibrahima/intervention-image-mask
+        // 3. نطبق القناع على الصورة المربعة (نستفيد من مكتبة إضافية لو احتجت mask())
+        // لو ما ثبت الحزمة التالية: composer require dialloibrahima/intervention-image-mask
 
-    $circleImage = $cropped->modify(new ApplyMask($mask));
+        $circleImage = $cropped->modify(new ApplyMask($mask));
 
-    // حفظ PNG
-    return $circleImage;
+        // حفظ PNG
+        return $circleImage;
+    }
 }
 
 if (!function_exists('imageLogo')) {

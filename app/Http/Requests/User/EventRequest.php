@@ -34,7 +34,7 @@ class EventRequest extends FormRequest implements \App\Contract\User\Request\Eve
         if ($isTranslate) {
             return [
                 'title' => ['required', 'string', 'max:100'],
-                'description' => ['required', 'string'],
+                'description' => ['required', 'string', 'max:255'],
                 'address' => $type === EventType::Physical
                     ? ['required', 'string', 'max:255']
                     : ['nullable', 'string', 'max:255']
@@ -47,7 +47,7 @@ class EventRequest extends FormRequest implements \App\Contract\User\Request\Eve
                 Rule::in(EventType::getValues()),
             ],
             'title' => [$isCreate ? 'required' : 'sometimes', 'string', 'max:100'],
-            'description' => [$isCreate ? 'required' : 'sometimes', 'string'],
+            'description' => [$isCreate ? 'required' : 'sometimes', 'string', 'max:255'],
             'address' => $type === EventType::Physical
                 ? [$isCreate ? 'required' : 'nullable', 'string', 'max:255']
                 : ['nullable', 'string', 'max:255'],
