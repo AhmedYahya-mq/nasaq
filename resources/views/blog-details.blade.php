@@ -1,17 +1,14 @@
 <x-layouts.guest-layout title="{{ $blog->title }}">
 
     @push('seo')
-        @php
-            use Illuminate\Support\Str;
-        @endphp
         {{-- Meta Tags --}}
-        <meta name="description" content="{{ $blog->excerpt ?? Str::limit(strip_tags($blog->content), 150) }}">
+        <meta name="description" content="{{ $blog->excerpt ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 150) }}">
         <meta name="keywords" content="{{ $blog->tags?->pluck('name')?->implode(', ') ?? __('seo.default_keywords') }}">
         <link rel="canonical" href="{{ url()->current() }}">
 
         {{-- Open Graph --}}
         <meta property="og:title" content="{{ $blog->title }}">
-        <meta property="og:description" content="{{ $blog->excerpt ?? Str::limit(strip_tags($blog->content), 150) }}">
+        <meta property="og:description" content="{{ $blog->excerpt ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 150) }}">
         <meta property="og:image" content="{{ $blog->photos()?->first()?->url ?? asset('favicon.ico') }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:site_name" content="{{ __('seo.site_name') }}">
@@ -20,7 +17,7 @@
         {{-- Twitter --}}
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="{{ $blog->title }}">
-        <meta name="twitter:description" content="{{ $blog->excerpt ?? Str::limit(strip_tags($blog->content), 150) }}">
+        <meta name="twitter:description" content="{{ $blog->excerpt ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 150) }}">
         <meta name="twitter:image" content="{{ $blog->photos()?->first()?->url ?? asset('favicon.ico') }}">
 
         {{-- Hreflang --}}
@@ -37,7 +34,7 @@
                     'item' => [
                         '@type' => 'BlogPosting',
                         'headline' => $blog->title,
-                        'description' => $blog->excerpt ?? Str::limit(strip_tags($blog->content), 150),
+                        'description' => $blog->excerpt ?? \Illuminate\Support\Str::limit(strip_tags($blog->content), 150),
                         'image' => $blog->photos()?->first()?->url ?? asset('favicon.ico'),
                         'author' => [
                             '@type' => 'Person',
