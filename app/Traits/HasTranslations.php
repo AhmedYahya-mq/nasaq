@@ -64,9 +64,9 @@ trait HasTranslations
         if (!in_array($field, $this->translatableFields)) return null;
 
         $translation = $this->translationsField()
-        ->where('field', $field)
-        ->where('locale', $locale)
-        ->first();
+            ->where('field', $field)
+            ->where('locale', $locale)
+            ->first();
 
         return $translation ? $translation->value : null;
     }
@@ -74,32 +74,59 @@ trait HasTranslations
     public function updateTranslations(array $data, $locale = null)
     {
         $locale = $locale ?: app()->getLocale();
-        foreach ($data as $field => $value) {
-            if (!in_array($field, $this->translatableFields)) continue;
 
-            Translation::updateOrCreate(
+        foreach ($data as $field => $value) {
+
+            // تجاهل الحقول غير القابلة للترجمة
+            if (!in_array($field, $this->translatableFields)) {
+                continue;
+            }
+
+            // تحويل القيمة إلى نص والتأكد من طولها
+            $value = (string) $value;
+            $value = mb_substr($value, 0, 255); // لأن العمود VARCHAR(255)
+
+            // تحديث أو إنشاء الترجمة الحالية
+            $translation = Translation::updateOrCreate(
                 [
                     'table_name' => $this->getTable(),
                     'record_id'  => $this->id,
                     'field'      => $field,
                     'locale'     => $locale,
                 ],
-                ['value' => $value]
+                [
+                    'value' => $value,
+                ]
             );
 
-            // إضافة الترجمة التلقائية إذا غير موجودة للغة الأخرى
+            // الترجمة التلقائية مرة واحدة فقط عند الإنشاء
+            if (!$translation->wasRecentlyCreated) {
+                continue;
+            }
+
             $otherLocale = $locale === 'ar' ? 'en' : 'ar';
-            $existing = Translation::where([
+
+            // إذا كانت الترجمة الأخرى موجودة، لا تفعل شيء
+            $exists = Translation::where([
                 'table_name' => $this->getTable(),
                 'record_id'  => $this->id,
                 'field'      => $field,
                 'locale'     => $otherLocale,
-            ])->first();
+            ])->exists();
 
-            if (!$existing) {
+            if ($exists) {
+                continue;
+            }
+
+            // إنشاء الترجمة التلقائية
+            try {
                 $tr = new GoogleTranslate();
                 $tr->setTarget($otherLocale);
+
                 $autoTranslated = $tr->translate($value);
+
+                // قص النص التلقائي ليتوافق مع 255 حرف
+                $autoTranslated = mb_substr($autoTranslated, 0, 255);
 
                 Translation::create([
                     'table_name' => $this->getTable(),
@@ -108,9 +135,19 @@ trait HasTranslations
                     'locale'     => $otherLocale,
                     'value'      => $autoTranslated,
                 ]);
+            } catch (\Throwable $e) {
+                // فشل الترجمة لا يجب أن يكسر الحفظ
+                logger()->warning('Auto translation failed', [
+                    'table'  => $this->getTable(),
+                    'id'     => $this->id,
+                    'field'  => $field,
+                    'locale' => $otherLocale,
+                    'error'  => $e->getMessage(),
+                ]);
             }
         }
     }
+
 
     public function setTranslationsField(array $translations)
     {
