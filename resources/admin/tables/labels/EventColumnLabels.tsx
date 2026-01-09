@@ -106,7 +106,9 @@ export const EventColumnLabels: Record<keyof EventModel, ColumnLabels> = {
     },
     is_featured: { label: 'مميز', render: (value: any) => value ? 'نعم' : 'لا' },
     is_full: { label: 'مكتمل', hidden: true },
-    created_at: { label: 'تاريخ الإنشاء', hidden: true},
+    created_at: { label: 'تاريخ الإنشاء', hidden: true },
     updated_at: { label: 'تاريخ التحديث', hidden: true },
     membership_ids: { label: 'Membership IDs', hidden: true },
+    is_started: { label: 'is_started', hidden: true },
+    is_ended: { label: 'is_ended', hidden: true }
 };

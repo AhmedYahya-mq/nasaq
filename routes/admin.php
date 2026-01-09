@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\User\EventController;
+use App\Http\Controllers\User\CouponController;
 use App\Http\Controllers\MembershipApplictionController;
 use App\Http\Controllers\User\BlogController;
 use App\Http\Controllers\User\LibraryController;
@@ -55,6 +56,12 @@ Route::middleware(['auth:admin', 'verified:admin.verification.notice'])->group(f
     Route::put('events/{event}/activate', [EventController::class, 'activate'])->name('events.activate');
     // edit link or adrress
     Route::put('events/{event}/update-link', [EventController::class, 'updateLink'])->name('events.updateLink');
+
+    // Coupon Routes
+    Route::get('coupons', [CouponController::class, 'index'])->name('coupons');
+    Route::post('coupons', [CouponController::class, 'store'])->name('coupons.store');
+    Route::put('coupons/{coupon}', [CouponController::class, 'update'])->name('coupons.update');
+    Route::delete('coupons/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
 
     // Event Registration Routes
     Route::get('event-registrations/{id}', [\App\Http\Controllers\User\EventRegistrationController::class, 'index'])->name('event.registrations');

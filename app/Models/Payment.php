@@ -27,6 +27,9 @@ class Payment extends Model
         'discount',
         'membership_discount',
         'original_price',
+        'coupon_id',
+        'coupon_code',
+        'coupon_amount',
     ];
 
     protected $casts = [
@@ -35,6 +38,7 @@ class Payment extends Model
         'amount' => 'integer',
         'discount' => 'integer',
         'membership_discount' => 'integer',
+        'coupon_amount' => 'integer',
     ];
 
     protected $hidden = [
@@ -94,6 +98,11 @@ class Payment extends Model
     public function payable()
     {
         return $this->morphTo();
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     /**

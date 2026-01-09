@@ -4,6 +4,7 @@ import membershipApplications from './membershipApplications'
 import members from './members'
 import blogs from './blogs'
 import events from './events'
+import coupons from './coupons'
 import event from './event'
 import library from './library'
 import profile from './profile'
@@ -481,6 +482,84 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     
     events.form = eventsForm
 /**
+* @see \App\Http\Controllers\User\CouponController::coupons
+ * @see app/Http/Controllers/User/CouponController.php:13
+ * @route '/hidden/door/zone/master/coupons'
+ */
+export const coupons = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: coupons.url(options),
+    method: 'get',
+})
+
+coupons.definition = {
+    methods: ["get","head"],
+    url: '/hidden/door/zone/master/coupons',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\User\CouponController::coupons
+ * @see app/Http/Controllers/User/CouponController.php:13
+ * @route '/hidden/door/zone/master/coupons'
+ */
+coupons.url = (options?: RouteQueryOptions) => {
+    return coupons.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\User\CouponController::coupons
+ * @see app/Http/Controllers/User/CouponController.php:13
+ * @route '/hidden/door/zone/master/coupons'
+ */
+coupons.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: coupons.url(options),
+    method: 'get',
+})
+/**
+* @see \App\Http\Controllers\User\CouponController::coupons
+ * @see app/Http/Controllers/User/CouponController.php:13
+ * @route '/hidden/door/zone/master/coupons'
+ */
+coupons.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: coupons.url(options),
+    method: 'head',
+})
+
+    /**
+* @see \App\Http\Controllers\User\CouponController::coupons
+ * @see app/Http/Controllers/User/CouponController.php:13
+ * @route '/hidden/door/zone/master/coupons'
+ */
+    const couponsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: coupons.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\User\CouponController::coupons
+ * @see app/Http/Controllers/User/CouponController.php:13
+ * @route '/hidden/door/zone/master/coupons'
+ */
+        couponsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: coupons.url(options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\User\CouponController::coupons
+ * @see app/Http/Controllers/User/CouponController.php:13
+ * @route '/hidden/door/zone/master/coupons'
+ */
+        couponsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: coupons.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    coupons.form = couponsForm
+/**
 * @see \App\Http\Controllers\User\LibraryController::library
  * @see app/Http/Controllers/User/LibraryController.php:19
  * @route '/hidden/door/zone/master/library'
@@ -847,6 +926,7 @@ membershipApplications,
 members,
 blogs,
 events,
+coupons,
 event,
 library,
 profile,

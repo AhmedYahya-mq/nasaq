@@ -1,6 +1,6 @@
-import { blogs, dashboard, events, library, members, membership, membershipApplications } from "@/routes/admin";
+import { blogs, events, library, members, membership, membershipApplications, coupons } from "@/routes/admin";
 import { NavItem } from "@/types";
-import { Calendar, LayoutGrid, LibraryBigIcon, Mail, NewspaperIcon, Users } from "lucide-react";
+import { Calendar, LayoutGrid, LibraryBigIcon, Mail, NewspaperIcon, TicketPercent, Users } from "lucide-react";
 
 const mainNavItems: NavItem[] = [
 
@@ -43,6 +43,12 @@ const mainNavItems: NavItem[] = [
         title: 'المكتبة',
         href: library(),
         icon: LibraryBigIcon,
+        isActive: false,
+    },
+    {
+        title: 'الكوبونات',
+        href: coupons(),
+        icon: TicketPercent,
         isActive: false,
     }
 ];

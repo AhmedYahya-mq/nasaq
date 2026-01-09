@@ -43,6 +43,9 @@ class AppServiceProvider extends ServiceProvider
             // Response Payment
             \App\Contract\User\Response\PaymentResponse::class => \App\Http\Responses\User\PaymentResponse::class,
 
+            // Coupon
+            \App\Contract\User\Response\CouponResponse::class => \App\Http\Responses\User\CouponResponse::class,
+
             // Event
             \App\Contract\User\Response\EventResponse::class => \App\Http\Responses\User\EventResponse::class,
             \App\Contract\User\Response\EventRegistrationResponse::class => \App\Http\Responses\User\EventRegistrationResponse::class,
@@ -73,6 +76,9 @@ class AppServiceProvider extends ServiceProvider
 
             // Library
             \App\Contract\User\Request\LibraryRequest::class => \App\Http\Requests\User\LibraryRequest::class,
+
+            // Coupon
+            \App\Contract\User\Request\CouponRequest::class => \App\Http\Requests\User\CouponRequest::class,
         ];
         $bindingResources = [
             // Membership
@@ -101,6 +107,10 @@ class AppServiceProvider extends ServiceProvider
             // Library
             \App\Contract\User\Resource\LibraryResource::class => \App\Http\Resources\Library\LibraryResource::class,
             \App\Contract\User\Resource\LibraryCollection::class => \App\Http\Resources\Library\LibraryCollection::class,
+
+            // Coupon
+            \App\Contract\User\Resource\CouponResource::class => \App\Http\Resources\Coupon\CouponResource::class,
+            \App\Contract\User\Resource\CouponCollection::class => \App\Http\Resources\Coupon\CouponCollection::class,
         ];
         $bindingActions = [
             // payment
