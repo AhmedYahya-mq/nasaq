@@ -1,5 +1,5 @@
 <article class="relative w-auto h-auto bg-card aspect-[3/2]" role="article" aria-label="{{ $blog->title }}">
-    <img src="{{ $photo->url }}" alt="{{ $blog->title }} - {{ $blog->excerpt }}" class="aspect-[3/2] object-cover rounded-lg" loading="lazy">
+    <img src="{{ $photo->url ?? asset('images/placeholder.png') }}" alt="{{ $blog->title }} - {{ $blog->excerpt }}" class="aspect-[3/2] object-cover rounded-lg" loading="lazy">
     <div
         class="p-4 absolute bottom-0 left-1/2 bg-card h-[156px] w-[90%] rounded-2xl -translate-x-1/2 translate-y-1/2 shadow-lg"
         aria-describedby="blog-excerpt-{{ $blog->id }}">

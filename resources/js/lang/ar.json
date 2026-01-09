@@ -24,6 +24,7 @@
     "The card number length is incorrect for the card type.": "طول رقم البطاقة غير صحيح لنوع البطاقة.",
     "The card type is not supported.": "نوع البطاقة غير مدعوم.",
     "Invalid format (MM / YY).": "تنسيق غير صالح (MM / YY).",
-    "The phone number must start with 05 and be 10 digits.": "يجب أن يبدأ رقم الجوال بـ 05 وأن يكون مكونًا من 10 أرقام."
-
+    "The phone number must start with 05 and be 10 digits.": "يجب أن يبدأ رقم الجوال بـ 05 وأن يكون مكونًا من 10 أرقام.",
+    "Transaction declined by the bank.": "تم رفض المعاملة من قبل البنك.",
+    "Cardholder name must be English letters only.": "يجب أن يكون اسم حامل البطاقة باللغة الإنجليزية فقط."
 }

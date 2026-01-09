@@ -28,6 +28,7 @@ class PaymentRequest extends FormRequest implements RequestPaymentRequest
             'cc_exp_year' => ['sometimes', 'nullable', 'digits:4', new CardExpirationYear($this->input('cc_exp_month'))],
             'cvc' => ['sometimes', 'required_if:cc_type,creditcard'],
             'phone' => 'sometimes|required_if:cc_type,stcpay|regex:/^05[0-9]{8}$/|digits:10',
+            'coupon_code' => ['nullable', 'string', 'max:50'],
         ];
     }
 
@@ -70,6 +71,7 @@ class PaymentRequest extends FormRequest implements RequestPaymentRequest
         $this->merge([
             'cc_exp_month' => $month ?? null,
             'cc_exp_year'  => $year ?? null,
+            'coupon_code' => $this->input('coupon_code') ? strtoupper($this->input('coupon_code')) : $this->input('coupon_code'),
         ]);
     }
 }

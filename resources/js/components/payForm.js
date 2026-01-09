@@ -1,8 +1,8 @@
-import { callback, create } from "@client/routes/client/pay";
+import { callback, create, coupon as couponRoute } from "@client/routes/client/pay";
 import { translate } from "@client/utils/translate";
 import axios from "axios";
 
-export default function payForm() {
+export default function payForm(props = {}) {
     // ----- local Mada BINs sample (استخدم نفس القائمة Qn عندك) -----
     const MADA_BINS = new Set([
         "22337902", "22337986", "22402030", "40177800", "403024", "40545400", "406136", "406996",
@@ -21,6 +21,11 @@ export default function payForm() {
     ]);
 
     // ----- helpers -----
+    const asNumber = (value, fallback = 0) => {
+        const num = Number(value);
+        return Number.isFinite(num) ? num : fallback;
+    };
+
     function onlyDigits(str = "") {
         return String(str || "").replace(/\D/g, "");
     }
@@ -111,6 +116,11 @@ export default function payForm() {
         return /^\d{3}$/.test(d);
     }
 
+    function isEnglishName(value = "") {
+        // Allow English letters and spaces only (no digits or Arabic letters)
+        return /^[A-Za-z ]+$/.test(String(value).trim());
+    }
+
     function formatCardNumber(raw, brand) {
         const digits = onlyDigits(raw);
         // No Amex formatting required
@@ -118,10 +128,27 @@ export default function payForm() {
         return trimmed.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
     }
 
+    const initialPrices = {
+        base: asNumber(props?.prices?.base, 0),
+        discount: asNumber(props?.prices?.discount, 0),
+        membershipDiscount: asNumber(props?.prices?.membershipDiscount, 0),
+        coupon: asNumber(props?.prices?.coupon, 0),
+        total: asNumber(props?.prices?.total, 0),
+    };
+
     // ----- main reactive object -----
     return {
         paymentMethod: "card",
         crsf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        basePricing: initialPrices,
+        prices: { ...initialPrices },
+        coupon: {
+            code: props?.prices?.code ?? "",
+            applied: false,
+            applying: false,
+            error: "",
+            success: "",
+        },
         card: {
             number: "",
             expiry: "",
@@ -158,6 +185,74 @@ export default function payForm() {
         init() {
             this.$watch("card", () => this.validateCardForm(), { deep: true });
             this.$watch("stc.phone", () => this.validateStcForm());
+        },
+
+        updatePrices(amounts = {}) {
+            const basePrice = asNumber(amounts.base ?? amounts.base_price, this.basePricing.base);
+            const discount = asNumber(amounts.discount ?? amounts.discount_amount, this.basePricing.discount);
+            const membershipDiscount = asNumber(
+                amounts.membership_discount ?? amounts.membershipDiscount,
+                this.basePricing.membershipDiscount
+            );
+            const couponAmount = asNumber(amounts.coupon ?? amounts.coupon_amount, 0);
+            const providedTotal = asNumber(amounts.total ?? amounts.final_price, null);
+            const computedTotal = providedTotal !== null
+                ? providedTotal
+                : Math.max(0, basePrice - discount - membershipDiscount - couponAmount);
+
+            this.prices = {
+                base: basePrice,
+                discount,
+                membershipDiscount,
+                coupon: couponAmount,
+                total: computedTotal,
+            };
+        },
+
+        applyCoupon() {
+            this.coupon.error = "";
+            this.coupon.success = "";
+            const code = (this.coupon.code || "").trim();
+
+            if (!code) {
+                this.coupon.error = translate("Please enter a coupon code.");
+                return;
+            }
+
+            this.coupon.applying = true;
+            axios.post(couponRoute().url, { code, _token: this.crsf })
+                .then((res) => {
+                    if (res.data?.success) {
+                        this.coupon.applied = true;
+                        this.coupon.success = translate("Coupon applied successfully.");
+                        this.updatePrices(res.data?.amounts || {});
+                    } else {
+                        this.coupon.applied = false;
+                        this.coupon.error = translate(res.data?.message || "Unable to apply coupon.");
+                        this.updatePrices({ ...this.basePricing, coupon: 0, total: this.basePricing.total });
+                    }
+                })
+                .catch((err) => {
+                    this.coupon.applied = false;
+                    this.coupon.error = translate(
+                        err.response?.data?.errors?.code?.[0] ||
+                        err.response?.data?.message ||
+                        "Invalid coupon."
+                    );
+                    this.updatePrices({ ...this.basePricing, coupon: 0, total: this.basePricing.total });
+                })
+                .finally(() => {
+                    this.coupon.applying = false;
+                });
+        },
+
+        removeCoupon() {
+            this.coupon.code = "";
+            this.coupon.applied = false;
+            this.coupon.applying = false;
+            this.coupon.error = "";
+            this.coupon.success = "";
+            this.updatePrices({ ...this.basePricing, coupon: 0, total: this.basePricing.total });
         },
 
         // ----- inputs handlers -----
@@ -230,6 +325,9 @@ export default function payForm() {
                 if (!this.card.name || !this.card.name.trim()) {
                     errs.name = translate("Please enter the cardholder name.");
                 }
+                else if (!isEnglishName(this.card.name)) {
+                    errs.name = translate("Cardholder name must be English letters only.");
+                }
             }
 
             // block unsupported brands
@@ -289,6 +387,7 @@ export default function payForm() {
                 name: this.card.name,
                 cc_type: "creditcard",
                 _token: this.crsf,
+                coupon_code: this.coupon.code ? this.coupon.code.trim().toUpperCase() : undefined,
             };
 
             this.onProgress = true;
@@ -319,6 +418,7 @@ export default function payForm() {
                         year: err.response.data.errors.cc_exp_year?.[0] ? translate(err.response.data.errors.cc_exp_year?.[0]) : undefined,
                         type: err.response.data.errors.cc_type?.[0] ? translate(err.response.data.errors.cc_type?.[0]) : undefined,
                     };
+                    this.cardFormValid = false;
                 } else {
                     this.errors.form = translate(err.response?.data?.message || "An unexpected error occurred, please try again.");
                 }
@@ -344,6 +444,7 @@ export default function payForm() {
                 phone: this.stc.phone,
                 cc_type: "stcpay",
                 _token: this.crsf,
+                coupon_code: this.coupon.code ? this.coupon.code.trim().toUpperCase() : undefined,
             };
             axios.post(create().url, payload).then((res) => {
                 if (res.data && res.data.success && res.data.status !== 'failed') {

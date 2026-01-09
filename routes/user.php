@@ -64,6 +64,7 @@ Route::prefix('/')->middleware('auth')->group(function () {
     Route::group(['prefix' => 'payment', 'as' => 'pay.'], function () {
         Route::get('{type}/{id}', [\App\Http\Controllers\PayController::class, 'index'])->name('index')->middleware('item.exists');
         Route::post('create/', [\App\Http\Controllers\PayController::class, 'createPayment'])->name('create')->middleware('prevent.duplicate');
+        Route::post('coupon', [\App\Http\Controllers\PayController::class, 'applyCoupon'])->name('coupon');
         Route::get('callback', [\App\Http\Controllers\PayController::class, 'handleCallback'])->name('callback');
         Route::get('success', [\App\Http\Controllers\PayController::class, 'success'])->name('success');
         Route::get('failure', [\App\Http\Controllers\PayController::class, 'failure'])->name('failure');

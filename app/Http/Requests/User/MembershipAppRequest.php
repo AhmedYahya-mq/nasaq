@@ -44,7 +44,7 @@ class MembershipAppRequest extends FormRequest implements \App\Contract\User\Req
             'scfhs_number' => ['nullable', 'string', 'max:255'],
             'file' => ['required', 'array', 'max:5'],
             'file.*' => ['required', new ValidUploadedFile(
-                ['jpg', 'png', 'jpeg', 'pdf'],
+                ['jpg', 'png', 'jpeg', 'pdf', 'doc', 'docx'],
                 10240 // 10MB
             )],
         ];

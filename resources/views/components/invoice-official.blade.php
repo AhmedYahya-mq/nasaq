@@ -1,8 +1,7 @@
 @push('scripts')
-    @vite(['resources/js/pages/print.js'])
     <style>
         #invoiceCard {
-            width: 900px;
+            width: 1000px;
             background: #ffffff;
             color: #1e293b;
             padding: 50px 60px;
@@ -153,34 +152,89 @@
             transform: translateY(-2px);
         }
 
-        /* Print */
         @media print {
-            .no-print {
-                display: none !important;
+            body * {
+                visibility: hidden;
             }
 
-            body {
-                background: white;
+            #invoiceCard,
+            #invoiceCard * {
+                visibility: visible;
             }
 
             #invoiceCard {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
                 box-shadow: none;
                 border: none;
                 padding: 0;
+                margin: 0;
+            }
+
+            /* إخفاء أزرار الطباعة نفسها */
+            .no-print {
+                display: none !important;
             }
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.querySelector('[data-invoice-print]');
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    // حفظ المحتوى الأصلي
+                    const originalContent = document.body.innerHTML;
+
+                    // استخراج محتوى الفاتورة فقط
+                    const invoiceContent = document.getElementById('invoiceCard').outerHTML;
+
+                    // استبدال محتوى body بمحتوى الفاتورة فقط
+                    document.body.innerHTML = invoiceContent;
+
+                    // الطباعة
+                    window.print();
+
+                    // استعادة المحتوى الأصلي
+                    document.body.innerHTML = originalContent;
+                });
+            }
+        });
+    </script>
 @endpush
 
-<div x-data="printInit('invoice')" class="flex flex-col items-center w-full space-y-6 pb-10">
+@php
+    $couponDiscount = (float) ($payment->coupon_discount ?? ($payment->coupon_amount ?? 0));
+    $couponCode = $payment->coupon_code ?? ($payment->coupon->code ?? null);
+@endphp
+
+@php
+    // طريقة 1: استخدام الصورة مع التحقق
+    $logoPath = public_path('images/logo.png');
+    $logoUrl = file_exists($logoPath) ? asset('images/logo.png') : '';
+
+    // طريقة 2: استخدام SVG كبديل (الأفضل للطباعة)
+    $logoSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24" fill="#3b82f6">
+        <rect width="24" height="24" rx="5" fill="#3b82f6" opacity="0.1"/>
+        <path fill="#3b82f6" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+    </svg>';
+@endphp
+
+<div class="flex flex-col items-center w-full space-y-6 py-5 box-print">
 
     <div class="scrollbar flex flex-col items-center w-full m-0 p-0">
-        <div id="invoiceCard" x-ref="card">
+        <div id="invoiceCard">
 
             <!-- Header -->
             <div class="header">
                 <div class="header-left">
-                    <img src="{{ asset('favicon.ico') }}" alt="Logo">
+                    @if ($logoUrl)
+                        <img src="{{ $logoUrl }}" alt="Logo" style="width: 55px; height: 55px;">
+                    @else
+                        <!-- استخدام SVG مباشرة -->
+                        {!! $logoSvg !!}
+                    @endif
                     <div>
                         <div class="invoice-title">{{ config('app.name') }}</div>
                         <div style="font-size: 13px; color:#64748b;">
@@ -221,6 +275,7 @@
                         <th>Price</th>
                         <th>Discount</th>
                         <th>Membership Discount</th>
+                        <th>Coupon Discount</th>
                         <th>Total</th>
                         <th>Currency</th>
                     </tr>
@@ -229,16 +284,25 @@
                     <tr>
                         <td>
                             @if ($payable instanceof \App\Models\Event)
-                                <strong>Register in:</strong> {{ $payment->payable->title_en ?? $payment->payable->title_ar }}
+                                <strong>Register in:</strong>
+                                {{ $payment->payable->title_en ?? $payment->payable->title_ar }}
                             @elseif ($payable instanceof \App\Models\Library)
-                                <strong>Purchase Book:</strong> {{ $payment->payable->title_en ?? $payment->payable->title_ar }}
+                                <strong>Purchase Book:</strong>
+                                {{ $payment->payable->title_en ?? $payment->payable->title_ar }}
                             @else
-                                <strong>Service:</strong> {{ $payment->payable->getTranslation('name', 'en') ?? 'No title' }}
+                                <strong>Service:</strong>
+                                {{ $payment->payable->getTranslation('name', 'en') ?? 'No title' }}
                             @endif
                         </td>
                         <td>{{ $payment->original_price ?? 0 }}</td>
                         <td>{{ $payment->discount ?? 0 }}</td>
                         <td>{{ $payment->membership_discount ?? 0 }}</td>
+                        <td>
+                            {{ $couponDiscount ?? 0 }}
+                            @if ($couponCode)
+                                <div style="font-size: 12px; color: #64748b;">Code: {{ $couponCode }}</div>
+                            @endif
+                        </td>
                         <td>{{ $payment->amount }}</td>
                         <td>{{ $payment->currency }}</td>
                     </tr>
@@ -260,6 +324,10 @@
                     <td>{{ $payment->membership_discount ?? 0 }}</td>
                 </tr>
                 <tr>
+                    <td>Coupon Discount</td>
+                    <td>{{ $couponDiscount ?? 0 }}</td>
+                </tr>
+                <tr>
                     <td><strong>Total</strong></td>
                     <td><strong>{{ $payment->amount }}</strong></td>
                 </tr>
@@ -270,7 +338,7 @@
                 Thank you for your payment.<br>
                 For any billing inquiries,
                 <a href="{{ route('client.about') }}#contact" style="color: #3b82f6; text-decoration: none;">
-                   contact us
+                    contact us
                 </a>.
             </div>
         </div>
@@ -278,13 +346,8 @@
 
     <!-- Buttons -->
     <div class="flex flex-col md:flex-row items-center gap-4 no-print">
-        <button @click="downloadTransparent"
-            class=" !bg-primary flex justify-center items-center gap-2 py-2 px-4 rounded mt-5">
-            🖼️ Download as Image
-        </button>
-        <button @click="downloadPDF"
-            class=" !bg-primary flex justify-center items-center gap-2 py-2 px-4 rounded mt-5">
-            📄 Download PDF
+        <button data-invoice-print class=" !bg-primary flex justify-center items-center gap-2 py-2 px-4 rounded mt-5">
+            print
         </button>
     </div>
 </div>

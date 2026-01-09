@@ -18,6 +18,8 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
     {
         $this->resolvePayment($request->query('id'));
 
+        $wasPaid = $this->payment->status?->isPaid();
+
         $status = $this->resolvePaymentStatus($request->query('status'));
 
         $this->assertInitialized();
@@ -26,6 +28,10 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
             'status' => $status->value
 
         ]);
+
+        if ($status->isPaid() && !$wasPaid && $this->payment->coupon_id) {
+            $this->payment->coupon()?->increment('used_count');
+        }
         if ($status->isFailed() || $status->isCancelled()) {
             throw new PaymentCallbackException($request->query('message'), 400);
         }

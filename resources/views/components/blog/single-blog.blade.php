@@ -17,7 +17,7 @@
         {{-- الصور --}}
         <div
             class="relative w-full h-auto aspect-[16/9] bg-card dark:bg-card-dark rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 group">
-            <img src="{{ $photo->url }}" alt="{{ $blog->title }} - {{ $blog->excerpt ?? '' }}"
+            <img src="{{ $photo->url ?? asset('images/placeholder.png') }}" alt="{{ $blog->title }} - {{ $blog->excerpt ?? '' }}"
                 class="object-cover min-w-lg max-h-md w-full h-full scale-100 group-hover:scale-105 transition-transform duration-300"
                 loading="lazy">
         </div>

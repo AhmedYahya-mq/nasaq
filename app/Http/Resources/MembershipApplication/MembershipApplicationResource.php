@@ -48,6 +48,30 @@ class MembershipApplicationResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
+        // Payment summary (optional)
+        try {
+            $payment = $this->payment ?? null;
+            if ($payment) {
+                $data['payment'] = [
+                    'invoice_id' => $payment->invoice_id ?? null,
+                    'amount' => $payment->amount ?? null,
+                    'currency' => $payment->currency ?? null,
+                    'original_price' => $payment->original_price ?? null,
+                    'discount' => $payment->discount ?? null,
+                    'membership_discount' => $payment->membership_discount ?? null,
+                    'coupon_discount' => ($payment->coupon_discount ?? $payment->coupon_amount ?? null),
+                    'coupon_code' => ($payment->coupon_code ?? optional($payment->coupon)->code ?? null),
+                    'created_at' => $payment->created_at ?? null,
+                    'status' => [
+                        'value' => optional($payment->status)->value,
+                        'label' => method_exists(optional($payment->status), 'label') ? $payment->status->label('en') : (string) optional($payment)->status,
+                        'color' => method_exists(optional($payment->status), 'color') ? $payment->status->color() : null,
+                    ],
+                ];
+            }
+        } catch (\Throwable $e) {
+            // silently ignore if relation not available
+        }
         if (!$this->minimal) {
             $data['user'] = app(UserResource::class, ['resource' => $this->user, 'minimal' => true]);
             $data['employment_status'] = [

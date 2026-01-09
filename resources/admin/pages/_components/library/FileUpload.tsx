@@ -88,7 +88,7 @@ function FileUpload({ onUploaded, disabled, setDisabled }: { onUploaded: (path: 
                 formData.append("total", totalChunks.toString());
                 formData.append("filename", f.name);
 
-                res = await axios.post("/admin/library/upload-chunk", formData, {
+                res = await axios.post(stream().url, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                     onUploadProgress: (e) => {
                         if (e.total) {

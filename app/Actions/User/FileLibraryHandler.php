@@ -122,6 +122,12 @@ class FileLibraryHandler implements \App\Contract\Actions\FileLibraryHandler
 
         // مسار الملف النهائي على القرص
         $finalFilePath = Storage::disk($this->disk)->path($finalPath);
+        $finalDir = dirname($finalFilePath);
+        if (!is_dir($finalDir)) {
+            if (!mkdir($finalDir, 0755, true) && !is_dir($finalDir)) {
+                throw new Exception("❌ تعذر إنشاء مجلد التخزين النهائي: {$finalDir}");
+            }
+        }
         $out = fopen($finalFilePath, 'wb');
 
         for ($i = 0; $i < $total; $i++) {

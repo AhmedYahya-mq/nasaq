@@ -1,138 +1,186 @@
-<div class="min-h-screen p-4" x-data="payForm" x-init="errors = {{ json_encode($errors->toArray()) }};
+@php
+    $basePrice = (int) ($item->price ?? 0);
+    $discountAmount = $item->discounted_price ? $item->price - (int) $item->discounted_price : 0;
+    $membershipDiscount = (int) ($item->membership_discount ?? 0);
+    $totalBeforeCoupon = (int) ($item->regular_price ?? $item->final_price ?? $item->price ?? 0);
+@endphp
+<div class="min-h-screen p-4 bg-gradient-to-br from-primary/10 via-background to-background" x-data="payForm({ prices: { base: {{ $item->price }}, discount: {{ $discountAmount }}, membershipDiscount: {{ $membershipDiscount }}, coupon: 0, total: {{ $totalBeforeCoupon }} } })" x-init="errors = {{ json_encode($errors->toArray()) }};
 init()" x-cloak>
     @push('scripts')
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @vite(['resources/js/pages/pay.js'])
     @endpush
-    <div class="h-full grid grid-cols-1 md:grid-cols-2 gap-5 card">
-        <div
-            class="w-full rounded-lg bg-primary/20 px-4 py-3 overflow-hidden shadow-lg flex flex-col justify-center items-center gap-1 md:hidden">
-            <div class="size-10 aspect-square">
-                <img class="w-full" src="{{ asset('favicon.ico') }}" alt="{{ __('payments.Payment Image') }}">
+    <div class="max-w-6xl mx-auto space-y-6">
+        <div class="flex flex-col gap-2 text-center">
+            <div class="inline-flex items-center justify-center gap-2 mx-auto px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                {{ __('payments.Secure Payment Info') }}
             </div>
-            <h2>
-                {{ $item->name ?? ($item->title ?? __('payments.Pay')) }}
-            </h2>
+            <h1 class="text-2xl md:text-3xl font-semibold">{{ $item->name ?? ($item->translateField('title') ?? __('payments.Pay')) }}</h1>
+            <p class="text-muted-foreground">{{ __('payments.Pay') }} <span x-text="prices.total">{{ $item->final_price ?? $item->regular_price ?? $item->price }}</span> <x-ui.icon name="riyal" class="inline size-5" /></p>
         </div>
-        <div class="w-full flex flex-col gap-6 not-md:order-2">
-            <div
-                class="rounded-lg bg-primary/20 px-4 py-3 overflow-hidden shadow-lg md:flex flex-col justify-center items-center gap-1 hidden">
-                <div class="size-10 aspect-square">
-                    <img class="w-full" src="{{ asset('favicon.ico') }}" alt="{{ __('payments.Payment Image') }}">
-                </div>
-                <h2>
-                    {{ $item->name ?? ($item->title ?? __('payments.Pay')) }}
-                </h2>
-            </div>
-            <div class="w-full border bg-card/50 p-6 rounded-lg shadow-lg">
-                @if ($isMembership)
-                    <h2>
-                        {{ $item->name }} - {{ __('payments.Annual') }}
-                    </h2>
-                    <strong class="text-lg block mb-4 ">
-                        {{ __('payments.Price') }}:
-                        {{ $item->regular_price }} <x-ui.icon name="riyal" class="inline size-5" />
-                    </strong>
-                    <div class="flex flex-col ">
-                        <span>
-                            {{ __('payments.Starts At') }}: {{ $startAt }}
-                        </span>
-                        <span class="text-destructive">
-                            {{ __('payments.Ends At') }}: {{ $endsAt }}
-                        </span>
-                    </div>
-                @else
-                    <h2>
-                        {{ $item->title }}
-                    </h2>
-                    <p>
-                        {{ $item->description }}
-                    </p>
-                    <strong class="text-lg block">
-                        {{ __('payments.Price') }}:
-                        {{ $item->final_price }} <x-ui.icon name="riyal" class="inline size-5" />
-                    </strong>
-                @endif
-            </div>
-            <div class="w-full flex flex-col border bg-card/50 p-6 rounded-lg shadow-lg">
-                <div class="flex justify-between items-center">
-                    <span class="font-semibold text-muted-foreground">
-                        {{ __('payments.Base Price') }}:
-                    </span>
-                    <span class="font-semibold text-muted-foreground text-lg">
-                        {{ $item->price }} <x-ui.icon name="riyal" class="inline size-5" />
-                    </span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="font-semibold text-muted-foreground">
-                        {{ __('payments.Discount') }}:
-                    </span>
-                    <span class="font-semibold text-muted-foreground text-lg">
-                        {{ $item->discounted_price ? $item->price - $item->discounted_price : 0 }}
-                        <x-ui.icon name="riyal" class="inline size-5" />
-                    </span>
-                </div>
-                @if (!$isMembership)
-                    <div class="flex justify-between items-center">
-                        <span class="font-semibold text-muted-foreground">
-                            {{ __('payments.Membership Discount') }}:
-                        </span>
-                        <span class="font-semibold text-muted-foreground text-lg">
-                            {{ $item->membership_discount }}
-                            <x-ui.icon name="riyal" class="inline size-5" />
-                        </span>
-                    </div>
-                @endif
-            </div>
-            <div class="w-full flex flex-col border bg-card/50 p-6 rounded-lg shadow-lg">
-                <div class="flex justify-between items-center">
-                    <span class="font-semibold text-muted-foreground">
-                        {{ __('payments.Total Amount') }}:
-                    </span>
-                    <span class="font-semibold text-muted-foreground text-lg">
-                        {{ $item->regular_price ?? $item->final_price }} <x-ui.icon name="riyal"
-                            class="inline size-5" />
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="w-full flex flex-col gap-6 @container not-md:order-3">
-            <div>
-                <div>
-                    {{ __('payments.Payment Method') }}
-                </div>
-                <div class="grid grid-cols-1 @sm:grid-cols-2 gap-4 mt-3">
-                    <div @click="paymentMethod = 'card'" class="cursor-pointer">
-                        <div :class="{ 'border-primary': paymentMethod === 'card' }"
-                            class="border p-4 rounded-lg w-full flex flex-col justify-center items-center gap-2">
-                            <x-ui.icon name="credit-card" class="size-5" />
-                            <span>{{ __('payments.Credit Card') }}</span>
+        <div class="h-full grid grid-cols-1 xl:grid-cols-[1.1fr_1.2fr] gap-6">
+            <div class="w-full flex flex-col gap-4 not-md:order-2">
+                <div class="rounded-2xl border border-border/70 bg-card/80 backdrop-blur shadow-2xl shadow-primary/10 p-6 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="size-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                            <img class="w-8 h-8" src="{{ asset('favicon.ico') }}" alt="{{ __('payments.Payment Image') }}">
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-xs uppercase tracking-wide text-muted-foreground">{{ __('payments.Item') }}</p>
+                            <h2 class="text-lg font-semibold leading-tight">{{ $item->name ?? ($item->translateField('title') ?? __('payments.Pay')) }}</h2>
                         </div>
                     </div>
-                    <div @click="paymentMethod = 'stc'" class="cursor-pointer">
-                        <div class="border p-4 rounded-lg w-full flex flex-col justify-center items-center gap-2"
-                            :class="{ 'border-primary': paymentMethod === 'stc' }">
-                            <x-ui.icon name="phone" class="size-5" />
-                            <span>{{ __('payments.STC Pay') }}</span>
+                    <div class="rounded-xl bg-muted/40 border border-border/70 p-4 space-y-3">
+                        @if ($isMembership)
+                            <div class="flex justify-between text-sm">
+                                <span class="text-muted-foreground">{{ __('payments.Action') }}</span>
+                                <span class="font-semibold">
+                                    @if ($membershipAction === 'renewal')
+                                        {{ __('payments.Renewal') }}
+                                    @elseif($membershipAction === 'upgrade')
+                                        {{ __('payments.Upgrade') }}
+                                    @else
+                                        {{ __('payments.New Subscription') }}
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-muted-foreground">{{ __('payments.Plan') }}</span>
+                                <span class="font-semibold">{{ __('payments.Annual') }}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-muted-foreground">{{ __('payments.Starts At') }}</span>
+                                <span class="font-medium">{{ $startAt }}</span>
+                            </div>
+                            <div class="flex justify-between text-sm text-destructive">
+                                <span>{{ __('payments.Ends At') }}</span>
+                                <span class="font-medium">{{ $endsAt }}</span>
+                            </div>
+                        @else
+                            <p class="text-sm text-muted-foreground leading-relaxed">{{ $item->description }}</p>
+                        @endif
+                        <div class="flex justify-between items-center pt-2 border-t border-dashed border-border/70">
+                            <span class="text-muted-foreground font-semibold">{{ __('payments.Price') }}</span>
+                            <span class="text-xl font-semibold flex items-center gap-1"><span x-text="prices.total">{{ $item->final_price ?? $item->regular_price ?? $item->price }}</span><x-ui.icon name="riyal" class="inline size-5" /></span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div x-text="errors.form" x-show="errors.form"
-                class="text-sm text-destructive bg-destructive/10 border border-destructive rounded-lg p-3">
-            </div>
-            {{-- success laravel with --}}
-            @session('success')
-                <div class="text-sm text-success bg-success/10 border border-success rounded-lg p-3">
-                    {{ $value }}
-                </div>
-            @endsession
 
-            <div>
-                <div>
-                    {{ __('payments.Payment Details') }}
+                <div class="rounded-2xl border border-border/70 bg-card/80 backdrop-blur shadow-xl p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-lg">{{ __('payments.Summary') }}</span>
+                        <span class="text-xs text-muted-foreground uppercase tracking-wide">{{ __('payments.Live Update') }}</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-muted-foreground">{{ __('payments.Base Price') }}</span>
+                            <span class="font-semibold flex items-center gap-1"><span>{{ $item->price }}</span><x-ui.icon name="riyal" class="inline size-5" /></span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-muted-foreground">{{ __('payments.Discount') }}</span>
+                            <span class="font-semibold text-destructive flex items-center gap-1">-<span x-text="prices.discount"></span><x-ui.icon name="riyal" class="inline size-5" /></span>
+                        </div>
+                        @if (!$isMembership)
+                            <div class="flex justify-between items-center text-sm">
+                                <span class="text-muted-foreground">{{ __('payments.Membership Discount') }}</span>
+                                <span class="font-semibold text-destructive flex items-center gap-1">-<span x-text="prices.membershipDiscount"></span><x-ui.icon name="riyal" class="inline size-5" /></span>
+                            </div>
+                        @endif
+                        <div class="flex justify-between items-center text-sm" x-show="prices.coupon > 0 || coupon.applied">
+                            <span class="text-muted-foreground">{{ __('payments.Coupon') }}</span>
+                            <span class="font-semibold text-destructive flex items-center gap-1">-<span x-text="prices.coupon"></span><x-ui.icon name="riyal" class="inline size-5" /></span>
+                        </div>
+                    </div>
+                    <div class="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-2">
+                        <label for="coupon-code" class="font-semibold flex items-center gap-2 text-sm">
+                            <x-ui.icon name="ticket-percent" class="size-4 fill-transparent stroke-primary" /> {{ __('payments.Coupon Code') }}
+                        </label>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input id="coupon-code" name="coupon-code" type="text" x-model="coupon.code"
+                                placeholder="{{ __('payments.Coupon Code') }}"
+                                class="w-full border px-4 py-2 rounded-lg bg-background/60 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" />
+                            <button type="button" @click.prevent="applyCoupon" :disabled="coupon.applying"
+                                class="sm:w-40 w-full bg-primary text-white py-2 rounded-lg hover:bg-primary/90 transition flex justify-center items-center gap-2 disabled:opacity-70">
+                                <span x-show="!coupon.applying">{{ __('payments.Apply') }}</span>
+                                <div x-show="coupon.applying"
+                                    class="border-2 border-white border-t-transparent animate-spin size-5 rounded-full"></div>
+                            </button>
+                            <button type="button" @click.prevent="removeCoupon" x-show="coupon.applied || coupon.code"
+                                class="sm:w-32 w-full border border-destructive text-destructive py-2 rounded-lg hover:bg-destructive/10 transition flex justify-center items-center gap-2">
+                                {{ __('payments.Remove') }}
+                            </button>
+                        </div>
+                        <p x-show="coupon.error" x-text="coupon.error"
+                            class="text-sm text-destructive bg-destructive/10 border border-destructive rounded-lg p-3"></p>
+                        <p x-show="coupon.success" x-text="coupon.success"
+                            class="text-sm text-success bg-success/10 border border-success rounded-lg p-3"></p>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-dashed border-border/70">
+                        <div class="space-y-1">
+                            <p class="text-sm text-muted-foreground">{{ __('payments.Total Amount') }}</p>
+                            {{-- <p class="text-xs text-muted-foreground">{{ __('payments.Includes taxes and fees') }}</p> --}}
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold leading-tight">
+                                <span x-text="prices.total"></span>
+                                <x-ui.icon name="riyal" class="inline size-6" />
+                            </p>
+                            <p class="text-xs text-muted-foreground">{{ __('payments.Secured by SSL') }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col gap-4 mt-2">
+            </div>
+
+            <div class="w-full flex flex-col gap-6 @container not-md:order-3">
+                <div class="rounded-2xl border border-border/70 bg-card/80 backdrop-blur shadow-xl p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-lg">{{ __('payments.Payment Method') }}</span>
+                        <span class="text-xs text-muted-foreground">{{ __('payments.Choose Method') }}</span>
+                    </div>
+                        @if ($isMembership && $membershipAction === 'upgrade')
+                            <div class="rounded-xl border border-amber-300/80 bg-amber-50 text-amber-900 px-4 py-3 text-sm flex gap-2 dark:bg-amber-900/20 dark:border-amber-400/70 dark:text-amber-100">
+                                <x-ui.icon name="alert-triangle" class="size-4 mt-[2px]" />
+                                <span>{{ __('payments.Upgrade Warning') }}</span>
+                            </div>
+                        @endif
+                    <div class="grid grid-cols-1 @sm:grid-cols-2 gap-4 mt-1">
+                        <button type="button" @click="paymentMethod = 'card'" class="cursor-pointer">
+                            <div
+                                :class="paymentMethod === 'card' ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-border'"
+                                class="border rounded-xl w-full flex flex-col justify-center items-center gap-2 p-4 transition hover:border-primary/60">
+                                <x-ui.icon name="credit-card" class="size-6" />
+                                <span class="font-medium">{{ __('payments.Credit Card') }}</span>
+                                <span class="text-xs text-muted-foreground">{{ __('payments.Pay with card') }}</span>
+                            </div>
+                        </button>
+                        <button type="button" @click="paymentMethod = 'stc'" class="cursor-pointer">
+                            <div
+                                :class="paymentMethod === 'stc' ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-border'"
+                                class="border rounded-xl w-full flex flex-col justify-center items-center gap-2 p-4 transition hover:border-primary/60">
+                                <x-ui.icon name="phone" class="size-6" />
+                                <span class="font-medium">{{ __('payments.STC Pay') }}</span>
+                                <span class="text-xs text-muted-foreground">{{ __('payments.Fast checkout') }}</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div x-text="errors.form" x-show="errors.form"
+                    class="text-sm text-destructive bg-destructive/10 border border-destructive rounded-lg p-3">
+                </div>
+                {{-- success laravel with --}}
+                @session('success')
+                    <div class="text-sm text-success bg-success/10 border border-success rounded-lg p-3">
+                        {{ $value }}
+                    </div>
+                @endsession
+
+                <div class="rounded-2xl border border-border/70 bg-card/80 backdrop-blur shadow-xl p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-lg">{{ __('payments.Payment Details') }}</span>
+                        <span class="text-xs text-muted-foreground">{{ __('payments.Encrypted Checkout') }}</span>
+                    </div>
+                    <div class="flex flex-col gap-4 mt-2">
                     <form x-show="paymentMethod === 'card'" @submit.prevent="submitCard" action="#" method="post"
                         class="flex flex-col gap-4">
                         <div>
@@ -210,8 +258,11 @@ init()" x-cloak>
                         </div>
                         <button type="submit" :disabled="onProgress"
                             class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary/90 transition mt-1 flex justify-center items-center gap-2">
-                            <span>{{ __('payments.Pay') }} {{ $item->regular_price }} <x-ui.icon name="riyal"
-                                    class="inline size-5" /></span>
+                            <span class="flex items-center gap-1">
+                                <span>{{ __('payments.Pay') }}</span>
+                                <span x-text="prices.total"></span>
+                                <x-ui.icon name="riyal" class="inline size-5" />
+                            </span>
                             <div x-show="onProgress"
                                 class="border-2 border-white border-t-transparent animate-spin size-5 rounded-full">
                             </div>
@@ -265,8 +316,11 @@ init()" x-cloak>
                         <button type="submit" :disabled="onProgress"
                             class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary/90 transition mt-1 flex justify-center items-center gap-2">
                             <span x-show="!stc.otpSent">
-                                {{ __('payments.Pay') }} {{ $item->regular_price }} <x-ui.icon name="riyal"
-                                    class="inline size-5" />
+                                <span class="flex items-center gap-1">
+                                    <span>{{ __('payments.Pay') }}</span>
+                                    <span x-text="prices.total"></span>
+                                    <x-ui.icon name="riyal" class="inline size-5" />
+                                </span>
                             </span>
                             <span x-show="stc.otpSent">
                                 {{ __('payments.Verify') }}

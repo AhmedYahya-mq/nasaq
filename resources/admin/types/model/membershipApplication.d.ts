@@ -19,6 +19,7 @@ export interface MembershipApplication {
     approved_at?: string;
     rejected_at?: string;
     files: MembershipFile[];
+    payment?: MembershipPayment;
 }
 
 export interface UseTableMembershipApplicationsProps {
@@ -35,4 +36,21 @@ export interface MembershipFile{
     created_at: string;
     updated_at: string;
     url: string; // Accessor
+}
+
+export interface MembershipPayment {
+    invoice_id?: string;
+    amount?: number;
+    currency?: string;
+    original_price?: number;
+    discount?: number;
+    membership_discount?: number;
+    coupon_discount?: number;
+    coupon_code?: string;
+    created_at?: string;
+    status?: {
+        value?: string;
+        label?: string;
+        color?: string;
+    };
 }

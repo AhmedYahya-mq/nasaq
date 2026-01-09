@@ -29,6 +29,7 @@ use App\Services\Payment\Strategies\PaymentMethodStrategy;
 use App\Models\Payment;
 use App\Services\Payment\Strategies\PaymentMethodStrategyFactory;
 use App\Services\PaymentGateway;
+use App\Services\Coupon\CouponCalculator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -85,8 +86,18 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
 
         $payable = $this->getPayableOrFail();
 
+        $pricing = app(CouponCalculator::class)->calculate($data['coupon_code'] ?? null, $payable);
+
         // 1) بناء بيانات الدفع الأساسية
-        $payload = $this->buildBasePayload($data, $payable, $user?->name, $user?->email, $user?->phone);
+        $payload = $this->buildBasePayload(
+            $data,
+            $payable,
+            $user?->name,
+            $user?->email,
+            $user?->phone,
+            $pricing['final_price_halalas'],
+            $pricing,
+        );
 
         // 2) تحديد استراتيجية الدفع وتطبيقها
         $strategy = $this->resolveStrategy($data['cc_type'] ?? null);
@@ -96,7 +107,7 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
         $responseDTO = $this->callGateway($payload);
 
         // 4) تحفظ الدفع في قاعدة البيانات بشكل آمن
-        return $this->persistPayment($responseDTO, $payable, $user?->id);
+        return $this->persistPayment($responseDTO, $payable, $user?->id, $pricing);
     }
 
     // =========================
@@ -145,24 +156,51 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
      *      بريد المستخدم (اختياري).
      * @param string|null $userPhone
      *      رقم جوال المستخدم (اختياري).
+     * @param int $amountInHalalas
+     *      المبلغ النهائي المطلوب تحصيله (بالهللات) بعد الخصومات/الكوبون.
+     * @param array $pricing
+     *      تفاصيل التسعير (السعر الأساسي، الخصومات، الكوبون).
      * @return PaymentPayloadDTO
      *      كائن بيانات الدفع الأساسية.
      */
-    protected function buildBasePayload(array $data, Model $payable, ?string $userName, ?string $userEmail, ?string $userPhone): PaymentPayloadDTO
+    protected function buildBasePayload(array $data, Model $payable, ?string $userName, ?string $userEmail, ?string $userPhone, int $amountInHalalas, array $pricing): PaymentPayloadDTO
     {
         return PaymentPayloadDTO::fromBase(
-            amount: (int) ($payable->regular_price_in_halalas ?? 0),
+            amount: $amountInHalalas,
             currency: 'SAR',
             description: 'Payment for ' . ($payable->name ?? $payable->title ?? 'Item'),
             callbackUrl: route('client.pay.callback'),
             metadata: [
-                'user_name' => $userName,
-                'user_email' => $userEmail,
-                'phone' => $userPhone ?? ($data['phone'] ?? null),
-                'item' => $payable->name ?? $payable->title ?? null,
-                'item_id' => $payable->id ?? $payable->uuid ?? null,
+                'user_name' => $this->formatMetadataValue($userName),
+                'user_email' => $this->formatMetadataValue($userEmail),
+                'phone' => $this->formatMetadataValue($userPhone ?? ($data['phone'] ?? null)),
+                'item' => $this->formatMetadataValue($payable->name ?? $payable->title ?? null),
+                'item_id' => $this->formatMetadataValue($payable->id ?? $payable->uuid ?? null),
+                'base_price' => $this->formatMetadataValue($pricing['price'] ?? ($payable->price ?? null)),
+                'discount' => $this->formatMetadataValue($pricing['discount'] ?? 0),
+                'membership_discount' => $this->formatMetadataValue($pricing['membership_discount'] ?? 0),
+                'coupon_amount' => $this->formatMetadataValue($pricing['coupon_amount'] ?? 0),
+                'coupon_code' => $this->formatMetadataValue($pricing['coupon']?->code ?? ($data['coupon_code'] ?? null)),
             ],
         );
+    }
+
+    /**
+     * تطبيع قيم الميتاداتا إلى نص لعرضها بوضوح في بوابة الدفع.
+     */
+    protected function formatMetadataValue($value): string
+    {
+        if (is_null($value)) {
+            return '-';
+        }
+
+        if (is_numeric($value)) {
+            return (float) $value === 0.0 ? '-' : (string) $value;
+        }
+
+        $stringValue = is_string($value) ? trim($value) : (string) $value;
+
+        return $stringValue === '' ? '-' : $stringValue;
     }
 
     /**
@@ -199,14 +237,43 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
 
             // تحقق من نجاح العملية
             if (!$rawResponse->success) {
-                dd($rawResponse);
-                // هنا نلتقط حالات الفشل مثل M076
-                $errorCode = $rawResponse->data['type'] ?? 'unknown_error';
-                $errorMessage = $rawResponse->error ?? 'حدث خطأ غير معروف في بوابة الدفع';
-                // ممكن ترمي استثناء خاص
-                throw new PaymentGatewayException("خطأ في الدفع [$errorCode]: $errorMessage");
+
+                $errorType    = $rawResponse->data['type']    ?? 'unknown_error';
+                $errorMessage = $rawResponse->error           ?? 'حدث خطأ غير معروف في بوابة الدفع';
+
+                // حالة Validation Failed
+                if (
+                    $errorType === 'invalid_request_error'
+                    && isset($rawResponse->data['errors'])
+                    && is_array($rawResponse->data['errors'])
+                ) {
+
+                    $validationErrors = [];
+
+                    foreach ($rawResponse->data['errors'] as $field => $messages) {
+                        foreach ((array) $messages as $msg) {
+                            $validationErrors[] = "$field: $msg";
+                        }
+                    }
+
+                    // دمج الأخطاء في رسالة واحدة واضحة
+                    $detailedMessage = implode(' | ', $validationErrors);
+
+                    throw new PaymentGatewayException(
+                        "$detailedMessage",
+                        422,
+                    );
+                }
+
+                // أي خطأ آخر
+                throw new PaymentGatewayException(
+                    "خطأ في الدفع [$errorType]: $errorMessage"
+                );
             }
         } catch (Exception $e) {
+            if ($e->getCode() === 422) {
+                throw $e;
+            }
             // هذا يمسك فقط أخطاء الاتصال أو الاستثناءات الأخرى
             throw new PaymentGatewayException('فشل الاتصال ببوابة الدفع: ' . $e->getMessage(), $e->getCode());
         }
@@ -233,27 +300,32 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
      *      العنصر القابل للدفع.
      * @param int|null $userId
      *      معرف المستخدم (اختياري).
+     * @param array $pricing
+     *      تفاصيل التسعير/الخصومات بما فيها الكوبون.
      * @return Payment
      *      كائن الدفع الذي تم حفظه.
      */
-    protected function persistPayment(PaymentResponseDTO $responseDTO, Model $payable, ?int $userId): Payment
+    protected function persistPayment(PaymentResponseDTO $responseDTO, Model $payable, ?int $userId, array $pricing): Payment
     {
-        return DB::transaction(function () use ($responseDTO, $payable, $userId) {
+        return DB::transaction(function () use ($responseDTO, $payable, $userId, $pricing) {
             return Payment::create([
                 'user_id' => $userId,
                 'moyasar_id' => $responseDTO->id,
                 'payable_id' => $payable->id,
                 'payable_type' => get_class($payable),
-                'amount' => $payable->regular_price ?? $payable->final_price, // keep in SAR if your column expects SAR
+                'amount' => $pricing['final_price'] ?? ($payable->regular_price ?? $payable->final_price),
                 'currency' => 'SAR',
                 'status' => $responseDTO->status ?: 'initiated',
                 'source_type' => $responseDTO->sourceType,
                 'company' => $responseDTO->company,
                 'description' => $responseDTO->description,
                 'raw_response' => $responseDTO->raw,
-                'discount' => $payable->discounted_price ? $payable->price - (int)$payable->discounted_price : 0,
-                'membership_discount' => (int) $payable->membership_discount ?? 0,
-                'original_price' => $payable->price ?? 0,
+                'discount' => $pricing['discount'] ?? ($payable->discounted_price ? $payable->price - (int) $payable->discounted_price : 0),
+                'membership_discount' => (int) ($pricing['membership_discount'] ?? ($payable->membership_discount ?? 0)),
+                'original_price' => $pricing['base_price'] ?? ($payable->price ?? 0),
+                'coupon_id' => $pricing['coupon']?->id,
+                'coupon_code' => $pricing['coupon']?->code,
+                'coupon_amount' => (int) ($pricing['coupon_amount'] ?? 0),
             ]);
         });
     }

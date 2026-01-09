@@ -1,68 +1,72 @@
-<div class="card flex flex-col">
-    <!-- صورة الملف الشخصي -->
-    <div x-data="photoProfile" x-ref="progres"
-        class="p-1 relative bg-background transition-all border border-muted size-[120px] aspect-square mx-auto mt-5 rounded-full grid place-items-center"
-        style="background: conic-gradient(var(--primary) 0% 0%, var(--background) 0% 100%);">
-        <img data-photo-profile src="{{ $user->profile_photo_url }}" width="120" height="120"
-            class="size-full rounded-full overflow-hidden object-cover" alt="{{ $user->name }}">
-        <label for="photo" aria-label="Change Profile Picture"
-            class="absolute cursor-pointer bottom-1 -right-1 bg-card active:scale-90 transition-transform e p-2 rounded-full dark:shadow-[0_0px_15px_rgba(255,255,255,0.15)]
-                                shadow-[0_0px_15px_rgba(0,0,0,0.30)]">
-            <x-ui.icon name="camera" class="size-5" />
-            <input type="file" id="photo" @change="updateFile($event)" style="display: none;" accept="image/*">
-        </label>
-        <div class="absolute inset-0 rounded-full bg-background/35" x-show="loading" x-cloak>
-            <div class="w-full h-full flex items-center justify-center" role="status">
-                <span class="text-sm text-foreground font-semibold" x-text="percent"></span>
+<div class="card relative overflow-hidden rounded-2xl border border-border/70 bg-gradient-to-br from-background via-background to-primary/5 shadow-xl">
+    <div class="absolute inset-x-0 top-0 h-20 bg-primary/10 blur-[80px]"></div>
+    <div class="flex flex-col items-center px-5 pt-6 pb-5 relative z-10">
+        <div x-data="photoProfile" x-ref="progres"
+            class="relative size-32 rounded-full p-[3px] bg-gradient-to-tr from-primary via-primary/60 to-accent shadow-lg">
+            <div class="size-full rounded-full bg-background grid place-items-center">
+                <img data-photo-profile src="{{ $user->profile_photo_url }}" width="120" height="120"
+                    class="size-full rounded-full object-cover" alt="{{ $user->name }}">
+            </div>
+            <label for="photo" aria-label="Change Profile Picture"
+                class="absolute cursor-pointer bottom-1 -right-1 bg-card border border-border active:scale-95 transition-transform p-2 rounded-full shadow-lg shadow-primary/20">
+                <x-ui.icon name="camera" class="size-5" />
+                <input type="file" id="photo" @change="updateFile($event)" style="display: none;" accept="image/*">
+            </label>
+            <div class="absolute inset-0 rounded-full bg-background/40 grid place-items-center" x-show="loading" x-cloak>
+                <span class="text-sm font-semibold" x-text="percent"></span>
             </div>
         </div>
-    </div>
 
-    <!-- معلومات العضوية -->
-    <div class="text-center mt-3 mb-5">
-        <h2 class="text-lg font-semibold">{{ $user->name }}</h2>
-        <p class="text-sm text-muted-foreground">
-            {{-- حالة العضوية --}}
-            @if ($user->membership_id)
-                {{ $user->membership->name }}
-                <span style=" --badget-color: {{ $user->membership_status->getColor() }};"
-                    class="badget px-2 py-1 rounded-md text-xs font-medium ">
-                    {{ $user->membership_status->label() }}
-                </span>
-                <br>
-                <small>{{ __('header.expires_in') }}: {{ $user->membership_expires_at->format('d/m/Y') }}</small>
-            @elseif($hasDraftApplication)
-                {{-- حالة الدفع ولكن لم يقدم الطلب بعد --}}
-                <span class="text-sm font-medium text-primary">
-                    <span>{{ $draftMembershipName ?? __('header.membership_request_draft') }}</span>
-                    {{-- status --}}
-                    <span class="badget badget-[#B0B0B0] px-2 py-1 rounded-md text-xs font-medium ">
+        <div class="mt-4 text-center space-y-1">
+            <h2 class="text-xl font-semibold text-foreground">{{ $user->name }}</h2>
+            <div class="text-sm text-muted-foreground flex items-center justify-center gap-2 flex-wrap">
+                @if ($user->membership_id)
+                    <span class="px-2 py-1 rounded-full bg-primary/10 text-primary font-medium text-xs">
+                        {{ $user->membership->name }}
+                    </span>
+                    <span style="--badget-color: {{ $user->membership_status->getColor() }};"
+                        class="badget px-2 py-1 rounded-full text-xs font-semibold">
+                        {{ $user->membership_status->label() }}
+                    </span>
+                    <span class="text-xs text-muted-foreground block">
+                        {{ __('header.expires_in') }}: {{ $user->membership_expires_at->format('d/m/Y') }}
+                    </span>
+                @elseif($hasDraftApplication)
+                    <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-semibold">
+                        {{ $draftMembershipName ?? __('header.membership_request_draft') }}
+                    </span>
+                    <span class="badget badget-[#B0B0B0] px-2 py-1 rounded-full text-xs font-medium">
                         {{ $draftApplication->status->Holded() }}
                     </span>
-                </span>
-            @else
-                {{ __('header.membership_regular') }}
-            @endif
-        </p>
+                @else
+                    <span class="px-3 py-1 rounded-full bg-muted text-xs font-medium">{{ __('header.membership_regular') }}</span>
+                @endif
+            </div>
+        </div>
 
-        <!-- زر الاشتراك / الترقية / إكمال الطلب -->
-        <div class="mt-2">
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
             @if ($user->membership_id)
                 <a href="{{ route('client.pay.index', ['id' => $user->membership->id, 'type' => 'membership']) }}"
-                    class="badget hover:badget-80 transition py-1 px-3 rounded-md hover:bg-secondary/60 cursor-pointer text-sm">
-                    {{ __('header.renew_membership') }}
+                    class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-white shadow-md hover:bg-primary/90 transition">
+                     {{ __('header.renew_membership') }}
                 </a>
+                @if (method_exists($user->membership, 'isHigherLevelThan') && !$user->membership->isHigherLevelThan())
+                    <a href="{{ route('client.memberships') }}"
+                        class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold border border-primary/60 text-primary hover:bg-primary/10 transition">
+                        {{ __('header.upgrade_membership') }}
+                    </a>
+                @endif
             @elseif (!$user->membership_id && !$hasDraftApplication)
                 <a href="{{ route('client.memberships') }}"
-                    class="badget hover:badget-80 transition py-1 px-3 rounded-md hover:bg-secondary/60 cursor-pointer text-sm">
+                    class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-white shadow-md hover:bg-primary/90 transition">
                     {{ __('header.subscribe_membership') }}
                 </a>
             @elseif($hasDraftApplication)
-                <div class="mt-2 text-sm text-muted-foreground">
-                    {{ __('header.your_request_has_not_been_submitted') }} <br>
+                <div class="text-sm text-muted-foreground text-center leading-relaxed">
+                    {{ __('header.your_request_has_not_been_submitted') }}<br>
                     <a href="{{ route('client.membership.request', ['application' => $draftApplication]) }}"
-                        class="text-primary hover:underline">
-                        {{ __('header.complete_request') }}
+                        class="text-primary font-semibold hover:underline inline-flex items-center gap-1">
+                        <x-ui.icon name="edit" class="size-4" /> {{ __('header.complete_request') }}
                     </a>
                 </div>
             @endif

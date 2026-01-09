@@ -1,3 +1,3 @@
-<x-layouts.auth title="{{ __('payments.Pay') }}">
+<x-layouts.guest-layout title="{{ __('payments.Pay') }}">
     <x-pay.pay-form />
-</x-layouts.auth>
+</x-layouts.guest-layout>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Membership;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,10 @@ class CheckItemExists
         }
         // تحقق اذا المستخدم قد اشترا العنصر من قبل
         $user = $request->user();
-        if ($user && $user->isPurchasedByUser($id, $modelClass::payableType())) {  // هذا يكفي للتحقق
+        $payableType = $modelClass::payableType();
+
+        // السماح بإعادة شراء العضوية (لأجل التجديد أو الترقية)
+        if ($payableType !== Membership::class && $user && $user->isPurchasedByUser($id, $payableType)) {
             $previous = url()->previous() && url()->previous() !== url()->current()
                 ? url()->previous()
                 : route('client.home');

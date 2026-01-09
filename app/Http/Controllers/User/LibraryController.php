@@ -26,7 +26,9 @@ class LibraryController extends Controller
         $data = $request->all();
         $res = Library::create($data);
         $res->updateTranslations($data['translations'] ?? [], $request->header('X-Locale', config('app.locale')));
-        $res->syncPhoto($request->input('poster', null));
+        // حافظ على نفس سلوك التحديث باستخدام syncPhotosById
+        $posterId = $request->input('poster');
+        $res->syncPhotosById($posterId ? [$posterId] : []);
         return app(LibraryResponse::class, ['resource' => $res])->toResponseResource();
     }
 

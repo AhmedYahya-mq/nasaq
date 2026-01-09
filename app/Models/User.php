@@ -439,7 +439,7 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
      * @param Carbon $now
      * @return Carbon
      */
-    private function upgradeWithBalance(Membership $newMembership, int $remainingDays, Carbon $now): Carbon
+    public function upgradeWithBalance(Membership $newMembership, int $remainingDays, Carbon $now): Carbon
     {
         if ($remainingDays > 0 && $this->membership_id) {
             $oldMembership = Membership::find($this->membership_id);
