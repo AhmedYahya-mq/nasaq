@@ -48,10 +48,15 @@
         <!-- زر الاشتراك / الترقية / إكمال الطلب -->
         <div class="mt-2">
             @if ($user->membership_id)
-                <a href="{{ route('client.pay.index', ['id' => $user->membership->id, 'type' => 'membership']) }}"
-                    class="badget hover:badget-80 transition py-1 px-3 rounded-md hover:bg-secondary/60 cursor-pointer text-sm">
-                    {{ __('header.renew_membership') }}
-                </a>
+                <form method="POST" action="{{ route('client.pay.prepare') }}" class="inline">
+                    @csrf
+                    <input type="hidden" name="type" value="membership">
+                    <input type="hidden" name="id" value="{{ $user->membership->id }}">
+                    <button type="submit"
+                        class="badget hover:badget-80 transition py-1 px-3 rounded-md hover:bg-secondary/60 cursor-pointer text-sm">
+                        {{ __('header.renew_membership') }}
+                    </button>
+                </form>
             @elseif (!$user->membership_id && !$hasDraftApplication)
                 <a href="{{ route('client.memberships') }}"
                     class="badget hover:badget-80 transition py-1 px-3 rounded-md hover:bg-secondary/60 cursor-pointer text-sm">

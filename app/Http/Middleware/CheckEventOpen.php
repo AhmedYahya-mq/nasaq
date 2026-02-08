@@ -19,6 +19,10 @@ class CheckEventOpen
         $event = $request->route('event'); // Route Model Binding
         $user = $request->user();
 
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
         // 1. تحقق من أن المستخدم مسجل للفعالية
         if (!$event->isUserRegistered($user->id)) {
             return redirect()
@@ -33,7 +37,7 @@ class CheckEventOpen
         }
 
         // 2. تحقق من الدفع إذا الفعالية ليست مجانية
-        if (!$event->isFree() && !($user && $user->isPurchasedByUser($event->id, Event::payableType()))) {
+        if (!$event->isFreeForUser($user) && !$user->isPurchasedByUser($event->id, Event::payableType())) {
             $previous = url()->previous() && url()->previous() !== url()->current()
                 ? url()->previous()
                 : route('client.home');

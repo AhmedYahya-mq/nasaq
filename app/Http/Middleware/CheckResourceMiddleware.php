@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Support\PaymentIntentFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -44,11 +45,16 @@ class CheckResourceMiddleware
      */
     protected function redirectToPayment($resource,  $message = null): Response
     {
+        $userId = request()->user()?->id;
+        if (!$userId) {
+            return redirect()
+                ->route('login')
+                ->with('error', $message ?? __('library.messages.requires_payment'));
+        }
+
+        $intent = PaymentIntentFactory::prepare($userId, $resource);
         return redirect()
-            ->route('client.pay.index', [
-                'type' => 'library',
-                'id' => $resource->id,
-            ])
+            ->route('client.pay.show', ['token' => $intent->token])
             ->with('error', $message ?? __('library.messages.requires_payment'));
     }
 }

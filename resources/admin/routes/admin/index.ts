@@ -404,7 +404,7 @@ blogs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     blogs.form = blogsForm
 /**
 * @see \App\Http\Controllers\User\EventController::events
- * @see app/Http/Controllers/User/EventController.php:27
+ * @see app/Http/Controllers/User/EventController.php:29
  * @route '/hidden/door/zone/master/events'
  */
 export const events = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -419,7 +419,7 @@ events.definition = {
 
 /**
 * @see \App\Http\Controllers\User\EventController::events
- * @see app/Http/Controllers/User/EventController.php:27
+ * @see app/Http/Controllers/User/EventController.php:29
  * @route '/hidden/door/zone/master/events'
  */
 events.url = (options?: RouteQueryOptions) => {
@@ -428,7 +428,7 @@ events.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\User\EventController::events
- * @see app/Http/Controllers/User/EventController.php:27
+ * @see app/Http/Controllers/User/EventController.php:29
  * @route '/hidden/door/zone/master/events'
  */
 events.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -437,7 +437,7 @@ events.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\User\EventController::events
- * @see app/Http/Controllers/User/EventController.php:27
+ * @see app/Http/Controllers/User/EventController.php:29
  * @route '/hidden/door/zone/master/events'
  */
 events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -447,7 +447,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\User\EventController::events
- * @see app/Http/Controllers/User/EventController.php:27
+ * @see app/Http/Controllers/User/EventController.php:29
  * @route '/hidden/door/zone/master/events'
  */
     const eventsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -457,7 +457,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\User\EventController::events
- * @see app/Http/Controllers/User/EventController.php:27
+ * @see app/Http/Controllers/User/EventController.php:29
  * @route '/hidden/door/zone/master/events'
  */
         eventsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -466,7 +466,7 @@ events.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\User\EventController::events
- * @see app/Http/Controllers/User/EventController.php:27
+ * @see app/Http/Controllers/User/EventController.php:29
  * @route '/hidden/door/zone/master/events'
  */
         eventsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

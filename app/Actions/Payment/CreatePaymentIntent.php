@@ -32,33 +32,17 @@ use App\Services\PaymentGateway;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Models\PaymentIntent;
+use App\Models\Event;
+use App\Models\Library;
+use App\Models\Membership;
 
 // =========================
 // Refactored Action
 // =========================
 class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
 {
-    /**
-     * @var int|null $payable_id
-     * معرف العنصر القابل للدفع (مثلاً: رقم الطلب أو المنتج)، يتم جلبه من السيشن.
-     */
-    protected ?int $payable_id;
-
-    /**
-     * @var string|null $payable_type
-     * نوع العنصر القابل للدفع (اسم الكلاس الكامل)، يتم جلبه من السيشن.
-     */
-    protected ?string $payable_type;
-
-    /**
-     * المُنشئ (Constructor)
-     * يقوم بجلب معرف ونوع العنصر القابل للدفع من السيشن وتخزينها في الخصائص.
-     */
-    public function __construct()
-    {
-        $this->payable_id = session('payable_id');
-        $this->payable_type = session('payable_type');
-    }
+    protected ?PaymentIntent $intent = null;
 
     /**
      * execute
@@ -83,7 +67,39 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
         $data = $request->all();
         $user = auth()->user();
 
-        $payable = $this->getPayableOrFail();
+        $payable = $this->getPayableFromIntentOrFail($data['intent_token'] ?? null, $user?->id);
+
+        // Defense-in-depth: validate payable is still eligible at payment creation time.
+        if ($payable instanceof Event) {
+            if (!$payable->isPurchasableFor($user)) {
+                throw new PayableNotFoundException('هذا الحدث غير متاح للتسجيل/الدفع حالياً.');
+            }
+        }
+
+        if ($payable instanceof Library) {
+            if (!Library::isPurchasable((int) $payable->id)) {
+                throw new PayableNotFoundException('هذا المورد غير متاح للشراء حالياً.');
+            }
+        }
+
+        if ($payable instanceof Membership) {
+            if ((int) ($payable->regular_price_in_halalas ?? 0) <= 0) {
+                throw new PayableNotFoundException('هذه العضوية لا تتطلب دفعاً.');
+            }
+        }
+
+        // Guardrail: if user already purchased, do not create new intents.
+        if ($user && method_exists($payable, 'payableType') && $user->isPurchasedByUser($payable->id, $payable::payableType())) {
+            throw new PayableNotFoundException('العنصر تم دفعه مسبقاً.');
+        }
+
+        // Intent-level idempotency: if this intent already has a linked payment, reuse it.
+        if ($this->intent && $this->intent->payment_id) {
+            $existing = Payment::find($this->intent->payment_id);
+            if ($existing) {
+                return $existing;
+            }
+        }
 
         // 1) بناء بيانات الدفع الأساسية
         $payload = $this->buildBasePayload($data, $payable, $user?->name, $user?->email, $user?->phone);
@@ -96,7 +112,17 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
         $responseDTO = $this->callGateway($payload);
 
         // 4) تحفظ الدفع في قاعدة البيانات بشكل آمن
-        return $this->persistPayment($responseDTO, $payable, $user?->id);
+        $payment = $this->persistPayment($responseDTO, $payable, $user?->id, $payload);
+
+        if ($this->intent) {
+            $this->intent->update([
+                'payment_id' => $payment->id,
+                'status' => 'used',
+                'used_at' => now(),
+            ]);
+        }
+
+        return $payment;
     }
 
     // =========================
@@ -113,20 +139,27 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
      *      كائن العنصر القابل للدفع.
      * @throws PayableNotFoundException
      */
-    protected function getPayableOrFail(): Model
+    protected function getPayableFromIntentOrFail(?string $token, ?int $userId): Model
     {
-        $type = $this->payable_type;
-        $id = $this->payable_id;
-
-        if (!$type || !$id || !class_exists($type)) {
-            throw new PayableNotFoundException('العنصر القابل للدفع غير موجود.');
+        if (!$token || !$userId) {
+            throw new PayableNotFoundException('محاولة دفع غير صالحة.');
         }
 
-        $payable = $type::find($id);
+        $intent = PaymentIntent::query()
+            ->where('token', $token)
+            ->where('user_id', $userId)
+            ->first();
+
+        if (!$intent || $intent->isExpired()) {
+            throw new PayableNotFoundException('عملية الدفع منتهية أو غير صالحة.');
+        }
+
+        $payable = $intent->payable;
         if (!$payable) {
             throw new PayableNotFoundException('العنصر القابل للدفع غير موجود.');
         }
 
+        $this->intent = $intent;
         return $payable;
     }
 
@@ -235,15 +268,17 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
      * @return Payment
      *      كائن الدفع الذي تم حفظه.
      */
-    protected function persistPayment(PaymentResponseDTO $responseDTO, Model $payable, ?int $userId): Payment
+    protected function persistPayment(PaymentResponseDTO $responseDTO, Model $payable, ?int $userId, PaymentPayloadDTO $payload): Payment
     {
-        return DB::transaction(function () use ($responseDTO, $payable, $userId) {
+        return DB::transaction(function () use ($responseDTO, $payable, $userId, $payload) {
+            $amountSar = round(((int) ($payload->amount ?? 0)) / 100, 2);
             return Payment::create([
                 'user_id' => $userId,
                 'moyasar_id' => $responseDTO->id,
                 'payable_id' => $payable->id,
                 'payable_type' => get_class($payable),
-                'amount' => $payable->regular_price ?? $payable->final_price, // keep in SAR if your column expects SAR
+                // Store expected amount derived from the exact payload sent to the gateway.
+                'amount' => $amountSar,
                 'currency' => 'SAR',
                 'status' => $responseDTO->status ?: 'initiated',
                 'source_type' => $responseDTO->sourceType,

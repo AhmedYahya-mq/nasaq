@@ -210,9 +210,11 @@ class PaymentGateway
             $method = strtoupper($method);
             $http = Http::withBasicAuth($this->apiKey, '')
                 ->acceptJson()
+                ->timeout(15)
                 ->withOptions([
                     'http_errors' => false,
-                    'verify' => false,
+                    // IMPORTANT: never disable TLS verification in production.
+                    'verify' => true,
                 ]);
 
             if ($method === 'GET') {

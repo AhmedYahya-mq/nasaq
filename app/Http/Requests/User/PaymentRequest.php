@@ -20,6 +20,7 @@ class PaymentRequest extends FormRequest implements RequestPaymentRequest
     public function rules(): array
     {
         return [
+            'intent_token' => 'required|string|size:64|exists:payment_intents,token',
             'cc_type' => 'required|in:creditcard,stcpay',
             'name' => 'sometimes|required_if:cc_type,creditcard|string|max:255',
             'cc_number' => ['sometimes', 'required_if:cc_type,creditcard', new CardNumber()],

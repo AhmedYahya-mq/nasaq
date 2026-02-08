@@ -22,7 +22,9 @@ return new class extends Migration
             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->index('slug');
             // content longText index is not supported in many databases
-            $table->fullText('content');
+            if (Schema::getConnection()->getDriverName() !== 'sqlite') {
+                $table->fullText('content');
+            }
 
             $table->index('admin_id');
             $table->index('views');

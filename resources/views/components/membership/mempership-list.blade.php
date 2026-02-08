@@ -30,7 +30,7 @@
                 'itemListElement' => $memberships->map(function ($membership, $index) {
                     $offer = [
                         '@type' => 'Offer',
-                        'url' => route('client.pay.index', ['type' => 'membership', 'id' => $membership->id]),
+                        'url' => route('client.memberships'),
                         'priceCurrency' => 'SAR',
                         'price' => $membership->is_discounted
                             ? $membership->discounted_price
@@ -66,7 +66,7 @@
                     return [
                         '@type' => 'ListItem',
                         'position' => $index + 1,
-                        'url' => route('client.pay.index', ['type' => 'membership', 'id' => $membership->id]),
+                        'url' => route('client.memberships'),
                         'item' => $item,
                     ];
                 }),

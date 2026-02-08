@@ -7,13 +7,117 @@ use App\Contract\Actions\PaymentCallback;
 use App\Contract\User\Request\PaymentCallbackRequest;
 use App\Contract\User\Request\PaymentRequest;
 use App\Contract\User\Response\PaymentResponse;
+use App\Models\Event;
+use App\Models\Library;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Models\PaymentIntent;
+use App\Models\Membership;
+use App\Support\PaymentIntentFactory;
 
 class PayController extends Controller
 {
-    public function index()
+    public function prepare(Request $request)
     {
-        return view('pay');
+        $user = $request->user();
+
+        $data = $request->validate([
+            'type' => ['required', 'string', Rule::in(['event', 'library', 'membership'])],
+            'id' => ['required', 'integer', 'min:1'],
+        ]);
+
+        $type = $data['type'];
+        $id = (int) $data['id'];
+
+        $payable = null;
+
+        if ($type === 'event') {
+            $event = Event::find($id);
+            if (!$event) {
+                abort(404);
+            }
+
+            if (!$event->isPurchasableFor($user)) {
+                return back()->with('error', __('هذا الحدث غير متاح للتسجيل/الدفع حالياً.'));
+            }
+
+            $payable = $event;
+        } elseif ($type === 'library') {
+            $res = Library::find($id);
+            if (!$res) {
+                abort(404);
+            }
+
+            if (!Library::isPurchasable($id)) {
+                return back()->with('error', __('هذا المورد غير متاح للشراء حالياً.'));
+            }
+
+            $payable = $res;
+        } elseif ($type === 'membership') {
+            $membership = Membership::find($id);
+            if (!$membership) {
+                abort(404);
+            }
+
+            if (!Membership::isPurchasable((int) $membership->id)) {
+                return back()->with('error', __('هذه العضوية غير متاحة للشراء حالياً.'));
+            }
+
+            $payable = $membership;
+        }
+
+        if (!$payable) {
+            return back()->with('error', __('محاولة غير صالحة.'));
+        }
+
+        $intent = PaymentIntentFactory::prepare($user->id, $payable);
+
+        return redirect()->route('client.pay.show', ['token' => $intent->token]);
+    }
+
+    public function show(string $token, Request $request)
+    {
+        $user = $request->user();
+
+        $intent = PaymentIntent::query()
+            ->where('token', $token)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        if ($intent->isExpired()) {
+            abort(410, 'Payment intent expired');
+        }
+
+        $item = $intent->payable;
+        if (!$item) {
+            abort(404);
+        }
+
+        $isMembership = $item instanceof Membership;
+        $startAt = null;
+        $endsAt = null;
+        if ($isMembership) {
+            $u = $user;
+            if (!$u->membership) {
+                $startAt = now()->format('Y-m-d');
+                $endsAt = now()->addYear()->format('Y-m-d');
+            } else {
+                $now = now();
+                $ends_at = $u->membership_expires_at && $u->membership_expires_at > $now
+                    ? $u->membership_expires_at
+                    : $now;
+                $endsAt = $ends_at->addYear()->format('Y-m-d');
+                $startAt = $u->membership_started_at?->format('Y-m-d');
+            }
+        }
+
+        return view('pay', [
+            'item' => $item,
+            'intentToken' => $intent->token,
+            'isMembership' => $isMembership,
+            'startAt' => $startAt,
+            'endsAt' => $endsAt,
+        ]);
     }
 
     public function createPayment(PaymentRequest $request, CreatePaymentIntent $createPaymentIntent)
@@ -35,9 +139,21 @@ class PayController extends Controller
             return app(PaymentResponse::class, ['payment' => $paymentCallback->payment])
                 ->toCallbackResponseWithDetails($paymentCallback->isSubscription);
         } catch (\Exception $e) {
-            return app(PaymentResponse::class, ['payment' => $paymentCallback->payment])
+            return app(PaymentResponse::class, ['payment' => $paymentCallback->payment ?? null])
                 ->toCallbackErrorResponse($e->getMessage());
         }
+    }
+
+    public function success()
+    {
+        return view('success');
+    }
+
+    public function failure(Request $request)
+    {
+        return view('failure', [
+            'message' => $request->query('message'),
+        ]);
     }
 
 }

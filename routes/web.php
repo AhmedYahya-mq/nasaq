@@ -3,6 +3,12 @@
 use App\Http\Controllers\FilePondController;
 use Illuminate\Support\Facades\Route;
 
+// Moyasar server-to-server webhook (payment confirmation)
+Route::post('/payment/webhook/moyasar', \App\Http\Controllers\MoyasarWebhookController::class)
+    ->name('payment.webhook.moyasar')
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])
+    ->middleware('throttle:60,1');
+
 
 Route::group(['middleware' => ['web', 'blocked'], 'as' => 'client.'], function () {
     Route::group(['prefix' => '{locale?}', 'where' => ['locale' => 'en|ar'], "as" => "locale."], function () {

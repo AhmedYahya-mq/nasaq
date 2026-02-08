@@ -283,6 +283,7 @@ export default function payForm() {
             if (!this.cardFormValid) return;
 
             const payload = {
+                intent_token: document.getElementById('payment_intent_token')?.value,
                 cc_number: onlyDigits(this.card.number),
                 cc_expiry: this.card.expiry,
                 cvc: this.card.cvc,
@@ -341,6 +342,7 @@ export default function payForm() {
             if (!this.stcFormValid) return;
             this.onProgress = true;
             const payload = {
+                intent_token: document.getElementById('payment_intent_token')?.value,
                 phone: this.stc.phone,
                 cc_type: "stcpay",
                 _token: this.crsf,
@@ -365,7 +367,7 @@ export default function payForm() {
             this.onProgress = true;
             axios.get(this.stc.otpUrl + "&otp_value=" + this.stc.otp).then((res) => {
                 if (res.data && res.data.status !== 'failed') {
-                    window.location.href = callback().url + "?id=" + res.data.id + "&status=" + res.data.status + "&message=" + encodeURIComponent(res.data.source?.message || "");
+                    window.location.href = callback().url + "?id=" + res.data.id + "&message=" + encodeURIComponent(res.data.source?.message || "");
                 } else {
                     this.onProgress = false;
                     this.stcError = translate(res.data.message || res.data.source?.message || "Verification failed. Please try again.");

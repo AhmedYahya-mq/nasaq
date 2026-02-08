@@ -10,6 +10,8 @@ use App\Traits\HasTranslations;
 use App\Traits\HasUlids;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Event extends Model
@@ -66,7 +68,33 @@ class Event extends Model
     public static function isPurchasable($id)
     {
         $event = self::find($id);
-        return $event && !$event->isFree();
+        if (!$event) {
+            return false;
+        }
+
+        // Backward-compatible behavior: use current auth user when available.
+        return $event->isPurchasableFor(Auth::user());
+    }
+
+    public function isPurchasableFor(?User $user = null): bool
+    {
+        if ($this->isFreeForUser($user)) {
+            return false;
+        }
+
+        if (!$this->isRegistrationOpen()) {
+            return false;
+        }
+
+        if (!$this->canUserRegister($user)) {
+            return false;
+        }
+
+        if ($user && $this->isUserRegistered($user->id)) {
+            return false;
+        }
+
+        return true;
     }
 
     public static function payableType()
@@ -81,10 +109,11 @@ class Event extends Model
     }
 
     // داله تتحقق اذا المستخدم المسجل اذا يمكنه تسجيل اذا في الحدث طبعا اذا الحدث لا يوجد اي عضوية مرتبطة يعني الكل يقدر يسجل مع عضوي او لا
-    public function canUserRegister()
+    public function canUserRegister(?User $user = null): bool
     {
-        $user = auth()->user();
-        if ($this->memberships()->count() === 0) {
+        $user = $user ?: Auth::user();
+
+        if (!$this->memberships()->exists()) {
             return true; // الحدث مفتوح للجميع
         }
 
@@ -153,7 +182,7 @@ class Event extends Model
     // مبلغ الخصم حق العضوية
     public function getMembershipDiscountAttribute(): int
     {
-        $user = auth()->user();
+        $user = Auth::user();
         if ($user && $user->membership && $user->membership->percent_discount > 0) {
             return round($this->event_discounted_price * $user->membership->percent_discount);
         }
@@ -163,7 +192,7 @@ class Event extends Model
     // 2️⃣ السعر بعد خصم العضوية (إذا المستخدم مسجل ولديه عضوية)
     public function getMembershipDiscountedPriceAttribute(): float
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $price = $this->event_discounted_price; // السعر بعد خصم الحدث
         if ($user && $user->membership && $user->membership->percent_discount > 0) {
             return $price -  round($price * $user->membership->percent_discount);
@@ -185,6 +214,22 @@ class Event extends Model
     public function isFree()
     {
         return $this->getFinalPriceAttribute() <= 0;
+    }
+
+    public function finalPriceForUser(?User $user = null): float
+    {
+        $price = (float) $this->event_discounted_price;
+
+        if ($user && $user->membership && (float) $user->membership->percent_discount > 0) {
+            $price -= (float) round($price * (float) $user->membership->percent_discount);
+        }
+
+        return (float) round($price);
+    }
+
+    public function isFreeForUser(?User $user = null): bool
+    {
+        return $this->finalPriceForUser($user) <= 0;
     }
 
     public function scopeUpcoming($query)

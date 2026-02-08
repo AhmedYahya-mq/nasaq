@@ -12,29 +12,17 @@ class PayForm extends Component
     public $isMembership = false;
     public $startAt;
     public $endsAt;
+    public $intentToken;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($item = null, $intentToken = null, $isMembership = false, $startAt = null, $endsAt = null)
     {
-        if (session('payable_type') !== '\App\Models\Membership') {
-            $this->item = session('payable_type')::find(session('payable_id'));
-            return;
-        }
-        $this->item = session('payable_type')::find(session('payable_id'));
-        $this->isMembership = true;
-        $user = auth()->user();
-        if (!$user->membership) {
-            $this->startAt = now()->format('Y-m-d');
-            $this->endsAt = now()->addYear()->format('Y-m-d');
-            return;
-        }
-        $now=now();
-        $ends_at = $user->membership_expires_at && $user->membership_expires_at > $now
-            ? $user->membership_expires_at
-            : $now;
-        $this->endsAt = $ends_at->addYear()->format('Y-m-d');
-        $this->startAt = $user->membership_started_at->format('Y-m-d');
+        $this->item = $item;
+        $this->intentToken = $intentToken;
+        $this->isMembership = (bool) $isMembership;
+        $this->startAt = $startAt;
+        $this->endsAt = $endsAt;
     }
 
     /**
