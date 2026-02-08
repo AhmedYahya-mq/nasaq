@@ -27,7 +27,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        
+
     }
 
     /**
@@ -49,6 +49,17 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        });
+
+        // Payment endpoints (prepare/create) are attractive DoS targets.
+        // Keep this reasonably strict; users still have PreventDuplicateRequest as a short replay lock.
+        RateLimiter::for('payment', function (Request $request) {
+            $userId = $request->user()?->id;
+            $key = $userId
+                ? ('payment|user:' . $userId)
+                : ('payment|ip:' . $request->ip());
+
+            return Limit::perMinute(10)->by($key);
         });
     }
 }

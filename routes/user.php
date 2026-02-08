@@ -62,8 +62,14 @@ Route::prefix('/')->middleware('auth')->group(function () {
         ->name('sessions.destroy');
 
     Route::group(['prefix' => 'payment', 'as' => 'pay.'], function () {
-        Route::get('{type}/{id}', [\App\Http\Controllers\PayController::class, 'index'])->name('index')->middleware('item.exists');
-        Route::post('create/', [\App\Http\Controllers\PayController::class, 'createPayment'])->name('create')->middleware('prevent.duplicate');
+        Route::get('{token}', [\App\Http\Controllers\PayController::class, 'show'])->name('show')
+            ->where('token', '[A-Za-z0-9]{64}');
+        Route::post('prepare', [\App\Http\Controllers\PayController::class, 'prepare'])
+            ->name('prepare')
+            ->middleware(['throttle:payment', 'prevent.duplicate']);
+        Route::post('create/', [\App\Http\Controllers\PayController::class, 'createPayment'])
+            ->name('create')
+            ->middleware(['throttle:payment', 'prevent.duplicate']);
         Route::get('callback', [\App\Http\Controllers\PayController::class, 'handleCallback'])->name('callback');
         Route::get('success', [\App\Http\Controllers\PayController::class, 'success'])->name('success');
         Route::get('failure', [\App\Http\Controllers\PayController::class, 'failure'])->name('failure');

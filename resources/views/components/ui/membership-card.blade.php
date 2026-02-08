@@ -100,7 +100,7 @@
 
         {{-- زر الانضمام --}}
         <div class="mt-auto pt-6">
-            <a href="{{ route('client.pay.index', ['type' => 'membership', 'id' => 22]) }}" @class([
+            <a href="{{ route('client.memberships') }}" @class([
                 'block w-full px-6 py-3 text-base font-semibold rounded-lg text-center transition-all duration-300',
                 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/40' => $featured,
                 'bg-accent text-accent-foreground hover:bg-accent/80' => !$featured,

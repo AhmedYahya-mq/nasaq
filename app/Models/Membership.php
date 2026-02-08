@@ -68,6 +68,16 @@ class Membership extends Model
     {
         return self::class;
     }
+
+    public static function isPurchasable(int $id): bool
+    {
+        $membership = self::query()->whereKey($id)->first();
+        if (!$membership) {
+            return false;
+        }
+
+        return (int) $membership->regular_price_in_halalas > 0;
+    }
     // ترجع نسبة الخصم اذا كانت العضوية مخفضة السعر
     public function getPrecentageDiscountAttribute(): ?int
     {

@@ -109,14 +109,18 @@
 
         {{-- زر الانضمام --}}
         <div class="mt-auto pt-6">
-            <a href="{{ route('client.pay.index', ['type' => 'membership', 'id' => $membership->id]) }}"
-                @class([
+            <form method="POST" action="{{ route('client.pay.prepare') }}">
+                @csrf
+                <input type="hidden" name="type" value="membership">
+                <input type="hidden" name="id" value="{{ $membership->id }}">
+                <button type="submit" @class([
                     'block w-full px-6 py-3 text-base font-semibold rounded-lg text-center transition-all duration-300',
                     'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/40' => $featured,
                     'bg-accent text-accent-foreground hover:bg-accent/80' => !$featured,
                 ])>
-                {{ __('about.memberships.join_now') }}
-            </a>
+                    {{ __('about.memberships.join_now') }}
+                </button>
+            </form>
         </div>
     </div>
 </div>

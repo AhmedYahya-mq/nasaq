@@ -13,7 +13,12 @@ class SendPaymentNotificationEmail
         $payment = $event->payment;
 
         // تحقق أن الحالة أصبحت مدفوعة
-        if ($payment->status->isPaid() && config('app.enable_email_notifications')) {
+        if (
+            $payment->status->isPaid()
+            && config('app.enable_email_notifications')
+            && ($payment->amount ?? 0) > 0
+            && ($payment->source_type ?? null) !== 'free'
+        ) {
             $adminEmail = env('CONTACT_EMAIL');
             if ($adminEmail) {
                 Mail::to($adminEmail)->queue(new PaymentInvoiceMail($payment));

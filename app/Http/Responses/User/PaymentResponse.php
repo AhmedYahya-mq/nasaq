@@ -52,11 +52,8 @@ class PaymentResponse implements ResponsePaymentResponse
     // callback response error
     public function toCallbackErrorResponse($message)
     {
-        // model payable
-        $type = strtolower(class_basename($this->payment->payable_type));
-        return redirect()->route('client.pay.index', [
-            'id' => $this->payment->payable_id,
-            'type' => $type,
-        ])->withErrors(['form' => $message]);
+        return redirect()->route('client.pay.failure', [
+            'message' => $message,
+        ]);
     }
 }

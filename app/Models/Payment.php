@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Payment extends Model
 {
@@ -134,5 +136,65 @@ class Payment extends Model
     public function getMessageAttribute(): ?string
     {
         return $this->raw_response['data']['source']['message'] ?? null;
+    }
+
+    public static function findPaidForUserPayable(int $userId, EloquentModel $payable): ?self
+    {
+        return self::query()
+            ->where('user_id', $userId)
+            ->where('payable_type', get_class($payable))
+            ->where('payable_id', $payable->getKey())
+            ->where('status', PaymentStatus::Paid)
+            ->orderByDesc('id')
+            ->first();
+    }
+
+    public function scopePaidPurchase($query)
+    {
+        return $query
+            ->where('status', PaymentStatus::Paid)
+            ->where(function ($q) {
+                $q->whereNull('source_type')
+                    ->orWhere('source_type', '!=', 'free');
+            });
+    }
+
+    public static function findPaidPurchaseForUserPayable(int $userId, EloquentModel $payable): ?self
+    {
+        return self::query()
+            ->paidPurchase()
+            ->where('user_id', $userId)
+            ->where('payable_type', get_class($payable))
+            ->where('payable_id', $payable->getKey())
+            ->orderByDesc('id')
+            ->first();
+    }
+
+    public static function createFreeInvoiceForUserPayable(int $userId, EloquentModel $payable, ?string $description = null): self
+    {
+        $existing = self::findPaidForUserPayable($userId, $payable);
+        if ($existing) {
+            return $existing;
+        }
+
+        return self::create([
+            'user_id' => $userId,
+            'moyasar_id' => 'free_' . (string) Str::ulid(),
+            'payable_id' => $payable->getKey(),
+            'payable_type' => get_class($payable),
+            'amount' => 0,
+            'currency' => 'SAR',
+            'status' => PaymentStatus::Paid,
+            'source_type' => 'free',
+            'company' => null,
+            'description' => $description,
+            'raw_response' => [
+                'type' => 'free',
+                'note' => 'Auto-created invoice for free acquisition',
+            ],
+            'discount' => 0,
+            'membership_discount' => 0,
+            'original_price' => (int) ($payable->price ?? 0),
+        ]);
     }
 }

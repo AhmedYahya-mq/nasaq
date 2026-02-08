@@ -4,31 +4,26 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response;
 
 class PreventDuplicateRequest
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // إذا ما في _token نكمل عادي
-        // if (!$request->has('_token')) {
-        //     return $next($request);
-        // }
+        // Prevent rapid replays (double-click / DevTools replay).
+        // This is NOT a full payment idempotency mechanism; it's a short-lived lock.
+        $userId = $request->user()?->id ?? 0;
+        $fingerprint = hash('sha256', $request->method() . '|' . $request->path() . '|' . json_encode($request->all()));
+        $key = "dup:req:{$userId}:{$fingerprint}";
 
-        // $token = $request->input('_token');
+        if (!Cache::add($key, true, now()->addSeconds(8))) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Duplicate request detected.',
+            ], 429);
+        }
 
-        // // نتحقق إذا موجود بالجلسة
-        // if (session()->has("request_tokens.$token")) {
-        //     return response()->json([
-        //         'status'  => 'failed',
-        //         'message' => 'Duplicate request detected.',
-        //     ], 429);
-        // }
-
-        // // نخزن التوكن في السيشن
-        // session()->put("request_tokens.$token", now());
-
-        // نكمل الطلب
         return $next($request);
     }
 }

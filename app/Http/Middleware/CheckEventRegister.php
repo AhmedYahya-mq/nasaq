@@ -2,10 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Event;
 use Closure;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
+use App\Support\PaymentIntentFactory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -18,29 +20,34 @@ class CheckEventRegister
         $event = $request->route('event'); // Route Model Binding
         $user = $request->user();
 
-        if(!$event->canUserRegister($user)) {
-            return redirect()->route('client.profile', ['tab'=>'events'])->with('error', __('events.messages.membership_required'));
-        }
-
         // 1️⃣ تحقق من وجود الحدث
         throw_if(!$event, NotFoundHttpException::class, __('events.messages.not_found'));
 
-        // 2️⃣ تحقق أن التسجيل مفتوح
-        throw_unless($event->isRegistrationOpen(), HttpException::class, 403, __('events.messages.registration_closed'));
-
-        // 3️⃣ تحقق من تسجيل المستخدم
+        // 2️⃣ تحقق من تسجيل المستخدم
         if (!$user) {
             return redirect()->route('login')->with('error', __('events.messages.login_required'));
         }
 
-        // 4️⃣ تحقق أن المستخدم لم يسجل مسبقًا
-        if ($event->isUserRegistered($user->id)) {
-            return redirect()->route('client.profile', ['tab'=>'events'])->with('info', __('events.messages.already_registered'));
+        // 3️⃣ تحقق من أهلية المستخدم للحدث (العضوية المطلوبة)
+        if (!$event->canUserRegister($user)) {
+            return redirect()->route('client.profile', ['tab' => 'events'])
+                ->with('error', __('events.messages.membership_required'));
         }
-        
-        // 5️⃣ تحقق من الدفع إذا لم يكن الحدث مجاني
-        if (!$event->isFree()) {
-            return $this->redirectToPayment($event);
+
+        // 4️⃣ تحقق أن التسجيل مفتوح وأن الحدث قابل للشراء/التسجيل
+        throw_unless($event->isRegistrationOpen(), HttpException::class, 403, __('events.messages.registration_closed'));
+
+        // 5️⃣ تحقق أن المستخدم لم يسجل مسبقًا
+        if ($event->isUserRegistered($user->id)) {
+            return redirect()->route('client.profile', ['tab' => 'events'])->with('info', __('events.messages.already_registered'));
+        }
+
+        // 6️⃣ تحقق من الدفع إذا لم يكن الحدث مجاني
+        $requiresPayment = !$event->isFreeForUser($user);
+        $alreadyPurchased = $user && $user->isPurchasedByUser($event->id, Event::payableType());
+
+        if ($requiresPayment && !$alreadyPurchased) {
+            return $this->redirectToPayment($user->id, $event);
         }
 
         return $next($request);
@@ -54,13 +61,11 @@ class CheckEventRegister
      * @throws RouteNotFoundException
      * @throws InvalidArgumentException
      */
-    protected function redirectToPayment($event,  $message = null): Response
+    protected function redirectToPayment(int $userId, $event,  $message = null): Response
     {
+        $intent = PaymentIntentFactory::prepare($userId, $event);
         return redirect()
-            ->route('client.pay.index', [
-                'type' => 'event',
-                'id' => $event->id,
-            ])
+            ->route('client.pay.show', ['token' => $intent->token])
             ->with('error', $message ?? __('events.messages.requires_payment'));
     }
 }

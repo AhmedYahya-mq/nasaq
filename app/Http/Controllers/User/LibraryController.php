@@ -85,6 +85,21 @@ class LibraryController extends Controller
     public function download(Library $res, FileLibraryDownload $downloader)
     {
         try {
+            $user = auth()->user();
+            if (!$user) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => __('library.messages.download_not_allowed'),
+                ], 401);
+            }
+
+            if (!$res->isUserRegistered($user->id)) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => __('library.messages.download_not_allowed'),
+                ], 403);
+            }
+
             return $downloader->download($res);
         } catch (\Exception $e) {
             Log::error('Error downloading file: ' . $e->getMessage());

@@ -128,10 +128,22 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
     // auth()->user()->isPurchasedByUser($itemId) 1 1
     public function isPurchasedByUser($itemId, $type): bool
     {
-        return $this->payments()
+        $query = $this->payments()
             ->where('payable_type', $type)
             ->where('payable_id', $itemId)
-            ->where('status', PaymentStatus::Paid)
+            ->where('status', PaymentStatus::Paid);
+
+        // For Events: allow free invoices to count as entitlement (grandfathering).
+        if ($type === \App\Models\Event::class) {
+            return $query->exists();
+        }
+
+        // For non-events (Library/Membership/...): free invoices should NOT be treated as a paid purchase.
+        return $query
+            ->where(function ($q) {
+                $q->whereNull('source_type')
+                    ->orWhere('source_type', '!=', 'free');
+            })
             ->exists();
     }
 

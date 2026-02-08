@@ -8,6 +8,7 @@ use App\Enums\LibraryType;
 use App\Traits\HasTranslations;
 use App\Traits\HasUlids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Library extends Model
 {
@@ -93,7 +94,7 @@ class Library extends Model
      */
     public function getMembershipDiscountAttribute(): float
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         if ($user && $user->membership && $user->membership->percent_discount > 0) {
             return round($this->discounted_price * $user->membership->percent_discount);
@@ -109,7 +110,7 @@ class Library extends Model
     {
         $price = $this->discounted_price;
 
-        $user = auth()->user();
+        $user = Auth::user();
         if ($user && $user->membership && $user->membership->percent_discount > 0) {
             $price -= $this->membership_discount;
         }
@@ -142,7 +143,9 @@ class Library extends Model
     public static function isPurchasable($id): bool
     {
         $res = self::find($id);
-        return $res && !$res->isFree();
+        return $res
+            && ($res->status?->value === \App\Enums\LibraryStatus::Published)
+            && !$res->isFree();
     }
 
     // تحقق من ان عليه تخفيض سوا عبر العضوية او عبر خصم مباشر
@@ -165,9 +168,11 @@ class Library extends Model
      */
     public function syncPaymentForUser(int $userId): void
     {
-        $payment = $this->payment()
+        $payment = Payment::query()
+            ->paidPurchase()
             ->where('user_id', $userId)
-            ->where('status', \App\Enums\PaymentStatus::Paid)
+            ->where('payable_type', self::class)
+            ->where('payable_id', $this->id)
             ->first();
         $this->users()->syncWithoutDetaching([
             $userId => [
@@ -183,16 +188,24 @@ class Library extends Model
         if (!$pivot) {
             return false;
         }
+
+        // If the library is currently free, any saved record grants access.
         if ($this->isFree()) {
             return true;
         }
-        if ($pivot->payment_id) {
-            return $this->payment()
-                ->where('id', $pivot->payment_id)
-                ->where('status', \App\Enums\PaymentStatus::Paid)
-                ->exists();
+
+        // If the library is currently paid, require a real paid purchase (not a free invoice).
+        if (!$pivot->payment_id) {
+            return false;
         }
-        return false;
+
+        return Payment::query()
+            ->paidPurchase()
+            ->whereKey($pivot->payment_id)
+            ->where('user_id', $userId)
+            ->where('payable_type', self::class)
+            ->where('payable_id', $this->id)
+            ->exists();
     }
 
 
@@ -200,6 +213,36 @@ class Library extends Model
     {
         if (! $this->exists) {
             return false;
+        }
+
+        if ($this->isFree() && !$paymentId) {
+            $paymentId = Payment::createFreeInvoiceForUserPayable(
+                $userId,
+                $this,
+                'Free library acquisition'
+            )->id;
+        }
+
+        if (! $this->isFree() && ! $paymentId) {
+            $paymentId = Payment::findPaidPurchaseForUserPayable($userId, $this)?->id;
+        }
+
+        if (!$this->isFree()) {
+            if (!$paymentId) {
+                return false;
+            }
+
+            $valid = Payment::query()
+                ->whereKey($paymentId)
+                ->where('user_id', $userId)
+                ->where('payable_type', self::class)
+                ->where('payable_id', $this->id)
+                ->paidPurchase()
+                ->exists();
+
+            if (!$valid) {
+                return false;
+            }
         }
 
         if ($this->isUserRegistered($userId)) {
@@ -212,7 +255,7 @@ class Library extends Model
         }
 
         $this->users()->attach($userId, [
-            'payment_id' => $this->isFree() ? null : $paymentId,
+            'payment_id' => $paymentId,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -232,8 +275,12 @@ class Library extends Model
             return false;
         }
 
-        return Payment::where('id', $pivot->payment_id)
-            ->where('status', \App\Enums\PaymentStatus::Paid)
+        return Payment::query()
+            ->paidPurchase()
+            ->whereKey($pivot->payment_id)
+            ->where('user_id', $userId)
+            ->where('payable_type', self::class)
+            ->where('payable_id', $this->id)
             ->exists();
     }
 }

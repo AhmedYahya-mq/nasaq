@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use RuntimeException;
 
 /** @package App\Models */
 class MembershipApplication extends Model
@@ -123,6 +124,22 @@ class MembershipApplication extends Model
      */
     public function approve()
     {
+        $membership = $this->membership;
+        if ($membership && (int) ($membership->regular_price_in_halalas ?? 0) > 0) {
+            if (!$this->isPaymentDone()) {
+                throw new RuntimeException('لا يمكن اعتماد الطلب بدون دفع ناجح.');
+            }
+
+            $payment = $this->payment;
+            if (!$payment
+                || (int) $payment->user_id !== (int) $this->user_id
+                || $payment->payable_type !== Membership::class
+                || (int) $payment->payable_id !== (int) $this->membership_id
+                || !$payment->isPaid()) {
+                throw new RuntimeException('سجل الدفع غير صالح لهذا الطلب.');
+            }
+        }
+
         DB::transaction(function () {
             $this->update([
                 'status' => EnumsMembershipApplication::Approved,

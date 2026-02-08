@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventRegistration;
 use Illuminate\Http\Request;
+use App\Support\PaymentIntentFactory;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -43,7 +45,7 @@ class EventController extends Controller
     public function update(EventRequest $request, Event $event)
     {
         $data = $request->all();
-        // اذا كان تاريخ الذي تم ارساله 
+        // اذا كان تاريخ الذي تم ارساله
         $event->update($data);
         $event->updateTranslations($data['translations'] ?? [], $request->header('X-Locale', config('app.locale')));
         if (array_key_exists('accepted_membership_ids', $data)) {
@@ -86,7 +88,19 @@ class EventController extends Controller
 
     public function register(Event $event)
     {
-        EventRegistration::registerUserToEvent($event->id, auth()->id());
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', __('events.messages.login_required'));
+        }
+
+        // Only free-for-user events can be registered without a paid payment record.
+        if (!$event->isFreeForUser($user)) {
+            $intent = PaymentIntentFactory::prepare($user->id, $event);
+            return redirect()->route('client.pay.show', ['token' => $intent->token])
+                ->with('error', __('events.messages.requires_payment'));
+        }
+
+        EventRegistration::registerUserToEvent($event->id, $user->id, null);
         return back()->with('success', __('events.messages.registration_successful'));
     }
 
@@ -131,7 +145,7 @@ class EventController extends Controller
 
     public function redirctToEvent(Event $event)
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         // جلب تسجيل المستخدم للفعالية (مضمون أنه موجود بفضل Middleware)
         $registration = EventRegistration::where('event_id', $event->id)

@@ -45,6 +45,7 @@ final class PaymentResponseDTO
         $description = $root['description'] ?? ($raw['description'] ?? null);
         $errorMessage = $raw['error']['message'] ?? $root['error']['message'] ?? $root['source']['message'] ?? null;
 
-        return new self($id, PaymentStatus::tryFrom($status), $sourceType, $company, $description, $raw, $errorMessage);
+        $parsedStatus = PaymentStatus::tryFrom((string) $status) ?? new PaymentStatus(PaymentStatus::Initiated);
+        return new self($id, $parsedStatus, $sourceType, $company, $description, $raw, $errorMessage);
     }
 }

@@ -8,7 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckItemExists
 {
-    protected $class = '\\App\\Models\\';
+    /**
+     * Explicit allowlist for payable types to prevent abusing arbitrary App\\Models\ classes.
+     * Key is the route {type} segment.
+     */
+    protected array $typeMap = [
+        'event' => \App\Models\Event::class,
+        'library' => \App\Models\Library::class,
+        'membership' => \App\Models\Membership::class,
+    ];
     /**
      * Handle an incoming request.
      *
@@ -16,16 +24,24 @@ class CheckItemExists
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $type = $request->route('type'); // أو من query string
+        $type = strtolower((string) $request->route('type')); // أو من query string
         $id   = $request->route('id');
 
-        $modelClass = $this->class . ucfirst($type);
-        if (!class_exists($modelClass) || !$modelClass::find($id)) {
+        $modelClass = $this->typeMap[$type] ?? null;
+        if (!$modelClass) {
+            return abort(404, 'Item not found');
+        }
+
+        $item = $modelClass::find($id);
+        if (!$item) {
             return abort(404, 'Item not found');
         }
         // تحقق اذا العنصر قابل لشراء يكون اسعر اكبر من صفر
         if (method_exists($modelClass, 'isPurchasable') && !$modelClass::isPurchasable($id)) {
-            return redirect($modelClass::redirectRoute($id));
+            if (method_exists($modelClass, 'redirectRoute')) {
+                return redirect($modelClass::redirectRoute($id));
+            }
+            return abort(403, 'Item not purchasable');
         }
         // تحقق اذا المستخدم قد اشترا العنصر من قبل
         $user = $request->user();
@@ -39,8 +55,10 @@ class CheckItemExists
                 ]));
         }
 
-        // العنصر موجود، تابع الطلب
-        session(['payable_type' => $modelClass, 'payable_id' => $id]);
+        // العنصر موجود، تابع الطلب (بدون استخدام session)
+        $request->attributes->set('payable_model', $item);
+        $request->attributes->set('payable_type', $modelClass);
+        $request->attributes->set('payable_id', (int) $id);
         return $next($request);
     }
 }

@@ -10,14 +10,14 @@ class PaymentCallbackRequest extends FormRequest implements \App\Contract\User\R
 {
     public function authorize(): bool
     {
-        return true;
+        return auth()->check();
     }
 
     public function rules(): array
     {
         return [
             'id' => 'required|string|exists:payments,moyasar_id',
-            'status' => 'required|string|in:' . implode(',', \App\Enums\PaymentStatus::getValues()),
+            'status' => 'sometimes|string|in:' . implode(',', \App\Enums\PaymentStatus::getValues()),
         ];
     }
 

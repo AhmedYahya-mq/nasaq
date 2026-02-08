@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Support\PaymentIntentFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckPaymentMiddleware
@@ -30,19 +31,19 @@ class CheckPaymentMiddleware
         // 4. تأكد من وجود الدفع
         $payment = $application->payment;
         if (!$payment) {
-            return $this->redirectToPayment($application, 'You need to complete the payment before proceeding.');
+            return $this->redirectToPayment($application, $user->id, 'You need to complete the payment before proceeding.');
         }
-        
+
         // 5. تحقق أن الدفع تم فعلاً
         if (!$application->isPaymentDone()) {
-            return $this->redirectToPayment($application, 'Payment is not completed yet.');
+            return $this->redirectToPayment($application, $user->id, 'Payment is not completed yet.');
         }
         // 6. تحقق أن الدفع يخص نفس العضوية
         if (
             $payment->payable_type !== \App\Models\Membership::class ||
             $payment->payable_id !== $application->membership_id
         ) {
-            return $this->redirectToPayment($application, 'Payment record does not match this membership.');
+            return $this->redirectToPayment($application, $user->id, 'Payment record does not match this membership.');
         }
         return $next($request);
     }
@@ -50,13 +51,19 @@ class CheckPaymentMiddleware
     /**
      * إعادة توجيه لصفحة الدفع مع رسالة
      */
-    protected function redirectToPayment($application, string $message): Response
+    protected function redirectToPayment($application, int $userId, string $message): Response
     {
+        // Membership payment is tied to the selected membership.
+        $membership = $application->membership;
+        if ($membership) {
+            $intent = PaymentIntentFactory::prepare($userId, $membership);
+            return redirect()
+                ->route('client.pay.show', ['token' => $intent->token])
+                ->with('error', $message);
+        }
+
         return redirect()
-            ->route('pay.index', [
-                'type' => 'membership',
-                'id' => $application->id,
-            ])
+            ->route('login')
             ->with('error', $message);
     }
 
