@@ -6,7 +6,7 @@
         <div class="container mx-auto">
             <div class="card w-full max-w-lg mx-auto animate-card-enter border border-border">
                 <div class="flex flex-col justify-center">
-                    @if (session('status') && session('status') == __(Password::RESET_LINK_SENT))
+                    @if (session('status') && session('status') == __(\Illuminate\Support\Facades\Password::RESET_LINK_SENT))
                         <div>
                             <div class="text-center animate-fade-in-down">
                                 <div
