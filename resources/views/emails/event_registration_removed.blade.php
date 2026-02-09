@@ -28,9 +28,8 @@
 
             <tr>
                 <td colspan="2" style="padding-top:14px; text-align:center;">
-                    <div
-                        style="padding:12px 16px;">
-                        <p style="margin:0; font-size:16px; color:#0f172a;">إلغاء تسجيلك في الفعالية
+                    <div style="padding:0px 16px;">
+                        <p style="margin:0; font-size:16px; color:#0f172a;">
                             <strong style="display: block">{{ $eventTitle }}</strong>
                         </p>
                     </div>

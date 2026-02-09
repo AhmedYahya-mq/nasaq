@@ -27,7 +27,7 @@ class EventRegistrationRemovedMail extends Mailable
             return $this;
         }
 
-        $eventTitle = $this->event->title_ar ?? $this->event->title_en ?? ('فعالية #' . $this->event->id);
+        $eventTitle = $this->event->translateField('title', 'ar') ?? ('فعالية #' . $this->event->id);
 
         return $this
             ->subject('تنبيه مهم: إلغاء تسجيل فعالية (' . $eventTitle . ') - ' . config('app.name'))
