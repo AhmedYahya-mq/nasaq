@@ -12,7 +12,7 @@ return [
     'purchased_item' => 'Purchased: :title',
     'unknown_service' => 'Unknown service',
     'no_purchases' => "You haven't made any purchases yet.",
-    
+
     'Payment Successful' => 'Payment Successful',
     'Thank you, :name! Your payment has been received successfully.' => 'Thank you, :name! Your payment has been received successfully.',
     'Amount Paid' => 'Amount Paid',
@@ -45,10 +45,46 @@ return [
     'Minute' => 'minute',
     'Guest' => 'Guest',
     'Membership Discount' => 'Membership Discount',
+    'Event Discount' => 'Event Discount',
+    'Event Price' => 'Event Price',
+    'Membership Price' => 'Membership Price',
+    'Membership' => 'Membership',
+    'Event' => 'Event',
+    'Course' => 'Course',
+    'Course Price' => 'Course Price',
+    'Course Discount' => 'Course Discount',
     'You_have_already_purchased_this_item' => 'You have already purchased this :item.',
     'item' => 'item',
     'event' => 'event',
     'membership' => 'membership',
     'library' => 'resource',
-    'Secure Payment Info' => 'Note: After completing the payment, the amount cannot be refunded. Please make sure to choose carefully before completing the purchase.'
+    'Secure Payment Info' => 'Note: After completing the payment, the amount cannot be refunded. Please make sure to choose carefully before completing the purchase.',
+
+    // Pay form UI
+    'Item' => 'Item',
+    'Action' => 'Action',
+    'Renewal' => 'Renewal',
+    'Upgrade' => 'Upgrade',
+    'Downgrade' => 'Downgrade',
+    'New Subscription' => 'New Subscription',
+    'Plan' => 'Plan',
+    'Summary' => 'Summary',
+    'Live Update' => 'Live Update',
+    'Secured by SSL' => 'Secured by SSL',
+    'Choose Method' => 'Choose a payment method',
+    'Upgrade Warning' => 'Note: Upgrading will replace your current subscription.',
+    'Membership Notice Title' => 'Membership update',
+    'Membership Notice New' => 'New membership: your subscription will start for the full plan duration.',
+    'Membership Notice Renewal' => 'Renewal: your current membership remains active and the expiry will be extended from your current end date.',
+    'Membership Notice Upgrade' => 'Upgrade: the remaining value of your current membership will be converted into extra time on the new plan.',
+    'Membership Notice Downgrade' => 'Downgrade: the remaining value of your current membership will be converted into time on the lower plan (not a full new period).',
+    'Membership Notice Approval' => 'Your membership will be updated after your membership request is approved.',
+    'Pay with card' => 'Pay with card',
+    'Fast checkout' => 'Fast checkout',
+    'Encrypted Checkout' => 'Encrypted checkout',
+    'Includes taxes and fees' => 'Includes taxes and fees',
+
+    // Failure page
+    'Payment failed' => 'Payment failed',
+    'Please try again.' => 'Please try again.'
 ];

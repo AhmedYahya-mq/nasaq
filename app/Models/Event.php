@@ -73,7 +73,8 @@ class Event extends Model
         }
 
         // Backward-compatible behavior: use current auth user when available.
-        return $event->isPurchasableFor(Auth::user());
+        $currentUser = Auth::user();
+        return $event->isPurchasableFor($currentUser instanceof User ? $currentUser : null);
     }
 
     public function isPurchasableFor(?User $user = null): bool
@@ -117,7 +118,14 @@ class Event extends Model
             return true; // الحدث مفتوح للجميع
         }
 
-        if ($user && $user->membership) {
+        // Admin (or any non-User auth model) never qualifies for membership-restricted events.
+        if ($user && !($user instanceof User)) {
+            return false;
+        }
+
+        // If event is restricted to memberships, the user must have an ACTIVE membership.
+        // Expired memberships are treated as no membership.
+        if ($user && $user->hasActiveMembership() && $user->membership) {
             return $this->memberships()->where('membership_id', $user->membership->id)->exists();
         }
 
@@ -183,7 +191,7 @@ class Event extends Model
     public function getMembershipDiscountAttribute(): int
     {
         $user = Auth::user();
-        if ($user && $user->membership && $user->membership->percent_discount > 0) {
+        if ($user instanceof User && $user->hasActiveMembership() && $user->membership && (float) $user->membership->percent_discount > 0) {
             return round($this->event_discounted_price * $user->membership->percent_discount);
         }
         return 0;
@@ -194,7 +202,7 @@ class Event extends Model
     {
         $user = Auth::user();
         $price = $this->event_discounted_price; // السعر بعد خصم الحدث
-        if ($user && $user->membership && $user->membership->percent_discount > 0) {
+        if ($user instanceof User && $user->hasActiveMembership() && $user->membership && (float) $user->membership->percent_discount > 0) {
             return $price -  round($price * $user->membership->percent_discount);
         }
         return $price;
@@ -220,7 +228,7 @@ class Event extends Model
     {
         $price = (float) $this->event_discounted_price;
 
-        if ($user && $user->membership && (float) $user->membership->percent_discount > 0) {
+        if ($user instanceof User && $user->hasActiveMembership() && $user->membership && (float) $user->membership->percent_discount > 0) {
             $price -= (float) round($price * (float) $user->membership->percent_discount);
         }
 

@@ -10,17 +10,19 @@ class PayForm extends Component
 {
     public $item;
     public $isMembership = false;
+    public $membershipAction;
     public $startAt;
     public $endsAt;
     public $intentToken;
     /**
      * Create a new component instance.
      */
-    public function __construct($item = null, $intentToken = null, $isMembership = false, $startAt = null, $endsAt = null)
+    public function __construct($item = null, $intentToken = null, $isMembership = false, $membershipAction = null, $startAt = null, $endsAt = null)
     {
         $this->item = $item;
         $this->intentToken = $intentToken;
         $this->isMembership = (bool) $isMembership;
+        $this->membershipAction = $membershipAction;
         $this->startAt = $startAt;
         $this->endsAt = $endsAt;
     }

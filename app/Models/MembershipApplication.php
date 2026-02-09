@@ -156,7 +156,15 @@ class MembershipApplication extends Model
             // تفعيل العضوية الجديدة
             $user = $this->user;
             $newMembership = $this->membership;
-            $user->subscribeMembership($newMembership);
+
+            // Determine and apply the correct membership operation (new/renewal/upgrade/downgrade)
+            $change = $user->calculateMembershipChange($newMembership);
+
+            $user->update([
+                'membership_id' => $newMembership->id,
+                'membership_started_at' => now(),
+                'membership_expires_at' => $change['newExpiresAt'],
+            ]);
             $this->sendRequestStatusNotification();
         });
     }

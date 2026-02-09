@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Event;
 
+use App\Models\User;
 use App\Contract\User\Resource\EventRegistrationCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -68,7 +69,9 @@ class EventResource extends JsonResource
             'address_en' => $this->address_en,
             'start_at' => $this->start_at,
             'start_date' => $this->start_at->setTimezone('Asia/Riyadh')->locale(app()->getLocale())->translatedFormat('d F Y h:i A'),
-            'can_register' => $this->canUserRegister(),
+            'can_register' => $this->isRegistrationOpen()
+                && $this->canUserRegister(($request->user() instanceof User) ? $request->user() : null)
+                && !$this->isUserRegistered($request->user()->id ?? 0),
             'is_registered' => $this->isUserRegistered($request->user()->id ?? 0),
             'end_at' => $this->end_at,
             'capacity' => $this->capacity ?? 0,

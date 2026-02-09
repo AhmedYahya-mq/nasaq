@@ -35,7 +35,10 @@ class CheckEventRegister
         }
 
         // 4️⃣ تحقق أن التسجيل مفتوح وأن الحدث قابل للشراء/التسجيل
-        throw_unless($event->isRegistrationOpen(), HttpException::class, 403, __('events.messages.registration_closed'));
+        if (!$event->isRegistrationOpen()) {
+            return redirect()->route('client.profile', ['tab' => 'events'])
+                ->with('error', __('events.messages.registration_closed'));
+        }
 
         // 5️⃣ تحقق أن المستخدم لم يسجل مسبقًا
         if ($event->isUserRegistered($user->id)) {

@@ -47,11 +47,11 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
 
         if ($this->payment->payable instanceof \App\Models\Membership) {
             $user = $request->user();
-            if ($user->membership_id === $this->payment->payable_id) {
-                $this->isRenew = true;
-            } else {
-                $this->isSubscription = true;
-            }
+
+            // Any membership payment requires completing the membership request form
+            // (new subscription, renewal, upgrade, downgrade).
+            $this->isSubscription = true;
+            $this->isRenew = ((int) $user->membership_id === (int) $this->payment->payable_id);
         }
 
         // Side effects must be executed only once on a legitimate initiated→paid transition.
@@ -59,12 +59,7 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
             return;
         }
 
-        if ($this->payment->payable instanceof \App\Models\Membership) {
-            $user = $request->user();
-            if ($this->isRenew) {
-                $user->renewMembership();
-            }
-        }
+        // Membership activation/renewal/upgrade/downgrade is handled on membership application approval.
 
         if ($this->payment->payable instanceof \App\Models\Event) {
             $this->registerUserToEvent();

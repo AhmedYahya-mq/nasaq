@@ -7,6 +7,7 @@ use App\Enums\LibraryStatus;
 use App\Models\Event;
 use App\Models\EventRegistration;
 use App\Models\Library;
+use App\Models\Membership;
 use App\Models\Payment;
 use App\Models\PaymentIntent;
 use App\Models\User;
@@ -83,6 +84,97 @@ class PaymentFlowTest extends TestCase
         ]);
     }
 
+    public function test_membership_renewal_callback_redirects_to_membership_request_form(): void
+    {
+        $membership = Membership::factory()->create([
+            'duration_days' => 365,
+            'price' => 100,
+        ]);
+
+        $user = User::factory()->create([
+            'is_active' => true,
+            'membership_id' => $membership->id,
+            'membership_started_at' => now()->subDays(10),
+            'membership_expires_at' => now()->addDays(30),
+        ]);
+
+        $intent = PaymentIntentFactory::prepare($user->id, $membership);
+
+        $this->fakeMoyasarCreateInitiated('pay_mem_renew_1', 10000);
+
+        $this->actingAs($user)
+            ->withCsrfSession()
+            ->post(route('client.pay.create'), $this->csrfPayload([
+                'intent_token' => $intent->token,
+                'cc_type' => 'creditcard',
+                'name' => 'Test User',
+                'cc_number' => '4111111111111111',
+                'cc_expiry' => '12/30',
+                'cvc' => '123',
+            ]))
+            ->assertOk();
+
+        $this->fakeMoyasarFindPaid('pay_mem_renew_1', 10000);
+
+        $callback = $this->actingAs($user)->get(route('client.pay.callback', ['id' => 'pay_mem_renew_1']));
+        $callback->assertRedirect();
+
+        $payment = Payment::where('moyasar_id', 'pay_mem_renew_1')->firstOrFail();
+        $this->assertTrue($payment->isPaid());
+        $this->assertNotNull($payment->membershipApplication);
+
+        $callback->assertRedirect(route('client.membership.request', ['application' => $payment->membershipApplication]));
+    }
+
+    public function test_membership_renewal_is_not_blocked_by_previous_paid_payment(): void
+    {
+        $membership = Membership::factory()->create([
+            'duration_days' => 365,
+            'price' => 100,
+        ]);
+
+        $user = User::factory()->create([
+            'is_active' => true,
+            'membership_id' => $membership->id,
+            'membership_started_at' => now()->subDays(10),
+            'membership_expires_at' => now()->addDays(30),
+        ]);
+
+        // Simulate an older successful membership payment (real users will have this).
+        Payment::create([
+            'user_id' => $user->id,
+            'moyasar_id' => 'pay_old_mem_1',
+            'payable_id' => $membership->id,
+            'payable_type' => Membership::class,
+            'amount' => 100,
+            'currency' => 'SAR',
+            'status' => 'paid',
+            'source_type' => 'creditcard',
+            'company' => 'visa',
+            'description' => 'Old membership payment',
+            'raw_response' => ['type' => 'test'],
+            'discount' => 0,
+            'membership_discount' => 0,
+            'original_price' => 100,
+        ]);
+
+        $intent = PaymentIntentFactory::prepare($user->id, $membership);
+
+        $this->fakeMoyasarCreateInitiated('pay_new_mem_1', 10000);
+
+        $this->actingAs($user)
+            ->withCsrfSession()
+            ->post(route('client.pay.create'), $this->csrfPayload([
+                'intent_token' => $intent->token,
+                'cc_type' => 'creditcard',
+                'name' => 'Test User',
+                'cc_number' => '4111111111111111',
+                'cc_expiry' => '12/30',
+                'cvc' => '123',
+            ]))
+            ->assertOk();
+    }
+
     public function test_prepare_creates_intent_and_redirects_to_token_page(): void
     {
         $user = User::factory()->create(['is_active' => true]);
@@ -124,6 +216,66 @@ class PaymentFlowTest extends TestCase
         $this->assertSame($user->id, (int) $intent->user_id);
 
         $response->assertRedirect(route('client.pay.show', ['token' => $intent->token]));
+    }
+
+    public function test_expired_membership_gets_no_discount_and_cannot_register_member_only_event(): void
+    {
+        $membership = Membership::factory()->create([
+            'percent_discount' => 20,
+            'duration_days' => 365,
+            'price' => 100,
+        ]);
+
+        $user = User::factory()->create([
+            'is_active' => true,
+            'membership_id' => $membership->id,
+            'membership_started_at' => now()->subDays(40),
+            'membership_expires_at' => now()->subDay(), // expired
+        ]);
+
+        $event = Event::query()->create([
+            'price' => 100,
+            'discount' => 0,
+            'event_status' => EventStatus::Upcoming,
+            'start_at' => Carbon::now()->addDays(2),
+            'end_at' => Carbon::now()->addDays(3),
+            'capacity' => null,
+            'is_featured' => false,
+        ]);
+
+        // Member-only: attach the membership to the event.
+        $event->memberships()->attach($membership->id);
+
+        $this->assertSame(100.0, $event->finalPriceForUser($user));
+        $this->assertFalse($event->canUserRegister($user));
+    }
+
+    public function test_expired_membership_gets_no_library_discount(): void
+    {
+        $membership = Membership::factory()->create([
+            'percent_discount' => 20,
+            'duration_days' => 365,
+            'price' => 100,
+        ]);
+
+        $user = User::factory()->create([
+            'is_active' => true,
+            'membership_id' => $membership->id,
+            'membership_started_at' => now()->subDays(40),
+            'membership_expires_at' => now()->subDay(), // expired
+        ]);
+
+        $library = Library::query()->create([
+            'status' => LibraryStatus::Published,
+            'price' => 100,
+            'discount' => 0,
+            'path' => 'tests/library.pdf',
+        ]);
+
+        $this->actingAs($user);
+
+        $this->assertSame(0.0, $library->membership_discount);
+        $this->assertSame(100.0, $library->final_price);
     }
 
     public function test_create_payment_creates_payment_and_marks_intent_used(): void
