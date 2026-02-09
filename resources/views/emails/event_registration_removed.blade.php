@@ -25,6 +25,17 @@
                     <p style="margin:0;"><strong>المرسل:</strong> {{ config('app.name') }}</p>
                 </td>
             </tr>
+
+            <tr>
+                <td colspan="2" style="padding-top:14px; text-align:center;">
+                    <div
+                        style="padding:12px 16px;">
+                        <p style="margin:0; font-size:16px; color:#0f172a;">إلغاء تسجيلك في الفعالية
+                            <strong style="display: block">{{ $eventTitle }}</strong>
+                        </p>
+                    </div>
+                </td>
+            </tr>
         </table>
 
         <!-- Intro -->
@@ -48,11 +59,11 @@
                         <h3
                             style="font-size:16px; margin:0 0 10px; border-bottom:1px solid #e2e8f0; padding-bottom:6px; color:#0f172a;">
                             بيانات الفعالية</h3>
-                        <p style="margin:0 0 8px; font-size:15px;"><strong>العنوان:</strong> {{ $eventTitle }}</p>
+                        <p style="margin:0 0 6px; font-size:14px; color:#475569;"><strong>رقم الفعالية:</strong>
+                            #{{ $event->id }}</p>
                         <p style="margin:0 0 8px; font-size:15px;"><strong>التاريخ:</strong>
                             {{ optional($event->start_at)->setTimezone('Asia/Riyadh')->translatedFormat('d F Y h:i A') }}
                         </p>
-                        <p style="margin:0; font-size:15px;"><strong>المعرف:</strong> #{{ $event->id }}</p>
                     </div>
                 </td>
 
