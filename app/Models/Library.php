@@ -96,7 +96,7 @@ class Library extends Model
     {
         $user = Auth::user();
 
-        if ($user && $user->membership && $user->membership->percent_discount > 0) {
+        if ($user instanceof User && $user->hasActiveMembership() && $user->membership && (float) $user->membership->percent_discount > 0) {
             return round($this->discounted_price * $user->membership->percent_discount);
         }
 
@@ -111,7 +111,7 @@ class Library extends Model
         $price = $this->discounted_price;
 
         $user = Auth::user();
-        if ($user && $user->membership && $user->membership->percent_discount > 0) {
+        if ($user instanceof User && $user->hasActiveMembership() && $user->membership && (float) $user->membership->percent_discount > 0) {
             $price -= $this->membership_discount;
         }
 

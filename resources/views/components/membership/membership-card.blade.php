@@ -1,3 +1,32 @@
+@php
+    $membershipAction = 'new';
+    $user = auth()->user();
+
+    if ($user?->membership) {
+        $currentMembership = $user->membership;
+
+        if ((int) $currentMembership->id === (int) $membership->id) {
+            $membershipAction = 'renewal';
+        } else {
+            $oldLevel = $currentMembership->level;
+            $newLevel = $membership->level;
+
+            if (is_numeric($oldLevel) && is_numeric($newLevel)) {
+                $membershipAction = ((int) $newLevel > (int) $oldLevel) ? 'upgrade' : 'downgrade';
+            } else {
+                $membershipAction = ((int) $membership->price > (int) $currentMembership->price) ? 'upgrade' : 'downgrade';
+            }
+        }
+    }
+
+    $membershipActionLabel = match ($membershipAction) {
+        'renewal' => __('payments.Renewal'),
+        'upgrade' => __('payments.Upgrade'),
+        'downgrade' => __('payments.Downgrade'),
+        default => __('about.memberships.join_now'),
+    };
+@endphp
+
 <div @class([
     'w-full max-w-md mx-auto rounded-2xl shadow-lg overflow-hidden flex flex-col h-full',
     'border-2 border-primary transform scale-105 shadow-primary/20 z-10' => $featured, // <-- تحسين: إضافة z-index للبطاقة المميزة
@@ -118,7 +147,7 @@
                     'bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-primary/40' => $featured,
                     'bg-accent text-accent-foreground hover:bg-accent/80' => !$featured,
                 ])>
-                    {{ __('about.memberships.join_now') }}
+                    {{ $membershipActionLabel }}
                 </button>
             </form>
         </div>

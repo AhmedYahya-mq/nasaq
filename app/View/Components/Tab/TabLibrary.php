@@ -5,6 +5,7 @@ namespace App\View\Components\Tab;
 use App\Models\Library;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class TabLibrary extends Component
@@ -16,7 +17,17 @@ class TabLibrary extends Component
         $filter = request()->get('filter', 'all');
         $search = request()->get('search', '');
 
+        $userId = Auth::id();
+
         $query = Library::query();
+
+        // Only show resources the current user has acquired/registered.
+        // Guests should see an empty list.
+        if (!$userId) {
+            $query->whereIn('id', []);
+        } else {
+            $query->whereHas('users', fn ($q) => $q->whereKey($userId));
+        }
 
         if ($filter !== 'all') {
             $query->where('type', $filter);

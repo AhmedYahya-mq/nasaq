@@ -32,6 +32,7 @@ use App\Services\PaymentGateway;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Enums\PaymentStatus;
 use App\Models\PaymentIntent;
 use App\Models\Event;
 use App\Models\Library;
@@ -88,8 +89,12 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
             }
         }
 
-        // Guardrail: if user already purchased, do not create new intents.
-        if ($user && method_exists($payable, 'payableType') && $user->isPurchasedByUser($payable->id, $payable::payableType())) {
+        // Guardrail: for one-time purchases, block duplicate paid acquisitions.
+        // Memberships are intentionally repeatable (renewal/upgrade/downgrade) so we must not block them.
+        if (!($payable instanceof Membership)
+            && $user
+            && method_exists($payable, 'payableType')
+            && $user->isPurchasedByUser($payable->id, $payable::payableType())) {
             throw new PayableNotFoundException('العنصر تم دفعه مسبقاً.');
         }
 
@@ -280,7 +285,7 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
                 // Store expected amount derived from the exact payload sent to the gateway.
                 'amount' => $amountSar,
                 'currency' => 'SAR',
-                'status' => $responseDTO->status ?: 'initiated',
+                'status' => $responseDTO->status?->value ?? PaymentStatus::Initiated,
                 'source_type' => $responseDTO->sourceType,
                 'company' => $responseDTO->company,
                 'description' => $responseDTO->description,

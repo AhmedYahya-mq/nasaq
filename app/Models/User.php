@@ -357,19 +357,34 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
      *     newMembership: Membership,
      *     newExpiresAt: \Carbon\Carbon,
      *     priceDifference: float,
-     *     actionType: 'renewal'|'upgrade'|'new'
+     *     actionType: 'renewal'|'upgrade'|'downgrade'|'new',
+     *     extraDays?: int
      * }
      */
     public function calculateMembershipChange(Membership $newMembership): array
     {
         $now = Carbon::now();
         $oldMembership = $this->membership;
+        $newDurationDays = max(0, (int) ($newMembership->duration_days ?? 0));
+
+        // Guardrail: a membership with no duration should not crash calculations.
+        if ($newDurationDays === 0) {
+            return [
+                'oldMembership' => $oldMembership,
+                'newMembership' => $newMembership,
+                'newExpiresAt' => $now->copy(),
+                'priceDifference' => (float) ($newMembership->price ?? 0),
+                'actionType' => $oldMembership ? 'upgrade' : 'new',
+                'extraDays' => 0,
+            ];
+        }
+
         // حالة عضوية جديدة بالكامل (لم يكن لديه عضوية)
         if (!$oldMembership) {
             return [
                 'oldMembership' => null,
                 'newMembership' => $newMembership,
-                'newExpiresAt' => $now->copy()->addDays($newMembership->duration_days),
+                'newExpiresAt' => $now->copy()->addDays($newDurationDays),
                 'priceDifference' => $newMembership->price,
                 'actionType' => 'new',
             ];
@@ -393,14 +408,45 @@ class User extends Authenticatable implements \Illuminate\Contracts\Auth\MustVer
         }
 
         $actionType = $newPrice > $oldPrice ? 'upgrade' : 'downgrade';
+
+        // If the existing membership has an invalid duration, treat the change like a fresh start
+        // (no balance carry-over) to avoid division by zero and inconsistent results.
+        $oldDurationDays = (int) ($oldMembership->duration_days ?? 0);
+        if ($oldDurationDays <= 0) {
+            return [
+                'oldMembership' => $oldMembership,
+                'newMembership' => $newMembership,
+                'newExpiresAt' => $now->copy()->addDays($newDurationDays),
+                'priceDifference' => (float) $newPrice,
+                'actionType' => $actionType,
+                'extraDays' => 0,
+            ];
+        }
+
         $remainingDays = $currentExpires->greaterThan($now)
             ? ceil($currentExpires->floatDiffInDays($now))
             : 0;
         $remainingDays = abs($remainingDays);
-        $remainingValue = $remainingDays > 0 ? ($oldPrice * $remainingDays / $oldMembership->duration_days) : 0;
-        $extraDays = $newPrice > 0 ? round(($remainingValue / $newPrice) * $newMembership->duration_days) : 0;
+        $remainingValue = $remainingDays > 0 ? ($oldPrice * $remainingDays / $oldDurationDays) : 0;
+
+        // Free memberships still have duration; treat as full duration instead of expiring immediately.
+        if ($newPrice <= 0) {
+            $extraDays = $newDurationDays;
+            $newExpiresAt = $now->copy()->addDays($newDurationDays);
+
+            return [
+                'oldMembership' => $oldMembership,
+                'newMembership' => $newMembership,
+                'newExpiresAt' => $newExpiresAt,
+                'priceDifference' => 0,
+                'actionType' => $actionType,
+                'extraDays' => $extraDays,
+            ];
+        }
+
+        $extraDays = round(($remainingValue / $newPrice) * $newDurationDays);
         $newExpiresAt = $actionType === 'upgrade'
-            ? $now->copy()->addDays($newMembership->duration_days + $extraDays)
+            ? $now->copy()->addDays($newDurationDays + $extraDays)
             : $now->copy()->addDays($extraDays);
         return [
             'oldMembership' => $oldMembership,

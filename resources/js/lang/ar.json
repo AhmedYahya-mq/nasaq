@@ -24,6 +24,8 @@
     "The card number length is incorrect for the card type.": "طول رقم البطاقة غير صحيح لنوع البطاقة.",
     "The card type is not supported.": "نوع البطاقة غير مدعوم.",
     "Invalid format (MM / YY).": "تنسيق غير صالح (MM / YY).",
-    "The phone number must start with 05 and be 10 digits.": "يجب أن يبدأ رقم الجوال بـ 05 وأن يكون مكونًا من 10 أرقام."
+    "The phone number must start with 05 and be 10 digits.": "يجب أن يبدأ رقم الجوال بـ 05 وأن يكون مكونًا من 10 أرقام.",
+    "Missing payment token. Please refresh the page.": "انتهت جلسة الدفع أو لا يوجد رمز دفع. يرجى تحديث الصفحة والمحاولة مرة أخرى.",
+    "Verification failed. Please try again.": "فشل التحقق. يرجى المحاولة مرة أخرى."
 
 }

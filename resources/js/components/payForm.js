@@ -2,7 +2,15 @@ import { callback, create } from "@client/routes/client/pay";
 import { translate } from "@client/utils/translate";
 import axios from "axios";
 
-export default function payForm() {
+export default function payForm(options = {}) {
+    const initialPrices = options?.prices ?? {};
+    const prices = {
+        base: Number(initialPrices.base ?? 0),
+        discount: Number(initialPrices.discount ?? 0),
+        membershipDiscount: Number(initialPrices.membershipDiscount ?? 0),
+        total: Number(initialPrices.total ?? 0),
+    };
+
     // ----- local Mada BINs sample (استخدم نفس القائمة Qn عندك) -----
     const MADA_BINS = new Set([
         "22337902", "22337986", "22402030", "40177800", "403024", "40545400", "406136", "406996",
@@ -23,6 +31,45 @@ export default function payForm() {
     // ----- helpers -----
     function onlyDigits(str = "") {
         return String(str || "").replace(/\D/g, "");
+    }
+
+    function getIntentToken() {
+        const provided = String(options?.intentToken || "").trim();
+        if (provided) return provided;
+
+        const fromDom = document.getElementById("payment_intent_token")?.value;
+        const token = String(fromDom || "").trim();
+        return token || null;
+    }
+
+    function normalizeAxiosErrorMessage(err) {
+        return (
+            err?.response?.data?.message ||
+            err?.response?.data?.source?.message ||
+            err?.message ||
+            "An unexpected error occurred, please try again."
+        );
+    }
+
+    function firstError(errorsObj, key) {
+        const v = errorsObj?.[key];
+        return Array.isArray(v) ? v[0] : undefined;
+    }
+
+    function applyServerValidationErrors(errorsObj) {
+        if (!errorsObj) return false;
+        this.errors = {
+            ...this.errors,
+            form: this.errors.form,
+            name: firstError(errorsObj, "name") ? translate(firstError(errorsObj, "name")) : this.errors.name,
+            number: firstError(errorsObj, "cc_number") ? translate(firstError(errorsObj, "cc_number")) : this.errors.number,
+            expiry: firstError(errorsObj, "cc_expiry") ? translate(firstError(errorsObj, "cc_expiry")) : this.errors.expiry,
+            cvc: firstError(errorsObj, "cvc") ? translate(firstError(errorsObj, "cvc")) : this.errors.cvc,
+            month: firstError(errorsObj, "cc_exp_month") ? translate(firstError(errorsObj, "cc_exp_month")) : this.errors.month,
+            year: firstError(errorsObj, "cc_exp_year") ? translate(firstError(errorsObj, "cc_exp_year")) : this.errors.year,
+            type: firstError(errorsObj, "cc_type") ? translate(firstError(errorsObj, "cc_type")) : this.errors.type,
+        };
+        return true;
     }
 
     function extractBin(number, len = 6) {
@@ -111,17 +158,28 @@ export default function payForm() {
         return /^\d{3}$/.test(d);
     }
 
-    function formatCardNumber(raw, brand) {
-        const digits = onlyDigits(raw);
-        // No Amex formatting required
-        const trimmed = digits.slice(0, 19);
-        return trimmed.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+    function maxLengthForBrand(brand) {
+        switch (brand) {
+            case "mastercard":
+            case "mada":
+                return 16;
+            case "visa":
+                return 16;
+            default:
+                return 16;
+        }
+    }
+
+    function formatCardNumber(rawDigits) {
+        const digits = onlyDigits(rawDigits);
+        return digits.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
     }
 
     // ----- main reactive object -----
     return {
+        prices,
         paymentMethod: "card",
-        crsf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         card: {
             number: "",
             expiry: "",
@@ -162,10 +220,17 @@ export default function payForm() {
 
         // ----- inputs handlers -----
         onCardNumberInput(e) {
-            const raw = onlyDigits(e.target.value);
-            const brand = detectBrand(raw);
+            const rawDigits = onlyDigits(e.target.value);
+
+            // Detect brand early (BIN-based for Mada)
+            const detected = detectBrand(rawDigits);
+            const maxLen = maxLengthForBrand(detected);
+            const trimmedDigits = rawDigits.slice(0, maxLen);
+
+            // Re-detect after trimming for stability
+            const brand = detectBrand(trimmedDigits);
             this.card.type = brand;
-            this.card.number = formatCardNumber(raw, brand);
+            this.card.number = formatCardNumber(trimmedDigits);
         },
 
         onExpiryInput(e) {
@@ -243,23 +308,31 @@ export default function payForm() {
 
         validateStcForm() {
             this.stcError = "";
-            if (this.stc.touched) {
-                if (!this.stc.phone) this.stcError = translate("Please enter your phone number.");
-                else if (!/^05\d{8}$/.test(this.stc.phone)) this.stcError = translate("The phone number must start with 05 and be 10 digits.");
+            const phoneDigits = onlyDigits(this.stc.phone);
+
+            if (this.stc.touched.phone) {
+                if (!phoneDigits) this.stcError = translate("Please enter your phone number.");
+                else if (!/^05\d{8}$/.test(phoneDigits)) this.stcError = translate("The phone number must start with 05 and be 10 digits.");
             }
+
             this.stcFormValid = !this.stcError;
         },
 
         validOtpForm() {
             this.otpError = "";
             if (this.stc.touched.otp) {
-                if (!this.stc.otp) this.otpError = translate("Please enter the verification code.");
-                else if (!/^\d{4,6}$/.test(this.stc.otp)) this.otpError = translate("The verification code must be between 4 and 6 digits.");
+                const otpDigits = onlyDigits(this.stc.otp);
+                if (!otpDigits) this.otpError = translate("Please enter the verification code.");
+                else if (!/^\d{4,6}$/.test(otpDigits)) this.otpError = translate("The verification code must be between 4 and 6 digits.");
             }
             return !this.otpError;
         },
 
         startOtpTimer() {
+            if (this.intervalId) {
+                clearInterval(this.intervalId);
+                this.intervalId = null;
+            }
             let totalSeconds = 5 * 60; // 5 دقائق
             this.stc.otpTimer = "05:00";
             this.intervalId = setInterval(() => {
@@ -278,18 +351,26 @@ export default function payForm() {
 
         // ----- submit -----
         async submitCard() {
+            if (this.onProgress) return;
+
             Object.keys(this.card.touched).forEach((k) => (this.card.touched[k] = true));
             this.validateCardForm();
             if (!this.cardFormValid) return;
 
+            const intentToken = getIntentToken();
+            if (!intentToken) {
+                this.errors = { ...this.errors, form: translate("Missing payment token. Please refresh the page.") };
+                return;
+            }
+
             const payload = {
-                intent_token: document.getElementById('payment_intent_token')?.value,
+                intent_token: intentToken,
                 cc_number: onlyDigits(this.card.number),
                 cc_expiry: this.card.expiry,
-                cvc: this.card.cvc,
+                cvc: onlyDigits(this.card.cvc),
                 name: this.card.name,
                 cc_type: "creditcard",
-                _token: this.crsf,
+                _token: this.csrf,
             };
 
             this.onProgress = true;
@@ -309,79 +390,105 @@ export default function payForm() {
                 }
             } catch (err) {
                 console.error("Error submitting card data:", err.response?.data || err.message || err);
-                if (err.response?.data?.errors) {
-                    this.errors = {
-                        ...this.errors,
-                        name: err.response.data.errors.name?.[0] ? translate(err.response.data.errors.name?.[0]) : undefined,
-                        number: err.response.data.errors.cc_number?.[0] ? translate(err.response.data.errors.cc_number?.[0]) : undefined,
-                        expiry: err.response.data.errors.cc_expiry?.[0] ? translate(err.response.data.errors.cc_expiry?.[0]) : '',
-                        cvc: err.response.data.errors.cvc?.[0] ? translate(err.response.data.errors.cvc?.[0]) : undefined,
-                        month: err.response.data.errors.cc_exp_month?.[0] ? translate(err.response.data.errors.cc_exp_month?.[0]) : undefined,
-                        year: err.response.data.errors.cc_exp_year?.[0] ? translate(err.response.data.errors.cc_exp_year?.[0]) : undefined,
-                        type: err.response.data.errors.cc_type?.[0] ? translate(err.response.data.errors.cc_type?.[0]) : undefined,
-                    };
-                } else {
-                    this.errors.form = translate(err.response?.data?.message || "An unexpected error occurred, please try again.");
-                }
+                const handledValidation = applyServerValidationErrors.call(this, err.response?.data?.errors);
+                if (!handledValidation) this.errors.form = translate(normalizeAxiosErrorMessage(err));
             } finally {
                 this.onProgress = false;
             }
         },
 
-        submitStc() {
+        async submitStc() {
+            if (this.onProgress) return;
+
             this.stcError = "";
-            if (this.stc.otpSent && this.stc.otpUrl) {
-                this.sendOtp();
-            } else {
-                this.sendPhoneVerification();
+
+            if (this.stc.otpSent) {
+                this.stc.touched.otp = true;
+                return this.sendOtp();
+            }
+
+            this.stc.touched.phone = true;
+            return this.sendPhoneVerification();
+        },
+
+        async sendPhoneVerification() {
+            this.validateStcForm();
+            if (!this.stcFormValid) return;
+
+            const intentToken = getIntentToken();
+            if (!intentToken) {
+                this.stcError = translate("Missing payment token. Please refresh the page.");
+                return;
+            }
+
+            this.onProgress = true;
+            try {
+                const payload = {
+                    intent_token: intentToken,
+                    phone: onlyDigits(this.stc.phone),
+                    cc_type: "stcpay",
+                    _token: this.csrf,
+                };
+
+                const res = await axios.post(create().url, payload);
+                const data = res?.data;
+
+                if (data && data.success && data.status !== "failed") {
+                    const url = String(data.transaction_url || "").trim();
+                    if (!url) {
+                        this.stcError = translate("An unexpected error occurred, please try again.");
+                        return;
+                    }
+
+                    this.stc.otpSent = true;
+                    this.stc.otpUrl = url;
+                    this.startOtpTimer();
+                } else {
+                    this.stcError = translate(data?.message || "An unexpected error occurred, please try again.");
+                }
+            } catch (err) {
+                const phoneError = firstError(err?.response?.data?.errors, "phone");
+                this.stcError = translate(phoneError || normalizeAxiosErrorMessage(err));
+            } finally {
+                this.onProgress = false;
             }
         },
 
-        sendPhoneVerification() {
-            this.validateStcForm();
-            if (!this.stcFormValid) return;
-            this.onProgress = true;
-            const payload = {
-                intent_token: document.getElementById('payment_intent_token')?.value,
-                phone: this.stc.phone,
-                cc_type: "stcpay",
-                _token: this.crsf,
-            };
-            axios.post(create().url, payload).then((res) => {
-                if (res.data && res.data.success && res.data.status !== 'failed') {
-                    this.stc.otpSent = true;
-                    this.stc.otpUrl = res.data.transaction_url || "";
-                    this.startOtpTimer();
-                } else {
-                    this.stcError = translate(res.data.message || "An unexpected error occurred, please try again.");
-                }
-            }).catch((err) => {
-                this.stcError = translate(err.response?.data?.errors?.phone?.[0] || err.response?.data?.message || "An unexpected error occurred, please try again.");
-            }).finally(() => {
-                this.onProgress = false;
-            });
-        },
-
-        sendOtp() {
+        async sendOtp() {
             if (!this.validOtpForm()) return;
+
+            const otpUrl = String(this.stc.otpUrl || "").trim();
+            if (!otpUrl) {
+                this.stcError = translate("An unexpected error occurred, please try again.");
+                return;
+            }
+
             this.onProgress = true;
-            axios.get(this.stc.otpUrl + "&otp_value=" + this.stc.otp).then((res) => {
-                if (res.data && res.data.status !== 'failed') {
-                    window.location.href = callback().url + "?id=" + res.data.id + "&message=" + encodeURIComponent(res.data.source?.message || "");
-                } else {
-                    this.onProgress = false;
-                    this.stcError = translate(res.data.message || res.data.source?.message || "Verification failed. Please try again.");
+            try {
+                const otpDigits = onlyDigits(this.stc.otp);
+                const res = await axios.get(otpUrl + "&otp_value=" + otpDigits);
+                const data = res?.data;
+
+                if (data && data.status !== "failed") {
+                    const message = encodeURIComponent(data.source?.message || "");
+                    window.location.href = callback().url + "?id=" + data.id + "&message=" + message;
+                    return;
                 }
-            }).catch((err) => {
+
+                this.stcError = translate(data?.message || data?.source?.message || "Verification failed. Please try again.");
+            } catch (err) {
+                this.stcError = translate(normalizeAxiosErrorMessage(err));
+            } finally {
                 this.onProgress = false;
-                this.stcError = translate(err.response?.data?.message || err.response?.data?.source?.message || "An unexpected error occurred, please try again.");
-            }).finally(() => {
-                clearInterval(this.intervalId);
+                if (this.intervalId) {
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
+                }
                 this.stc.otp = "";
                 this.stc.otpSent = false;
                 this.stc.otpTimer = "05:00";
                 this.stc.otpUrl = "";
-            });
+            }
         },
     }
 }

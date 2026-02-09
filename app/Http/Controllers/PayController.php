@@ -94,27 +94,31 @@ class PayController extends Controller
         }
 
         $isMembership = $item instanceof Membership;
+
+        $membershipAction = null;
         $startAt = null;
         $endsAt = null;
+
         if ($isMembership) {
-            $u = $user;
-            if (!$u->membership) {
-                $startAt = now()->format('Y-m-d');
-                $endsAt = now()->addYear()->format('Y-m-d');
-            } else {
-                $now = now();
-                $ends_at = $u->membership_expires_at && $u->membership_expires_at > $now
-                    ? $u->membership_expires_at
-                    : $now;
-                $endsAt = $ends_at->addYear()->format('Y-m-d');
-                $startAt = $u->membership_started_at?->format('Y-m-d');
-            }
+            $now = now();
+            $change = $user->calculateMembershipChange($item);
+
+            $membershipAction = $change['actionType'] ?? 'new';
+
+            $startAt = match ($membershipAction) {
+                'renewal' => $user->membership_started_at?->format('Y-m-d') ?? $now->format('Y-m-d'),
+                default => $now->format('Y-m-d'),
+            };
+
+            $newExpiresAt = $change['newExpiresAt'] ?? null;
+            $endsAt = $newExpiresAt ? $newExpiresAt->format('Y-m-d') : null;
         }
 
         return view('pay', [
             'item' => $item,
             'intentToken' => $intent->token,
             'isMembership' => $isMembership,
+            'membershipAction' => $membershipAction,
             'startAt' => $startAt,
             'endsAt' => $endsAt,
         ]);

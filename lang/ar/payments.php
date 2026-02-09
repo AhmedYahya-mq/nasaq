@@ -12,7 +12,7 @@ return [
     'purchased_item' => 'اشتريت: :title',
     'unknown_service' => 'خدمة غير معروفة',
     'no_purchases' => 'لم تقم بأي عملية شراء بعد.',
-    
+
     'Payment Successful' => 'تم الدفع بنجاح',
     'Thank you, :name! Your payment has been received successfully.' => 'شكراً لك، :name! تم استلام عملية الدفع بنجاح.',
     'Amount Paid' => 'المبلغ المدفوع',
@@ -58,5 +58,33 @@ return [
     'event' => 'الحدث',
     'membership' => 'العضوية',
     'library' => 'المورد',
-    'Secure Payment Info' => 'تنبيه: بعد إتمام الدفع، لا يمكن استرجاع المبلغ. يرجى التأكد من اختيارك بعناية قبل إتمام عملية الشراء.'
+    'Secure Payment Info' => 'تنبيه: بعد إتمام الدفع، لا يمكن استرجاع المبلغ. يرجى التأكد من اختيارك بعناية قبل إتمام عملية الشراء.',
+
+    // Pay form UI
+    'Item' => 'العنصر',
+    'Action' => 'الإجراء',
+    'Renewal' => 'تجديد',
+    'Upgrade' => 'ترقية',
+    'Downgrade' => 'خفض',
+    'New Subscription' => 'اشتراك جديد',
+    'Plan' => 'الخطة',
+    'Summary' => 'الملخص',
+    'Live Update' => 'تحديث مباشر',
+    'Secured by SSL' => 'محمي عبر SSL',
+    'Choose Method' => 'اختر طريقة الدفع',
+    'Upgrade Warning' => 'تنبيه: الترقية ستستبدل اشتراكك الحالي.',
+    'Membership Notice Title' => 'تحديث العضوية',
+    'Membership Notice New' => 'اشتراك جديد: ستبدأ العضوية لمدة الخطة كاملة.',
+    'Membership Notice Renewal' => 'تجديد: تبقى عضويتك الحالية كما هي وسيتم تمديد تاريخ الانتهاء من تاريخ انتهائك الحالي.',
+    'Membership Notice Upgrade' => 'ترقية: سيتم تحويل القيمة المتبقية من عضويتك الحالية إلى مدة إضافية على الخطة الجديدة.',
+    'Membership Notice Downgrade' => 'خفض: سيتم تحويل القيمة المتبقية من عضويتك الحالية إلى مدة على الخطة الأقل (بدون مدة كاملة جديدة).',
+    'Membership Notice Approval' => 'سيتم تحديث عضويتك بعد اعتماد طلب العضوية.',
+    'Pay with card' => 'ادفع بالبطاقة',
+    'Fast checkout' => 'دفع سريع',
+    'Encrypted Checkout' => 'دفع مشفر',
+    'Includes taxes and fees' => 'يشمل الضرائب والرسوم',
+
+    // Failure page
+    'Payment failed' => 'فشل الدفع',
+    'Please try again.' => 'يرجى المحاولة مرة أخرى.'
 ];
