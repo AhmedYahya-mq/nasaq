@@ -1,16 +1,15 @@
+import { callback, create } from "@client/routes/client/pay";
 import { translate } from "@client/utils/translate";
 import axios from "axios";
 
 export default function payForm(options = {}) {
     const initialPrices = options?.prices ?? {};
-    const applePayOptions = options?.applePay ?? {};
     const prices = {
         base: Number(initialPrices.base ?? 0),
         discount: Number(initialPrices.discount ?? 0),
         membershipDiscount: Number(initialPrices.membershipDiscount ?? 0),
         total: Number(initialPrices.total ?? 0),
     };
-    const backendBaseUrl = String(options?.backendBaseUrl ?? "").trim().replace(/\/$/, "");
 
     // ----- local Mada BINs sample (استخدم نفس القائمة Qn عندك) -----
     const MADA_BINS = new Set([
@@ -43,19 +42,6 @@ export default function payForm(options = {}) {
         return token || null;
     }
 
-    function getLocalePrefix() {
-        const first = window.location.pathname.split("/").filter(Boolean)[0] || "";
-        return first === "ar" || first === "en" ? `/${first}` : "";
-    }
-
-    function paymentCreateUrl() {
-        return `${backendBaseUrl}${getLocalePrefix()}/payment/create`;
-    }
-
-    function paymentCallbackUrl() {
-        return `${backendBaseUrl}${getLocalePrefix()}/payment/callback`;
-    }
-
     function normalizeAxiosErrorMessage(err) {
         return (
             err?.response?.data?.message ||
@@ -82,7 +68,6 @@ export default function payForm(options = {}) {
             month: firstError(errorsObj, "cc_exp_month") ? translate(firstError(errorsObj, "cc_exp_month")) : this.errors.month,
             year: firstError(errorsObj, "cc_exp_year") ? translate(firstError(errorsObj, "cc_exp_year")) : this.errors.year,
             type: firstError(errorsObj, "cc_type") ? translate(firstError(errorsObj, "cc_type")) : this.errors.type,
-            applepay: firstError(errorsObj, "applepay_token") ? translate(firstError(errorsObj, "applepay_token")) : this.errors.applepay,
         };
         return true;
     }
@@ -223,10 +208,6 @@ export default function payForm(options = {}) {
 
         stcError: "",
         otpError: "",
-        applePay: {
-            available: false,
-            error: "",
-        },
         cardFormValid: false,
         stcFormValid: false,
         onProgress: false,
@@ -235,9 +216,6 @@ export default function payForm(options = {}) {
         init() {
             this.$watch("card", () => this.validateCardForm(), { deep: true });
             this.$watch("stc.phone", () => this.validateStcForm());
-            // Defer detection so the Apple Pay SDK has time to finish any async
-            // internal setup (e.g. communicating with the OS on Chrome/macOS).
-            this.$nextTick(() => this.detectApplePayAvailability());
         },
 
         // ----- inputs handlers -----
@@ -397,7 +375,7 @@ export default function payForm(options = {}) {
 
             this.onProgress = true;
             try {
-                const res = await axios.post(paymentCreateUrl(), payload);
+                const res = await axios.post(create().url, payload);
                 if (res.data && res.data.success) {
                     const data = res.data;
                     if (data.status !== 'failed') {
@@ -452,7 +430,7 @@ export default function payForm(options = {}) {
                     _token: this.csrf,
                 };
 
-                const res = await axios.post(paymentCreateUrl(), payload);
+                const res = await axios.post(create().url, payload);
                 const data = res?.data;
 
                 if (data && data.success && data.status !== "failed") {
@@ -493,7 +471,7 @@ export default function payForm(options = {}) {
 
                 if (data && data.status !== "failed") {
                     const message = encodeURIComponent(data.source?.message || "");
-                    window.location.href = paymentCallbackUrl() + "?id=" + data.id + "&message=" + message;
+                    window.location.href = callback().url + "?id=" + data.id + "&message=" + message;
                     return;
                 }
 
@@ -511,139 +489,6 @@ export default function payForm(options = {}) {
                 this.stc.otpTimer = "05:00";
                 this.stc.otpUrl = "";
             }
-        },
-
-        detectApplePayAvailability() {
-            try {
-                this.applePay.error = "";
-                const aps = window.ApplePaySession;
-                if (!aps || typeof aps.supportsVersion !== "function") {
-                    this.applePay.available = false;
-                    return;
-                }
-
-                // Use API capability check (Safari/Apple Pay JS support) instead of wallet/card check.
-                // `canMakePayments()` can be false even when merchant setup is correct.
-                this.applePay.available = [6, 5, 4, 3, 2, 1].some((v) => aps.supportsVersion(v));
-            } catch (error) {
-                this.applePay.available = false;
-            }
-        },
-
-        async submitApplePay() {
-            if (this.onProgress) return;
-
-            this.applePay.error = "";
-
-            if (!this.applePay.available || !window.ApplePaySession) {
-                this.applePay.error = translate("Apple Pay not available on this device/browser.");
-                return;
-            }
-
-            const intentToken = getIntentToken();
-            if (!intentToken) {
-                this.applePay.error = translate("Missing payment token. Please refresh the page.");
-                return;
-            }
-
-            const paymentRequest = {
-                countryCode: String(applePayOptions.countryCode || "SA"),
-                currencyCode: String(applePayOptions.currencyCode || "SAR"),
-                supportedNetworks: ["mada", "visa", "masterCard"],
-                merchantCapabilities: ["supports3DS", "supportsCredit", "supportsDebit"],
-                total: {
-                    label: String(options?.itemLabel || applePayOptions.merchantName || "Order"),
-                    amount: Number(prices.total || 0).toFixed(2),
-                },
-            };
-
-            let session;
-            try {
-                session = new window.ApplePaySession(5, paymentRequest);
-            } catch (error) {
-                this.applePay.error = translate("Apple Pay not available on this device/browser.");
-                return;
-            }
-
-            session.onvalidatemerchant = async (event) => {
-                try {
-                    const res = await fetch(`${applePayOptions.apiBaseUrl || "https://api.moyasar.com/v1"}/applepay/initiate`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            validation_url: event.validationURL,
-                            display_name: String(applePayOptions.merchantName || "Merchant"),
-                            domain_name: window.location.hostname,
-                            publishable_api_key: String(applePayOptions.publishableKey || ""),
-                        }),
-                    });
-
-                    if (!res.ok) {
-                        const bodyText = await res.text();
-                        throw new Error(bodyText || `Merchant validation failed (${res.status})`);
-                    }
-
-                    let merchantSession;
-                    try {
-                        merchantSession = await res.json();
-                    } catch (e) {
-                        throw new Error("Invalid merchant session response from Moyasar.");
-                    }
-
-                    session.completeMerchantValidation(merchantSession);
-                } catch (error) {
-                    this.applePay.error = String(error?.message || normalizeAxiosErrorMessage(error));
-                    session.abort();
-                }
-            };
-
-            session.onpaymentauthorized = async (event) => {
-                this.onProgress = true;
-
-                try {
-                    const payload = {
-                        intent_token: intentToken,
-                        cc_type: "applepay",
-                        applepay_token: event.payment.token,
-                        _token: this.csrf,
-                    };
-
-                    const res = await axios.post(paymentCreateUrl(), payload);
-                    const data = res?.data;
-
-                    if (!data?.success) {
-                        throw new Error(data?.message || "Payment failed. Please try again.");
-                    }
-
-                    session.completePayment({ status: window.ApplePaySession.STATUS_SUCCESS });
-
-                    if (data?.transaction_url) {
-                        window.location.href = data.transaction_url;
-                        return;
-                    }
-
-                    if (data?.moyasar_id) {
-                        window.location.href = `${paymentCallbackUrl()}?id=${encodeURIComponent(data.moyasar_id)}`;
-                        return;
-                    }
-
-                    window.location.href = "/";
-                } catch (error) {
-                    const handledValidation = applyServerValidationErrors.call(this, error?.response?.data?.errors);
-                    if (!handledValidation) {
-                        this.applePay.error = translate(normalizeAxiosErrorMessage(error));
-                    }
-                    session.completePayment({ status: window.ApplePaySession.STATUS_FAILURE });
-                } finally {
-                    this.onProgress = false;
-                }
-            };
-
-            session.oncancel = () => {
-                this.onProgress = false;
-            };
-
-            session.begin();
         },
     }
 }
