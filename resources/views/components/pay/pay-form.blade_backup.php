@@ -3,16 +3,14 @@
     $discountAmount = $item->discounted_price ? $item->price - (int) $item->discounted_price : 0;
     $membershipDiscount = (int) ($item->membership_discount ?? 0);
     $totalBeforeCoupon = (int) ($item->regular_price ?? $item->final_price ?? $item->price ?? 0);
-    $itemLabel = $item->name ?? ($item->translateField('title') ?? __('payments.Pay'));
 
     // Ensure action is always defined for membership checkout to avoid view errors
     $membershipAction = $isMembership ? ($membershipAction ?? 'new') : null;
 @endphp
-<div class="min-h-screen p-4 md:p-8 bg-gradient-to-br from-primary/10 via-background to-background" x-data="payForm({ prices: { base: {{ $item->price }}, discount: {{ $discountAmount }}, membershipDiscount: {{ $membershipDiscount }}, total: {{ $totalBeforeCoupon }} }, itemLabel: @js($itemLabel), backendBaseUrl: @js(''), applePay: { publishableKey: @js(config('moyasar.public_key')), merchantName: @js(config('app.name')), apiBaseUrl: @js(config('moyasar.base_url', 'https://api.moyasar.com/v1')), countryCode: 'SA', currencyCode: 'SAR' } })" x-init="errors = {{ json_encode($errors->toArray()) }};
+<div class="min-h-screen p-4 md:p-8 bg-gradient-to-br from-primary/10 via-background to-background" x-data="payForm({ prices: { base: {{ $item->price }}, discount: {{ $discountAmount }}, membershipDiscount: {{ $membershipDiscount }}, total: {{ $totalBeforeCoupon }} } })" x-init="errors = {{ json_encode($errors->toArray()) }};
 init()" x-cloak>
     @push('scripts')
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
         @vite(['resources/js/pages/pay.js'])
     @endpush
 
@@ -137,7 +135,7 @@ init()" x-cloak>
                             </div>
                         </div>
                     @endif
-                    <div class="grid grid-cols-1 @sm:grid-cols-3 gap-4 mt-1">
+                    <div class="grid grid-cols-1 @sm:grid-cols-2 gap-4 mt-1">
                         <button type="button" @click="paymentMethod = 'card'" class="cursor-pointer">
                             <div
                                 :class="paymentMethod === 'card' ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-border'"
@@ -145,15 +143,6 @@ init()" x-cloak>
                                 <x-ui.icon name="credit-card" class="size-6" />
                                 <span class="font-medium">{{ __('payments.Credit Card') }}</span>
                                 <span class="text-xs text-muted-foreground">{{ __('payments.Pay with card') }}</span>
-                            </div>
-                        </button>
-                        <button type="button" @click="paymentMethod = 'applepay'" class="cursor-pointer">
-                            <div
-                                :class="paymentMethod === 'applepay' ? 'border-primary ring-2 ring-primary/20 bg-primary/5' : 'border-border'"
-                                class="border rounded-xl w-full flex flex-col justify-center items-center gap-2 p-4 transition hover:border-primary/60">
-                                <x-ui.icon name="credit-card" class="size-6" />
-                                <span class="font-medium">{{ __('payments.Apple Pay') }}</span>
-                                <span class="text-xs text-muted-foreground">{{ __('payments.Pay with Apple Pay') }}</span>
                             </div>
                         </button>
                         <button type="button" @click="paymentMethod = 'stc'" class="cursor-pointer">
@@ -269,25 +258,6 @@ init()" x-cloak>
                                 class="border-2 border-white border-t-transparent animate-spin size-5 rounded-full">
                             </div>
                         </button>
-                    </form>
-                    <form x-show="paymentMethod === 'applepay'"
-                        @submit.prevent="typeof submitApplePay === 'function'
-                            ? submitApplePay()
-                            : (typeof applePay !== 'undefined' ? (applePay.error = 'Please refresh the page.') : null)"
-                        action="#" method="post"
-                        class="flex flex-col gap-4">
-                        <p x-show="typeof applePay !== 'undefined' && applePay.error"
-                            x-text="typeof applePay !== 'undefined' ? applePay.error : ''" class="text-sm text-destructive"></p>
-                        <button type="submit" :disabled="onProgress"
-                            class="w-full bg-black text-white py-3 rounded-lg transition mt-1 flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <span>{{ __('payments.Pay with Apple Pay') }}</span>
-                            <div x-show="onProgress"
-                                class="border-2 border-white border-t-transparent animate-spin size-5 rounded-full">
-                            </div>
-                        </button>
-                        <p x-show="typeof applePay !== 'undefined' ? (!applePay.available && !applePay.error) : false" class="text-sm text-muted-foreground">
-                            {{ __('payments.Apple Pay not available on this device/browser.') }}
-                        </p>
                     </form>
                     {{-- stc pay form --}}
                     <form x-show="paymentMethod === 'stc'" @submit.prevent="submitStc" action="#" method="post"
