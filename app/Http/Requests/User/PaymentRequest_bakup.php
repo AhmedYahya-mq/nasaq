@@ -21,7 +21,7 @@ class PaymentRequest extends FormRequest implements RequestPaymentRequest
     {
         return [
             'intent_token' => 'required|string|size:64|exists:payment_intents,token',
-            'cc_type' => 'required|in:creditcard,stcpay,applepay',
+            'cc_type' => 'required|in:creditcard,stcpay',
             'name' => 'sometimes|required_if:cc_type,creditcard|string|max:255',
             'cc_number' => ['sometimes', 'required_if:cc_type,creditcard', new CardNumber()],
             'cc_expiry' => 'sometimes|required_if:cc_type,creditcard|string',
@@ -29,7 +29,6 @@ class PaymentRequest extends FormRequest implements RequestPaymentRequest
             'cc_exp_year' => ['sometimes', 'nullable', 'digits:4', new CardExpirationYear($this->input('cc_exp_month'))],
             'cvc' => ['sometimes', 'required_if:cc_type,creditcard'],
             'phone' => 'sometimes|required_if:cc_type,stcpay|regex:/^05[0-9]{8}$/|digits:10',
-            'applepay_token' => 'sometimes|required_if:cc_type,applepay|array'
         ];
     }
 

@@ -250,11 +250,8 @@ class CreatePaymentIntent implements \App\Contract\Actions\CreatePaymentIntent
 
         $dto = PaymentResponseDTO::fromGatewayResponse($rawResponse);
 
-        // Status-based failure (if provided).
-        // Note: Apple Pay payments are immediately authorized by the device (no 3DS redirect),
-        // so Moyasar returns status 'paid' right away — that is a success, not a failure.
-        // Only reject genuinely failed or cancelled statuses.
-        if (isset($dto->status) && ($dto->status->isFailed() || $dto->status->isCancelled())) {
+        // Status-based failure (if provided)
+        if (isset($dto->status) && !$dto->status->isInitiated()) {
             $message = $dto->errorMessage ?? 'تم رفض عملية الدفع من قبل بوابة الدفع.';
             throw new PaymentGatewayException($message);
         }

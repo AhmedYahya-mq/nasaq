@@ -10,7 +10,7 @@ use App\Models\Library;
 class FileLibraryDownload implements \App\Contract\Actions\FileLibraryDownload
 {
     protected $disk = 'local';
-    protected $chunkSize = 5 * 1024 * 1024; // 5 ميجا لكل Chunk
+    protected $chunkSize = 5 * 1024 * 1024;
 
     /**
      * ✅ الدالة العامة التي يستدعيها الكنترولر

@@ -8,7 +8,6 @@ class SaveInitialData
 {
     public function handle(array $payload, \Closure $next)
     {
-        // حفظ بيانات المنتج/الخدمة في جدول Payment مع حالة مبدئية
         $payment = Payment::create([
             'user_id' => $payload['user_id'],
             'payable_id' => $payload['payable_id'],

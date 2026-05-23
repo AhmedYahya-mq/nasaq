@@ -117,15 +117,12 @@ class PaymentGateway
             }
         }
 
-        // فلترة metadata بشكل ديناميكي
+
         if (!empty($filters['metadata']) && is_array($filters['metadata'])) {
             foreach ($filters['metadata'] as $metaKey => $metaValue) {
                 $result["metadata[{$metaKey}]"] = $metaValue;
             }
         }
-
-        // يمكن إضافة فلاتر جديدة بسهولة هنا
-
         return $result;
     }
 
@@ -305,6 +302,4 @@ class PaymentGateway
         return $this->status === PaymentStatus::Refunded;
     }
 
-    // ===================== قابلية التوسعة =====================
-    // يمكن إضافة خصائص أو دوال جديدة بسهولة هنا مستقبلاً
 }

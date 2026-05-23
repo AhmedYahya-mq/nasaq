@@ -90,7 +90,6 @@ class Agent extends MobileDetect
     public function isDesktop()
     {
         return $this->retrieveUsingCacheOrResolve('jetstream.desktop', function () {
-            // Check specifically for cloudfront headers if the useragent === 'Amazon CloudFront'
             if (
                 $this->getUserAgent() === static::$cloudFrontUA
                 && $this->getHttpHeader('HTTP_CLOUDFRONT_IS_DESKTOP_VIEWER') === 'true'

@@ -29,6 +29,7 @@ return [
     'Discount' => 'الخصم',
     'Total Amount' => 'المبلغ الإجمالي',
     'Credit Card' => 'بطاقة إئتمان',
+    'Apple Pay' => 'Apple Pay',
     'STC Pay' => 'STC Pay',
     'Payment Details' => 'تفاصيل الدفع',
     'Card Details' => 'تفاصيل البطاقة',
@@ -82,6 +83,9 @@ return [
     'Pay with card' => 'ادفع بالبطاقة',
     'Fast checkout' => 'دفع سريع',
     'Encrypted Checkout' => 'دفع مشفر',
+    'Pay with Apple Pay.' => 'ادفع عبر Apple Pay',
+    'Pay with Apple Pay' => 'ادفع عبر Apple Pay',
+    'Apple Pay not available on this device/browser.' => 'Apple Pay غير متاح على هذا الجهاز/المتصفح.',
     'Includes taxes and fees' => 'يشمل الضرائب والرسوم',
 
     // Failure page

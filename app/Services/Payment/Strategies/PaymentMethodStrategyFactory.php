@@ -28,6 +28,7 @@ final class PaymentMethodStrategyFactory
         return match ($normalized) {
             'creditcard' => new CreditCardPaymentStrategy(),
             'stcpay' => new StcPayPaymentStrategy(),
+            'applepay' => new ApplePayPaymentStrategy(),
             default => throw new UnsupportedPaymentTypeException('نوع الدفع غير مدعوم.'),
         };
     }

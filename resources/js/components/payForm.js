@@ -516,25 +516,44 @@ export default function payForm(options = {}) {
         detectApplePayAvailability() {
             try {
                 this.applePay.error = "";
+
                 const aps = window.ApplePaySession;
+
                 if (!aps || typeof aps.supportsVersion !== "function") {
                     this.applePay.available = false;
+                    console.log("Apple Pay JS API not available in this browser.");
                     return;
                 }
 
-                // Use API capability check (Safari/Apple Pay JS support) instead of wallet/card check.
-                // `canMakePayments()` can be false even when merchant setup is correct.
-                this.applePay.available = [6, 5, 4, 3, 2, 1].some((v) => aps.supportsVersion(v));
+                // Check if the browser supports at least Apple Pay version 3 (recommended baseline)
+                const supportsApplePay = aps.supportsVersion(3);
+
+                // Basic device/browser capability check (does NOT require a card in Wallet)
+                const canMakePayments = aps.canMakePayments();
+
+                this.applePay.available = supportsApplePay && canMakePayments;
+
+                console.log("Apple Pay detection:", {
+                    supportsVersion3: supportsApplePay,
+                    canMakePayments: canMakePayments,
+                    available: this.applePay.available
+                });
+
             } catch (error) {
                 this.applePay.available = false;
+                this.applePay.error = error.message || "Unknown error detecting Apple Pay";
+                console.error("Apple Pay availability check failed:", error);
             }
         },
+
+        
 
         async submitApplePay() {
             if (this.onProgress) return;
 
             this.applePay.error = "";
-
+            console.log("Starting Apple Pay flow...");
+            console.log("Apple Pay availability:", this.applePay.available,window.ApplePaySession);
             if (!this.applePay.available || !window.ApplePaySession) {
                 this.applePay.error = translate("Apple Pay not available on this device/browser.");
                 return;
@@ -617,13 +636,14 @@ export default function payForm(options = {}) {
 
                     session.completePayment({ status: window.ApplePaySession.STATUS_SUCCESS });
 
-                    if (data?.transaction_url) {
-                        window.location.href = data.transaction_url;
+                    const callbackPaymentId = String(data?.moyasar_id || data?.id || "").trim();
+                    if (callbackPaymentId) {
+                        window.location.href = `${paymentCallbackUrl()}?id=${encodeURIComponent(callbackPaymentId)}`;
                         return;
                     }
 
-                    if (data?.moyasar_id) {
-                        window.location.href = `${paymentCallbackUrl()}?id=${encodeURIComponent(data.moyasar_id)}`;
+                    if (data?.transaction_url) {
+                        window.location.href = data.transaction_url;
                         return;
                     }
 

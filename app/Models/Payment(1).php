@@ -63,10 +63,6 @@ class Payment extends Model
 
         static::created(function ($payment) {
             if ($payment->status->isPaid()) {
-                // Apple Pay payments are created directly with status 'paid' (no 3DS redirect),
-                // so we must fire PaymentStatusChanged here too — the updated observer won't fire
-                // because the status was never changed after creation.
-                event(new \App\Events\PaymentStatusChanged($payment));
                 event(new \App\Events\PaymentStatusUpdated($payment));
             }
         });

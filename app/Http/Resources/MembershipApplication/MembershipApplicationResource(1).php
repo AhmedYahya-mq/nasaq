@@ -50,13 +50,13 @@ class MembershipApplicationResource extends JsonResource
         ];
         if (!$this->minimal) {
             $data['user'] = app(UserResource::class, ['resource' => $this->user, 'minimal' => true]);
-            $data['employment_status'] = $this->employment_status ? [
+            $data['employment_status'] = [
                 'value' => $this->employment_status->value,
                 'label' => $this->employment_status->getLabel(),
                 'label_ar' => $this->employment_status->getLabelArabic(),
                 'color' => $this->employment_status->getColor(),
                 'icon' => $this->employment_status->getIcon(),
-            ] : null;
+            ];
         }
         return $data;
     }

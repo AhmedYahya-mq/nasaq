@@ -55,9 +55,9 @@ class PaymentCallback implements \App\Contract\Actions\PaymentCallback
         }
 
         // Side effects must be executed only once on a legitimate initiated→paid transition.
-        if (!$wasInitiated) {
-            return;
-        }
+        // if (!$wasInitiated) {
+        //     return;
+        // }
 
         // Membership activation/renewal/upgrade/downgrade is handled on membership application approval.
 

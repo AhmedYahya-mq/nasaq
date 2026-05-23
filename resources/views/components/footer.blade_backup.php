@@ -54,15 +54,6 @@
                     <img alt="STC Pay" src="{{ asset('images/pay/stc_pay_mini.webp') }}" loading="lazy"
                         class="h-6 sm:h-7 w-auto object-contain object-center">
                 </div>
-                <div dir="ltr"
-                    class="h-5 sm:h-6 w-[63px] rounded bg-black border border-black/90 px-2 flex items-center justify-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Apple"
-                        class="h-4 w-4 shrink-0">
-                        <path fill="#fff"
-                            d="M23.67 15.53c-.03-2.7 2.2-3.99 2.3-4.05-1.26-1.84-3.22-2.09-3.92-2.12-1.66-.17-3.24 1-4.09 1-.84 0-2.14-.98-3.52-.96-1.8.03-3.47 1.05-4.4 2.67-1.89 3.26-.48 8.09 1.36 10.74.9 1.29 1.97 2.74 3.38 2.69 1.36-.05 1.87-.87 3.51-.87 1.64 0 2.1.87 3.54.84 1.47-.03 2.39-1.31 3.28-2.61 1.03-1.5 1.46-2.95 1.49-3.03-.03-.01-2.85-1.1-2.93-4.3zM20.96 7.6c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.37.71-3.13 1.61-.68.79-1.27 2.07-1.11 3.29 1.19.09 2.4-.61 3.14-1.5z" />
-                    </svg>
-                    <span class="mt-[5px] text-white text-[11px] sm:text-xs font-semibold leading-none tracking-tight">Pay</span>
-                </div>
             </div>
             <div class="text-muted-foreground text-sm" dir="{{ $locale === 'ar' ? 'ltr' : 'rtl' }}">
                 &copy; {{ date('Y') }} {{ __('footer.copyright') }}

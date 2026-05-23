@@ -30,6 +30,7 @@ return [
     'Total Amount' => 'Total Amount',
     'Credit Card' => 'Credit Card',
     'STC Pay' => 'STC Pay',
+    'Apple Pay' => 'Apple Pay',
     'Payment Details' => 'Payment Details',
     'Card Details' => 'Card Details',
     'Expiry Date' => 'Expiry Date',
@@ -58,6 +59,9 @@ return [
     'event' => 'event',
     'membership' => 'membership',
     'library' => 'resource',
+    'Pay with Apple Pay' => 'Pay with Apple Pay',
+    'Pay with Apple Pay.' => 'Pay with Apple Pay',
+    'Apple Pay not available on this device/browser.' => 'Apple Pay not available on this device/browser.',
     'Secure Payment Info' => 'Note: After completing the payment, the amount cannot be refunded. Please make sure to choose carefully before completing the purchase.',
 
     // Pay form UI

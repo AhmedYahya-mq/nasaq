@@ -16,7 +16,7 @@
     </header>
 
     <figure class="w-full max-h-[261.33px] flex items-center justify-center rounded-md overflow-hidden shadow-md mb-2">
-        <img src="{{ $resource->photo->url }}" alt="{{ $resource->title }} cover"
+        <img src="{{ $resource->photo?->url }}" alt="{{ $resource->title }} cover"
             class="aspect-square object-cover object-center hover:scale-105 transition-transform duration-200"
             itemprop="image" loading="lazy">
     </figure>
@@ -56,7 +56,7 @@
 
     <footer class="flex items-center justify-between gap-2 mt-3">
         @if ($resource->isPay(auth()->id()))
-      
+
             <div class="flex flex-col w-full" x-data="downloadResource(true, '{{ $resource->ulid }}', '{{ $resource->title }}')">
                 <button x-show="!isLoading && !isComplete && !errorMessage" x-on:click="startDownload()"
                     class="badget-70 badget gap-1 w-full h-10  text-center rounded-sm text-xs flex items-center justify-center cursor-pointer"

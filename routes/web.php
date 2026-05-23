@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FilePondController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 // Moyasar server-to-server webhook (payment confirmation)
 Route::post('/payment/webhook/moyasar', \App\Http\Controllers\MoyasarWebhookController::class)
