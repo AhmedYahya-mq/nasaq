@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Ahmed\GalleryImages\HasPhotos;
+use App\Enums\PaymentStatus;
 use App\Enums\LibraryStatus;
 use App\Enums\LibraryType;
 use App\Traits\HasTranslations;
@@ -168,12 +169,8 @@ class Library extends Model
      */
     public function syncPaymentForUser(int $userId): void
     {
-        $payment = Payment::query()
-            ->paidPurchase()
-            ->where('user_id', $userId)
-            ->where('payable_type', self::class)
-            ->where('payable_id', $this->id)
-            ->first();
+        $payment = $this->resolveOwnershipPaymentForUser($userId);
+
         $this->users()->syncWithoutDetaching([
             $userId => [
                 'payment_id' => $payment?->id,
@@ -182,30 +179,20 @@ class Library extends Model
         ]);
     }
 
-    public function isUserRegistered(int $userId): bool
+    protected function resolveOwnershipPaymentForUser(int $userId): ?Payment
     {
-        $pivot = $this->users()->where('user_id', $userId)->first()?->pivot;
-        if (!$pivot) {
-            return false;
-        }
-
-        // If the library is currently free, any saved record grants access.
-        if ($this->isFree()) {
-            return true;
-        }
-
-        // If the library is currently paid, require a real paid purchase (not a free invoice).
-        if (!$pivot->payment_id) {
-            return false;
-        }
-
         return Payment::query()
-            ->paidPurchase()
-            ->whereKey($pivot->payment_id)
             ->where('user_id', $userId)
             ->where('payable_type', self::class)
             ->where('payable_id', $this->id)
-            ->exists();
+            ->where('status', PaymentStatus::Paid)
+            ->orderByDesc('id')
+            ->first();
+    }
+
+    public function isUserRegistered(int $userId): bool
+    {
+        return $this->resolveOwnershipPaymentForUser($userId) !== null;
     }
 
 
@@ -213,6 +200,10 @@ class Library extends Model
     {
         if (! $this->exists) {
             return false;
+        }
+
+        if ($paymentId === null && $this->isUserRegistered($userId)) {
+            return true;
         }
 
         if ($this->isFree() && !$paymentId) {
@@ -224,7 +215,7 @@ class Library extends Model
         }
 
         if (! $this->isFree() && ! $paymentId) {
-            $paymentId = Payment::findPaidPurchaseForUserPayable($userId, $this)?->id;
+            $paymentId = $this->resolveOwnershipPaymentForUser($userId)?->id;
         }
 
         if (!$this->isFree()) {
@@ -265,22 +256,6 @@ class Library extends Model
 
     public function isPay(int $userId): bool
     {
-        if ($this->isFree()) {
-            return true;
-        }
-
-        $pivot = $this->users()->where('user_id', $userId)->first()?->pivot;
-
-        if (!$pivot || !$pivot->payment_id) {
-            return false;
-        }
-
-        return Payment::query()
-            ->paidPurchase()
-            ->whereKey($pivot->payment_id)
-            ->where('user_id', $userId)
-            ->where('payable_type', self::class)
-            ->where('payable_id', $this->id)
-            ->exists();
+        return $this->isFree() || $this->isUserRegistered($userId);
     }
 }
