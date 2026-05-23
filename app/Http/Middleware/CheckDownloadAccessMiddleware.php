@@ -24,6 +24,11 @@ class CheckDownloadAccessMiddleware
                 'message' => __('library.messages.download_not_allowed'),
             ], 401);
         }
+
+        if ($res->isUserRegistered($user->id) && ! $res->users()->whereKey($user->id)->exists()) {
+            $res->syncPaymentForUser($user->id);
+        }
+
         if (!$res->isUserRegistered($user->id)) {
             return response()->json([
                 'status' => 'error',

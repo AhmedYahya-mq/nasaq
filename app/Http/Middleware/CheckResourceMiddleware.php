@@ -23,6 +23,14 @@ class CheckResourceMiddleware
             return redirect()->route('login')->with('error', __('library.messages.login_required'));
         }
 
+        // Legacy ownership repair:
+        // Some older free claims already have a valid payment record, but the
+        // libraries_users pivot row is missing, so the profile tab cannot list them.
+        // Sync the pivot before any redirect so UI, download access, and profile listing agree.
+        if ($res->isUserRegistered($user->id) && ! $res->users()->whereKey($user->id)->exists()) {
+            $res->syncPaymentForUser($user->id);
+        }
+
         // 4️⃣ تحقق أن المستخدم لم يسجل مسبقًا
         if ($res->isUserRegistered($user->id)) {
             return redirect()->route('client.profile', ['tab' => 'library'])->with('info', __('library.messages.already_registered'));

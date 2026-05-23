@@ -169,7 +169,11 @@ class Library extends Model
      */
     public function syncPaymentForUser(int $userId): void
     {
-        $payment = $this->resolveOwnershipPaymentForUser($userId);
+        $payment = $this->resolvePurchasedPaymentForUser($userId);
+
+        if (! $payment) {
+            return;
+        }
 
         $this->users()->syncWithoutDetaching([
             $userId => [
@@ -179,20 +183,25 @@ class Library extends Model
         ]);
     }
 
-    protected function resolveOwnershipPaymentForUser(int $userId): ?Payment
+    protected function resolvePurchasedPaymentForUser(int $userId): ?Payment
     {
         return Payment::query()
+            ->paidPurchase()
             ->where('user_id', $userId)
             ->where('payable_type', self::class)
             ->where('payable_id', $this->id)
-            ->where('status', PaymentStatus::Paid)
             ->orderByDesc('id')
             ->first();
     }
 
     public function isUserRegistered(int $userId): bool
     {
-        return $this->resolveOwnershipPaymentForUser($userId) !== null;
+        if ($this->isFree()) {
+            return $this->users()->whereKey($userId)->exists()
+                || $this->resolvePurchasedPaymentForUser($userId) !== null;
+        }
+
+        return $this->resolvePurchasedPaymentForUser($userId) !== null;
     }
 
 
@@ -200,10 +209,6 @@ class Library extends Model
     {
         if (! $this->exists) {
             return false;
-        }
-
-        if ($paymentId === null && $this->isUserRegistered($userId)) {
-            return true;
         }
 
         if ($this->isFree() && !$paymentId) {
@@ -215,7 +220,7 @@ class Library extends Model
         }
 
         if (! $this->isFree() && ! $paymentId) {
-            $paymentId = $this->resolveOwnershipPaymentForUser($userId)?->id;
+            $paymentId = $this->resolvePurchasedPaymentForUser($userId)?->id;
         }
 
         if (!$this->isFree()) {
@@ -236,7 +241,11 @@ class Library extends Model
             }
         }
 
-        if ($this->isUserRegistered($userId)) {
+        $hasPivot = $this->users()
+            ->whereKey($userId)
+            ->exists();
+
+        if ($hasPivot) {
             // حدث فقط إذا هناك تغيير في الدفع
             $this->users()->updateExistingPivot($userId, [
                 'payment_id' => $paymentId,
@@ -256,6 +265,6 @@ class Library extends Model
 
     public function isPay(int $userId): bool
     {
-        return $this->isFree() || $this->isUserRegistered($userId);
+        return $this->isUserRegistered($userId);
     }
 }
