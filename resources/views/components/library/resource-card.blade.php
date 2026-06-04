@@ -16,7 +16,7 @@
     </header>
 
     <figure class="w-full max-h-[261.33px] flex items-center justify-center rounded-md overflow-hidden shadow-md mb-2">
-        <img src="{{ $resource->photo->url }}" alt="{{ $resource->title }} cover"
+        <img src="{{ $resource->photo?->url }}" alt="{{ $resource->title }} cover"
             class="aspect-square object-cover object-center hover:scale-105 transition-transform duration-200"
             itemprop="image" loading="lazy">
     </figure>
@@ -49,7 +49,7 @@
             </svg>
             <span itemprop="datePublished">
                 <strong>{{ __('library.publish_date') }}: </strong>
-                {{ $resource->published_at->locale(app()->getLocale())->translatedFormat('d F Y') }}
+                {{ $resource->published_at?->locale(app()->getLocale())->translatedFormat('d F Y') }}
             </span>
         </div>
     </section>

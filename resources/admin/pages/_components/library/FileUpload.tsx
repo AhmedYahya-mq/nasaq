@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import axios from "axios";
-import { deleteFile, stream } from "@/routes/admin/library";
+import { checkUploadedChunks, deleteFile, stream } from "@/routes/admin/library";
 
 axios.defaults.headers.common["X-CSRF-TOKEN"] =
     document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") || "";
@@ -17,6 +17,15 @@ function FileUpload({ onUploaded, disabled, setDisabled }: { onUploaded: (path: 
     const [uploadedPath, setUploadedPath] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const CHUNK_SIZE = 5 * 1024 * 1024;
+
+    const buildUploadHash = async (f: File) => {
+        const payload = [f.name, f.size, f.type || "", f.lastModified || 0].join("|");
+        const bytes = new TextEncoder().encode(payload);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", bytes);
+        return Array.from(new Uint8Array(hashBuffer))
+            .map((byte) => byte.toString(16).padStart(2, "0"))
+            .join("");
+    };
 
     useEffect(() => {
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
@@ -61,18 +70,36 @@ function FileUpload({ onUploaded, disabled, setDisabled }: { onUploaded: (path: 
         setError(null);
 
         const totalChunks = Math.ceil(f.size / CHUNK_SIZE);
-        let res;
+        const uploadHash = await buildUploadHash(f);
+        let res: any;
+        let completedSuccessfully = false;
 
         try {
-            // 🟢 تحقق أولاً من الأجزاء المرفوعة مسبقًا
-            const check = await axios.get(stream().url, {
-                params: { filename: f.name },
+            // 🟢 تحقق أولاً من الأجزاء المرفوعة مسبقًا عبر manifest
+            const manifestCheck = await axios.get(checkUploadedChunks().url, {
+                params: {
+                    filename: f.name,
+                    total: totalChunks,
+                    file_size: f.size,
+                    upload_hash: uploadHash,
+                },
             });
-            const uploadedIndexes: number[] = check.data.uploaded_chunks || [];
+
+            const serverState = manifestCheck.data || {};
+            const uploadedSet = new Set<number>((serverState.uploaded_chunks || []).map((index: number) => Number(index)));
+
+            if (serverState.done && serverState.final_path) {
+                setProgress(100);
+                setUploadedPath(serverState.final_path);
+                onUploaded(serverState.final_path);
+                toast.success("✅ الملف موجود ومكتمل مسبقًا!");
+                completedSuccessfully = true;
+                return;
+            }
 
             for (let i = 0; i < totalChunks; i++) {
                 // تخطي الجزء الموجود مسبقاً
-                if (uploadedIndexes.includes(i)) {
+                if (uploadedSet.has(i)) {
                     console.log(`✅ الجزء ${i} موجود مسبقًا`);
                     setProgress(Math.round(((i + 1) / totalChunks) * 100));
                     continue;
@@ -87,6 +114,8 @@ function FileUpload({ onUploaded, disabled, setDisabled }: { onUploaded: (path: 
                 formData.append("index", i.toString());
                 formData.append("total", totalChunks.toString());
                 formData.append("filename", f.name);
+                formData.append("file_size", f.size.toString());
+                formData.append("upload_hash", uploadHash);
 
                 res = await axios.post(stream().url, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
@@ -100,24 +129,33 @@ function FileUpload({ onUploaded, disabled, setDisabled }: { onUploaded: (path: 
                 }).then((r) => r.data);
             }
 
-            toast.success("✅ تم رفع الملف بنجاح!");
-            setUploading(false);
-            setDisabled(false);
-            console.log(res?.file_path);
+            const finalPath = res?.final_path || res?.file_path || null;
 
-            if (res?.file_path) {
-                onUploaded(res.file_path);
-                setUploadedPath(res.file_path);
+            if (finalPath) {
+                toast.success("✅ تم رفع الملف بنجاح!");
+                console.log(finalPath);
+                onUploaded(finalPath);
+                setUploadedPath(finalPath);
+                setProgress(100);
+                completedSuccessfully = true;
+            } else {
+                toast.success("✅ تم رفع الملف بنجاح!");
             }
+
         } catch (err) {
             console.error("❌ خطأ أثناء رفع الملف:", err);
-            setError("فشل رفع الملف");
-            toast.error("❌ فشل رفع الملف");
+            const message = axios.isAxiosError(err)
+                ? (err.response?.data?.message || "فشل رفع الملف")
+                : "فشل رفع الملف";
+            setError(message);
+            toast.error(`❌ ${message}`);
             setFile(null);
         } finally {
             setUploading(false);
             setDisabled(false);
-            setProgress(0);
+            if (!completedSuccessfully) {
+                setProgress(0);
+            }
         }
     };
 

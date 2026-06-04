@@ -13,6 +13,7 @@ import loading from './components/loading';
 import dropdown from './components/dropdown';
 import hover from './components/hover';
 import buttonToggleMenu from './components/button-toggle-menu';
+import chunkedUpload from './components/chunked-upload';
 import { register } from 'swiper/element';
 import swiperSlide from './animations/swiperSlide';
 import importing from './scrollAnimtionImport';
@@ -29,6 +30,7 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('hover', hover);
     Alpine.data('datepicker', datepicker);
     Alpine.data('phoneInput', phoneInput);
+    Alpine.data('chunkedUpload', chunkedUpload);
     loading();
     buttonToggleMenu();
 });

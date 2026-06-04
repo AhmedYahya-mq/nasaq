@@ -49,7 +49,7 @@
             </svg>
             <span itemprop="datePublished">
                 <strong>{{ __('library.publish_date') }}: </strong>
-                {{ $resource->published_at->locale(app()->getLocale())->translatedFormat('d F Y') }}
+                {{ $resource->published_at?->locale(app()->getLocale())->translatedFormat('d F Y') }}
             </span>
         </div>
     </section>

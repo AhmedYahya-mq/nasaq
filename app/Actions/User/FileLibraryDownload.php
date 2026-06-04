@@ -34,17 +34,36 @@ class FileLibraryDownload implements \App\Contract\Actions\FileLibraryDownload
     protected function prepareFile(Library $file): array
     {
         $disk = Storage::disk($this->disk);
+        if (!$file->path) {
+            abort(404, 'الملف غير موجود.');
+        }
 
-        if (!$file->path || !$disk->exists($file->path)) {
+        $candidates = [$file->path];
+        // try adding/removing 'private/' prefix for compatibility
+        if (str_starts_with($file->path, 'private/')) {
+            $candidates[] = preg_replace('#^private/#', '', $file->path, 1);
+        } else {
+            $candidates[] = 'private/' . $file->path;
+        }
+
+        $found = null;
+        foreach ($candidates as $candidate) {
+            if ($disk->exists($candidate)) {
+                $found = $candidate;
+                break;
+            }
+        }
+
+        if ($found === null) {
             abort(404, 'الملف غير موجود.');
         }
 
         return [
-            'path' => $disk->path($file->path),
-            'name' => basename($file->path),
-            'size' => $disk->size($file->path),
-            'mime' => Storage::mimeType($file->path),
-            'extension' => pathinfo($file->path, PATHINFO_EXTENSION),
+            'path' => $disk->path($found),
+            'name' => basename($found),
+            'size' => $disk->size($found),
+            'mime' => $disk->mimeType($found) ?: 'application/octet-stream',
+            'extension' => pathinfo($found, PATHINFO_EXTENSION),
         ];
     }
 

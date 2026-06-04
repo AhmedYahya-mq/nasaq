@@ -15,17 +15,29 @@ class LibraryRole implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!str_starts_with($value, 'library/')) {
-            $fail("يجب أن يحتوي على مسار صحيح داخل مجلد المكتبة (library/).");
+        // Accept both 'library/' and 'private/library/' prefixes.
+        if (!str_starts_with($value, 'library/') && !str_starts_with($value, 'private/library/')) {
+            $fail("يجب أن يحتوي على مسار صحيح داخل مجلد المكتبة (library/ أو private/library/).");
             return;
         }
 
-        $filePath = Storage::disk('local')->path($value);
-
-        // التحقق من وجود الملف فعلياً
-        if (!file_exists($filePath)) {
-            $fail("الملف المحدد في غير موجود داخل مجلد التخزين الخاص.");
-            return;
+        // Try multiple candidate locations to be tolerant of existing files.
+        $candidates = [$value];
+        if (str_starts_with($value, 'library/')) {
+            $candidates[] = 'private/' . $value;
+        } elseif (str_starts_with($value, 'private/library/')) {
+            $candidates[] = preg_replace('#^private/#', '', $value, 1);
         }
+
+        foreach ($candidates as $candidate) {
+            $filePath = Storage::disk('local')->path($candidate);
+            if (file_exists($filePath)) {
+                // found a valid file
+                return;
+            }
+        }
+
+        $fail("الملف المحدد في غير موجود داخل مجلد التخزين الخاص.");
+        return;
     }
 }
